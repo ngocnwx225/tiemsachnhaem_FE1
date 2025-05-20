@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Đăng nhập</title>
+  <title>Quên mật khẩu</title>
   <link rel="stylesheet" href="styledangky.css">
 </head>
 <body>
@@ -14,19 +14,26 @@
 
     <!-- Form đăng nhập bên phải -->
     <div class="form-box">
-      <h1>Đăng nhập</h1>
+      <h1>Khôi phục mật khẩu</h1>
+      <p>Tạo mật khẩu mới cho tài khoản của bạn. Mật khẩu phải đáp ứng các yêu cầu bảo mật dưới đây.</p>
       <br>
       <form>
-        <h4>Email hoặc Số điện thoại</h4>
-        <input type="email" style="font-size: 16px;" placeholder="Nhập email hoặc số điện thoại" required> <br> <br>
-        <h4>Mật khẩu</h4>
+        <h4>Mật khẩu mới</h4>
         <div class="pass-wrapper">
           <input id="pass" type="password" placeholder="Nhập mật khẩu" required>
           <img onclick="myfunction()" src="Hình/view.png" class="eye-icon" alt="Hiện mật khẩu">
         </div>
-        <a href="quenMK1.html" class="quenMK-link">Quên mật khẩu?</a> <br>
-
-        <button type="submit">Đăng nhập</button>
+        <br>
+        <h4>Xác nhận mật khẩu</h4>
+        <div class="pass-wrapper">
+          <input id="pass" type="password" placeholder="Nhập lại mật khẩu" required>
+          <img onclick="myfunction()" src="Hình/view.png" class="eye-icon" alt="Hiện mật khẩu">
+        </div>
+        <div class="button-row" style="margin-top: 5px;">
+            <a href="quenMK2.html"><button class="back">Quay lại</button></a>
+            <a href="quenMK4.html"><button class="next">Đặt lại mật khẩu</button></a>
+        </div>
+          <a href="dangnhap1.html" class="login-link">&larr; Trở về Đăng nhập</a>
       </form>
     </div>
   </div>

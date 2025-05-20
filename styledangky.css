@@ -1,4 +1,4 @@
-/*Đăng ký*/
+/*ĐĂNG KÝ*/
 * {
   box-sizing: border-box;
   margin: 0;
@@ -69,7 +69,7 @@ body {
 .form-box input {
   width: 100%;
   padding: 14px;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 6px;
 }
@@ -111,18 +111,20 @@ body {
   padding-top: 230px;
 }
 
-/*Đăng nhập*/
+/*ĐĂNG NHẬP*/
 .pass-wrapper {
   position: relative;
   width: 100%;
+  display: flex;
+  align-items: center; /* căn giữa icon theo chiều dọc */
 }
 
 .pass-wrapper input {
-  width: 100%;
-  padding-right: 40px;         /* Chừa không gian cho icon */
+  flex: 1;
+  padding-right: 40px; /* chừa khoảng cho icon */
   padding-left: 12px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 12px;
+  padding-bottom: 12px;
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 6px;
@@ -132,13 +134,11 @@ body {
 .pass-wrapper .eye-icon {
   position: absolute;
   right: 12px;
-  top: 0;
-  bottom: 0;
-  margin: auto 0;              /* Đặt icon nằm giữa theo chiều cao */
   height: 20px;
   width: 20px;
   cursor: pointer;
-  opacity: 0.7;
+  opacity: 0.8;
+  object-fit: contain;
 }
 
 .otp-box {
@@ -156,6 +156,14 @@ body {
   font-size: 24px;
   border: 1px solid #ccc;
   border-radius: 16px;
+}
+
+.Error {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+  margin-bottom: 16px;
+  font-weight: normal;
 }
 
 /*QUÊN MẬT KHẨU*/
@@ -187,12 +195,13 @@ body {
   font-size: 16px;
   width: 269.5px;
   height: 52px;
+  border: 1px solid #6f8f70;
 }
 
 /* Nút quay lại: xám sáng */
 .button-row .back {
-  background-color: #f0f0f0;
-  color: #333;
+  color: #6f8f70;
+  background-color: #ffff;
 }
 
 .button-row .back:hover {
