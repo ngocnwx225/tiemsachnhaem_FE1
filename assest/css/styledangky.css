@@ -7,7 +7,7 @@
 }
 
 body {
-  background-image: url('Hình/background.jpg');
+  background-image: url('../Hình/background.jpg');
   background-size: cover;
   background-position: center;
   height: 100vh;
@@ -167,6 +167,22 @@ body {
 }
 
 /*QUÊN MẬT KHẨU*/
+.login-return {
+  margin-top: 150px;
+  text-align: left;
+  font-size: 14px;
+}
+
+.login-return a {
+  color: #86A788;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.login-return a:hover {
+  text-decoration: none;
+}
+
 .button-row {
   display: flex;
   gap: 10px;

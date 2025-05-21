@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Quên mật khẩu</title>
+  <script src="../assest/js/javascript.js"></script>
+  <link rel="stylesheet" href="../assest/css/styledangky.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Logo bên trái -->
+    <div class="logo-box">
+      <img src="../assest/Hình/logo.png" alt="Logo">
+    </div>
+
+    <!-- Form đăng nhập bên phải -->
+    <div class="form-box">
+      <h1>Khôi phục mật khẩu</h1>
+      <p>Tạo mật khẩu mới cho tài khoản của bạn. Mật khẩu phải đáp ứng các yêu cầu bảo mật dưới đây.</p>
+      <br>
+      <form>
+        <h4>Mật khẩu mới</h4>
+        <div class="pass-wrapper">
+          <input id="pass1" type="password" placeholder="Mật khẩu mới">
+          <img src="../assest/Hình/view.png" class="eye-icon" onclick="togglePassword('pass1')">
+        </div>
+        <br>
+        <h4>Xác nhận mật khẩu</h4>
+        <div class="pass-wrapper">
+          <input id="pass2" type="password" placeholder="Xác nhận mật khẩu">
+          <img src="../assest/Hình/view.png" class="eye-icon" onclick="togglePassword('pass2')">
+        </div>
+        <div class="button-row" style="margin-top: 5px;">
+          <button type="button" class="back" onclick="location.href='../pages/quenMK2.html'">Quay lại</button>
+          <button type="button" class="next" onclick="location.href='../pages/quenMK4.html'">Đặt lại mật khẩu</button>
+        </div>
+          <div class="login-return">
+            <a href="../pages/dangnhap1.html">&larr; Trở về Đăng nhập</a>
+          </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
