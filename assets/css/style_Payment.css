@@ -3,7 +3,7 @@ body {
     margin: 0;
     padding: 0;
     line-height: 1.6;
-    background-color: rgba(245, 245, 247, 1);
+    background-color: white;
   }
 
 
@@ -35,7 +35,7 @@ body {
    .checkout-container {
     display: flex;
     justify-content: space-between;
-    gap: 40px;
+    gap: 90px;
     padding: 40px;
     font-family: Arial, sans-serif;
     flex-wrap: wrap;
@@ -47,11 +47,13 @@ body {
   .checkout-left {
     flex: 2;
     min-width: 350px;
+    max-width: 600px;
   }
-  
+    
+
   .checkout-left h2 {
     font-size: 18px;
-    margin: 20px 0 10px;
+    margin-bottom: 15px;
   }
   
   .checkout-left input,
@@ -90,47 +92,11 @@ body {
     margin: 25px 0 15px;
   }
   
-  .radio-option-box {
-    display: flex;
-    align-items: flex-start;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 12px 16px;
-    margin-bottom: 12px;
-    cursor: pointer;
-    gap: 10px;
-  }
-  
-  .radio-option-box input[type="radio"] {
-    margin-top: 3px;
-    flex-shrink: 0;
-  }
-  
-  .option-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex: 1;
-    font-size: 14px;
-  }
-  
-  .option-content .tag {
-    color: #5ca37c;
-    font-weight: bold;
-    font-size: 14px;
-    white-space: nowrap;
-  }
-  
-  .secure-note {
-    font-size: 13px;
-    color: #444;
-    margin-top: 10px;
-  }
   
   .checkout-right {
     flex: 1;
     min-width: 300px;
-    background-color: #f3f7f2;
+    background-color: rgba(245, 245, 247, 1);
     padding: 20px;
     border-radius: 10px;
   }
@@ -147,9 +113,10 @@ body {
   }
   
   .order-item img {
-    width: 40px;
-    height: 60px;
+    width: 60px;
+    height: 100px;
     object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   }
   
   .order-item .info {
@@ -223,7 +190,7 @@ body {
     border-radius: 6px;
     cursor: pointer;
   }
-  
+
    /*footer*/
  .site-footer {
     background-color: #1e2b23;
