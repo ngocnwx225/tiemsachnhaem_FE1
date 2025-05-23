@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <!-- Thiết lập charset và giao diện hiển thị -->
+  <!-- Khai báo mã hóa ký tự UTF-8 để hỗ trợ tiếng Việt -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trang quản lý - Tiệm Sách Nhà Em</title>
+
+  <!-- Kết nối file style.css chứa toàn bộ CSS chính -->
+  <link rel="stylesheet" href="css/style.css" />
+
+  <!-- CSS nội tuyến chỉ dùng để thiết lập khung giao diện chính -->
+  <style>
+    .container-all {
+      display: flex;
+      /* width: 1920px; /* cố định độ rộng theo Full HD */
+      /* height: 1080px; */ */
+      margin: 0 auto;
+      overflow: hidden;
+      background-color: #F5F5F7; /* màu nền nhạt */
+    }
+  </style>
+</head>
+<body>
+  <!-- Khối bao ngoài toàn giao diện -->
+  <div class="container-all">
+
+    <!-- Phần sidebar sẽ được load từ file HTML riêng bằng JavaScript -->
+    <div id="sidebar-container" class="sidebar"></div>
+
+    <!-- Phần nội dung chính của trang -->
+    <div class="main">
+      <div class="container">
+        <!-- Chào mừng -->
+        <h2>Xin chào!</h2>
+        <p>Đây là tổng quan hoạt động của ngày hôm nay.</p>
+        <br />
+
+        <!-- Bốn thẻ tổng quan dạng thẻ màu -->
+        <div class="overview">
+          <div class="card blue">
+            <div class="icon">📦</div>
+            <h3>Tổng đơn hàng</h3>
+            <div class="value">1,284</div>
+          </div>
+          <div class="card green">
+            <div class="icon">🛒</div>
+            <h3>Đơn hàng mới</h3>
+            <div class="value">34</div>
+          </div>
+          <div class="card purple">
+            <div class="icon">👥</div>
+            <h3>Khách hàng</h3>
+            <div class="value">5,670</div>
+          </div>
+          <div class="card yellow">
+            <div class="icon">💰</div>
+            <h3>Doanh thu</h3>
+            <div class="value">32.5M VND</div>
+          </div>
+        </div>
+
+        <!-- Khối chứa hai box: Sách bán chạy + Đơn hàng gần đây -->
+        <div class="section">
+
+          <!-- Box: Sách bán chạy -->
+          <div class="box">
+            <div class="box-header">
+              <h4>Sách bán chạy</h4>
+              <a href="#">Xem tất cả</a>
+            </div>
+
+            <!-- Mỗi book-item là một quyển sách -->
+            <div class="book-item">
+              <img src="assets/images/sách.png" alt="Đắc Nhân Tâm" width="48">
+              <div class="book-info">
+                <span class="book-title">Đắc Nhân Tâm</span>
+                <span class="book-author">Dale Carnegie</span>
+                <span>120,000 VND</span>
+              </div>
+              <div class="book-sold">
+                <span class="sold-quantity">142</span> <span class="sold-label">đã bán</span>
+              </div>
+            </div>
+
+            <!-- Sách 2 -->
+             <div class="book-item">
+              <img src="assets/images/sách.png" alt="Nhà Giả Kim" width="48">
+              <div class="book-info">
+                <span class="book-title">Nhà Giả Kim</span>
+                <span class="book-author">Paulo Coelho</span>
+                <span>85,000 VND</span>
+              </div>
+              <div class="book-sold">
+                <span class="sold-quantity">142</span> <span class="sold-label">đã bán</span>
+              </div>
+            </div>
+            <!-- Sách 3 -->
+            <div class="book-item">
+              <img src="assets/images/sách.png" alt="Tư Duy Nhanh Và Chậm" width="48">
+              <div class="book-info">
+                <span class="book-title">Tư Duy Nhanh Và Chậm</span>
+                <span class="book-author">Daniel Kahneman</span>
+                <span>195,000 VND</span>
+              </div>
+              <div class="book-sold">
+                <span class="sold-quantity">142</span> <span class="sold-label">đã bán</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Box: Đơn hàng gần đây -->
+          <div class="box">
+            <div class="box-header">
+              <h4>Đơn hàng gần đây</h4>
+              <a href="#">Xem tất cả</a>
+            </div>
+
+            <!-- Đơn hàng một -->
+            <div class="order-item">
+              <!-- Thông tin bên trái: khách, số đơn -->
+              <div class="order-left">
+                <img src="assets/images/Container.png" alt="Cart Icon" width="32" height="32" />
+                <div class="order-info">
+                  <strong>Nguyễn Văn A</strong>
+                  <span>#ORD-7245 • 3 sản phẩm</span>
+                </div>
+              </div>
+
+              <!-- Ngày giao dự kiến và thực tế -->
+              <div class="order-dates">
+                <span>Dự kiến giao ngày:</span>01/3/2024
+                <span>Ngày giao:</span>01/3/2024
+              </div>
+
+              <!-- Giá trị đơn và trạng thái -->
+              <div class="order-status">
+                <div class="order-price">450,000 VND</div>
+                <div class="status green">Đã giao</div>
+              </div>
+            </div>
+
+            <!-- Đơn hàng 2 -->
+             <div class="order-item">
+              <div class="order-left">
+                <img src="assets/images/Container.png" alt="Cart Icon" width="32" height="32" />
+                <div class="order-info">
+                  <strong>Trần Thị B</strong>
+                  <span>#ORD-7244 • 2 sản phẩm</span>
+                </div>
+              </div>
+
+              <div class="order-dates">
+                <span>Dự kiến giao ngày:</span>12/3/2024
+                <span>Ngày giao:</span>---
+              </div>
+
+              <div class="order-status">
+                <div class="order-price">780,000 VND</div>
+                <div class="status red">Đang giao</div>
+              </div>
+            </div>
+            <!-- Đơn hàng 3 -->
+            <div class="order-item">
+              <div class="order-left">
+                <img src="assets/images/Container.png" alt="Cart Icon" width="32" height="32" />
+                <div class="order-info">
+                  <strong>Trần Thị B</strong>
+                  <span>#ORD-7244 • 2 sản phẩm</span>
+                </div>
+              </div>
+
+              <div class="order-dates">
+                <span>Dự kiến giao ngày:</span>12/3/2024
+                <span>Ngày giao:</span>---
+              </div>
+
+              <div class="order-status">
+                <div class="order-price">780,000 VND</div>
+                <div class="status red">Đang giao</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript để load sidebar và active menu hiện tại -->
+  <script>
+    fetch("components/sidebar.html") // Tải nội dung sidebar từ file ngoài
+      .then(res => res.text()) // Chuyển kết quả về text
+      .then(data => {
+        document.getElementById("sidebar-container").innerHTML = data;
+
+        // Nếu trang là index.html thì highlight menu "Tổng quan"
+        const path = window.location.pathname;
+        if (path.includes("index.html")) {
+          document.getElementById("menu-overview")?.classList.add("active");
+        }
+      });
+  </script>
+</body>
+</html>
