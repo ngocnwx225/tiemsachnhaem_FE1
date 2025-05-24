@@ -1,0 +1,244 @@
+/*ĐĂNG KÝ*/
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background-image: url('../Hình/background.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  display: flex;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  overflow: hidden;
+  width: 1040px;
+  height: 628px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.logo-box {
+  background-color: rgba(26, 50, 41, 0.8);
+  color: white;
+  padding: 30px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-box img {
+  width: 366px;
+  margin-bottom: 15px;
+}
+
+.logo-box h2 {
+  font-size: 20px;
+  text-align: center;
+}
+
+.form-box {
+  flex: 2;
+  padding: 40px;
+}
+
+.form-box h1 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.form-box p {
+  margin-bottom: 20px;
+  color: #555;
+}
+
+.form-box h4 {
+  margin-bottom: 5px;
+}
+
+.form-box input {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.form-box button {
+  width: 100%;
+  padding: 14px;
+  background-color: #86A788;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.form-box button:hover {
+  background-color: #6f8f70;
+}
+
+.login-link {
+  color: #86A788;
+  text-decoration: none;
+  text-align: left;
+  font-size: 14px;
+}
+
+.quenMK-link {
+  display: block; 
+  color: #86A788;
+  text-decoration: none;
+  text-align: right;
+  font-size: 14px;
+}
+
+.dangnhap-link {
+  text-align: left;
+  font-size: 14px;
+  margin-top: auto;
+  padding-top: 230px;
+}
+
+/*ĐĂNG NHẬP*/
+.pass-wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center; /* căn giữa icon theo chiều dọc */
+}
+
+.pass-wrapper input {
+  flex: 1;
+  padding-right: 40px; /* chừa khoảng cho icon */
+  padding-left: 12px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+.pass-wrapper .eye-icon {
+  position: absolute;
+  right: 12px;
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+  opacity: 0.8;
+  object-fit: contain;
+}
+
+.otp-box {
+  display: flex;
+  justify-content: space-between; /* Cách đều các ô */
+  gap: 24px; /* khoảng cách giữa các ô */
+  margin: 20px 0;
+  text-align: center;
+}
+
+.otp-box input {
+  width: 72.5px;
+  height: 84px;
+  text-align: center;
+  font-size: 24px;
+  border: 1px solid #ccc;
+  border-radius: 16px;
+}
+
+.Error {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+  margin-bottom: 16px;
+  font-weight: normal;
+}
+
+/*QUÊN MẬT KHẨU*/
+.login-return {
+  margin-top: 150px;
+  text-align: left;
+  font-size: 14px;
+}
+
+.login-return a {
+  color: #86A788;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.login-return a:hover {
+  text-decoration: none;
+}
+
+.button-row {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.otp-timer {
+  display: flex;
+  justify-content: space-between; /* đẩy 2 phần tử ra 2 bên */
+  align-items: center;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.otp-timer .resend {
+  color: #86A788;
+  text-decoration: none;
+}
+
+.button-row .back,
+.button-row .next {
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 16px;
+  width: 269.5px;
+  height: 52px;
+  border: 1px solid #6f8f70;
+}
+
+/* Nút quay lại: xám sáng */
+.button-row .back {
+  color: #6f8f70;
+  background-color: #ffff;
+}
+
+.button-row .back:hover {
+  background-color: #ddd;
+}
+
+/* Nút tiếp tục: xanh thương hiệu */
+.button-row .next {
+  background-color: #86A788;
+  color: white;
+}
+
+.button-row .next:hover {
+  background-color: #6f8f70;
+}
+
+.login-linkcuoi {
+  display: block;
+  margin-top: 160px;
+  text-decoration: none;
+  text-align: left;
+  color: #86A788;
+}
+
