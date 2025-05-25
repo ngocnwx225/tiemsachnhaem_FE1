@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <!-- Khai báo mã hóa ký tự UTF-8 để hỗ trợ tiếng Việt -->
+  <meta charset="UTF-8" />
+  <!-- Thiết lập giao diện thân thiện với thiết bị di động -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thống kê - Tiệm Sách Nhà Em</title>
+
+  <!-- Link đến file CSS bên ngoài để định dạng giao diện -->
+  <link rel="stylesheet" href="css/style.css" />
+
+  <!-- Import thư viện Chart.js để vẽ biểu đồ -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!-- Khối bao toàn bộ giao diện -->
+  <div class="container-all">
+
+    <!-- Sidebar sẽ được load động từ file HTML khác -->
+    <div id="sidebar-container" class="sidebar"></div>
+
+    <!-- Phần chính của nội dung -->
+    <div class="main">
+      <!-- Tiêu đề trang + các nút chọn khoảng thời gian -->
+      <div class="header">
+        <h2>Thống kê</h2>
+        <div class="time-filter">
+          <!-- Các nút lọc thời gian -->
+          <button class="time-btn">Tuần</button>
+          <button class="time-btn active">Tháng</button>
+          <button class="time-btn">Năm</button>
+          <button class="time-btn custom">
+            <img src="assets/images/Máy in.png" width="16" style="margin-right: 4px;" />
+            Tùy chỉnh
+          </button>
+        </div>
+      </div>
+
+      <!-- Khối nội dung lưới: gồm biểu đồ, sản phẩm bán chạy, thống kê đơn hàng -->
+      <div class="grid">
+
+        <!-- Khối biểu đồ doanh số -->
+        <div>
+          <div class="box sales-chart-box">
+            <div class="box-header">
+              <!-- Tiêu đề và icon -->
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <img src="assets/images/Thống kê xanh.png" width="16" />
+                <strong>Doanh số bán hàng</strong>
+              </div>
+              <!-- Nút xuất báo cáo -->
+              <div style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <img src="assets/images/Tải xuống.png" width="14" />
+                <span style="font-size: 14px; color: #333;">Xuất báo cáo</span>
+              </div>
+            </div>
+
+            <!-- Vùng biểu đồ -->
+            <canvas id="salesChart" width="400" height="150"></canvas>
+
+            <!-- Hiển thị tổng doanh thu -->
+            <p style="text-align: center; margin-top: 1px; font-weight: bold;">
+              Tổng doanh thu: <span style="color: #86A788; font-weight: 500;">24,560,000 VND</span>
+            </p>
+          </div>
+
+          <!-- Bảng xếp hạng sản phẩm bán chạy nhất -->
+          <div class="box best-selling-box">
+            <div class="box-header">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <img src="assets/images/Quyển sách.png" width="16" />
+                <strong>Sản phẩm bán chạy nhất</strong>
+              </div>
+              <div style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <img src="assets/images/Tải xuống.png" width="14" />
+                <span style="font-size: 14px; color: #333;">Xuất báo cáo</span>
+              </div>
+            </div>
+
+            <!-- Dữ liệu từng sản phẩm top 1 đến top 5 -->
+            <!-- Mỗi mục có: thứ hạng, tên sách, số lượng, tác giả, thanh tiến trình -->
+            <!-- Top 1 -->
+            <div class="rank-item">
+              <div class="rank-index">#1</div>
+              <div class="rank-info">
+                <div class="title-row">
+                  <div class="book-title">Đắc Nhân Tâm</div>
+                  <div class="sold-number">142</div>
+                </div>
+                <div class="author-row">
+                  <div class="book-author">Dale Carnegie</div>
+                  <div class="sold-label">đã bán</div>
+                </div>
+                <div class="rank-bar">
+                  <div class="bar-fill" style="width: 95%"></div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Top 2 -->
+             <div class="rank-item">
+              <div class="rank-index">#2</div>
+              <div class="rank-info">
+                <div class="title-row">
+                  <div class="book-title">Nhà Giả Kim</div>
+                  <div class="sold-number">98</div>
+                </div>
+                <div class="author-row">
+                  <div class="book-author">Paulo Coelho</div>
+                  <div class="sold-label">đã bán</div>
+                </div>
+                <div class="rank-bar">
+                  <div class="bar-fill" style="width: 65%"></div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Top 3 -->
+             <div class="rank-item">
+              <div class="rank-index">#3</div>
+              <div class="rank-info">
+                <div class="title-row">
+                  <div class="book-title">Tư Duy Nhanh Và Chậm</div>
+                  <div class="sold-number">86</div>
+                </div>
+                <div class="author-row">
+                  <div class="book-author">Daniel Kahneman</div>
+                  <div class="sold-label">đã bán</div>
+                </div>
+                <div class="rank-bar">
+                  <div class="bar-fill" style="width: 58%"></div>
+                </div>
+              </div>
+            </div>
+            <!-- Top 4 -->
+             <div class="rank-item">
+            <div class="rank-index">#4</div>
+            <div class="rank-info">
+              <div class="title-row">
+                <div class="book-title">Đời Ngắn Đừng Ngủ Dài</div>
+                <div class="sold-number">76</div>
+              </div>
+              <div class="author-row">
+                <div class="book-author">Robin Sharma</div>
+                <div class="sold-label">đã bán</div>
+              </div>
+              <div class="rank-bar">
+                <div class="bar-fill" style="width: 50%"></div>
+              </div>
+            </div>
+          </div>
+            <!-- Top 5 -->
+          <div class="rank-item">
+            <div class="rank-index">#5</div>
+            <div class="rank-info">
+              <div class="title-row">
+                <div class="book-title">Người Giàu Có Nhất Thành Babylon</div>
+                <div class="sold-number">65</div>
+              </div>
+              <div class="author-row">
+                <div class="book-author">George S. Clason</div>
+                <div class="sold-label">đã bán</div>
+              </div>
+              <div class="rank-bar">
+                <div class="bar-fill" style="width: 42%"></div>
+              </div>
+            </div>
+          </div>
+
+          </div>
+        </div>
+
+        <!-- Khối thống kê đơn hàng -->
+        <div class="box order-statistics-box">
+          <div class="box-header">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <img src="assets/images/Container.png" width="16" />
+              <strong>Thống kê đơn hàng</strong>
+            </div>
+            <div style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+              <img src="assets/images/Tải xuống.png" width="14" />
+              <span style="font-size: 14px; color: #333;">Xuất báo cáo</span>
+            </div>
+          </div>
+
+          <!-- Bốn chỉ số: mới, hoàn thành, đang giao, đã hủy -->
+          <div class="stat-grid">
+            <div class="stat-box bg-yellow"><h3>246</h3><p>Đơn hàng mới</p></div>
+            <div class="stat-box bg-red"><h3>215</h3><p>Đã hoàn thành</p></div>
+            <div class="stat-box bg-gray"><h3>18</h3><p>Đang giao</p></div>
+            <div class="stat-box bg-gray"><h3>13</h3><p>Đã hủy</p></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript xử lý phần động -->
+  <script>
+    // Load file sidebar.html và chèn vào div sidebar-container
+    fetch("components/sidebar.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("sidebar-container").innerHTML = data;
+
+        // Tô sáng menu thống kê nếu là trang thống kê
+        const path = window.location.pathname;
+        if (path.includes("statistics.html")) {
+          document.getElementById("menu-statistics")?.classList.add("active");
+        }
+      });
+
+    // Khởi tạo biểu đồ doanh thu theo ngày trong tuần bằng Chart.js
+    const ctx = document.getElementById('salesChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar', // biểu đồ cột
+      data: {
+        labels: ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'], // các trục X là thứ trong tuần
+        datasets: [{
+          data: [3200000, 2700000, 3400000, 3800000, 4100000, 3900000, 3600000], // doanh thu từng ngày
+          backgroundColor: '#86A788', // màu cột
+          borderRadius: 8, // bo tròn đầu cột
+          borderSkipped: false,
+          barThickness: 40 // độ dày cột
+        }]
+      },
+      options: {
+        plugins: {
+          legend: { display: false }, // ẩn chú giải
+          tooltip: {
+            callbacks: {
+              // hiển thị định dạng tiền tệ trong tooltip
+              label: ctx => `${ctx.raw.toLocaleString()} VND`
+            }
+          }
+        },
+        scales: {
+          x: { grid: { display: false } }, // không hiển thị lưới trục X
+          y: {
+            ticks: {
+              callback: val => `${(val / 1000000)}M`, // chia đơn vị thành triệu (ví dụ: 3.2M)
+              font: { size: 12 }
+            },
+            grid: { color: '#eee' },
+            beginAtZero: true // bắt đầu trục Y từ 0
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

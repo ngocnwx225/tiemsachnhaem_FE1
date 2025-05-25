@@ -1,0 +1,155 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    background-color: rgba(245, 245, 247, 1);
+  }
+
+  
+  header {
+    background-color: rgba(26, 50, 41, 1);
+    color: white;
+    text-align: center;
+    width: 100%;
+    height: auto;
+  }
+
+  footer {
+    margin: 0;
+    padding: 1rem 0;
+    text-align: center;
+  }
+  p{
+    margin: 0;
+  }
+  
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  .logo-section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    justify-content: center; /* canh giữa theo chiều ngang */
+  }
+  
+  .logo-section img {
+    height: 50px;
+  }
+  
+  .main-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 0;
+    background-color: #f5f5f7;
+    flex-wrap: wrap; /* Để tránh vỡ layout khi thu nhỏ */
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 20px;
+    flex-shrink: 0;
+  }
+  
+  .nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+  }
+  
+  .search-bar {
+    flex-grow: 1;
+    max-width: 400px;
+  }
+  
+  .search-bar input {
+    width: 100%;
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+  }
+  
+  .icons {
+    display: flex;
+    gap: 15px;
+    flex-shrink: 0;
+    font-size: 18px;
+  }
+
+/*Footer*/
+  .site-footer {
+    background-color: #1e2b23;
+    color: white;
+    padding: 40px 0 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+  
+  .footer-logo-info {
+    display: flex;
+    gap: 16px;
+    max-width: none;
+    flex: 1;
+  }
+  
+  .footer-logo-info img {
+    width: 120px;
+    height: auto;
+    flex-shrink: 0;
+  }
+  
+  .footer-description h4 {
+    font-size: 16px;
+    margin: 0 0 6px;
+  }
+  
+  .footer-description p {
+    font-size: 13px;
+    color: #ccc;
+    margin: 0;
+  }
+  
+  .footer-block {
+    flex: 1;
+    min-width: 150px;
+  }
+  
+  .footer-block h4 {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  
+  .footer-block p {
+    font-size: 13px;
+    margin: 6px 0;
+    color: #ccc;
+  }
+  
+  .footer-block i {
+    margin-right: 8px;
+    color: #9dd1b0;
+  }
+  
+  .footer-bottom {
+    border-top: 1px solid #ccc;
+    margin-top: 30px;
+    padding-top: 10px;
+    text-align: center;
+    font-size: 13px;
+    color: #bbb;
+  }
