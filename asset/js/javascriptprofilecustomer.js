@@ -31,4 +31,11 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    const editBtn = document.querySelector('.edit-info-btn');
+    if (editBtn) {
+        editBtn.addEventListener('click', function() {
+            window.location.href = '../pages/editcustomer.html';
+        });
+    }
+
 });
