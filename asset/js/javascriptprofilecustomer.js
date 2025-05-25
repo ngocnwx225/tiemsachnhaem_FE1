@@ -13,21 +13,21 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    accountSidebarButtons.forEach(button => {
+    accountSidebarButtons.forEach((button, idx) => {
         button.addEventListener('click', function() {
             // Remove 'active' class from all buttons
             accountSidebarButtons.forEach(btn => btn.classList.remove('active'));
             // Add 'active' class to the clicked button
             this.classList.add('active');
 
-            // Here you would typically load different content based on the active button
-            // For example:
-            // if (this.textContent.includes('Đổi mật khẩu')) {
-            //     // Show change password form, hide account info
-            // } else {
-            //     // Show account info, hide change password form
-            // }
-            console.log(this.textContent.trim() + " clicked");
+            // Nếu là nút "Đổi mật khẩu"
+            if (this.textContent.trim() === 'Đổi mật khẩu') {
+                window.location.href = 'changepassword.html';
+            }
+            // Nếu là nút "Thông tin tài khoản"
+            else if (this.textContent.trim() === 'Thông tin tài khoản') {
+                window.location.href = 'profilecustomer.html';
+            }
         });
     });
 

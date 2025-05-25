@@ -4,44 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chỉnh sửa thông tin - Tiệm Sách Nhà Em</title>
-    <link rel="stylesheet" href="editcustomer.css">
+    <link rel="stylesheet" href="../asset/css/editcustomer.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-
-    <div id="header-placeholder">
-        <header class="site-header-placeholder">
-            <div class="top-bar-placeholder">
-                <div class="container-placeholder">
-                    <span><i class="fas fa-map-marker-alt"></i> 123 Đường Sách, Quận 1, TP. Hồ Chí Minh</span>
-                    <span><i class="fas fa-phone-alt"></i> +1 123 456 7878</span>
-                    <span><i class="fas fa-envelope"></i> tiemsachnhaem@mail.com</span>
-                </div>
-            </div>
-            <div class="main-header-placeholder">
-                <div class="container-placeholder logo-nav-placeholder">
-                    <div class="logo-area-placeholder">
-                        <span>TIỆM SÁCH NHÀ EM</span>
-                    </div>
-                    <nav class="nav-placeholder">
-                        <a href="#">Trang chủ</a>
-                        <a href="#">Sản phẩm</a>
-                        <a href="#">Giới thiệu</a>
-                        <a href="#">F&Q</a>
-                    </nav>
-                    <div class="search-user-cart-placeholder">
-                        <div class="search-area-placeholder">
-                            <input type="text" placeholder="Tìm kiếm sản phẩm">
-                            <i class="fas fa-search"></i>
-                        </div>
-                        <a href="#"><i class="fas fa-user"></i></a>
-                        <a href="#"><i class="fas fa-shopping-cart"></i></a>
-                    </div>
-                </div>
-            </div>
-        </header>
-    </div>
+    <div id="header-placeholder"></div>
     <main class="edit-customer-page-content">
         <div class="container">
             <h1 class="page-main-title">Thông tin tài khoản</h1>
@@ -52,7 +20,6 @@
                     </a>
                     <h2>Chỉnh sửa tài khoản</h2>
                 </div>
-
                 <form id="editCustomerForm" class="edit-form">
                     <div class="form-group">
                         <label for="fullName">Họ và tên</label>
@@ -73,25 +40,21 @@
             </div>
         </div>
     </main>
-
-    <!-- Footer component sẽ được load vào đây -->
     <div id="footer-placeholder"></div>
-</div>
-<script src="../asset/js/javascriptprofilecustomer.js"></script>
-<script>
-// Tự động load header/footer component
-function loadComponent(id, url) {
-    fetch(url)
-        .then(res => res.text())
-        .then(html => {
-            document.getElementById(id).innerHTML = html;
-        });
-}
-document.addEventListener('DOMContentLoaded', function() {
-    loadComponent('header-placeholder', '../components/header.html');
-    loadComponent('footer-placeholder', '../components/footer.html');
-});
-</script>
-    <script src="editcustomer.js"></script>
-    </body>
+    <script>
+    // Tự động load header/footer component
+    function loadComponent(id, url) {
+        fetch(url)
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById(id).innerHTML = html;
+            });
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        loadComponent('header-placeholder', '../components/header.html');
+        loadComponent('footer-placeholder', '../components/footer.html');
+    });
+    </script>
+    <script src="../asset/js/editcustomer.js"></script>
+</body>
 </html>

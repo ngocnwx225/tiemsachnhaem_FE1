@@ -1,195 +1,157 @@
-/* Global body styles */
 body {
     font-family: 'Montserrat', sans-serif;
-    background-color: #F5F5F7; /* Background từ Figma */
+    background-color: #F5F5F7;
     margin: 0;
     padding: 0;
-    color: #333; /* Màu chữ mặc định */
-    display: flex;
-    flex-direction: column;
+    color: #333;
     min-height: 100vh;
 }
 
-.container {
-    width: 90%;
-    max-width: 1100px; /* Giới hạn chiều rộng cho nội dung chính */
-    margin-left: auto;
-    margin-right: auto;
-    padding: 0 15px;
+.edit-customer-page-content {
+    background: #F5F5F7;
+    min-height: 100vh;
+    padding-top: 40px;
+    padding-bottom: 60px;
 }
 
-/* Main content specific styles */
-.edit-customer-page-content {
-    flex-grow: 1; /* Đảm bảo main content chiếm không gian còn lại nếu footer ngắn */
-    padding-top: 30px;
-    padding-bottom: 50px;
+.container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 0;
 }
 
 .page-main-title {
-    font-size: 32px; /* Figma: 40px, điều chỉnh cho web */
+    font-size: 32px;
     font-weight: 600;
-    color: black;
-    margin-bottom: 24px;
-    text-align: left;
+    color: #1A3229;
+    margin-bottom: 32px;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .form-section-wrapper {
-    background-color: #FFFFFF; /* Nền trắng cho form */
-    padding: 25px 30px; /* Padding từ Figma, có thể điều chỉnh */
-    border-radius: 8px; /* Bo góc nhẹ */
-    /* max-width: 1070px; Figma, nhưng container sẽ kiểm soát */
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.08); /* Đổ bóng nhẹ */
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    padding: 48px 56px;
 }
 
 .form-title-header {
     display: flex;
     align-items: center;
-    gap: 15px; /* Khoảng cách giữa icon và tiêu đề */
-    margin-bottom: 24px;
+    gap: 14px;
+    margin-bottom: 32px;
 }
 
 .form-title-header .back-arrow {
-    font-size: 22px; /* Kích thước icon mũi tên */
-    color: #333;
+    font-size: 26px;
+    color: #1A3229;
     text-decoration: none;
-    line-height: 1; /* Căn chỉnh icon */
-}
-.form-title-header .back-arrow i {
-    display: block;
+    margin-right: 8px;
 }
 
 .form-title-header h2 {
-    font-size: 24px; /* Figma: 28px */
+    font-size: 24px;
     font-weight: 600;
-    color: black;
+    color: #1A3229;
     margin: 0;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .edit-form .form-group {
-    margin-bottom: 20px; /* Figma: gap: 12px, điều chỉnh */
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .edit-form label {
-    display: block;
-    font-size: 16px; /* Figma: 18px */
+    font-size: 18px;
     font-weight: 600;
-    color: black;
-    margin-bottom: 8px; /* Figma: gap: 6px */
-    line-height: 1.5; /* Figma: line-height: 28px */
+    color: #1A3229;
+    margin-bottom: 0;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .edit-form input[type="text"],
 .edit-form input[type="email"],
 .edit-form input[type="tel"] {
-    width: 100%;
-    padding: 12px 16px; /* Figma: padding: 16px */
-    border: 1px solid #D8DADC; /* Figma: outline: 1px #D8DADC solid */
-    border-radius: 8px; /* Figma: border-radius: 10px */
-    background-color: white;
+    padding: 18px;
+    border-radius: 12px;
+    border: 1px solid #D8DADC;
+    background: #fff;
     font-size: 16px;
+    color: #1A3229;
     font-family: 'Montserrat', sans-serif;
-    color: #333; /* Màu chữ khi nhập */
-    line-height: 1.5; /* Figma: line-height: 24px */
+    line-height: 24px;
 }
 
 .edit-form input[type="text"]::placeholder,
 .edit-form input[type="email"]::placeholder,
 .edit-form input[type="tel"]::placeholder {
-    color: rgba(0, 0, 0, 0.50); /* Figma: color: rgba(0, 0, 0, 0.50) */
+    color: rgba(0,0,0,0.5);
     font-weight: 400;
 }
 
-.edit-form .form-actions {
-    margin-top: 30px; /* Figma: gap: 24px */
+.form-actions {
+    margin-top: 32px;
     display: flex;
-    justify-content: flex-end; /* Đưa nút về bên phải như trong hình */
+    justify-content: flex-end;
 }
 
-.edit-form .save-button {
-    background-color: #86A788; /* Figma */
-    color: white;
-    font-size: 14px; /* Figma: 13px */
+.save-button {
+    padding: 16px 40px;
+    background: #86A788;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 14px;
     font-weight: 600;
     font-family: 'Montserrat', sans-serif;
-    padding: 12px 25px; /* Figma: padding: 16px */
     border: none;
-    border-radius: 8px; /* Figma: border-radius: 10px */
     cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
-    line-height: 1.4; /* Figma: line-height: 20px */
+    transition: background 0.2s;
+    line-height: 20px;
 }
 
-.edit-form .save-button:hover {
-    background-color: #709072; /* Màu đậm hơn khi hover */
+.save-button:hover {
+    background: #6e8e6e;
 }
 
-
-/* --- PLACEHOLDER STYLES FOR HEADER AND FOOTER --- */
-/* Bạn nên xóa/thay thế các style này bằng CSS thực tế từ header.html và footer.html */
-#header-placeholder, #footer-placeholder {
-    width: 100%;
+/* Responsive */
+@media (max-width: 900px) {
+    .form-section-wrapper {
+        padding: 32px 16px;
+    }
+    .container {
+        max-width: 98vw;
+        padding: 0 4vw;
+    }
 }
-.site-header-placeholder { background: #fff; padding:5px 0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-.top-bar-placeholder { background: #1A3229; color: white; padding: 8px 0; font-size: 12px; }
-.top-bar-placeholder .container-placeholder { display: flex; justify-content: center; gap: 20px; max-width: 1200px; margin: auto;}
-.main-header-placeholder .container-placeholder { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; max-width: 1200px; margin: auto;}
-.logo-area-placeholder span { font-size: 18px; font-weight: 600; color: #1A3229; }
-.nav-placeholder a { margin: 0 15px; color: #1A3229; text-decoration: none; font-size: 14px; }
-.search-user-cart-placeholder { display: flex; align-items: center; gap: 15px; }
-.search-area-placeholder { display: flex; align-items: center; border: 1px solid #D8DADC; border-radius: 5px; padding: 5px 8px; }
-.search-area-placeholder input { border: none; outline: none; font-size: 14px; color: rgba(0,0,0,0.5);}
-.search-user-cart-placeholder i { font-size: 18px; color: #1A3229; }
 
-.site-footer-placeholder { background-color: #1A3229; color: #fff; padding: 40px 0 20px; font-size: 14px; margin-top: auto;}
-.site-footer-placeholder .footer-content-placeholder { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; max-width: 1200px; margin: auto; padding:0 15px; }
-.site-footer-placeholder .footer-col-1 { flex-basis: 30%; }
-.site-footer-placeholder .footer-col { flex-basis: 18%; min-width: 150px; }
-.site-footer-placeholder h3 { font-size: 24px; margin-bottom: 10px;}
-.site-footer-placeholder h4 { font-size: 16px; margin-bottom: 15px;}
-.site-footer-placeholder p, .site-footer-placeholder a { color: #ccc; text-decoration: none; margin-bottom: 8px; display: block;}
-.site-footer-placeholder a:hover { color: #fff; }
-.site-footer-placeholder .footer-logo-placeholder { margin-bottom: 15px; width: 100px;}
-.site-footer-placeholder i { margin-right: 8px; }
-.site-footer-placeholder .footer-bottom-placeholder { text-align: center; padding-top: 20px; margin-top: 20px; border-top: 1px solid #4a5d50; font-size: 12px; color: #bbb; }
-/* --- END PLACEHOLDER STYLES --- */
-
-
-/* Responsive adjustments for main content */
-@media (max-width: 768px) {
+@media (max-width: 600px) {
     .page-main-title {
         font-size: 26px;
+        margin-bottom: 20px;
+    }
+    .form-section-wrapper {
+        padding: 16px 4vw;
+        border-radius: 10px;
     }
     .form-title-header h2 {
         font-size: 20px;
     }
-    .form-section-wrapper {
-        padding: 20px;
+    .edit-form label {
+        font-size: 15px;
     }
     .edit-form input[type="text"],
     .edit-form input[type="email"],
-    .edit-form input[type="tel"],
-    .edit-form .save-button {
+    .edit-form input[type="tel"] {
+        padding: 12px;
         font-size: 15px;
-        padding: 10px 14px;
+        border-radius: 8px;
     }
-     .edit-form .save-button {
-        width: 100%; /* Nút chiếm toàn bộ chiều rộng trên mobile */
-    }
-}
-
-@media (max-width: 480px) {
-    .page-main-title {
-        font-size: 22px;
-        text-align: center;
-    }
-    .form-title-header {
-        gap: 10px;
-        justify-content: center; /* Căn giữa tiêu đề form và mũi tên */
-    }
-    .form-title-header .back-arrow {
-        font-size: 20px;
-    }
-    .form-title-header h2 {
-        font-size: 18px;
+    .save-button {
+        padding: 12px 20px;
+        font-size: 13px;
+        border-radius: 8px;
     }
 }
