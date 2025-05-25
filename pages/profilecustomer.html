@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông tin tài khoản - Tiệm Sách Nhà Em</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Open+Sans:wght@600&family=Lato:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../asset/css/styleprofilecustomer.css">
+    <link rel="stylesheet" href="../asset/css/header.css">
+    <link rel="stylesheet" href="../asset/css/footer.css">
+</head>
+<body>
+    <div class="page-wrapper">
+        <!-- Header component sẽ được load vào đây -->
+        <div id="header-placeholder"></div>
+
+        <main class="main-content">
+            <div class="container">
+                <h1 class="page-title">Thông tin tài khoản</h1>
+                <div class="account-card">
+                    <aside class="account-sidebar">
+                        <button class="sidebar-btn active">Thông tin tài khoản</button>
+                        <button class="sidebar-btn">Đổi mật khẩu</button>
+                    </aside>
+                    <section class="account-details">
+                        <div class="user-profile-header">
+                            <img class="avatar" src="https://placehold.co/80x80" alt="User Avatar"/>
+                            <h2 class="user-name">Nguyễn Văn A</h2>
+                            <button class="edit-info-btn">Chỉnh sửa thông tin</button>
+                        </div>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <span class="info-label">Email:</span>
+                                <span class="info-value">user@gmail.com</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Số điện thoại:</span>
+                                <span class="info-value">0123456789</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Tên tài khoản:</span>
+                                <span class="info-value">user123</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Họ và tên:</span>
+                                <span class="info-value">Phan Thúy Ngân</span>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer component sẽ được load vào đây -->
+        <div id="footer-placeholder"></div>
+    </div>
+    <script src="../asset/js/javascriptprofilecustomer.js"></script>
+    <script>
+    // Tự động load header/footer component
+    function loadComponent(id, url) {
+        fetch(url)
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById(id).innerHTML = html;
+            });
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        loadComponent('header-placeholder', '../components/header.html');
+        loadComponent('footer-placeholder', '../components/footer.html');
+    });
+    </script>
+</body>
+</html>
