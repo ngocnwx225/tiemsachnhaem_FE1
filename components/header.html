@@ -1,41 +1,156 @@
-<!-- Header -->
+<!-- Header Component Start -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <header class="header-component">
-    <div class="header-top">
-      <div class="header-top-inner">
-        <div>
-          <i class="fas fa-map-marker-alt"></i>
-          <span>123 Đường Sách, Quận 1, TP. Hồ Chí Minh</span>
-        </div>
-        <div>
-          <i class="fas fa-phone-alt"></i>
-          <span>+1 123 456 7878</span>
-        </div>
-        <div>
-          <i class="fas fa-envelope"></i>
-          <span>tiemsachnhaem@gmail.com</span>
-        </div>
+  <style>
+    .header-component {
+      width: 100%;
+      background: #fff;
+    }
+    .header-top {
+      background-color: #1A3229;
+      color: white;
+      width: 100%;
+    }
+    .header-top-inner {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      padding: 10px 0;
+      font-size: 14px;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .header-top-inner i {
+      margin-right: 6px;
+    }
+    .logo-section {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 6px;
+      justify-content: center;
+      padding: 16px 0 8px 0;
+      width: 100%;
+    }
+    .logo-section img {
+      height: 60px;
+    }
+    .logo-section h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 24px;
+      color: #1A3229;
+      font-weight: 600;
+      margin: 0;
+    }
+    .main-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 0;
+      background-color: #ffffff;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+    .container {
+      width: 100%;
+      max-width: 1680px;
+      margin: 0 auto;
+      padding-left: 120px;
+      padding-right: 120px;
+      box-sizing: border-box;
+    }
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      flex-shrink: 0;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      font-family: 'Montserrat', sans-serif;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover {
+      color: #86A788;
+    }
+    .search-bar {
+      font-family: 'Montserrat', sans-serif;
+      flex-grow: 1;
+      max-width: 400px;
+      margin: 0 16px;
+    }
+    .search-bar input {
+      font-family: 'Montserrat', sans-serif;
+      width: 100%;
+      padding: 8px 16px;
+      border-radius: 20px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+    .icons {
+      display: flex;
+      gap: 15px;
+      flex-shrink: 0;
+      font-size: 18px;
+      color: #1A3229;
+    }
+    .header-divider {
+      color: #eee;
+      margin: 0;
+      border: none;
+      border-top: 1px solid #eee;
+    }
+    @media (max-width: 1200px) {
+      .container {
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+    }
+    @media (max-width: 600px) {
+      .container {
+        padding-left: 8px;
+        padding-right: 8px;
+      }
+    }
+  </style>
+  <div class="header-top">
+    <div class="container header-top-inner">
+      <div>
+        <i class="fas fa-map-marker-alt"></i>
+        <span>123 Đường Sách, Quận 1, TP. Hồ Chí Minh</span>
+      </div>
+      <div>
+        <i class="fas fa-phone-alt"></i>
+        <span>+1 123 456 7878</span>
+      </div>
+      <div>
+        <i class="fas fa-envelope"></i>
+        <span>tiemsachnhaem@gmail.com</span>
       </div>
     </div>
-  
+  </div>
+  <div class="container">
     <div class="logo-section">
       <img src="../assets/images/logo.png" alt="Logo">
       <h2>Tiệm sách nhà em</h2>
     </div>
-  
-    <nav class="main-header container">
-      <div class="nav-links">
-        <a href="#">Trang chủ</a>
-        <a href="#">Sản phẩm</a>
-        <a href="#">Giới thiệu</a>
-        <a href="#">Liên hệ</a>
-      </div>
-      <div class="search-bar">
-        <input type="text" placeholder="Tìm kiếm sản phẩm">
-      </div>
-      <div class="icons">
-        <i class="fas fa-user"></i>
-        <i class="fas fa-shopping-cart"></i>
-      </div>
-    </nav>
-    <hr class="header-divider">
-  </header>
+  </div>
+  <nav class="main-header container">
+    <div class="nav-links">
+      <a href="#">Trang chủ</a>
+      <a href="#">Sản phẩm</a>
+      <a href="#">Giới thiệu</a>
+      <a href="#">F&Q</a>
+    </div>
+    <div class="search-bar">
+      <input type="text" placeholder="Tìm kiếm sản phẩm">
+    </div>
+    <div class="icons">
+      <i class="fas fa-user"></i>
+      <i class="fas fa-shopping-cart"></i>
+    </div>
+  </nav>
+  <hr class="header-divider">
+</header>
+<!-- Header Component End -->

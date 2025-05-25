@@ -1,55 +1,160 @@
-<footer class="footer">
-    <div class="container footer-content">
-        <div class="footer-main-section">
-            <div class="footer-brand">
-                <img class="footer-logo-img" src="https://placehold.co/317x269" alt="Footer Logo Tiệm Sách"/>
-                <div>
-                    <div class="footer-brand-name">Tiệm sách nhà em</div>
-                    <div class="footer-brand-description">
-                        Điểm đến lý tưởng để khám phá thế giới sách. Tìm cuốn sách tiếp theo của bạn tại đây.
-                    </div>
-                </div>
-            </div>
-            <div class="footer-links-group">
-                <div class="footer-links-column">
-                    <div class="footer-links-title">Truy Cập Nhanh</div>
-                    <div class="footer-links-list">
-                        <a href="#" class="footer-link">Trang chủ</a>
-                        <a href="#" class="footer-link">Sản phẩm</a>
-                        <a href="#" class="footer-link">Giới thiệu</a>
-                        <a href="#" class="footer-link">Liên hệ</a>
-                    </div>
-                </div>
-                <div class="footer-links-column">
-                    <div class="footer-links-title">Điều khoản</div>
-                    <div class="footer-links-list">
-                        <a href="#" class="footer-link">Điều khoản sử dụng</a>
-                        <a href="#" class="footer-link">Chính sách bảo mật thông tin</a>
-                        <a href="#" class="footer-link">Trợ giúp</a>
-                        <a href="#" class="footer-link">Điều khoản khách hàng</a>
-                    </div>
-                </div>
-                <div class="footer-links-column">
-                    <div class="footer-contact-title">Liên hệ</div>
-                    <div class="footer-contact-list">
-                        <div class="footer-contact-item">
-                            <svg class="icon" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><path d="M8.99999 1.5C5.96285 1.5 3.49999 4.0189 3.49999 7.125C3.49999 10.9342 8.51913 16.0923 8.64413 16.2442C8.70562 16.3183 8.79499 16.3612 8.88974 16.3657C8.98449 16.3703 9.07612 16.3363 9.14736 16.2707C9.17361 16.2487 14.5 10.2667 14.5 7.125C14.5 4.0189 11.9617 1.5 8.99999 1.5ZM8.99999 9C7.89542 9 6.99999 8.10457 6.99999 7C6.99999 5.89543 7.89542 5 8.99999 5C10.1046 5 11 5.89543 11 7C11 8.10457 10.1046 9 8.99999 9Z"/></svg>
-                            <span>123 Đường Sách, Quận 1, TP. Hồ Chí Minh</span>
-                        </div>
-                        <div class="footer-contact-item">
-                            <svg class="icon" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><path d="M3.60001 2.25001C3.60001 2.05109 3.67903 1.86033 3.8182 1.72117C3.95737 1.58201 4.14814 1.50001 4.35001 1.50001H13.65C13.8519 1.50001 14.0426 1.58201 14.1818 1.72117C14.321 1.86033 14.4 2.05109 14.4 2.25001V15.75C14.4 15.9489 14.321 16.1397 14.1818 16.2788C14.0426 16.418 13.8519 16.5 13.65 16.5H4.35001C4.14814 16.5 3.95737 16.418 3.8182 16.2788C3.67903 16.1397 3.60001 15.9489 3.60001 15.75V2.25001ZM12.9 11.25H5.10001V12H12.9V11.25ZM12.9 8.25001H5.10001V9.00001H12.9V8.25001ZM10.5 5.25001H5.10001V6.00001H10.5V5.25001Z"/></svg>
-                            <span>+1 123 456 7878</span>
-                        </div>
-                        <div class="footer-contact-item">
-                            <svg class="icon" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><path d="M1.5 4.5L9 9.75L16.5 4.5M1.5 13.5H16.5V4.5H1.5V13.5Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                            <span>tiemsachnhaem@mail.com</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="footer-copyright">
-            © 2025 Tiệm sách nhà em. All rights reserved.
-        </div>
+<!-- Footer Component Start -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<footer class="site-footer">
+  <style>
+    .site-footer {
+      background-color: #1e2b23;
+      color: white;
+      padding: 40px 0 20px;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 30px;
+      flex-wrap: wrap;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    .footer-logo-info {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      max-width: 400px;
+      padding-left: 0;
+    }
+    .footer-logo-info img {
+      width: 190px;
+      height: 190px;
+      flex-shrink: 0;
+      object-fit: contain;
+      margin-right: 16px;
+    }
+    .footer-description {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      margin-top: 0;
+    }
+    .footer-description h4 {
+      margin-bottom: 10px;
+      margin-top: 16px;
+      font-size: 30px;
+      color: #fff;
+    }
+    .footer-description p {
+      font-size: 12px;
+      width: 200px;
+      color: #ccc;
+      line-height: 1.5;
+      margin: 0;
+    }
+    .footer-block h4 {
+      font-size: 14px;
+      margin-bottom: 10px;
+      width: 200px;
+      color: #ffffff;
+    }
+    .footer-right-blocks {
+      display: flex;
+      gap: 15px;
+      flex: 2;
+      justify-content: flex-end;
+      line-height: 1.6;
+      flex-wrap: wrap;
+    }
+    .footer-block p {
+      font-size: 13px;
+      margin: 6px 0;
+      color: #ccc;
+    }
+    .footer-block i {
+      margin-right: 8px;
+      color: #ffffff;
+      line-height: 2.4;
+    }
+    .footer-bottom {
+      border-top: 1px solid #4a5d50;
+      margin-top: 30px;
+      padding-top: 10px;
+      text-align: center;
+      font-size: 12px;
+      color: #bbb;
+    }
+    @media (max-width: 900px) {
+      .footer-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
+      }
+      .footer-right-blocks {
+        justify-content: flex-start;
+        gap: 24px;
+      }
+      .footer-logo-info {
+        margin-bottom: 16px;
+      }
+    }
+    @media (max-width: 600px) {
+      .footer-content {
+        padding: 0 8px;
+      }
+      .footer-logo-info img {
+        width: 100px;
+        height: 100px;
+      }
+      .footer-description h4 {
+        font-size: 20px;
+      }
+      .footer-block h4 {
+        font-size: 13px;
+        width: auto;
+      }
+      .footer-description p {
+        width: auto;
+      }
+    }
+  </style>
+  <div class="footer-content container">
+    <!-- Logo + giới thiệu -->
+    <div class="footer-logo-info">
+      <img src="../assets/images/logo.png" alt="Logo">
+      <div class="footer-description">
+        <h4>Tiệm sách nhà em</h4>
+        <p>Điểm đến lý tưởng để khám phá thế giới sách. Tìm cuốn sách tiếp theo của bạn tại đây.</p>
+      </div>
     </div>
+    <!-- Right blocks container -->
+    <div class="footer-right-blocks">
+      <!-- Truy cập nhanh -->
+      <div class="footer-block">
+        <h4>Truy Cập Nhanh</h4>
+        <p>Trang chủ</p>
+        <p>Sản phẩm</p>
+        <p>Giới thiệu</p>
+        <p>F&Q</p>
+      </div>
+      <!-- Điều khoản -->
+      <div class="footer-block">
+        <h4>Điều khoản</h4>
+        <p>Điều khoản sử dụng</p>
+        <p>Chính sách bảo mật thông tin</p>
+        <p>Trợ giúp</p>
+        <p>Điều khoản khách hàng</p>
+      </div>
+      <!-- Liên hệ -->
+      <div class="footer-block">
+        <h4>Liên hệ</h4>
+        <p><i class="fas fa-map-marker-alt"></i> 123 Đường Sách, Quận 1, TP. Hồ Chí Minh</p>
+        <p><i class="fas fa-phone-alt"></i> +1 123 456 7878</p>
+        <p><i class="fas fa-envelope"></i> tiemsachnhaem@gmail.com</p>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2025 Tiệm sách nhà em. All rights reserved.
+  </div>
 </footer>
+<!-- Footer Component End -->
