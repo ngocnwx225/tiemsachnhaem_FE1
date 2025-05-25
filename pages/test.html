@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>Đăng ký tài khoản</title>
-  <script src="../assets/js/javascriptDangKy.js"></script>
   <link rel="stylesheet" href="../assets/css/styledangky.css">
 </head>
 <body>
@@ -21,16 +20,13 @@
         <h4>Email</h4>
         <input type="email" id="email" placeholder="Nhập email" required oninvalid="setEmailError(this)">
         <h4>Mật khẩu</h4>
-        <div class="pass-wrapper">
-          <input type="password" id="password" placeholder="Nhập mật khẩu" required oninvalid="setRequiredError(this, 'Vui lòng nhập mật khẩu!')">
-          <img onclick="myfunction()" src="../assets/Hình/view.png" class="eye-icon" alt="Hiện mật khẩu">
-        </div>
-        <div id="password-error" class="error-message hidden">Vui lòng nhập mật khẩu!</div>
+        <input type="password" id="password" placeholder="Nhập mật khẩu" required oninvalid="setRequiredError(this, 'Vui lòng nhập mật khẩu!')">
         <button type="submit">Đăng ký</button>
         <br><br>
         <a href="../pages/dangnhap1.html" class="login-link">← Đã có tài khoản? <strong>Đăng nhập ngay</strong></a>
       </form>
     </div>
   </div>
+  <script src="../assets/js/validateForm.js"></script>
 </body>
 </html>
