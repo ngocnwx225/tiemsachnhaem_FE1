@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Payment</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="../assets/css/stylePayment.css">
+  <script src="../assets/js/javascriptPayment.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body onload="renderOrderDetails()">
+    <!-- Header -->
+    <header>
+      <div style="display: flex; justify-content: center; gap: 30px; padding: 10px;">
+        <div>  
+          <i class="fas fa-map-marker-alt"></i>
+          <span>123 Đường Sách, Quận 1, TP. Hồ Chí Minh</span>
+        </div>
+        <div>  
+          <i class="fas fa-phone-alt"></i>
+          <span>+1 123 456 7878</span>
+        </div>
+        <div>
+          <i class="fas fa-envelope"></i>
+          <span>tiemsachnhaem@gmail.com</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="logo-section">
+      <img src="../assets/images/logo.png" alt="Logo">
+      <h2>Tiệm sách nhà em</h2>
+    </div>
+
+    <nav class="main-header container">
+      <div class="nav-links">
+        <a href="#">Trang chủ</a>
+        <a href="#">Sản phẩm</a>
+        <a href="#">Giới thiệu</a>
+        <a href="#">Liên hệ</a>
+      </div>
+    
+      <div class="search-bar">
+        <input type="text" placeholder="Tìm kiếm sản phẩm">
+      </div>
+    
+      <div class="icons">
+        <i class="fas fa-user"></i>
+        <i class="fas fa-shopping-cart"></i>
+      </div>
+    </nav>
+    <hr style="color: lightgrey;">
+
+    <main class="checkout-container">
+      <!-- Bên trái: Form -->
+      <div class="checkout-left">
+        <h2>Thông tin liên hệ</h2>
+        <input type="text" placeholder="Họ tên" id="fullName" required>
+        <input type="tel" placeholder="Số điện thoại" id="phone" pattern="[0-9]{10}" title="Vui lòng nhập số điện thoại 10 số" required>
+        <input type="email" placeholder="Email" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Vui lòng nhập email hợp lệ" required>
+        <p class="note">Chúng tôi sẽ không hiển thị trang thương hiệu. Hãy đảm bảo bạn sử dụng số điện thoại & email đúng của bạn.</p>
+    
+        <h2>Địa chỉ giao hàng</h2>
+        <div class="address-row">
+          <select id="city" onchange="updateDistricts()">
+            <option value="">Thành phố</option>
+            <option value="HaNoi">Hà Nội</option>
+            <option value="HoChiMinh">Hồ Chí Minh</option>
+            <option value="Hue">Huế</option>
+            <option value="CanTho">Cần Thơ</option>
+            <option value="DaNang">Đà Nẵng</option>
+          </select>
+          <select id="district">
+            <option value="">Quận</option>
+          </select>
+        </div>
+        <input type="text" placeholder="Huyện">
+        <input type="text" placeholder="Số nhà, tên đường">
+        <p class="note">Địa chỉ này sẽ được sử dụng làm địa chỉ thanh toán cho đơn hàng này.</p>
+        
+        <h2>Phương thức giao hàng</h2>
+        <label class="radio-label">
+          <input type="radio" name="shipping" value="standard" checked>
+          <span>Tiêu chuẩn miễn phí (2-3 ngày)</span>
+          <span class="radio-value">Miễn phí</span>
+        </label>
+        
+        <h2>Phương thức thanh toán</h2>
+        <label class="radio-label">
+          <input type="radio" name="payment" value="cod" checked>
+          <span>Thanh toán khi nhận hàng (COD)</span>
+        </label>
+        <label class="radio-label">
+          <input type="radio" name="payment" value="online">
+          <span>Thanh toán trực tuyến (Online payment)</span>
+        </label>
+        <p class="note">Mọi giao dịch đều an toàn và được mã hóa.</p>
+      </div>
+        
+      <!-- Bên phải: Chi tiết đơn hàng -->
+      <div class="checkout-right">
+        <h2>Chi tiết đơn hàng</h2>
+        <div id="order-details"></div>
+        <button class="checkout-btn">ĐẶT HÀNG</button>
+      </div>
+    </main>
+
+    <!-- Modal xác nhận đơn hàng -->
+    <div id="confirmationModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <i class="fas fa-exclamation-circle"></i>
+          <h2>Xác nhận đơn hàng</h2>
+          <p>Vui lòng kiểm tra thông tin trước khi xác nhận!</p>
+        </div>
+        <div class="modal-body">
+          <div class="recipient-info">
+            <h3>Người nhận:</h3>
+            <div class="info-group">
+              <p><strong>Họ & Tên:</strong> <span id="modalName"></span></p>
+              <p><strong>Số điện thoại:</strong> <span id="modalPhone"></span></p>
+              <p><strong>Địa chỉ:</strong> <span id="modalAddress"></span></p>
+            </div>
+          </div>
+          <div class="order-info">
+            <h3>Sản phẩm:</h3>
+            <div id="modalOrderDetails"></div>
+            <div class="total-amount">
+              <h3>Tổng đơn hàng (<span id="modalItemCount"></span> sản phẩm)</h3>
+              <span id="modalTotalAmount"></span>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-cancel" onclick="closeModal()">Hủy</button>
+          <button class="btn-confirm" onclick="confirmOrder()">Xác nhận</button>
+        </div>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <div class="footer-content container">
+        <!-- Logo + giới thiệu -->
+        <div class="footer-logo-info">
+          <img src="../assets/images/logo.png" alt="Logo">
+          <div class="footer-description">
+            <h4>Tiệm sách nhà em</h4>
+            <p>Điểm đến lý tưởng để khám phá thế giới sách. Tìm cuốn sách tiếp theo của bạn tại đây.</p>
+          </div>
+        </div>
+    
+        <!-- Right blocks container -->
+        <div class="footer-right-blocks">
+          <!-- Truy cập nhanh -->
+          <div class="footer-block">
+            <h4>Truy Cập Nhanh</h4>
+            <p>Trang chủ</p>
+            <p>Sản phẩm</p>
+            <p>Giới thiệu</p>
+            <p>Liên hệ</p>
+          </div>
+    
+          <!-- Điều khoản -->
+          <div class="footer-block">
+            <h4>Điều khoản</h4>
+            <p>Điều khoản sử dụng</p>
+            <p>Chính sách bảo mật thông tin</p>
+            <p>Trợ giúp</p>
+            <p>Điều khoản khách hàng</p>
+          </div>
+    
+          <!-- Liên hệ -->
+          <div class="footer-block">
+            <h4>Liên hệ</h4>
+            <p><i class="fas fa-map-marker-alt"></i> 123 Đường Sách, Quận 1, TP. Hồ Chí Minh</p>
+            <p><i class="fas fa-phone-alt"></i> +1123 456 7878</p>
+            <p><i class="fas fa-envelope"></i> tiemsachnhaem@gmail.com</p>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        © 2025 Tiệm sách nhà em. All rights reserved.
+      </div>
+    </footer>
+
+</body>
+</html>
