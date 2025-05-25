@@ -9,13 +9,7 @@
         x = true;
       }
     }
-
-function togglePassword(inputId) {
-  const input = document.getElementById(inputId);
-  input.type = (input.type === "password") ? "text" : "password";
-}
-
-
+    
   //Cuộn sách trong Home
   function scrollBooks(direction) {
     const scrollAmount = 300;

@@ -27,6 +27,18 @@ body {
     padding: 0 1rem;
   }
 
+.banner-container {
+  width: 100%;
+  max-width: 1200px;
+}
+
+.banner-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+
   section.book-banners {
       max-width: 1200px;
       display: flex;
@@ -384,77 +396,107 @@ body {
     color: #5d8c6a;
   }
   
- /*footer*/
- .site-footer {
-  background-color: #1e2b23;
-  color: white;
-  padding: 40px 0 20px;
-  font-family: Arial, sans-serif;
+/* Footer */
+footer {
+    margin: 0;
+    padding: 1rem 0;
+    background-color: #033;
+    color: white;
+    text-align: left;
+}
+
+.site-footer {
+    background-color: #1e2b23;
+    color: white;
+    padding: 40px 0 20px;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .footer-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 30px;
-  flex-wrap: wrap;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 30px;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
 .footer-logo-info {
-  display: flex;
-  gap: 16px;
-  max-width: none;
-  flex: 1;
+    display: flex;
+    flex-direction: row; /* Đảm bảo logo và text nằm ngang hàng */
+    align-items: flex-start; /* Căn lên trên cùng */
+    max-width: 400px;
+    padding-left: 0;
 }
 
 .footer-logo-info img {
-  width: 120px;
-  height: auto;
-  flex-shrink: 0;
+    width: 190px;
+    height: 190px;
+    flex-shrink: 0;
+    object-fit: contain;
+    margin-right: 16px; /* Thêm khoảng cách giữa logo và text */
+}
+
+.footer-description {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-top: 0; /* Đảm bảo không có khoảng cách trên để căn sát đỉnh */
 }
 
 .footer-description h4 {
-  font-size: 16px;
-  margin: 0 0 6px;
+    margin-bottom: 10px;
+    margin-top: 16px; /* Bỏ khoảng cách trên để căn sát đỉnh */
+    font-size: 30px;
+    color: #fff;
 }
 
 .footer-description p {
-  font-size: 13px;
-  color: #ccc;
-  margin: 0;
-}
-
-.footer-block {
-  flex: 1;
-  min-width: 150px;
+    font-size: 12px;
+    width: 200px;
+    color: #ccc;
+    line-height: 1.5;
+    margin: 0; /* Bỏ margin để không bị lệch */
 }
 
 .footer-block h4 {
-  font-size: 14px;
-  margin-bottom: 10px;
+    font-size: 14px;
+    margin-bottom: 10px;
+    width: 200px;
+    color: #ffffff;
+}
+
+.footer-right-blocks {
+    display: flex;
+    gap: 15px;
+    flex: 2;
+    justify-content: flex-end;
+    line-height: 1.6;
+    flex-wrap: wrap;
 }
 
 .footer-block p {
-  font-size: 13px;
-  margin: 6px 0;
-  color: #ccc;
+    font-size: 13px;
+    margin: 6px 0;
+    color: #ccc;
 }
 
 .footer-block i {
-  margin-right: 8px;
-  color: #9dd1b0;
+    margin-right: 8px;
+    color: #ffffff;
+    line-height: 2.4;
 }
 
 .footer-bottom {
-  border-top: 1px solid #ccc;
-  margin-top: 30px;
-  padding-top: 10px;
-  text-align: center;
-  font-size: 13px;
-  color: #bbb;
+    border-top: 1px solid #4a5d50;
+    margin-top: 30px;
+    padding-top: 10px;
+    text-align: center;
+    font-size: 12px;
+    color: #bbb;
 }
-
-
 
   /* Responsive styles */
   @media screen and (max-width: 768px) {

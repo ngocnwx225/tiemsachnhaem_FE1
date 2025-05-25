@@ -63,7 +63,10 @@ body {
 }
 
 .form-box h4 {
-  margin-bottom: 5px;
+  font-size: 16px;
+  color: black;
+  font-weight: bold;
+  margin-bottom: 8px;
 }
 
 .form-box input {
@@ -72,6 +75,30 @@ body {
   margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 6px;
+}
+
+/* Bổ sung: Định dạng placeholder cho các input trong form-box */
+.form-box input::placeholder {
+  font-size: 14px; /* Đồng bộ với <h4> */
+  color: #666; /* Đồng bộ với <h4> */
+  font-weight: normal; /* Không in đậm */
+}
+
+/* Hỗ trợ các trình duyệt khác */
+.form-box input::-webkit-input-placeholder {
+  font-size: 14px;
+  color: #666;
+  font-weight: normal;
+}
+.form-box input::-moz-placeholder {
+  font-size: 14px;
+  color: #666;
+  font-weight: normal;
+}
+.form-box input:-ms-input-placeholder {
+  font-size: 14px;
+  color: #666;
+  font-weight: normal;
 }
 
 .form-box button {
@@ -87,6 +114,19 @@ body {
 
 .form-box button:hover {
   background-color: #6f8f70;
+}
+
+.error-message {
+  color: #d9534f; /* đỏ cảnh báo */
+  padding: 8px 12px;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.hidden {
+  display: none;
 }
 
 .login-link {
@@ -131,6 +171,30 @@ body {
   box-sizing: border-box;
 }
 
+/* Bổ sung: Định dạng placeholder cho input trong pass-wrapper */
+.pass-wrapper input::placeholder {
+  font-size: 14px; /* Đồng bộ với <h4> */
+  color: #666; /* Đồng bộ với <h4> */
+  font-weight: normal; /* Không in đậm */
+}
+
+/* Hỗ trợ các trình duyệt khác */
+.pass-wrapper input::-webkit-input-placeholder {
+  font-size: 14px;
+  color: #666;
+  font-weight: normal;
+}
+.pass-wrapper input::-moz-placeholder {
+  font-size: 14px;
+  color: #666;
+  font-weight: normal;
+}
+.pass-wrapper input:-ms-input-placeholder {
+  font-size: 14px;
+  color: #666;
+  font-weight: normal;
+}
+
 .pass-wrapper .eye-icon {
   position: absolute;
   right: 12px;
@@ -168,7 +232,7 @@ body {
 
 /*QUÊN MẬT KHẨU*/
 .login-return {
-  margin-top: 150px;
+  margin-top: auto;
   text-align: left;
   font-size: 14px;
 }
@@ -241,4 +305,3 @@ body {
   text-align: left;
   color: #86A788;
 }
-
