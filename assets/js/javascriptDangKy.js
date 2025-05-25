@@ -191,4 +191,14 @@ function validateResetPassword() {
   window.location.href = '../pages/quenMK3.html';
 }
 
+function handleSubmit(event) {
+  event.preventDefault(); // Ngăn reload trang
 
+  const isValid = validateForm(event); // gọi hàm kiểm tra dữ liệu
+
+  if (isValid) {
+    callRegisterAPI(event); // gọi API nếu dữ liệu hợp lệ
+  }
+
+  return false; // Ngăn submit mặc định
+}
