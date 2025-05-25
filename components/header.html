@@ -84,10 +84,11 @@
     .search-bar input {
       font-family: 'Montserrat', sans-serif;
       width: 100%;
-      padding: 8px 16px;
-      border-radius: 20px;
+      padding: 8px 16px 8px 36px; /* Adjusted padding to accommodate the icon */
+      border-radius: 10px;
       border: 1px solid #ccc;
       font-size: 14px;
+      box-sizing: border-box;
     }
     .icons {
       display: flex;
@@ -145,7 +146,10 @@
       <a href="#">F&Q</a>
     </div>
     <div class="search-bar">
-      <input type="text" placeholder="Tìm kiếm sản phẩm">
+      <div style="position: relative;">
+        <input type="text" placeholder="Tìm kiếm sản phẩm">
+        <i class="fas fa-search" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #999; pointer-events: none;"></i>
+      </div>
     </div>
     <div class="icons">
       <i class="fas fa-user"></i>
