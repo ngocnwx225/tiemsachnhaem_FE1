@@ -1,160 +1,160 @@
-<!-- Footer Component Start -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-<footer class="site-footer">
-  <style>
-    .site-footer {
-      background-color: #1e2b23;
-      color: white;
-      padding: 40px 0 20px;
-      font-family: 'Montserrat', sans-serif;
-    }
-    .footer-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 30px;
-      flex-wrap: wrap;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-    .footer-logo-info {
-      display: flex;
-      flex-direction: row;
-      align-items: flex-start;
-      max-width: 400px;
-      padding-left: 0;
-    }
-    .footer-logo-info img {
-      width: 190px;
-      height: 190px;
-      flex-shrink: 0;
-      object-fit: contain;
-      margin-right: 16px;
-    }
-    .footer-description {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      margin-top: 0;
-    }
-    .footer-description h4 {
-      margin-bottom: 10px;
-      margin-top: 16px;
-      font-size: 30px;
-      color: #fff;
-    }
-    .footer-description p {
-      font-size: 12px;
-      width: 200px;
-      color: #ccc;
-      line-height: 1.5;
-      margin: 0;
-    }
-    .footer-block h4 {
-      font-size: 14px;
-      margin-bottom: 10px;
-      width: 200px;
-      color: #ffffff;
-    }
-    .footer-right-blocks {
-      display: flex;
-      gap: 15px;
-      flex: 2;
-      justify-content: flex-end;
-      line-height: 1.6;
-      flex-wrap: wrap;
-    }
-    .footer-block p {
-      font-size: 13px;
-      margin: 6px 0;
-      color: #ccc;
-    }
-    .footer-block i {
-      margin-right: 8px;
-      color: #ffffff;
-      line-height: 2.4;
-    }
-    .footer-bottom {
-      border-top: 1px solid #4a5d50;
-      margin-top: 30px;
-      padding-top: 10px;
-      text-align: center;
-      font-size: 12px;
-      color: #bbb;
-    }
-    @media (max-width: 900px) {
-      .footer-content {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 24px;
-      }
-      .footer-right-blocks {
-        justify-content: flex-start;
-        gap: 24px;
-      }
-      .footer-logo-info {
-        margin-bottom: 16px;
-      }
-    }
-    @media (max-width: 600px) {
-      .footer-content {
-        padding: 0 8px;
-      }
-      .footer-logo-info img {
-        width: 100px;
-        height: 100px;
-      }
-      .footer-description h4 {
-        font-size: 20px;
-      }
-      .footer-block h4 {
-        font-size: 13px;
-        width: auto;
-      }
-      .footer-description p {
-        width: auto;
-      }
-    }
-  </style>
-  <div class="footer-content container">
-    <!-- Logo + giới thiệu -->
-    <div class="footer-logo-info">
-      <img src="../assets/images/logo.png" alt="Logo">
-      <div class="footer-description">
-        <h4>Tiệm sách nhà em</h4>
-        <p>Điểm đến lý tưởng để khám phá thế giới sách. Tìm cuốn sách tiếp theo của bạn tại đây.</p>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiệm sách nhà em</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Footer */
+        body { /* Thêm body để reset margin mặc định nếu cần */
+            margin: 0;
+            font-family: 'Montserrat', sans-serif; /* Đặt font chung ở đây nếu muốn */
+        }
+
+        /* Footer */
+footer {
+    margin: 0;
+    padding: 1rem 0;
+    background-color: #033;
+    color: white;
+    text-align: left;
+}
+
+.site-footer {
+    background-color: #1e2b23;
+    color: white;
+    padding: 40px 0 20px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 30px;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-logo-info {
+    display: flex;
+    flex-direction: row; /* Đảm bảo logo và text nằm ngang hàng */
+    align-items: flex-start; /* Căn lên trên cùng */
+    max-width: 400px;
+    padding-left: 0;
+}
+
+.footer-logo-info img {
+    width: 190px;
+    height: 190px;
+    flex-shrink: 0;
+    object-fit: contain;
+    margin-right: 16px; /* Thêm khoảng cách giữa logo và text */
+}
+
+.footer-description {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-top: 0; /* Đảm bảo không có khoảng cách trên để căn sát đỉnh */
+}
+
+.footer-description h4 {
+    margin-bottom: 10px;
+    margin-top: 16px; /* Bỏ khoảng cách trên để căn sát đỉnh */
+    font-size: 30px;
+    color: #fff;
+}
+
+.footer-description p {
+    font-size: 12px;
+    width: 200px;
+    color: #ccc;
+    line-height: 1.5;
+    margin: 0; /* Bỏ margin để không bị lệch */
+}
+
+.footer-block h4 {
+    font-size: 14px;
+    margin-bottom: 10px;
+    width: 200px;
+    color: #ffffff;
+}
+
+.footer-right-blocks {
+    display: flex;
+    gap: 15px;
+    flex: 2;
+    justify-content: flex-end;
+    line-height: 1.6;
+    flex-wrap: wrap;
+}
+
+.footer-block p {
+    font-size: 13px;
+    margin: 6px 0;
+    color: #ccc;
+}
+
+.footer-block i {
+    margin-right: 8px;
+    color: #ffffff;
+    line-height: 2.4;
+}
+
+.footer-bottom {
+    border-top: 1px solid #4a5d50;
+    margin-top: 30px;
+    padding-top: 10px;
+    text-align: center;
+    font-size: 12px;
+    color: #bbb;
+}
+    </style>
+</head>
+<body>
+    <footer class="site-footer">
+      <div class="footer-content container">
+        <div class="footer-logo-info">
+          <img src="../assets/images/logo.png" alt="Logo">
+          <div class="footer-description">
+            <h4>Tiệm sách nhà em</h4>
+            <p>Điểm đến lý tưởng để khám phá thế giới sách. Tìm cuốn sách tiếp theo của bạn tại đây.</p>
+          </div>
+        </div>
+
+        <div class="footer-right-blocks">
+          <div class="footer-block">
+            <h4>Truy Cập Nhanh</h4>
+            <p>Trang chủ</p>
+            <p>Sản phẩm</p>
+            <p>Giới thiệu</p>
+            <p>Liên hệ</p>
+          </div>
+
+          <div class="footer-block">
+            <h4>Điều khoản</h4>
+            <p>Điều khoản sử dụng</p>
+            <p>Chính sách bảo mật thông tin</p>
+            <p>Trợ giúp</p>
+            <p>Điều khoản khách hàng</p>
+          </div>
+
+          <div class="footer-block">
+            <h4>Liên hệ</h4>
+            <p><i class="fas fa-map-marker-alt"></i> 123 Đường Sách, Quận 1, TP. Hồ Chí Minh</p>
+            <p><i class="fas fa-phone-alt"></i> +1123 456 7878</p>
+            <p><i class="fas fa-envelope"></i> tiemsachnhaem@gmail.com</p>
+          </div>
+        </div>
       </div>
-    </div>
-    <!-- Right blocks container -->
-    <div class="footer-right-blocks">
-      <!-- Truy cập nhanh -->
-      <div class="footer-block">
-        <h4>Truy Cập Nhanh</h4>
-        <p>Trang chủ</p>
-        <p>Sản phẩm</p>
-        <p>Giới thiệu</p>
-        <p>F&Q</p>
+      <div class="footer-bottom">
+        © 2025 Tiệm sách nhà em. All rights reserved.
       </div>
-      <!-- Điều khoản -->
-      <div class="footer-block">
-        <h4>Điều khoản</h4>
-        <p>Điều khoản sử dụng</p>
-        <p>Chính sách bảo mật thông tin</p>
-        <p>Trợ giúp</p>
-        <p>Điều khoản khách hàng</p>
-      </div>
-      <!-- Liên hệ -->
-      <div class="footer-block">
-        <h4>Liên hệ</h4>
-        <p><i class="fas fa-map-marker-alt"></i> 123 Đường Sách, Quận 1, TP. Hồ Chí Minh</p>
-        <p><i class="fas fa-phone-alt"></i> +1 123 456 7878</p>
-        <p><i class="fas fa-envelope"></i> tiemsachnhaem@gmail.com</p>
-      </div>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    © 2025 Tiệm sách nhà em. All rights reserved.
-  </div>
-</footer>
-<!-- Footer Component End -->
+    </footer>
+
+</body>
+</html>
