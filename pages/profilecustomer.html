@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thông tin tài khoản - Tiệm Sách Nhà Em</title>
+    <title>Đổi mật khẩu - Tiệm Sách Nhà Em</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Open+Sans:wght@600&family=Lato:wght@400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/style_profileCustomer.css">
+    <link rel="stylesheet" href="../asset/css/styleprofilecustomer.css">
+    <link rel="stylesheet" href="../asset/css/header.css">
+    <link rel="stylesheet" href="../asset/css/footer.css">
+    <link rel="stylesheet" href="../asset/css/changepassword.css">
 </head>
 <body>
     <div class="page-wrapper">
@@ -15,36 +18,28 @@
         <main class="main-content">
             <div class="container">
                 <h1 class="page-title">Thông tin tài khoản</h1>
-                <div class="account-card">
-                    <aside class="account-sidebar">
-                        <button class="sidebar-btn active">Thông tin tài khoản</button>
-                        <button class="sidebar-btn">Đổi mật khẩu</button>
+                <div class="changepw-card">
+                    <aside class="changepw-sidebar">
+                        <button class="sidebar-btn">Thông tin tài khoản</button>
+                        <button class="sidebar-btn active">Đổi mật khẩu</button>
                     </aside>
-                    <section class="account-details">
-                        <div class="user-profile-header">
-                            <img src="https://i.pinimg.com/736x/8f/1c/a2/8f1ca2029e2efceebd22fa05cca423d7.jpg" alt="User Avatar" style="width: 60px; height: 60px; border-radius: 50%;">
-                            <h2 class="user-name">Nguyễn Văn A</h2>
-                            <button class="edit-info-btn">Chỉnh sửa thông tin</button>
-                        </div>
-                        <div class="info-grid">
-                            <div class="info-item">
-                                <span class="info-label">Email:</span>
-                                <span class="info-value">user@gmail.com</span>
+                    <div class="changepw-form-col">
+                        <form class="changepw-form">
+                            <div>
+                                <label for="old-password">Mật khẩu cũ</label>
+                                <input type="password" id="old-password" placeholder="Nhập mật khẩu cũ" required />
                             </div>
-                            <div class="info-item">
-                                <span class="info-label">Số điện thoại:</span>
-                                <span class="info-value">0123456789</span>
+                            <div>
+                                <label for="new-password">Mật khẩu mới</label>
+                                <input type="password" id="new-password" placeholder="Nhập mật khẩu mới" required />
                             </div>
-                            <div class="info-item">
-                                <span class="info-label">Tên tài khoản:</span>
-                                <span class="info-value">user123</span>
+                            <div>
+                                <label for="confirm-password">Xác nhận mật khẩu</label>
+                                <input type="password" id="confirm-password" placeholder="Xác nhận mật khẩu mới" required />
                             </div>
-                            <div class="info-item">
-                                <span class="info-label">Họ và tên:</span>
-                                <span class="info-value">Phan Thúy Ngân</span>
-                            </div>
-                        </div>
-                    </section>
+                            <button type="submit">Lưu thông tin</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </main>
@@ -52,7 +47,7 @@
         <!-- Footer component sẽ được load vào đây -->
         <div id="footer-placeholder"></div>
     </div>
-    <script src="../assets/js/script_profileCustomer.js"></script>
+    <script src="../asset/js/javascriptprofilecustomer.js"></script>
     <script>
     // Tự động load header/footer component
     function loadComponent(id, url) {
