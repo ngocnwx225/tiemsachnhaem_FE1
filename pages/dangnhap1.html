@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>Đăng nhập</title>
   <link rel="stylesheet" href="../assets/css/styledangky.css">
-  <script src="../assets/js/javascriptDangKy.js"></script>
 </head>
 <body>
   <div class="container">
@@ -17,7 +16,7 @@
     <div class="form-box">
       <h1>Đăng nhập</h1>
       <br>
-      <form id="loginForm" onsubmit="return validateForm(event)">
+      <form id="loginForm" onsubmit="return callLoginAPI(event)">
         <h4>Email</h4>
         <input type="email" id="email" placeholder="Nhập email" required oninvalid="setEmailError(this)"> <br> <br>
         <h4>Mật khẩu</h4>
@@ -33,5 +32,7 @@
       </form>
     </div>
   </div>
+  <script src="../assets/js/javascriptDangKy.js"></script>
+  <script src="../assets/js/API_DangNhap.js"></script>
 </body>
 </html>
