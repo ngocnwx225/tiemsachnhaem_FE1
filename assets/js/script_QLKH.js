@@ -1,6 +1,5 @@
 const searchInput = document.getElementById('searchInput');
 const customerList = document.getElementById('customerList');
-const rows = customerList.getElementsByTagName('tr');
 const filterOptions = document.getElementById('filterOptions');
 const popupOverlay = document.getElementById('popupOverlay');
 const confirmOverlay = document.getElementById('confirmOverlay');
@@ -8,10 +7,45 @@ const unlockOverlay = document.getElementById('unlockOverlay');
 const successOverlay = document.getElementById('successOverlay');
 let currentRow = null;
 let isUnlock = false;
+let customers = []; // Lưu trữ danh sách khách hàng từ API
+
+// Gọi API để lấy danh sách khách hàng khi trang tải
+async function fetchCustomers() {
+  try {
+    const response = await fetch('https://tiemsachnhaem-be-mu.vercel.app/api/users');
+    if (!response.ok) throw new Error('Lỗi khi gọi API');
+    customers = await response.json();
+    renderTable();
+  } catch (error) {
+    console.error('Lỗi:', error);
+    customerList.innerHTML = '<tr><td colspan="5">Không thể tải dữ liệu khách hàng.</td></tr>';
+  }
+}
+
+// Hiển thị dữ liệu trong bảng
+function renderTable() {
+  customerList.innerHTML = '';
+  customers.forEach(customer => {
+    const row = document.createElement('tr');
+    row.setAttribute('data-status', customer.status.toLowerCase());
+    row.innerHTML = `
+      <td><strong>${customer.fullName}</strong></td>
+      <td>${customer.totalOrders}</td>
+      <td>${customer.totalSpent.toLocaleString('vi-VN')}đ</td>
+      <td><span class="status ${customer.status.toLowerCase()}">${customer.status}</span></td>
+      <td class="actions">
+        <img src="https://img.icons8.com/material-outlined/24/000000/visible.png" alt="view" onclick="showPopup('${customer.fullName}', '${customer.fullName}', '', '', '', ${customer.totalOrders}, '${customer.totalSpent.toLocaleString('vi-VN')}đ', '', this.parentNode.parentNode)">
+        <img src="https://img.icons8.com/material-outlined/24/${customer.status === 'Bị khóa' ? '00ff00' : 'ff0000'}/${customer.status === 'Bị khóa' ? 'unlock' : 'lock'}.png" alt="${customer.status === 'Bị khóa' ? 'unblock' : 'block'}" onclick="showConfirmPopup('${customer.fullName}', this.parentNode.parentNode, ${customer.status === 'Bị khóa'})">
+      </td>
+    `;
+    customerList.appendChild(row);
+  });
+}
 
 // Tìm kiếm
 searchInput.addEventListener('input', function () {
   const searchText = this.value.toLowerCase();
+  const rows = customerList.getElementsByTagName('tr');
   for (let row of rows) {
     const customerInfo = row.cells[0].textContent.toLowerCase();
     row.style.display = customerInfo.includes(searchText) ? '' : 'none';
@@ -25,6 +59,7 @@ function toggleFilter() {
 
 // Lọc theo trạng thái
 function filterStatus(status) {
+  const rows = customerList.getElementsByTagName('tr');
   for (let row of rows) {
     const rowStatus = row.getAttribute('data-status');
     row.style.display = (status === 'all' || rowStatus === status) ? '' : 'none';
@@ -41,13 +76,13 @@ document.addEventListener('click', function (event) {
 
 // Hiển thị popup thông tin khách hàng
 function showPopup(name, email, phone, address, regDate, orderCount, totalSpent, lastOrder, row) {
-  const status = row.querySelector('.status').textContent; // Lấy trạng thái từ bảng chính
+  const status = row.querySelector('.status').textContent;
   document.getElementById('popupName').textContent = name;
   document.getElementById('popupEmail').textContent = email;
   document.getElementById('popupPhone').textContent = phone;
   document.getElementById('popupAddress').textContent = address;
   document.getElementById('popupRegDate').textContent = regDate;
-  document.getElementById('popupStatus').textContent = status; // Đồng bộ trạng thái từ bảng
+  document.getElementById('popupStatus').textContent = status;
   document.getElementById('popupOrderCount').textContent = orderCount;
   document.getElementById('popupTotalSpent').textContent = totalSpent;
   document.getElementById('popupLastOrder').textContent = lastOrder;
@@ -123,7 +158,7 @@ function confirmBlockAction() {
     const actionCell = currentRow.querySelector('.actions img:last-child');
     const selectedTime = document.querySelector('input[name="blockTime"]:checked').value;
 
-    // Khóa tài khoản
+    // Khóa tài khoản (chỉ cập nhật giao diện, không gửi API thực sự trong ví dụ này)
     statusCell.textContent = 'Bị khóa';
     statusCell.className = 'status blocked';
     actionCell.src = 'https://img.icons8.com/material-outlined/24/00ff00/unlock.png';
@@ -211,3 +246,6 @@ successOverlay.addEventListener('click', function (event) {
     closeSuccessPopup();
   }
 });
+
+// Gọi API khi trang tải
+document.addEventListener('DOMContentLoaded', fetchCustomers);
