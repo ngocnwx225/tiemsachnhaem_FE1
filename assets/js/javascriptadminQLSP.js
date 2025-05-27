@@ -30,9 +30,6 @@ const editUploadBtn = document.getElementById('edit-upload-btn');
 // Danh sách sản phẩm
 let products = [];
 
-// Biến lưu trữ danh sách thể loại
-let catalogs = [];
-
 // Thêm biến cho phân trang
 let currentPage = 1;
 let isLoading = false;
@@ -112,7 +109,6 @@ function hideLoading() {
 
 // Hàm hiển thị thông báo lỗi
 function showError(message, duration = 5000) {
-    // Tạo error message element nếu chưa tồn tại
     let errorMessage = document.getElementById('globalError');
     if (!errorMessage) {
         errorMessage = document.createElement('div');
@@ -139,7 +135,6 @@ function showError(message, duration = 5000) {
     errorMessage.textContent = message;
     errorMessage.style.display = 'block';
     
-    // Auto hide after duration
     setTimeout(() => {
         errorMessage.style.display = 'none';
     }, duration);
@@ -156,36 +151,6 @@ function getBase64(file) {
 }
 
 // ========== QUẢN LÝ HIỂN THỊ ==========
-// Load dữ liệu thể loại
-async function loadCatalogs() {
-    try {
-        catalogs = await catalogAPI.getAllCatalogs();
-        updateCategoryDropdowns();
-    } catch (error) {
-        console.error('Error loading catalogs:', error);
-    }
-}
-
-// Cập nhật các dropdown thể loại
-function updateCategoryDropdowns() {
-    const categoryOptions = `
-        <option value="">Chọn thể loại</option>
-        ${catalogs.map(cat => `<option value="${cat._id}">${cat.genre2nd || cat.genreID}</option>`).join('')}
-    `;
-    
-    // Cập nhật dropdown trong form thêm mới
-    document.getElementById('add-category').innerHTML = categoryOptions;
-    
-    // Cập nhật dropdown trong form chỉnh sửa
-    document.getElementById('edit-category').innerHTML = categoryOptions;
-    
-    // Cập nhật dropdown filter
-    document.getElementById('categoryFilter').innerHTML = `
-        <option value="">Tất cả thể loại</option>
-        ${catalogs.map(cat => `<option value="${cat._id}">${cat.genre2nd || cat.genreID}</option>`).join('')}
-    `;
-}
-
 // Load và hiển thị sản phẩm với debounce
 async function loadProducts() {
     if (isLoading) return;
@@ -194,7 +159,6 @@ async function loadProducts() {
         isLoading = true;
         showLoading();
 
-        // Hiển thị loading message trong bảng
         productTableBody.innerHTML = `
             <tr>
                 <td colspan="6" class="text-center">
@@ -208,7 +172,6 @@ async function loadProducts() {
             </tr>
         `;
 
-        // Set timeout để hiển thị thông báo nếu load quá lâu
         loadingTimeout = setTimeout(() => {
             const overlay = document.getElementById('loadingOverlay');
             if (overlay) {
@@ -222,12 +185,8 @@ async function loadProducts() {
             }
         }, 5000);
 
-        // Gọi API lấy dữ liệu
         products = await productAPI.getAllProducts();
-        
-        // Render từng phần của bảng
         renderTable(products);
-        await loadCatalogs();
 
     } catch (error) {
         console.error('Error:', error);
@@ -309,8 +268,7 @@ function resetEditForm() {
 // ========== XỬ LÝ SỰ KIỆN ==========
 // Load dữ liệu khi trang được tải
 document.addEventListener('DOMContentLoaded', async () => {
-    await loadCatalogs(); // Load danh sách thể loại trước
-    await loadProducts(); // Sau đó load sản phẩm
+    await loadProducts();
 });
 
 // Thêm debounce cho search
@@ -340,22 +298,18 @@ const debouncedSearch = debounce((searchTerm) => {
 searchInput.addEventListener('input', (e) => {
     const searchTerm = e.target.value.toLowerCase().trim();
     
-    // Nếu không có từ khóa tìm kiếm, hiển thị lại toàn bộ sản phẩm
     if (!searchTerm) {
         renderTable(products);
         return;
     }
 
-    // Lọc sản phẩm theo tên sách hoặc tác giả
     const filteredProducts = products.filter(product => 
         product.bookTitle.toLowerCase().includes(searchTerm) ||
         product.author.toLowerCase().includes(searchTerm)
     );
 
-    // Render lại bảng với kết quả tìm kiếm
     renderTable(filteredProducts);
 
-    // Log để debug
     console.log('Đang tìm kiếm với từ khóa:', searchTerm);
     console.log('Số kết quả tìm thấy:', filteredProducts.length);
 });
@@ -416,7 +370,6 @@ window.addEventListener('click', (event) => {
             return;
         }
 
-        // Kiểm tra ISBN đã được nhập chưa
         if (!isbn) {
             errorMessage.textContent = '* Vui lòng nhập ISBN trước khi chọn ảnh bìa';
             imageFile.value = '';
@@ -425,7 +378,6 @@ window.addEventListener('click', (event) => {
             return;
         }
 
-        // Kiểm tra định dạng file
         if (!['image/jpeg', 'image/png', 'image/gif'].includes(file.type)) {
             errorMessage.textContent = '* Vui lòng chọn file ảnh (jpg, png, gif)';
             imageFile.value = '';
@@ -434,14 +386,12 @@ window.addEventListener('click', (event) => {
             return;
         }
 
-        // Đổi tên file theo ISBN
         fileName.textContent = `${isbn}.png`;
 
-        // Preview ảnh
         try {
             const base64Image = await getBase64(file);
             imagePreview.innerHTML = `<img src="${base64Image}" style="max-width: 100px; max-height: 100px; margin-top: 10px;">`;
-            errorMessage.textContent = ''; // Xóa thông báo lỗi nếu có
+            errorMessage.textContent = '';
         } catch (error) {
             console.error('Lỗi khi xử lý ảnh:', error);
             errorMessage.textContent = '* Có lỗi xảy ra khi xử lý ảnh. Vui lòng thử lại.';
@@ -456,17 +406,15 @@ window.addEventListener('click', (event) => {
 // Xử lý thêm sản phẩm
 addForm.addEventListener('submit', async (event) => {
     event.preventDefault();
-    addErrorMessage.textContent = ''; // Reset error message
+    addErrorMessage.textContent = '';
     
     try {
         showLoading();
         
-        // Lấy và validate dữ liệu form
         const isbn = document.getElementById('add-isbn').value.trim();
         const categorySelect = document.getElementById('add-category');
         const selectedCatalog = categorySelect.value;
 
-        // Kiểm tra xem đã chọn thể loại chưa
         if (!selectedCatalog) {
             throw new Error('Vui lòng chọn thể loại sách');
         }
@@ -477,17 +425,15 @@ addForm.addEventListener('submit', async (event) => {
             author: document.getElementById('add-author').value.trim(),
             publisher: document.getElementById('add-publisher').value.trim(),
             price: Number(document.getElementById('add-price').value),
-            Catalog: selectedCatalog, // Đã là _id của catalog
+            Catalog: selectedCatalog,
             description: document.getElementById('add-notes').value.trim()
         };
 
-        // Validate các trường bắt buộc
         if (!formData.ISBN || !formData.bookTitle || !formData.author || 
             !formData.publisher || isNaN(formData.price)) {
             throw new Error('Vui lòng điền đầy đủ thông tin bắt buộc');
         }
 
-        // Xử lý ảnh nếu có
         const imageFile = addImageFile.files[0];
         if (imageFile) {
             formData.imageUrl = `${isbn}.png`;
@@ -495,10 +441,8 @@ addForm.addEventListener('submit', async (event) => {
 
         console.log('Dữ liệu gửi lên:', formData);
 
-        // Gọi API thêm sản phẩm
         const response = await productAPI.createProduct(formData);
 
-        // Nếu thành công
         addModal.style.display = 'none';
         resetAddForm();
         await loadProducts();
@@ -522,7 +466,6 @@ productTableBody.addEventListener('click', async (event) => {
         showLoading();
         const product = await productAPI.getProductById(productId);
         
-        // Điền thông tin vào form
         document.getElementById('edit-isbn').value = product.ISBN || '';
         document.getElementById('edit-product-name').value = product.bookTitle || '';
         document.getElementById('edit-author').value = product.author || '';
@@ -531,7 +474,6 @@ productTableBody.addEventListener('click', async (event) => {
         document.getElementById('edit-category').value = product.Catalog || '';
         document.getElementById('edit-notes').value = product.description || '';
 
-        // Hiển thị ảnh
         if (product.imageUrl) {
             editImagePreview.innerHTML = `<img src="${product.imageUrl}" style="max-width: 100px; max-height: 100px; margin-top: 10px;">`;
         } else {
@@ -555,7 +497,6 @@ editForm.addEventListener('submit', async (event) => {
     event.preventDefault();
     const productId = editForm.dataset.productId;
     
-    // Lấy dữ liệu từ form
     const formData = {
         ISBN: document.getElementById('edit-isbn').value.trim(),
         bookTitle: document.getElementById('edit-product-name').value.trim(),
@@ -568,9 +509,8 @@ editForm.addEventListener('submit', async (event) => {
 
     console.log('Form data trước khi cập nhật:', formData);
     console.log('Product ID:', productId);
-    console.log('Giá trị thể loại:', document.getElementById('edit-category').value);
+    console.log('Giá trị thể loại:', formData.Catalog);
 
-    // Validate
     if (!formData.ISBN || !formData.bookTitle || !formData.author || 
         !formData.publisher || !formData.price || !formData.Catalog) {
         console.log('Validation failed:', {
@@ -593,22 +533,20 @@ editForm.addEventListener('submit', async (event) => {
             console.log('Đã thêm ảnh vào form data');
         }
 
-        // Lấy thông tin sản phẩm hiện tại
-        console.log('Đang lấy thông tin sản phẩm hiện tại...');
-        const currentProduct = await productAPI.getProductById(productId);
-        console.log('Sản phẩm hiện tại:', currentProduct);
-
-        // Giữ lại các trường không thay đổi
         const updatedProduct = {
-            ...currentProduct,
-            ...formData
+            ISBN: formData.ISBN,
+            bookTitle: formData.bookTitle,
+            author: formData.author,
+            publisher: formData.publisher,
+            price: formData.price,
+            Catalog: formData.Catalog,
+            description: formData.description,
+            imageUrl: formData.imageUrl || null
         };
 
         console.log('Dữ liệu cuối cùng gửi lên server:', updatedProduct);
 
-        // Gọi API cập nhật
-        const result = await productAPI.updateProduct(productId, updatedProduct);
-        console.log('Kết quả từ API:', result);
+        await productAPI.updateProduct(productId, updatedProduct);
 
         editModal.style.display = 'none';
         resetEditForm();

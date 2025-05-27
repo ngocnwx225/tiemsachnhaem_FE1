@@ -1,8 +1,8 @@
 const API_BASE_URL = 'https://tiemsachnhaem-be-mu.vercel.app/api';
-const TIMEOUT_MS = 5000; // Giảm timeout xuống 20 giây
+const TIMEOUT_MS = 5000;
 const MAX_RETRIES = 3;
-const ITEMS_PER_PAGE = 5; // Giảm xuống 5 sản phẩm mỗi lần
-const MAX_BACKOFF_MS = 15000; // Maximum backoff time of 30 seconds
+const ITEMS_PER_PAGE = 5;
+const MAX_BACKOFF_MS = 15000;
 
 // Hàm timeout promise
 const timeout = (ms) => {
@@ -38,7 +38,6 @@ async function fetchWithRetry(url, options = {}, retries = MAX_RETRIES) {
                 const response = await fetchPromise;
                 clearTimeout(timeoutId);
 
-                // Nếu response không ok, thử đọc error message
                 if (!response.ok) {
                     const errorText = await response.text();
                     let errorMessage;
@@ -67,12 +66,10 @@ async function fetchWithRetry(url, options = {}, retries = MAX_RETRIES) {
             console.error(`Attempt ${i + 1} failed:`, error);
             lastError = error;
             
-            // Nếu là lần thử cuối cùng, throw error
             if (i === retries - 1) {
                 throw new Error(`All ${retries} attempts failed. Last error: ${error.message}`);
             }
             
-            // Tính thời gian chờ với exponential backoff
             const waitTime = Math.min(1000 * Math.pow(2, i), MAX_BACKOFF_MS);
             console.log(`Waiting ${waitTime}ms before retry...`);
             await new Promise(resolve => setTimeout(resolve, waitTime));
@@ -82,54 +79,12 @@ async function fetchWithRetry(url, options = {}, retries = MAX_RETRIES) {
     throw lastError;
 }
 
-// API cho catalogs (thể loại)
-const catalogAPI = {
-    // Lấy danh sách thể loại
-    getAllCatalogs: async () => {
-        try {
-            return await fetchWithRetry(`${API_BASE_URL}/catalogs`);
-        } catch (error) {
-            console.error('Error fetching catalogs:', error);
-            throw new Error('Có lỗi xảy ra khi tải danh sách thể loại. Vui lòng thử lại sau.');
-        }
-    },
-
-    // Lấy chi tiết một thể loại
-    getCatalogById: async (id) => {
-        try {
-            return await fetchWithRetry(`${API_BASE_URL}/catalogs/${id}`);
-        } catch (error) {
-            console.error('Error fetching catalog:', error);
-            throw new Error('Có lỗi xảy ra khi tải thông tin thể loại. Vui lòng thử lại sau.');
-        }
-    }
-};
-
 // API cho products
 const productAPI = {
     // Lấy danh sách sản phẩm
     getAllProducts: async () => {
         try {
-            console.log('Đang gọi API:', `${API_BASE_URL}/products`);
-            const response = await fetch(`${API_BASE_URL}/products`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-
-            console.log('Status:', response.status);
-            console.log('Headers:', Object.fromEntries(response.headers));
-
-            if (!response.ok) {
-                const errorText = await response.text();
-                console.error('Error response:', errorText);
-                throw new Error(`Network response was not ok: ${response.status} - ${errorText}`);
-            }
-
-            const data = await response.json();
-            console.log('Success data:', data);
-            return data;
+            return await fetchWithRetry(`${API_BASE_URL}/products`);
         } catch (error) {
             console.error('Chi tiết lỗi:', error);
             throw error;
@@ -139,18 +94,7 @@ const productAPI = {
     // Lấy chi tiết một sản phẩm
     getProductById: async (id) => {
         try {
-            const response = await fetch(`${API_BASE_URL}/products/${id}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-
-            return await response.json();
+            return await fetchWithRetry(`${API_BASE_URL}/products/${id}`);
         } catch (error) {
             console.error('Error fetching product:', error);
             throw error;
@@ -160,7 +104,6 @@ const productAPI = {
     // Thêm sản phẩm mới
     createProduct: async (productData) => {
         try {
-            // Đảm bảo dữ liệu đúng format trước khi gửi
             const cleanedData = {
                 ISBN: productData.ISBN.trim(),
                 bookTitle: productData.bookTitle.trim(),
@@ -204,16 +147,36 @@ const productAPI = {
     // Cập nhật sản phẩm
     updateProduct: async (id, productData) => {
         try {
+            const cleanedData = {
+                ISBN: productData.ISBN.trim(),
+                bookTitle: productData.bookTitle.trim(),
+                author: productData.author.trim(),
+                publisher: productData.publisher.trim(),
+                price: Number(productData.price),
+                Catalog: productData.Catalog.trim(),
+                description: productData.description ? productData.description.trim() : '',
+                imageUrl: productData.imageUrl || null
+            };
+
+            console.log('Cleaned data before updating:', cleanedData);
+
             const response = await fetch(`${API_BASE_URL}/products/${id}`, {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
                 },
-                body: JSON.stringify(productData)
+                body: JSON.stringify(cleanedData)
             });
 
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                const errorText = await response.text();
+                console.error('API Error:', {
+                    status: response.status,
+                    statusText: response.statusText,
+                    body: errorText
+                });
+                throw new Error('Không thể cập nhật sản phẩm. Vui lòng kiểm tra lại thông tin.');
             }
 
             return await response.json();
@@ -240,4 +203,4 @@ const productAPI = {
             throw error;
         }
     }
-}; 
+};
