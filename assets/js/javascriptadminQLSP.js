@@ -5,12 +5,22 @@ const searchInput = document.getElementById('searchInput');
 const categoryFilter = document.getElementById('categoryFilter');
 
 // Các elements cho modal thêm sản phẩm
+// ========== KHAI BÁO BIẾN ==========
+// Các elements cho bảng sản phẩm
+const productTableBody = document.getElementById('productTableBody');
+const searchInput = document.getElementById('searchInput');
+const categoryFilter = document.getElementById('categoryFilter');
+
+// Các elements cho modal thêm sản phẩm
 const addModal = document.getElementById('addModal');
 const addForm = document.getElementById('addProductForm');
 const addErrorMessage = document.getElementById('addErrorMessage');
 const addImageFile = document.getElementById('add-imageFile');
 const addFileName = document.getElementById('add-file-name');
 const addImagePreview = document.getElementById('add-imagePreview');
+
+// Các elements cho modal chỉnh sửa
+const editModal = document.getElementById('editModal');
 
 // Các elements cho modal chỉnh sửa
 const editModal = document.getElementById('editModal');
@@ -217,7 +227,20 @@ function renderTable(data) {
         const row = document.createElement('tr');
         const imageUrl = product.imageUrl || `../assets/images/bookcover/${product.ISBN}.png`;
         
+        const imageUrl = product.imageUrl || `../assets/images/bookcover/${product.ISBN}.png`;
+        
         row.innerHTML = `
+            <td style="min-width: 300px;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <img src="${imageUrl}" 
+                         alt="${product.bookTitle}" 
+                         style="width: 45px; height: 65px; object-fit: cover;"
+                         onerror="this.src='../assets/images/bookcover/default-book.png'">
+                    <div style="display: flex; flex-direction: column; justify-content: center;">
+                        <span>${product.bookTitle}</span>
+                        <span style="color: #6c757d; font-size: 0.85em;">ISBN: ${product.ISBN}</span>
+                    </div>
+                </div>
             <td style="min-width: 300px;">
                 <div style="display: flex; align-items: center; gap: 12px;">
                     <img src="${imageUrl}" 
@@ -239,10 +262,28 @@ function renderTable(data) {
                     <button class="btn btn-sm edit" data-id="${product._id}" style="padding: 4px 8px;">✏️</button>
                     <button class="btn btn-sm delete" data-id="${product._id}" style="padding: 4px 8px;">🗑️</button>
                 </div>
+            <td class="text-truncate" style="max-width: 150px;" title="${product.author}">${product.author}</td>
+            <td class="text-truncate" style="max-width: 150px;" title="${product.publisher}">${product.publisher}</td>
+            <td style="width: 100px;">${product.price.toLocaleString('vi-VN')}đ</td>
+            <td style="width: 200px; white-space: normal;">${product.Catalog || 'Chưa phân loại'}</td>
+            <td style="width: 100px; text-align: center;">
+                <div style="display: inline-flex; gap: 8px;">
+                    <button class="btn btn-sm edit" data-id="${product._id}" style="padding: 4px 8px;">✏️</button>
+                    <button class="btn btn-sm delete" data-id="${product._id}" style="padding: 4px 8px;">🗑️</button>
+                </div>
             </td>
         `;
         fragment.appendChild(row);
+        fragment.appendChild(row);
     });
+
+    productTableBody.innerHTML = '';
+    productTableBody.appendChild(fragment);
+}
+
+// ========== XỬ LÝ FORM ==========
+// Reset form thêm sản phẩm
+function resetAddForm() {
 
     productTableBody.innerHTML = '';
     productTableBody.appendChild(fragment);
@@ -333,11 +374,40 @@ addProductBtn.addEventListener('click', () => {
 addCancelBtn.addEventListener('click', () => {
     addModal.style.display = 'none';
     resetAddForm();
+// Xử lý lọc theo thể loại
+categoryFilter.addEventListener('change', () => {
+    const selectedCategory = categoryFilter.value;
+    const filteredProducts = selectedCategory
+        ? products.filter(product => product.Catalog === selectedCategory)
+        : products;
+    renderTable(filteredProducts);
+});
+
+// Mở modal thêm sản phẩm
+addProductBtn.addEventListener('click', () => {
+    addModal.style.display = 'block';
+    resetAddForm();
+});
+
+// Đóng modal thêm sản phẩm
+addCancelBtn.addEventListener('click', () => {
+    addModal.style.display = 'none';
+    resetAddForm();
 });
 
 // Đóng modal chỉnh sửa
+// Đóng modal chỉnh sửa
 editCancelBtn.addEventListener('click', () => {
     editModal.style.display = 'none';
+    resetEditForm();
+});
+
+// Click ngoài modal để đóng
+window.addEventListener('click', (event) => {
+    if (event.target === addModal) {
+        addModal.style.display = 'none';
+        resetAddForm();
+    }
     resetEditForm();
 });
 
@@ -402,6 +472,9 @@ window.addEventListener('click', (event) => {
     });
 });
 
+// ========== XỬ LÝ THÊM/SỬA/XÓA ==========
+// Xử lý thêm sản phẩm
+addForm.addEventListener('submit', async (event) => {
 // ========== XỬ LÝ THÊM/SỬA/XÓA ==========
 // Xử lý thêm sản phẩm
 addForm.addEventListener('submit', async (event) => {
@@ -562,6 +635,30 @@ editForm.addEventListener('submit', async (event) => {
 });
 
 // Xử lý xóa sản phẩm
+productTableBody.addEventListener('click', async (event) => {
+    if (!event.target.classList.contains('delete')) return;
+    
+    const productId = event.target.dataset.id;
+    if (confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')) {
+        try {
+            showLoading();
+            await productAPI.deleteProduct(productId);
+            await loadProducts();
+            alert('Xóa sản phẩm thành công!');
+        } catch (error) {
+            console.error('Error deleting product:', error);
+            alert('Có lỗi xảy ra khi xóa sản phẩm. Vui lòng thử lại.');
+        } finally {
+            hideLoading();
+        }
+    }
+});
+
+// Hàm thử lại
+function retryLoading() {
+    console.log('Đang thử lại...');
+    loadProducts();
+}
 productTableBody.addEventListener('click', async (event) => {
     if (!event.target.classList.contains('delete')) return;
     
