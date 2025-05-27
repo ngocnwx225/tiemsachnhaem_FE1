@@ -1,19 +1,26 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+* {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 body {
-    font-family: 'Montserrat', sans-serif;
     background-color: #f8f9fa;
-    margin: 30px auto;;
-    padding: 25px;;
+    margin: 30px auto;
+    padding: 25px;
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 30px auto;
     background-color: #fff;
     border-radius: 15px;
     padding: 25px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    overflow-x: auto;
 }
 
 /* Điều chỉnh container khi hiển thị trong iframe */
@@ -45,7 +52,6 @@ h1 {
 }
 
 .search-bar input {
-    font-family: 'Montserrat', sans-serif;
     width: 50%;
     padding: 10px 12px 10px 40px; /* padding-left để chừa chỗ cho icon */
     border: 1px solid #d1d5db;
@@ -61,7 +67,6 @@ h1 {
 }
 
 .search-bar input::placeholder {
-    font-family: 'Montserrat', sans-serif;
     color: #a0a0a0;
     font-weight: 400;
 }
@@ -72,7 +77,6 @@ h1 {
 }
 
 .actions select {
-    font-family: 'Montserrat', sans-serif;
     padding: 10px 15px;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
@@ -82,7 +86,6 @@ h1 {
 }
 
 .actions .add-product {
-    font-family: 'Montserrat', sans-serif;
     padding: 10px 20px;
     background-color: #fff5f5;
     color: #ff4d4f;
@@ -101,12 +104,66 @@ h1 {
 table {
     width: 100%;
     border-collapse: collapse;
+    table-layout: fixed;
+    min-width: 1200px;
 }
 
 thead {
     background-color: #86A788;
     color: #ffffff;
     font-weight: 300;
+}
+
+/* Định nghĩa độ rộng cố định cho từng cột */
+th:nth-child(1), td:nth-child(1) { /* Cột SẢN PHẨM */
+    width: 25%;
+}
+
+th:nth-child(2), td:nth-child(2) { /* Cột TÁC GIẢ */
+    width: 15%;
+}
+
+th:nth-child(3), td:nth-child(3) { /* Cột NHÀ XUẤT BẢN */
+    width: 15%;
+}
+
+th:nth-child(4), td:nth-child(4) { /* Cột GIÁ */
+    width: 8%;
+}
+
+th:nth-child(5), td:nth-child(5) { /* Cột THỂ LOẠI */
+    width: 18%;
+}
+
+th:nth-child(6), td:nth-child(6) { /* Cột THAO TÁC */
+    width: 3%;
+}
+
+/* Xử lý text trong các cột */
+td:nth-child(1) { /* Cột SẢN PHẨM */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+td:nth-child(2), td:nth-child(3) { /* Cột TÁC GIẢ và NHÀ XUẤT BẢN */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+td:nth-child(4) { /* Cột GIÁ */
+    white-space: nowrap;
+}
+
+td:nth-child(5) { /* Cột THỂ LOẠI */
+    white-space: normal;
+    word-wrap: break-word;
+    padding: 15px 10px;
+}
+
+td:nth-child(6) { /* Cột THAO TÁC */
+    text-align: center;
 }
 
 th, td {
@@ -148,21 +205,36 @@ td span br {
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 16px;
     margin: 0 5px;
+    padding: 5px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+    line-height: 1;
 }
 
 .edit {
     color: #1890ff;
 }
 
+.edit:hover {
+    background-color: #f0f0f0;
+}
+
 .delete {
     color: #ff4d4f;
 }
 
+.delete:hover {
+    background-color: #f0f0f0;
+}
+
+.edit i, .delete i {
+    font-size: 14px;
+}
+
 /* Modal Styles */
 .modal {
-    font-family: 'Montserrat', sans-serif;
     display: none;
     position: fixed;
     top: 0;
@@ -175,15 +247,13 @@ td span br {
 }
 
 .modal-content {
-    
-    background-color: #f9f9f9;
+    background-color: #fff;
     margin: 5% auto;
-    padding: 20px 30px;
-    border-radius: 10px;
-    width: 90%;
-    max-width: 500px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    border: 1px solid #ddd;
+    padding: 25px;
+    border-radius: 8px;
+    width: 95%;
+    max-width: 900px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .modal-content h2 {
@@ -194,15 +264,21 @@ td span br {
     margin-bottom: 15px;
 }
 
-.form-row {
-    display: flex;
-    justify-content: space-between;
-    gap: 15px;
-    margin-bottom: 10px;
+.form-container {
+    display: grid;
+    grid-template-columns: 1.5fr 0.5fr;
+    gap: 30px;
 }
 
-.form-row.full-width {
-    display: block;
+.form-left {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
 }
 
 .form-group {
@@ -211,36 +287,105 @@ td span br {
 
 .form-group label {
     display: block;
-    margin-bottom: 5px;
-    font-weight: 500;
-    font-size: 14px;
     color: #333;
-}
-
-.form-group input[type="text"],
-.form-group input[type="number"],
-.form-group textarea,
-.form-group select {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
     font-size: 14px;
-    box-sizing: border-box;
+    font-weight: 500;
+    margin-bottom: 5px;
+    margin-top: 12px;
 }
 
-.form-group input[type="text"][readonly] {
-    background-color: #f1f1f1;
-    cursor: not-allowed;
-}
-
-.form-group input[type="file"] {
-    display: none;
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
 }
 
 .form-group textarea {
-    height: 60px;
+    height: 100px;
     resize: vertical;
+}
+
+.form-right {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-right label {
+    display: block;
+    color: #333;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.upload-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #86A788;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-bottom: 12px;
+    margin-top: 5px;
+}
+
+.image-preview {
+    width: 100%;
+    height: 230px;
+    border: 2px dashed #ddd;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f9fa;
+    margin-top: 10px;
+}
+
+.image-preview img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.image-status {
+    color: #666;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 12px;
+}
+
+.modal-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.cancel-btn {
+    padding: 8px 20px;
+    border: none;
+    background: none;
+    color: #ff4d4f;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.add-btn {
+    padding: 8px 20px;
+    background-color: #86A788;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
 }
 
 .error {
@@ -248,62 +393,6 @@ td span br {
     font-size: 12px;
     margin-bottom: 10px;
     white-space: pre-wrap;
-}
-
-.modal-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    margin-top: 15px;
-}
-
-.cancel-btn, .add-btn {
-    padding: 8px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-}
-
-.cancel-btn {
-    background-color: #fff;
-    color: #ff4d4f;
-    border: 1px solid #ffe6e6;
-}
-
-.add-btn {
-    background-color: #86A788;
-    color: #fff;
-}
-
-.custom-file-upload {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.upload-btn {
-    padding: 8px 15px;
-    background-color: #1890ff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 13px;
-    transition: background-color 0.3s;
-}
-
-.upload-btn:hover {
-    background-color: #40a9ff;
-}
-
-.file-name {
-    font-size: 14px;
-    color: #666;
-}
-
-.image-preview {
-    margin-top: 10px;
 }
 
 .success-modal {

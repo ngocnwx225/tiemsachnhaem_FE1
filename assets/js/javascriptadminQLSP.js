@@ -1,479 +1,650 @@
-// Dữ liệu sản phẩm cục bộ
-let products = [
-    {
-        id: 1,
-        name: "Cloud Atlas: 20th Anniversary Edition",
-        author: "David Carnegie",
-        publisher: "NXB Tổng hợp TP.HCM",
-        price: 85000,
-        category: "Khoa học tự nhiên",
-        imageUrl: "https://th.bing.com/th/id/OIP.H0dzOx5ktIV8zHyPxOsvhgAAAA?w=288&h=442&rs=1&pid=ImgDetMain",
-        notes: ""
-    },
-    {
-        id: 2,
-        name: "Dust",
-        author: "Paulo Coelho",
-        publisher: "NXB Văn học",
-        price: 69000,
-        category: "Tiểu thuyết",
-        imageUrl: "https://th.bing.com/th/id/OIP.afKgBsVqvdCXgVU7-tMmIQAAAA?rs=1&pid=ImgDetMain",
-        notes: ""
-    },
-    {
-        id: 3,
-        name: "The Body - Illustrated",
-        author: "Rosie Nguyễn",
-        publisher: "NXB Hội Nhà Văn",
-        price: 75000,
-        category: "Ký sự sống",
-        imageUrl: "https://th.bing.com/th/id/R.52b9ebff003869349a4572c6277870d9?rik=yQpFW44FgSPTxg&pid=ImgRaw&r=0",
-        notes: ""
-    },
-    {
-        id: 4,
-        name: "The Fault In Our Stars",
-        author: "Tony Buổi Sáng",
-        publisher: "NXB Trẻ",
-        price: 90000,
-        category: "Ký sự sống",
-        imageUrl: "https://th.bing.com/th/id/R.e795ce4ab4b4c1fe088529296b6ee94d?rik=JBP7Sjfuhhqp1Q&pid=ImgRaw&r=0",
-        notes: ""
-    },
-    {
-        id: 5,
-        name: "The Picture Of Dorian Gray",
-        author: "George S. Clason",
-        publisher: "NXB Tổng hợp TP.HCM",
-        price: 65000,
-        category: "Kinh tế",
-        imageUrl: "https://th.bing.com/th/id/OIP.FvIkMBH0Xk4-zmywIpA5fQHaK6?w=513&h=756&rs=1&pid=ImgDetMain",
-        notes: ""
-    }
-];
-
-// Khai báo các biến cần thiết
-const addModal = document.getElementById('addModal');
-const editModal = document.getElementById('editModal');
-const deleteModal = document.getElementById('deleteModal');
-const addProductBtn = document.querySelector('.add-product');
-const addCancelBtn = document.getElementById('add-cancel-btn');
-const addSubmitBtn = document.getElementById('add-submit-btn');
-const addForm = document.getElementById('addProductForm');
-const addErrorMessage = document.getElementById('addErrorMessage');
-const addUploadBtn = document.getElementById('add-upload-btn');
-const addImageFile = document.getElementById('add-imageFile');
-const addFileName = document.getElementById('add-file-name');
-const addImagePreview = document.getElementById('add-imagePreview');
-const successModal = document.getElementById('successModal');
-const successMessage = document.getElementById('successMessage');
-const successCancelBtn = document.querySelector('.success-cancel');
-const successOkBtn = document.querySelector('.success-ok');
-const editCancelBtn = document.getElementById('edit-cancel-btn');
-const editSubmitBtn = document.getElementById('edit-submit-btn');
-const editForm = document.getElementById('editProductForm');
-const editErrorMessage = document.getElementById('editErrorMessage');
-const editUploadBtn = document.getElementById('edit-upload-btn');
-const editImageFile = document.getElementById('edit-imageFile');
-const editFileName = document.getElementById('edit-file-name');
-const editImagePreview = document.getElementById('edit-imagePreview');
-const deleteCancelBtn = document.querySelector('.delete-cancel');
-const deleteConfirmBtn = document.querySelector('.delete-confirm');
+// ========== KHAI BÁO BIẾN ==========
+// Các elements cho bảng sản phẩm
 const productTableBody = document.getElementById('productTableBody');
 const searchInput = document.getElementById('searchInput');
 const categoryFilter = document.getElementById('categoryFilter');
 
-// Hàm render bảng sản phẩm
-function renderTable(productsToRender = products) {
-    productTableBody.innerHTML = '';
-    productsToRender.forEach(product => {
-        const row = document.createElement('tr');
-        const formattedPrice = new Intl.NumberFormat('vi-VN', {
-            style: 'currency',
-            currency: 'VND'
-        }).format(product.price);
-        row.innerHTML = `
-            <td>
-                <img src="${product.imageUrl}" alt="Book Cover" style="width: 40px; height: 60px;">
-                <span>${product.name} <br> ID #${product.id}</span>
-            </td>
-            <td>${product.author}</td>
-            <td>${product.publisher}</td>
-            <td>${formattedPrice}</td>
-            <td>${product.category}</td>
-            <td>
-                <button class="edit" data-id="${product.id}">✏️</button>
-                <button class="delete" data-id="${product.id}">🗑️</button>
-            </td>
+// Các elements cho modal thêm sản phẩm
+const addModal = document.getElementById('addModal');
+const addForm = document.getElementById('addProductForm');
+const addErrorMessage = document.getElementById('addErrorMessage');
+const addImageFile = document.getElementById('add-imageFile');
+const addFileName = document.getElementById('add-file-name');
+const addImagePreview = document.getElementById('add-imagePreview');
+
+// Các elements cho modal chỉnh sửa
+const editModal = document.getElementById('editModal');
+const editForm = document.getElementById('editProductForm');
+const editErrorMessage = document.getElementById('editErrorMessage');
+const editImageFile = document.getElementById('edit-imageFile');
+const editFileName = document.getElementById('edit-file-name');
+const editImagePreview = document.getElementById('edit-imagePreview');
+
+// Các nút bấm
+const addProductBtn = document.querySelector('.add-product');
+const addCancelBtn = document.getElementById('add-cancel-btn');
+const editCancelBtn = document.getElementById('edit-cancel-btn');
+const addUploadBtn = document.getElementById('add-upload-btn');
+const editUploadBtn = document.getElementById('edit-upload-btn');
+
+// Danh sách sản phẩm
+let products = [];
+
+// Biến lưu trữ danh sách thể loại
+let catalogs = [];
+
+// Thêm biến cho phân trang
+let currentPage = 1;
+let isLoading = false;
+let hasMoreData = true;
+
+// Thêm biến để theo dõi trạng thái loading
+let loadingTimeout;
+
+// ========== UTILITY FUNCTIONS ==========
+// Hàm hiển thị loading
+function showLoading() {
+    if (!document.getElementById('loadingOverlay')) {
+        const overlay = document.createElement('div');
+        overlay.id = 'loadingOverlay';
+        overlay.innerHTML = `
+            <div class="loading-content">
+                <div class="spinner"></div>
+                <div class="loading-text">
+                    <p>Đang tải dữ liệu...</p>
+                    <p class="small text-muted">Vui lòng đợi trong giây lát</p>
+                </div>
+            </div>
         `;
-        productTableBody.appendChild(row);
+        document.body.appendChild(overlay);
+
+        // Thêm style cho loading
+        const style = document.createElement('style');
+        style.textContent = `
+            #loadingOverlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(255, 255, 255, 0.8);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 9999;
+            }
+            .loading-content {
+                text-align: center;
+            }
+            .spinner {
+                width: 50px;
+                height: 50px;
+                border: 5px solid #f3f3f3;
+                border-top: 5px solid #86A788;
+                border-radius: 50%;
+                animation: spin 1s linear infinite;
+                margin: 0 auto 15px;
+            }
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+            .loading-text {
+                color: #333;
+            }
+            .loading-text .small {
+                font-size: 14px;
+                margin-top: 5px;
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    document.getElementById('loadingOverlay').style.display = 'flex';
+}
+
+// Hàm ẩn loading
+function hideLoading() {
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    if (loadingOverlay) {
+        loadingOverlay.style.display = 'none';
+    }
+}
+
+// Hàm hiển thị thông báo lỗi
+function showError(message, duration = 5000) {
+    // Tạo error message element nếu chưa tồn tại
+    let errorMessage = document.getElementById('globalError');
+    if (!errorMessage) {
+        errorMessage = document.createElement('div');
+        errorMessage.id = 'globalError';
+        errorMessage.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background-color: #fff2f0;
+            border: 1px solid #ffccc7;
+            border-radius: 4px;
+            color: #ff4d4f;
+            font-size: 14px;
+            z-index: 10000;
+            display: none;
+            max-width: 80%;
+            word-wrap: break-word;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        `;
+        document.body.appendChild(errorMessage);
+    }
+    
+    errorMessage.textContent = message;
+    errorMessage.style.display = 'block';
+    
+    // Auto hide after duration
+    setTimeout(() => {
+        errorMessage.style.display = 'none';
+    }, duration);
+}
+
+// Hàm chuyển file ảnh sang base64
+function getBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
     });
 }
 
-// Mở modal Thêm sản phẩm
-addProductBtn.addEventListener('click', () => {
-    addModal.style.display = 'block';
+// ========== QUẢN LÝ HIỂN THỊ ==========
+// Load dữ liệu thể loại
+async function loadCatalogs() {
+    try {
+        catalogs = await catalogAPI.getAllCatalogs();
+        updateCategoryDropdowns();
+    } catch (error) {
+        console.error('Error loading catalogs:', error);
+    }
+}
+
+// Cập nhật các dropdown thể loại
+function updateCategoryDropdowns() {
+    const categoryOptions = `
+        <option value="">Chọn thể loại</option>
+        ${catalogs.map(cat => `<option value="${cat._id}">${cat.genre2nd || cat.genreID}</option>`).join('')}
+    `;
+    
+    // Cập nhật dropdown trong form thêm mới
+    document.getElementById('add-category').innerHTML = categoryOptions;
+    
+    // Cập nhật dropdown trong form chỉnh sửa
+    document.getElementById('edit-category').innerHTML = categoryOptions;
+    
+    // Cập nhật dropdown filter
+    document.getElementById('categoryFilter').innerHTML = `
+        <option value="">Tất cả thể loại</option>
+        ${catalogs.map(cat => `<option value="${cat._id}">${cat.genre2nd || cat.genreID}</option>`).join('')}
+    `;
+}
+
+// Load và hiển thị sản phẩm với debounce
+async function loadProducts() {
+    if (isLoading) return;
+    
+    try {
+        isLoading = true;
+        showLoading();
+
+        // Hiển thị loading message trong bảng
+        productTableBody.innerHTML = `
+            <tr>
+                <td colspan="6" class="text-center">
+                    <div class="py-3">
+                        <div class="spinner-border text-success" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p class="mt-2 mb-0">Đang tải danh sách sản phẩm...</p>
+                    </div>
+                </td>
+            </tr>
+        `;
+
+        // Set timeout để hiển thị thông báo nếu load quá lâu
+        loadingTimeout = setTimeout(() => {
+            const overlay = document.getElementById('loadingOverlay');
+            if (overlay) {
+                const loadingText = overlay.querySelector('.loading-text');
+                if (loadingText) {
+                    loadingText.innerHTML = `
+                        <p>Đang tải dữ liệu...</p>
+                        <p class="small text-muted">Server đang xử lý, vui lòng đợi thêm</p>
+                    `;
+                }
+            }
+        }, 5000);
+
+        // Gọi API lấy dữ liệu
+        products = await productAPI.getAllProducts();
+        
+        // Render từng phần của bảng
+        renderTable(products);
+        await loadCatalogs();
+
+    } catch (error) {
+        console.error('Error:', error);
+        productTableBody.innerHTML = `
+            <tr>
+                <td colspan="6" class="text-center">
+                    <div class="py-3 text-danger">
+                        <p class="mb-2">${error.message}</p>
+                        <button onclick="retryLoading()" class="btn btn-outline-danger btn-sm">
+                            Thử lại
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        `;
+    } finally {
+        clearTimeout(loadingTimeout);
+        isLoading = false;
+        hideLoading();
+    }
+}
+
+// Tối ưu hàm render table
+function renderTable(data) {
+    const fragment = document.createDocumentFragment();
+    
+    data.forEach(product => {
+        const row = document.createElement('tr');
+        const imageUrl = product.imageUrl || `../assets/images/bookcover/${product.ISBN}.png`;
+        
+        row.innerHTML = `
+            <td style="min-width: 300px;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <img src="${imageUrl}" 
+                         alt="${product.bookTitle}" 
+                         style="width: 45px; height: 65px; object-fit: cover;"
+                         onerror="this.src='../assets/images/bookcover/default-book.png'">
+                    <div style="display: flex; flex-direction: column; justify-content: center;">
+                        <span>${product.bookTitle}</span>
+                        <span style="color: #6c757d; font-size: 0.85em;">ISBN: ${product.ISBN}</span>
+                    </div>
+                </div>
+            </td>
+            <td class="text-truncate" style="max-width: 150px;" title="${product.author}">${product.author}</td>
+            <td class="text-truncate" style="max-width: 150px;" title="${product.publisher}">${product.publisher}</td>
+            <td style="width: 100px;">${product.price.toLocaleString('vi-VN')}đ</td>
+            <td style="width: 200px; white-space: normal;">${product.Catalog || 'Chưa phân loại'}</td>
+            <td style="width: 100px; text-align: center;">
+                <div style="display: inline-flex; gap: 8px;">
+                    <button class="btn btn-sm edit" data-id="${product._id}" style="padding: 4px 8px;">✏️</button>
+                    <button class="btn btn-sm delete" data-id="${product._id}" style="padding: 4px 8px;">🗑️</button>
+                </div>
+            </td>
+        `;
+        fragment.appendChild(row);
+    });
+
+    productTableBody.innerHTML = '';
+    productTableBody.appendChild(fragment);
+}
+
+// ========== XỬ LÝ FORM ==========
+// Reset form thêm sản phẩm
+function resetAddForm() {
+    addForm.reset();
     addErrorMessage.textContent = '';
     addFileName.textContent = 'Chưa chọn ảnh';
     addImagePreview.innerHTML = '';
-    addForm.reset();
-});
+}
 
-// Đóng modal Thêm sản phẩm
-addCancelBtn.addEventListener('click', () => {
-    addModal.style.display = 'none';
-    addForm.reset();
-    addErrorMessage.textContent = '';
-    addFileName.textContent = 'Chưa chọn ảnh';
-    addImagePreview.innerHTML = '';
-});
-
-addModal.addEventListener('click', (event) => {
-    if (event.target === addModal) {
-        addModal.style.display = 'none';
-        addForm.reset();
-        addErrorMessage.textContent = '';
-        addFileName.textContent = 'Chưa chọn ảnh';
-        addImagePreview.innerHTML = '';
-    }
-});
-
-// Xử lý chọn ảnh cho Thêm sản phẩm
-addUploadBtn.addEventListener('click', () => {
-    addImageFile.click();
-});
-
-addImageFile.addEventListener('change', (event) => {
-    const file = event.target.files[0];
-    if (file) {
-        const validImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
-        if (!validImageTypes.includes(file.type)) {
-            addErrorMessage.textContent = '* Vui lòng chọn file ảnh (jpg, png, gif)';
-            addErrorMessage.style.color = 'red';
-            addImageFile.value = '';
-            addFileName.textContent = 'Chưa chọn ảnh';
-            addImagePreview.innerHTML = '';
-            return;
-        }
-        addFileName.textContent = file.name;
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            addImagePreview.innerHTML = '';
-            const img = document.createElement('img');
-            img.src = e.target.result;
-            img.style.maxWidth = '100px';
-            img.style.maxHeight = '100px';
-            img.style.marginTop = '10px';
-            addImagePreview.appendChild(img);
-        };
-        reader.readAsDataURL(file);
-    } else {
-        addFileName.textContent = 'Chưa chọn ảnh';
-        addImagePreview.innerHTML = '';
-    }
-});
-
-// Xử lý submit form Thêm sản phẩm
-addForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-    const productName = document.getElementById('add-product-name').value.trim();
-    const author = document.getElementById('add-author').value.trim();
-    const publisher = document.getElementById('add-publisher').value.trim();
-    const price = parseFloat(document.getElementById('add-price').value);
-    const category = document.getElementById('add-category').value;
-    const imageFile = addImageFile.files[0];
-    const notes = document.getElementById('add-notes').value.trim();
-
-    addErrorMessage.textContent = '';
-    let hasError = false;
-
-    if (!productName) {
-        addErrorMessage.textContent += '* Tên sách là trường bắt buộc\n';
-        hasError = true;
-    }
-    if (!author) {
-        addErrorMessage.textContent += '* Tác giả là trường bắt buộc\n';
-        hasError = true;
-    }
-    if (!publisher) {
-        addErrorMessage.textContent += '* Nhà xuất bản là trường bắt buộc\n';
-        hasError = true;
-    }
-    if (isNaN(price) || price <= 0) {
-        addErrorMessage.textContent += '* Giá phải lớn hơn 0\n';
-        hasError = true;
-    }
-    if (!category) {
-        addErrorMessage.textContent += '* Thể loại là trường bắt buộc\n';
-        hasError = true;
-    }
-    if (!imageFile) {
-        addErrorMessage.textContent += '* Ảnh bìa là trường bắt buộc\n';
-        hasError = true;
-    }
-
-    if (hasError) {
-        addErrorMessage.style.color = 'red';
-        return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = (e) => {
-        const newProduct = {
-            id: products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1,
-            name: productName,
-            author: author,
-            publisher: publisher,
-            price: price,
-            category: category,
-            imageUrl: e.target.result,
-            notes: notes
-        };
-        products.push(newProduct);
-        renderTable();
-        successMessage.textContent = 'Thêm thành công sản phẩm mới vào danh sách';
-        successModal.style.display = 'block';
-        addModal.style.display = 'none';
-        addForm.reset();
-        addFileName.textContent = 'Chưa chọn ảnh';
-        addImagePreview.innerHTML = '';
-    };
-    reader.readAsDataURL(imageFile);
-});
-
-// Mở modal Chỉnh sửa sản phẩm
-document.addEventListener('click', (event) => {
-    if (event.target.classList.contains('edit')) {
-        const productId = parseInt(event.target.getAttribute('data-id'));
-        const product = products.find(p => p.id === productId);
-        if (product) {
-            editModal.style.display = 'block';
-            editErrorMessage.textContent = '';
-            editFileName.textContent = 'Đã chọn ảnh hiện tại';
-            editImagePreview.innerHTML = '';
-            editForm.reset();
-            editSubmitBtn.setAttribute('data-id', productId);
-
-            document.getElementById('edit-product-name').value = product.name;
-            document.getElementById('edit-author').value = product.author;
-            document.getElementById('edit-publisher').value = product.publisher;
-            document.getElementById('edit-price').value = product.price;
-            document.getElementById('edit-category').value = product.category;
-            document.getElementById('edit-notes').value = product.notes || '';
-            const img = document.createElement('img');
-            img.src = product.imageUrl;
-            img.style.maxWidth = '100px';
-            img.style.maxHeight = '100px';
-            img.style.marginTop = '10px';
-            editImagePreview.appendChild(img);
-        }
-    }
-});
-
-// Đóng modal Chỉnh sửa sản phẩm
-editCancelBtn.addEventListener('click', () => {
-    editModal.style.display = 'none';
+// Reset form chỉnh sửa
+function resetEditForm() {
     editForm.reset();
     editErrorMessage.textContent = '';
     editFileName.textContent = 'Chưa chọn ảnh';
     editImagePreview.innerHTML = '';
+}
+
+// ========== XỬ LÝ SỰ KIỆN ==========
+// Load dữ liệu khi trang được tải
+document.addEventListener('DOMContentLoaded', async () => {
+    await loadCatalogs(); // Load danh sách thể loại trước
+    await loadProducts(); // Sau đó load sản phẩm
 });
 
-editModal.addEventListener('click', (event) => {
-    if (event.target === editModal) {
-        editModal.style.display = 'none';
-        editForm.reset();
-        editErrorMessage.textContent = '';
-        editFileName.textContent = 'Chưa chọn ảnh';
-        editImagePreview.innerHTML = '';
-    }
-});
-
-// Xử lý chọn ảnh cho Chỉnh sửa sản phẩm
-editUploadBtn.addEventListener('click', () => {
-    editImageFile.click();
-});
-
-editImageFile.addEventListener('change', (event) => {
-    const file = event.target.files[0];
-    if (file) {
-        const validImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
-        if (!validImageTypes.includes(file.type)) {
-            editErrorMessage.textContent = '* Vui lòng chọn file ảnh (jpg, png, gif)';
-            editErrorMessage.style.color = 'red';
-            editImageFile.value = '';
-            editFileName.textContent = 'Chưa chọn ảnh';
-            editImagePreview.innerHTML = '';
-            return;
-        }
-        editFileName.textContent = file.name;
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            editImagePreview.innerHTML = '';
-            const img = document.createElement('img');
-            img.src = e.target.result;
-            img.style.maxWidth = '100px';
-            img.style.maxHeight = '100px';
-            img.style.marginTop = '10px';
-            editImagePreview.appendChild(img);
+// Thêm debounce cho search
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
         };
-        reader.readAsDataURL(file);
-    } else {
-        editFileName.textContent = 'Chưa chọn ảnh';
-        editImagePreview.innerHTML = '';
-    }
-});
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
 
-// Xử lý submit form Chỉnh sửa sản phẩm
-editForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-    const productId = parseInt(editSubmitBtn.getAttribute('data-id'));
-    const productName = document.getElementById('edit-product-name').value.trim();
-    const author = document.getElementById('edit-author').value.trim();
-    const publisher = document.getElementById('edit-publisher').value.trim();
-    const price = parseFloat(document.getElementById('edit-price').value);
-    const category = document.getElementById('edit-category').value;
-    const imageFile = editImageFile.files[0];
-    const notes = document.getElementById('edit-notes').value.trim();
+// Tối ưu search
+const debouncedSearch = debounce((searchTerm) => {
+    const filteredProducts = products.filter(product => 
+        product.bookTitle.toLowerCase().includes(searchTerm) ||
+        product.author.toLowerCase().includes(searchTerm) ||
+        product.ISBN.toLowerCase().includes(searchTerm)
+    );
+    renderTable(filteredProducts);
+}, 300);
 
-    editErrorMessage.textContent = '';
-    let hasError = false;
-
-    if (!productName) {
-        editErrorMessage.textContent += '* Tên sách là trường bắt buộc\n';
-        hasError = true;
-    }
-    if (!author) {
-        editErrorMessage.textContent += '* Tác giả là trường bắt buộc\n';
-        hasError = true;
-    }
-    if (!publisher) {
-        editErrorMessage.textContent += '* Nhà xuất bản là trường bắt buộc\n';
-        hasError = true;
-    }
-    if (isNaN(price) || price <= 0) {
-        editErrorMessage.textContent += '* Giá phải lớn hơn 0\n';
-        hasError = true;
-    }
-    if (!category) {
-        editErrorMessage.textContent += '* Thể loại là trường bắt buộc\n';
-        hasError = true;
-    }
-
-    if (hasError) {
-        editErrorMessage.style.color = 'red';
+// Xử lý tìm kiếm
+searchInput.addEventListener('input', (e) => {
+    const searchTerm = e.target.value.toLowerCase().trim();
+    
+    // Nếu không có từ khóa tìm kiếm, hiển thị lại toàn bộ sản phẩm
+    if (!searchTerm) {
+        renderTable(products);
         return;
     }
 
-    const productIndex = products.findIndex(p => p.id === productId);
-    if (productIndex !== -1) {
-        const updatedProduct = {
-            id: productId,
-            name: productName,
-            author: author,
-            publisher: publisher,
-            price: price,
-            category: category,
-            notes: notes
-        };
-        if (imageFile) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                updatedProduct.imageUrl = e.target.result;
-                products[productIndex] = updatedProduct;
-                renderTable();
-                successMessage.textContent = 'Cập nhật sản phẩm thành công';
-                successModal.style.display = 'block';
-                editModal.style.display = 'none';
-                editForm.reset();
-                editFileName.textContent = 'Chưa chọn ảnh';
-                editImagePreview.innerHTML = '';
-            };
-            reader.readAsDataURL(imageFile);
-        } else {
-            updatedProduct.imageUrl = products[productIndex].imageUrl;
-            products[productIndex] = updatedProduct;
-            renderTable();
-            successMessage.textContent = 'Cập nhật sản phẩm thành công';
-            successModal.style.display = 'block';
-            editModal.style.display = 'none';
-            editForm.reset();
-            editFileName.textContent = 'Chưa chọn ảnh';
-            editImagePreview.innerHTML = '';
+    // Lọc sản phẩm theo tên sách hoặc tác giả
+    const filteredProducts = products.filter(product => 
+        product.bookTitle.toLowerCase().includes(searchTerm) ||
+        product.author.toLowerCase().includes(searchTerm)
+    );
+
+    // Render lại bảng với kết quả tìm kiếm
+    renderTable(filteredProducts);
+
+    // Log để debug
+    console.log('Đang tìm kiếm với từ khóa:', searchTerm);
+    console.log('Số kết quả tìm thấy:', filteredProducts.length);
+});
+
+// Xử lý lọc theo thể loại
+categoryFilter.addEventListener('change', () => {
+    const selectedCategory = categoryFilter.value;
+    const filteredProducts = selectedCategory
+        ? products.filter(product => product.Catalog === selectedCategory)
+        : products;
+    renderTable(filteredProducts);
+});
+
+// Mở modal thêm sản phẩm
+addProductBtn.addEventListener('click', () => {
+    addModal.style.display = 'block';
+    resetAddForm();
+});
+
+// Đóng modal thêm sản phẩm
+addCancelBtn.addEventListener('click', () => {
+    addModal.style.display = 'none';
+    resetAddForm();
+});
+
+// Đóng modal chỉnh sửa
+editCancelBtn.addEventListener('click', () => {
+    editModal.style.display = 'none';
+    resetEditForm();
+});
+
+// Click ngoài modal để đóng
+window.addEventListener('click', (event) => {
+    if (event.target === addModal) {
+        addModal.style.display = 'none';
+        resetAddForm();
+    }
+    if (event.target === editModal) {
+        editModal.style.display = 'none';
+        resetEditForm();
+    }
+});
+
+// Xử lý chọn ảnh
+[
+    { uploadBtn: addUploadBtn, imageFile: addImageFile, fileName: addFileName, imagePreview: addImagePreview, errorMessage: addErrorMessage, isbnInput: 'add-isbn' },
+    { uploadBtn: editUploadBtn, imageFile: editImageFile, fileName: editFileName, imagePreview: editImagePreview, errorMessage: editErrorMessage, isbnInput: 'edit-isbn' }
+].forEach(({ uploadBtn, imageFile, fileName, imagePreview, errorMessage, isbnInput }) => {
+    uploadBtn.addEventListener('click', () => imageFile.click());
+    
+    imageFile.addEventListener('change', async (event) => {
+        const file = event.target.files[0];
+        const isbn = document.getElementById(isbnInput).value.trim();
+        
+        if (!file) {
+            fileName.textContent = 'Chưa chọn ảnh';
+            imagePreview.innerHTML = '';
+            return;
         }
+
+        // Kiểm tra ISBN đã được nhập chưa
+        if (!isbn) {
+            errorMessage.textContent = '* Vui lòng nhập ISBN trước khi chọn ảnh bìa';
+            imageFile.value = '';
+            fileName.textContent = 'Chưa chọn ảnh';
+            imagePreview.innerHTML = '';
+            return;
+        }
+
+        // Kiểm tra định dạng file
+        if (!['image/jpeg', 'image/png', 'image/gif'].includes(file.type)) {
+            errorMessage.textContent = '* Vui lòng chọn file ảnh (jpg, png, gif)';
+            imageFile.value = '';
+            fileName.textContent = 'Chưa chọn ảnh';
+            imagePreview.innerHTML = '';
+            return;
+        }
+
+        // Đổi tên file theo ISBN
+        fileName.textContent = `${isbn}.png`;
+
+        // Preview ảnh
+        try {
+            const base64Image = await getBase64(file);
+            imagePreview.innerHTML = `<img src="${base64Image}" style="max-width: 100px; max-height: 100px; margin-top: 10px;">`;
+            errorMessage.textContent = ''; // Xóa thông báo lỗi nếu có
+        } catch (error) {
+            console.error('Lỗi khi xử lý ảnh:', error);
+            errorMessage.textContent = '* Có lỗi xảy ra khi xử lý ảnh. Vui lòng thử lại.';
+            imageFile.value = '';
+            fileName.textContent = 'Chưa chọn ảnh';
+            imagePreview.innerHTML = '';
+        }
+    });
+});
+
+// ========== XỬ LÝ THÊM/SỬA/XÓA ==========
+// Xử lý thêm sản phẩm
+addForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    addErrorMessage.textContent = ''; // Reset error message
+    
+    try {
+        showLoading();
+        
+        // Lấy và validate dữ liệu form
+        const isbn = document.getElementById('add-isbn').value.trim();
+        const categorySelect = document.getElementById('add-category');
+        const selectedCatalog = categorySelect.value;
+
+        // Kiểm tra xem đã chọn thể loại chưa
+        if (!selectedCatalog) {
+            throw new Error('Vui lòng chọn thể loại sách');
+        }
+
+        const formData = {
+            ISBN: isbn,
+            bookTitle: document.getElementById('add-product-name').value.trim(),
+            author: document.getElementById('add-author').value.trim(),
+            publisher: document.getElementById('add-publisher').value.trim(),
+            price: Number(document.getElementById('add-price').value),
+            Catalog: selectedCatalog, // Đã là _id của catalog
+            description: document.getElementById('add-notes').value.trim()
+        };
+
+        // Validate các trường bắt buộc
+        if (!formData.ISBN || !formData.bookTitle || !formData.author || 
+            !formData.publisher || isNaN(formData.price)) {
+            throw new Error('Vui lòng điền đầy đủ thông tin bắt buộc');
+        }
+
+        // Xử lý ảnh nếu có
+        const imageFile = addImageFile.files[0];
+        if (imageFile) {
+            formData.imageUrl = `${isbn}.png`;
+        }
+
+        console.log('Dữ liệu gửi lên:', formData);
+
+        // Gọi API thêm sản phẩm
+        const response = await productAPI.createProduct(formData);
+
+        // Nếu thành công
+        addModal.style.display = 'none';
+        resetAddForm();
+        await loadProducts();
+        alert('Thêm sản phẩm thành công!');
+
+    } catch (error) {
+        console.error('Lỗi:', error);
+        addErrorMessage.textContent = error.message || 'Không thể thêm sản phẩm. Vui lòng kiểm tra lại thông tin và thử lại.';
+        addErrorMessage.style.color = '#dc3545';
+    } finally {
+        hideLoading();
     }
 });
 
-// Mở modal Xác nhận xóa
-document.addEventListener('click', (event) => {
-    if (event.target.classList.contains('delete')) {
-        const productId = parseInt(event.target.getAttribute('data-id'));
-        deleteModal.style.display = 'block';
-        deleteConfirmBtn.setAttribute('data-id', productId);
+// Xử lý sửa sản phẩm
+productTableBody.addEventListener('click', async (event) => {
+    if (!event.target.classList.contains('edit')) return;
+    
+    const productId = event.target.dataset.id;
+    try {
+        showLoading();
+        const product = await productAPI.getProductById(productId);
+        
+        // Điền thông tin vào form
+        document.getElementById('edit-isbn').value = product.ISBN || '';
+        document.getElementById('edit-product-name').value = product.bookTitle || '';
+        document.getElementById('edit-author').value = product.author || '';
+        document.getElementById('edit-publisher').value = product.publisher || '';
+        document.getElementById('edit-price').value = product.price || '';
+        document.getElementById('edit-category').value = product.Catalog || '';
+        document.getElementById('edit-notes').value = product.description || '';
+
+        // Hiển thị ảnh
+        if (product.imageUrl) {
+            editImagePreview.innerHTML = `<img src="${product.imageUrl}" style="max-width: 100px; max-height: 100px; margin-top: 10px;">`;
+        } else {
+            const localImageUrl = `../assets/images/bookcover/${product.ISBN}.png`;
+            editImagePreview.innerHTML = `<img src="${localImageUrl}" style="max-width: 100px; max-height: 100px; margin-top: 10px;" onerror="this.style.display='none'">`;
+        }
+
+        editForm.dataset.productId = productId;
+        editErrorMessage.textContent = '';
+        editModal.style.display = 'block';
+    } catch (error) {
+        console.error('Error fetching product:', error);
+        alert('Có lỗi xảy ra khi tải thông tin sản phẩm. Vui lòng thử lại.');
+    } finally {
+        hideLoading();
     }
 });
 
-// Đóng modal Xác nhận xóa
-deleteCancelBtn.addEventListener('click', () => {
-    deleteModal.style.display = 'none';
-});
+// Xử lý submit form sửa
+editForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const productId = editForm.dataset.productId;
+    
+    // Lấy dữ liệu từ form
+    const formData = {
+        ISBN: document.getElementById('edit-isbn').value.trim(),
+        bookTitle: document.getElementById('edit-product-name').value.trim(),
+        author: document.getElementById('edit-author').value.trim(),
+        publisher: document.getElementById('edit-publisher').value.trim(),
+        price: parseFloat(document.getElementById('edit-price').value),
+        Catalog: document.getElementById('edit-category').value,
+        description: document.getElementById('edit-notes').value.trim()
+    };
 
-deleteModal.addEventListener('click', (event) => {
-    if (event.target === deleteModal) {
-        deleteModal.style.display = 'none';
+    console.log('Form data trước khi cập nhật:', formData);
+    console.log('Product ID:', productId);
+    console.log('Giá trị thể loại:', document.getElementById('edit-category').value);
+
+    // Validate
+    if (!formData.ISBN || !formData.bookTitle || !formData.author || 
+        !formData.publisher || !formData.price || !formData.Catalog) {
+        console.log('Validation failed:', {
+            ISBN: !formData.ISBN,
+            bookTitle: !formData.bookTitle,
+            author: !formData.author,
+            publisher: !formData.publisher,
+            price: !formData.price,
+            Catalog: !formData.Catalog
+        });
+        editErrorMessage.textContent = '* Vui lòng điền đầy đủ thông tin bắt buộc';
+        return;
+    }
+
+    try {
+        showLoading();
+        const imageFile = editImageFile.files[0];
+        if (imageFile) {
+            formData.imageUrl = await getBase64(imageFile);
+            console.log('Đã thêm ảnh vào form data');
+        }
+
+        // Lấy thông tin sản phẩm hiện tại
+        console.log('Đang lấy thông tin sản phẩm hiện tại...');
+        const currentProduct = await productAPI.getProductById(productId);
+        console.log('Sản phẩm hiện tại:', currentProduct);
+
+        // Giữ lại các trường không thay đổi
+        const updatedProduct = {
+            ...currentProduct,
+            ...formData
+        };
+
+        console.log('Dữ liệu cuối cùng gửi lên server:', updatedProduct);
+
+        // Gọi API cập nhật
+        const result = await productAPI.updateProduct(productId, updatedProduct);
+        console.log('Kết quả từ API:', result);
+
+        editModal.style.display = 'none';
+        resetEditForm();
+        await loadProducts();
+        alert('Cập nhật sản phẩm thành công!');
+    } catch (error) {
+        console.error('Chi tiết lỗi cập nhật:', error);
+        console.error('Stack trace:', error.stack);
+        editErrorMessage.textContent = 'Có lỗi xảy ra khi cập nhật sản phẩm. Vui lòng thử lại.';
+    } finally {
+        hideLoading();
     }
 });
 
 // Xử lý xóa sản phẩm
-deleteConfirmBtn.addEventListener('click', () => {
-    const productId = parseInt(deleteConfirmBtn.getAttribute('data-id'));
-    products = products.filter(p => p.id !== productId);
-    renderTable();
-    successMessage.textContent = 'Xóa sản phẩm thành công';
-    successModal.style.display = 'block';
-    deleteModal.style.display = 'none';
+productTableBody.addEventListener('click', async (event) => {
+    if (!event.target.classList.contains('delete')) return;
+    
+    const productId = event.target.dataset.id;
+    if (confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')) {
+        try {
+            showLoading();
+            await productAPI.deleteProduct(productId);
+            await loadProducts();
+            alert('Xóa sản phẩm thành công!');
+        } catch (error) {
+            console.error('Error deleting product:', error);
+            alert('Có lỗi xảy ra khi xóa sản phẩm. Vui lòng thử lại.');
+        } finally {
+            hideLoading();
+        }
+    }
 });
 
-// Đóng modal thành công
-successOkBtn.addEventListener('click', () => {
-    successModal.style.display = 'none';
-    addModal.style.display = 'none';
-    editModal.style.display = 'none';
-    deleteModal.style.display = 'none';
-    addForm.reset();
-    editForm.reset();
-    addFileName.textContent = 'Chưa chọn ảnh';
-    addImagePreview.innerHTML = '';
-    editFileName.textContent = 'Chưa chọn ảnh';
-    editImagePreview.innerHTML = '';
-});
-
-successCancelBtn.addEventListener('click', () => {
-    successModal.style.display = 'none';
-});
-
-// Tìm kiếm và lọc
-searchInput.addEventListener('input', () => {
-    const searchTerm = searchInput.value.toLowerCase();
-    const selectedCategory = categoryFilter.value;
-    const filteredProducts = products.filter(product => {
-        const matchesSearch = product.name.toLowerCase().includes(searchTerm) || product.author.toLowerCase().includes(searchTerm);
-        const matchesCategory = !selectedCategory || product.category === selectedCategory;
-        return matchesSearch && matchesCategory;
-    });
-    renderTable(filteredProducts);
-});
-
-categoryFilter.addEventListener('change', () => {
-    const searchTerm = searchInput.value.toLowerCase();
-    const selectedCategory = categoryFilter.value;
-    const filteredProducts = products.filter(product => {
-        const matchesSearch = product.name.toLowerCase().includes(searchTerm) || product.author.toLowerCase().includes(searchTerm);
-        const matchesCategory = !selectedCategory || product.category === selectedCategory;
-        return matchesSearch && matchesCategory;
-    });
-    renderTable(filteredProducts);
-});
-
-// Render bảng khi tải trang
-renderTable();
+// Hàm thử lại
+function retryLoading() {
+    console.log('Đang thử lại...');
+    loadProducts();
+}

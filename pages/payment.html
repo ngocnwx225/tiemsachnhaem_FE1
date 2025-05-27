@@ -9,47 +9,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body onload="renderOrderDetails()">
-    <!-- Header -->
+
+    <!-- Include header -->
     <header>
-      <div style="display: flex; justify-content: center; gap: 30px; padding: 10px;">
-        <div>  
-          <i class="fas fa-map-marker-alt"></i>
-          <span>123 Đường Sách, Quận 1, TP. Hồ Chí Minh</span>
-        </div>
-        <div>  
-          <i class="fas fa-phone-alt"></i>
-          <span>+1 123 456 7878</span>
-        </div>
-        <div>
-          <i class="fas fa-envelope"></i>
-          <span>tiemsachnhaem@gmail.com</span>
-        </div>
-      </div>
+        <!-- Assuming header.html is included here -->
+        <iframe src="../assets/components/header.html" frameborder="0" style="width: 100%; height: 200px; border: none;"></iframe>
     </header>
-
-    <div class="logo-section">
-      <img src="../assets/images/logo.png" alt="Logo">
-      <h2>Tiệm sách nhà em</h2>
-    </div>
-
-    <nav class="main-header container">
-      <div class="nav-links">
-        <a href="#">Trang chủ</a>
-        <a href="#">Sản phẩm</a>
-        <a href="#">Giới thiệu</a>
-        <a href="#">Liên hệ</a>
-      </div>
-    
-      <div class="search-bar">
-        <input type="text" placeholder="Tìm kiếm sản phẩm">
-      </div>
-    
-      <div class="icons">
-        <i class="fas fa-user"></i>
-        <i class="fas fa-shopping-cart"></i>
-      </div>
-    </nav>
-    <hr style="color: lightgrey;">
 
     <main class="checkout-container">
       <!-- Bên trái: Form -->
@@ -71,10 +36,9 @@
             <option value="DaNang">Đà Nẵng</option>
           </select>
           <select id="district">
-            <option value="">Quận</option>
+            <option value="">Quận/Huyện</option>
           </select>
         </div>
-        <input type="text" placeholder="Huyện">
         <input type="text" placeholder="Số nhà, tên đường">
         <p class="note">Địa chỉ này sẽ được sử dụng làm địa chỉ thanh toán cho đơn hàng này.</p>
         
@@ -138,49 +102,10 @@
       </div>
     </div>
 
-    <footer class="site-footer">
-      <div class="footer-content container">
-        <!-- Logo + giới thiệu -->
-        <div class="footer-logo-info">
-          <img src="../assets/images/logo.png" alt="Logo">
-          <div class="footer-description">
-            <h4>Tiệm sách nhà em</h4>
-            <p>Điểm đến lý tưởng để khám phá thế giới sách. Tìm cuốn sách tiếp theo của bạn tại đây.</p>
-          </div>
-        </div>
-    
-        <!-- Right blocks container -->
-        <div class="footer-right-blocks">
-          <!-- Truy cập nhanh -->
-          <div class="footer-block">
-            <h4>Truy Cập Nhanh</h4>
-            <p>Trang chủ</p>
-            <p>Sản phẩm</p>
-            <p>Giới thiệu</p>
-            <p>Liên hệ</p>
-          </div>
-    
-          <!-- Điều khoản -->
-          <div class="footer-block">
-            <h4>Điều khoản</h4>
-            <p>Điều khoản sử dụng</p>
-            <p>Chính sách bảo mật thông tin</p>
-            <p>Trợ giúp</p>
-            <p>Điều khoản khách hàng</p>
-          </div>
-    
-          <!-- Liên hệ -->
-          <div class="footer-block">
-            <h4>Liên hệ</h4>
-            <p><i class="fas fa-map-marker-alt"></i> 123 Đường Sách, Quận 1, TP. Hồ Chí Minh</p>
-            <p><i class="fas fa-phone-alt"></i> +1123 456 7878</p>
-            <p><i class="fas fa-envelope"></i> tiemsachnhaem@gmail.com</p>
-          </div>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        © 2025 Tiệm sách nhà em. All rights reserved.
-      </div>
+      <!-- Include footer -->
+      <footer>
+        <!-- Assuming footer.html is included here -->
+        <iframe src="../assets/components/footer.html" frameborder="0" style="width: 100%; height: 340px; border: none;"></iframe>
     </footer>
 
 </body>

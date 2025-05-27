@@ -19,185 +19,6 @@ p {
     padding: 0 1rem;
 }
 
-/*Header*/
-header {
-    background-color: rgba(26, 50, 41, 1);
-    color: white;
-    text-align: center;
-    width: 100%;
-    height: auto;
-}
-
-.header-inner {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start; /* hoặc flex-start nếu bạn muốn kéo về trái */
-    width: 100%;
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1rem;
-}
-
-.logo-section {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 6px;
-    justify-content: center; /* canh giữa theo chiều ngang */
-}
-
-.logo-section img {
-    height: 60px;
-}
-
-.main-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    padding: 10px 0;
-    background-color: #ffffff;
-    flex-wrap: wrap; /* Để tránh vỡ layout khi thu nhỏ */
-}
-
-.nav-links {
-    display: flex;
-    gap: 20px;
-    flex-shrink: 0;
-}
-
-.nav-links a {
-    text-decoration: none;
-    color: #333;
-    font-weight: 500;
-}
-
-.search-bar {
-    font-family: 'Montserrat', sans-serif;
-    flex-grow: 1;
-    max-width: 400px;
-}
-
-.search-bar input {
-    font-family: 'Montserrat', sans-serif;
-    width: 100%;
-    padding: 8px 16px;
-    border-radius: 20px;
-    border: 1px solid #ccc;
-    font-size: 14px;
-}
-
-.icons {
-    display: flex;
-    gap: 15px;
-    flex-shrink: 0;
-    font-size: 18px;
-}
-
-/* Footer */
-footer {
-    margin: 0;
-    padding: 1rem 0;
-    background-color: #033;
-    color: white;
-    text-align: left;
-}
-
-.site-footer {
-    background-color: #1e2b23;
-    color: white;
-    padding: 40px 0 20px;
-    font-family: 'Montserrat', sans-serif;
-}
-
-.footer-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 30px;
-    flex-wrap: wrap;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-.footer-logo-info {
-    display: flex;
-    flex-direction: row; /* Đảm bảo logo và text nằm ngang hàng */
-    align-items: flex-start; /* Căn lên trên cùng */
-    max-width: 400px;
-    padding-left: 0;
-}
-
-.footer-logo-info img {
-    width: 190px;
-    height: 190px;
-    flex-shrink: 0;
-    object-fit: contain;
-    margin-right: 16px; /* Thêm khoảng cách giữa logo và text */
-}
-
-.footer-description {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    margin-top: 0; /* Đảm bảo không có khoảng cách trên để căn sát đỉnh */
-}
-
-.footer-description h4 {
-    margin-bottom: 10px;
-    margin-top: 16px; /* Bỏ khoảng cách trên để căn sát đỉnh */
-    font-size: 30px;
-    color: #fff;
-}
-
-.footer-description p {
-    font-size: 12px;
-    width: 200px;
-    color: #ccc;
-    line-height: 1.5;
-    margin: 0; /* Bỏ margin để không bị lệch */
-}
-
-.footer-block h4 {
-    font-size: 14px;
-    margin-bottom: 10px;
-    width: 200px;
-    color: #ffffff;
-}
-
-.footer-right-blocks {
-    display: flex;
-    gap: 15px;
-    flex: 2;
-    justify-content: flex-end;
-    line-height: 1.6;
-    flex-wrap: wrap;
-}
-
-.footer-block p {
-    font-size: 13px;
-    margin: 6px 0;
-    color: #ccc;
-}
-
-.footer-block i {
-    margin-right: 8px;
-    color: #ffffff;
-    line-height: 2.4;
-}
-
-.footer-bottom {
-    border-top: 1px solid #4a5d50;
-    margin-top: 30px;
-    padding-top: 10px;
-    text-align: center;
-    font-size: 12px;
-    color: #bbb;
-}
 
 /* Check_out - Chỉnh sửa */
 .checkout-container {
@@ -421,7 +242,10 @@ hr {
   width: 500px;
   max-width: 95%;
   border-radius: 8px;
-  position: relative;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   animation: modalFadeIn 0.3s;
   max-height: 85vh;
   display: flex;
@@ -546,10 +370,95 @@ hr {
 @keyframes modalFadeIn {
   from {
     opacity: 0;
-    transform: translateY(-20px);
+    top: 45%;
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    top: 50%;
   }
+}
+
+.error-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: modalFadeIn 0.3s;
+}
+
+.error-content .modal-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    border: none;
+}
+
+.error-content .modal-header i {
+    font-size: 32px;
+    color: #ff4d4f;
+}
+
+.error-content .modal-header h2 {
+    font-size: 16px;
+    margin: 0;
+}
+
+.error-content .modal-body {
+    background: none;
+    padding: 0;
+    margin-bottom: 15px;
+    font-size: 14px;
+    color: #666;
+}
+
+.error-content .modal-footer {
+    border: none;
+    padding: 0;
+    justify-content: center;
+}
+
+.error-content .btn-confirm {
+    padding: 8px 25px;
+}
+
+.success-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: modalFadeIn 0.3s;
+}
+
+.success-content .modal-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    border: none;
+}
+
+.success-content .modal-header i {
+    font-size: 32px;
+}
+
+.success-content .modal-body {
+    background: none;
+    padding: 0;
+    color: #666;
+    font-size: 14px;
 }

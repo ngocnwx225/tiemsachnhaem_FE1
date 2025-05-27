@@ -19,19 +19,27 @@
                     <option value="Khoa học tự nhiên">Khoa học tự nhiên</option>
                     <option value="Kinh điển">Kinh điển</option>
                     <option value="Trinh thám">Trinh thám</option>
-                    <option value="Self help">Self help</option>
+                    <option value="Self-help">Self-help</option>
                     <option value="Kinh dị">Kinh dị</option>
                     <option value="Tâm lý">Tâm lý</option>
                     <option value="Khoa học viễn tưởng">Khoa học viễn tưởng</option>
                     <option value="Lãng mạn">Lãng mạn</option>
                     <option value="Kinh tế">Kinh tế</option>
                     <option value="Sức khỏe">Sức khỏe</option>
-                    <option value="Văn học">Văn học</option>
+                    <option value="Văn hóa">Văn hóa</option>
                 </select>
                 <button class="add-product">+ Thêm sản phẩm</button>
             </div>
         </div>
-        <table>
+        <table style="width: 100%; table-layout: fixed;">
+            <colgroup>
+                <col style="width: 35%"> <!-- Sản phẩm -->
+                <col style="width: 15%"> <!-- Tác giả -->
+                <col style="width: 15%"> <!-- Nhà xuất bản -->
+                <col style="width: 10%"> <!-- Giá -->
+                <col style="width: 15%"> <!-- Thể loại -->
+                <col style="width: 10%"> <!-- Thao tác -->
+            </colgroup>
             <thead>
                 <tr>
                     <th>Sản phẩm</th>
@@ -39,7 +47,7 @@
                     <th>Nhà xuất bản</th>
                     <th>Giá</th>
                     <th>Thể loại</th>
-                    <th>Thao tác</th>
+                    <th style="white-space: nowrap;">Thao tác</th>
                 </tr>
             </thead>
             <tbody id="productTableBody">
@@ -54,58 +62,66 @@
             <h2>Thêm sản phẩm mới</h2>
             <form id="addProductForm">
                 <div class="error" id="addErrorMessage"></div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="add-product-name">Tên sách:</label>
-                        <input type="text" id="add-product-name" name="product-name" required>
+                <div class="form-container">
+                    <div class="form-info">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="add-isbn">ISBN:</label>
+                                <input type="text" id="add-isbn" name="isbn" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="add-product-name">Tên sách:</label>
+                                <input type="text" id="add-product-name" name="product-name" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="add-author">Tác giả:</label>
+                                <input type="text" id="add-author" name="author" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="add-publisher">Nhà xuất bản:</label>
+                                <input type="text" id="add-publisher" name="publisher" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="add-price">Giá:</label>
+                                <input type="number" id="add-price" name="price" required min="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="add-category">Thể loại:</label>
+                                <select id="add-category" name="category" required>
+                                    <option value="">Chọn thể loại</option>
+                                    <option value="Khoa học tự nhiên">Khoa học tự nhiên</option>
+                                    <option value="Kinh điển">Kinh điển</option>
+                                    <option value="Trinh thám">Trinh thám</option>
+                                    <option value="Self-help">Self-help</option>
+                                    <option value="Kinh dị">Kinh dị</option>
+                                    <option value="Tâm lý">Tâm lý</option>
+                                    <option value="Khoa học viễn tưởng">Khoa học viễn tưởng</option>
+                                    <option value="Lãng mạn">Lãng mạn</option>
+                                    <option value="Kinh tế">Kinh tế</option>
+                                    <option value="Sức khỏe">Sức khỏe</option>
+                                    <option value="Văn hóa">Văn hóa</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row full-width">
+                            <div class="form-group">
+                                <label for="add-notes">Ghi chú:</label>
+                                <textarea id="add-notes" name="notes"></textarea>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="add-author">Tác giả:</label>
-                        <input type="text" id="add-author" name="author" required>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="add-publisher">Nhà xuất bản:</label>
-                        <input type="text" id="add-publisher" name="publisher" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="add-price">Giá:</label>
-                        <input type="number" id="add-price" name="price" required min="0">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="add-category">Thể loại:</label>
-                        <select id="add-category" name="category" required>
-                            <option value="">Chọn thể loại</option>
-                            <option value="Khoa học tự nhiên">Khoa học tự nhiên</option>
-                            <option value="Kinh điển">Kinh điển</option>
-                            <option value="Trinh thám">Trinh thám</option>
-                            <option value="Self help">Self help</option>
-                            <option value="Kinh dị">Kinh dị</option>
-                            <option value="Tâm lý">Tâm lý</option>
-                            <option value="Khoa học viễn tưởng">Khoa học viễn tưởng</option>
-                            <option value="Lãng mạn">Lãng mạn</option>
-                            <option value="Kinh tế">Kinh tế</option>
-                            <option value="Sức khỏe">Sức khỏe</option>
-                            <option value="Văn học">Văn học</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="add-image">Ảnh bìa:</label>
+                    <div class="form-image">
+                        <label>Ảnh bìa:</label>
                         <div class="custom-file-upload">
                             <button type="button" class="upload-btn" id="add-upload-btn">Chọn ảnh</button>
                             <span class="file-name" id="add-file-name">Chưa chọn ảnh</span>
                             <input type="file" id="add-imageFile" name="imageFile" accept="image/*" style="display: none;">
                         </div>
                         <div class="image-preview" id="add-imagePreview"></div>
-                    </div>
-                </div>
-                <div class="form-row full-width">
-                    <div class="form-group">
-                        <label for="add-notes">Ghi chú:</label>
-                        <textarea id="add-notes" name="notes"></textarea>
                     </div>
                 </div>
                 <div class="modal-actions">
@@ -122,58 +138,66 @@
             <h2>Chỉnh sửa sản phẩm</h2>
             <form id="editProductForm">
                 <div class="error" id="editErrorMessage"></div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="edit-product-name">Tên sách:</label>
-                        <input type="text" id="edit-product-name" name="product-name" required>
+                <div class="form-container">
+                    <div class="form-info">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="edit-isbn">ISBN:</label>
+                                <input type="text" id="edit-isbn" name="isbn" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-product-name">Tên sách:</label>
+                                <input type="text" id="edit-product-name" name="product-name" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="edit-author">Tác giả:</label>
+                                <input type="text" id="edit-author" name="author" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-publisher">Nhà xuất bản:</label>
+                                <input type="text" id="edit-publisher" name="publisher" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="edit-price">Giá:</label>
+                                <input type="number" id="edit-price" name="price" required min="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-category">Thể loại:</label>
+                                <select id="edit-category" name="category" required>
+                                    <option value="">Chọn thể loại</option>
+                                    <option value="Khoa học tự nhiên">Khoa học tự nhiên</option>
+                                    <option value="Kinh điển">Kinh điển</option>
+                                    <option value="Trinh thám">Trinh thám</option>
+                                    <option value="Self-help">Self-help</option>
+                                    <option value="Kinh dị">Kinh dị</option>
+                                    <option value="Tâm lý">Tâm lý</option>
+                                    <option value="Khoa học viễn tưởng">Khoa học viễn tưởng</option>
+                                    <option value="Lãng mạn">Lãng mạn</option>
+                                    <option value="Kinh tế">Kinh tế</option>
+                                    <option value="Sức khỏe">Sức khỏe</option>
+                                    <option value="Văn hóa">Văn hóa</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row full-width">
+                            <div class="form-group">
+                                <label for="edit-notes">Ghi chú:</label>
+                                <textarea id="edit-notes" name="notes"></textarea>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="edit-author">Tác giả:</label>
-                        <input type="text" id="edit-author" name="author" required>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="edit-publisher">Nhà xuất bản:</label>
-                        <input type="text" id="edit-publisher" name="publisher" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="edit-price">Giá:</label>
-                        <input type="number" id="edit-price" name="price" required min="0">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="edit-category">Thể loại:</label>
-                        <select id="edit-category" name="category" required>
-                            <option value="">Chọn thể loại</option>
-                            <option value="Khoa học tự nhiên">Khoa học tự nhiên</option>
-                            <option value="Kinh điển">Kinh điển</option>
-                            <option value="Trinh thám">Trinh thám</option>
-                            <option value="Self help">Self help</option>
-                            <option value="Kinh dị">Kinh dị</option>
-                            <option value="Tâm lý">Tâm lý</option>
-                            <option value="Khoa học viễn tưởng">Khoa học viễn tưởng</option>
-                            <option value="Lãng mạn">Lãng mạn</option>
-                            <option value="Kinh tế">Kinh tế</option>
-                            <option value="Sức khỏe">Sức khỏe</option>
-                            <option value="Văn học">Văn học</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="edit-image">Ảnh bìa:</label>
+                    <div class="form-image">
+                        <label>Ảnh bìa:</label>
                         <div class="custom-file-upload">
                             <button type="button" class="upload-btn" id="edit-upload-btn">Chọn ảnh</button>
                             <span class="file-name" id="edit-file-name">Chưa chọn ảnh</span>
                             <input type="file" id="edit-imageFile" name="imageFile" accept="image/*" style="display: none;">
                         </div>
                         <div class="image-preview" id="edit-imagePreview"></div>
-                    </div>
-                </div>
-                <div class="form-row full-width">
-                    <div class="form-group">
-                        <label for="edit-notes">Ghi chú:</label>
-                        <textarea id="edit-notes" name="notes"></textarea>
                     </div>
                 </div>
                 <div class="modal-actions">
@@ -209,6 +233,8 @@
         </div>
     </div>
 
+    <!-- Đặt scripts ở cuối body và theo đúng thứ tự load -->
+    <script src="../assets/js/api.js"></script>
     <script src="../assets/js/javascriptadminQLSP.js"></script>
 </body>
 </html>

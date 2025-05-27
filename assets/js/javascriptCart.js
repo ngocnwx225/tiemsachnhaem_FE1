@@ -143,7 +143,25 @@ function setupCartEvents() {
     });
 
     cartDOM.checkoutBtn.addEventListener('click', () => {
-        showDiscountMessage('Chuyển đến trang thanh toán');
+        // Check if any items are selected
+        const selectedItems = cartItems.filter(item => item.checked);
+        if (selectedItems.length === 0) {
+            showDiscountMessage('Vui lòng chọn ít nhất một sản phẩm để thanh toán');
+            return;
+        }
+
+        // Save cart data to localStorage
+        const cartData = {
+            items: selectedItems,
+            subtotal: selectedItems.reduce((sum, item) => sum + item.price * item.quantity, 0),
+            shipping: 0,
+            discount: appliedDiscount,
+            total: selectedItems.reduce((sum, item) => sum + item.price * item.quantity, 0) - appliedDiscount
+        };
+        localStorage.setItem('cartData', JSON.stringify(cartData));
+        
+        // Redirect to payment page
+        window.location.href = 'payment.html';
     });
 
     // Xử lý sự kiện áp dụng mã giảm giá

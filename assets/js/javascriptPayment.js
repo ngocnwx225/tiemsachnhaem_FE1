@@ -44,75 +44,97 @@ function updateDistricts() {
     }
 }
 
-function renderOrderDetails() {
-    const orderDetailsContainer = document.getElementById("order-details");
-
-    // Dữ liệu sách
-    const books = [
-        {
-            image: "https://th.bing.com/th/id/OIP.41YOPVU57YEnQiDVlHvbowAAAA?rs=1&pid=ImgDetMain",
-            title: "Viral: The Search for the Origin of COVID-19",
-            quantity: 1,
-            price: 300000
-        },
-        {
-            image: "https://th.bing.com/th/id/OIP.FO0fr8_PTvFtEeQlDd2BewAAAA?w=300&h=459&rs=1&pid=ImgDetMain",
-            title: "The Forever Dog: A New Science Blueprint For Raising Healthy And Happy Canine Companions",
-            quantity: 1,
-            price: 560000
-        },
-        {
-            image: "https://th.bing.com/th/id/OIP.6fAsPdK6Ob_PjYKwBcvP_wHaKc?rs=1&pid=ImgDetMain",
-            title: "Think Like a Therapist: Six Life-Changing Insights for Leading a Good Life",
-            quantity: 1,
-            price: 400000
-        }
-    ];
-
-    // Tính toán tổng cộng
-    const subtotal = books.reduce((sum, book) => sum + book.price * book.quantity, 0);
-    const shipping = 0;
-    const discount = 0;
-    const total = subtotal + shipping - discount;
-
-    // Tạo HTML cho chi tiết đơn hàng
-    let html = '';
-
-    // Thêm từng mục sách
-    books.forEach(book => {
-        html += `
-            <div class="order-item">
-                <img src="${book.image}" alt="sách">
-                <div class="info">
-                    <p class="title">${book.title}</p>
-                    <p class="qty">Số lượng: ${book.quantity}</p>
+// Thêm HTML cho modal thông báo
+function showErrorModal(message) {
+    const modalHtml = `
+        <div id="errorModal" class="modal">
+            <div class="modal-content error-content">
+                <div class="modal-header">
+                    <i class="fas fa-exclamation-circle" style="color: #ff4d4f;"></i>
+                    <h2>Lỗi</h2>
                 </div>
-                <p class="price">${book.price.toLocaleString('vi-VN')} đ</p>
+                <div class="modal-body">
+                    <p>${message}</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-confirm" onclick="closeErrorModal()">Đóng</button>
+                </div>
             </div>
-        `;
-    });
-
-    // Thêm phần tổng kết
-    html += `
-        <div class="summary">
-            <div><span>Tổng cộng</span><span>${subtotal.toLocaleString('vi-VN')} đ</span></div>
-            <div><span>Vận chuyển</span><span>${shipping.toLocaleString('vi-VN')} đ</span></div>
-            <div><span>Giảm giá</span><span>${discount.toLocaleString('vi-VN')} đ</span></div>
-        </div>
-        <hr>
-        <div class="total">
-            <span>Tổng đơn hàng</span>
-            <strong>${total.toLocaleString('vi-VN')} đ</strong>
         </div>
     `;
-
-    // Gán HTML vào container
-    orderDetailsContainer.innerHTML = html;
+    
+    // Kiểm tra nếu modal đã tồn tại thì xóa đi
+    const existingModal = document.getElementById('errorModal');
+    if (existingModal) {
+        existingModal.remove();
+    }
+    
+    // Thêm modal mới vào body
+    document.body.insertAdjacentHTML('beforeend', modalHtml);
+    document.getElementById('errorModal').style.display = 'block';
 }
 
-// Function to show modal
+function closeErrorModal() {
+    const modal = document.getElementById('errorModal');
+    if (modal) {
+        modal.style.display = 'none';
+        modal.remove();
+    }
+}
+
+function renderOrderDetails() {
+    const orderDetailsContainer = document.getElementById("order-details");
+    
+    try {
+        // Lấy dữ liệu giỏ hàng từ localStorage với xử lý lỗi
+        const cartData = localStorage.getItem('cartData');
+        if (!cartData) {
+            throw new Error('Không tìm thấy thông tin giỏ hàng');
+        }
+        
+        const parsedCartData = JSON.parse(cartData);
+        if (!parsedCartData || !parsedCartData.items || parsedCartData.items.length === 0) {
+            throw new Error('Giỏ hàng trống');
+        }
+
+        // Tạo HTML cho chi tiết đơn hàng
+        let html = '';
+        parsedCartData.items.forEach(item => {
+            html += `
+                <div class="order-item">
+                    <img src="${item.image}" alt="sách">
+                    <div class="info">
+                        <p class="title">${item.name}</p>
+                        <p class="qty">Số lượng: ${item.quantity}</p>
+                    </div>
+                    <p class="price">${item.price.toLocaleString('vi-VN')} đ</p>
+                </div>
+            `;
+        });
+
+        html += `
+            <div class="summary">
+                <div><span>Tổng cộng</span><span>${parsedCartData.subtotal.toLocaleString('vi-VN')} đ</span></div>
+                <div><span>Vận chuyển</span><span>${parsedCartData.shipping.toLocaleString('vi-VN')} đ</span></div>
+                <div><span>Giảm giá</span><span>${parsedCartData.discount.toLocaleString('vi-VN')} đ</span></div>
+            </div>
+            <hr>
+            <div class="total">
+                <span>Tổng đơn hàng</span>
+                <strong>${parsedCartData.total.toLocaleString('vi-VN')} đ</strong>
+            </div>
+        `;
+
+        orderDetailsContainer.innerHTML = html;
+    } catch (error) {
+        showErrorModal(error.message);
+        setTimeout(() => {
+            window.location.href = 'cart.html';
+        }, 2000);
+    }
+}
+
 function showConfirmationModal() {
-    const modal = document.getElementById('confirmationModal');
     const nameInput = document.querySelector('#fullName');
     const phoneInput = document.querySelector('#phone');
     const emailInput = document.querySelector('#email');
@@ -120,98 +142,118 @@ function showConfirmationModal() {
     const districtSelect = document.getElementById('district');
     const streetInput = document.querySelector('input[placeholder="Số nhà, tên đường"]');
 
-    // Validate form
+    // Validate form với modal thông báo
     if (!nameInput.value) {
-        alert('Vui lòng nhập họ tên!');
+        showErrorModal('Vui lòng nhập họ tên!');
         return;
     }
 
-    // Validate phone number
+    // Validate số điện thoại
     const phonePattern = /^[0-9]{10}$/;
     if (!phonePattern.test(phoneInput.value)) {
-        alert('Vui lòng nhập số điện thoại hợp lệ (10 số)!');
+        showErrorModal('Vui lòng nhập số điện thoại hợp lệ (10 số)!');
         return;
     }
 
     // Validate email
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailPattern.test(emailInput.value)) {
-        alert('Vui lòng nhập email hợp lệ!');
+        showErrorModal('Vui lòng nhập email hợp lệ!');
         return;
     }
 
     if (!citySelect.value || !districtSelect.value || !streetInput.value) {
-        alert('Vui lòng điền đầy đủ thông tin địa chỉ!');
+        showErrorModal('Vui lòng điền đầy đủ thông tin địa chỉ!');
         return;
     }
 
-    // Update modal with form data
+    // Cập nhật modal với dữ liệu form
     document.getElementById('modalName').textContent = nameInput.value;
     document.getElementById('modalPhone').textContent = phoneInput.value;
     document.getElementById('modalAddress').textContent = `${streetInput.value}, ${districtSelect.value}, ${citySelect.value}`;
 
-    // Use books data directly
-    const books = [
-        {
-            title: "Viral: The Search for the Origin of COVID-19",
-            quantity: 1,
-            price: 300000
-        },
-        {
-            title: "The Forever Dog",
-            quantity: 1,
-            price: 560000
-        },
-        {
-            title: "Think Like a Therapist",
-            quantity: 1,
-            price: 400000
+    try {
+        // Lấy dữ liệu giỏ hàng từ localStorage
+        const cartData = localStorage.getItem('cartData');
+        if (!cartData) {
+            throw new Error('Không tìm thấy thông tin giỏ hàng');
         }
-    ];
 
-    const modalOrderDetails = document.getElementById('modalOrderDetails');
-    let totalAmount = 0;
+        const parsedCartData = JSON.parse(cartData);
+        if (!parsedCartData || !parsedCartData.items || parsedCartData.items.length === 0) {
+            throw new Error('Giỏ hàng trống');
+        }
 
-    // Clear previous content
-    modalOrderDetails.innerHTML = '';
+        const modalOrderDetails = document.getElementById('modalOrderDetails');
+        let totalAmount = 0;
 
-    // Add each item to the modal
-    books.forEach(book => {
-        const itemDiv = document.createElement('div');
-        itemDiv.style.display = 'flex';
-        itemDiv.style.justifyContent = 'space-between';
-        itemDiv.style.marginBottom = '10px';
-        itemDiv.innerHTML = `
-            <span>${book.title} × ${book.quantity} quyển</span>
-            <span>${(book.price * book.quantity).toLocaleString('vi-VN')} đ</span>
-        `;
-        modalOrderDetails.appendChild(itemDiv);
-        totalAmount += book.price * book.quantity;
-    });
+        // Xóa nội dung cũ
+        modalOrderDetails.innerHTML = '';
 
-    // Update total amount and item count
-    document.getElementById('modalItemCount').textContent = books.length;
-    document.getElementById('modalTotalAmount').textContent = totalAmount.toLocaleString('vi-VN') + ' đ';
+        // Thêm từng sản phẩm vào modal
+        parsedCartData.items.forEach(item => {
+            const itemDiv = document.createElement('div');
+            itemDiv.style.display = 'flex';
+            itemDiv.style.justifyContent = 'space-between';
+            itemDiv.style.marginBottom = '10px';
+            itemDiv.innerHTML = `
+                <span>${item.name} × ${item.quantity} quyển</span>
+                <span>${(item.price * item.quantity).toLocaleString('vi-VN')} đ</span>
+            `;
+            modalOrderDetails.appendChild(itemDiv);
+            totalAmount += item.price * item.quantity;
+        });
 
-    // Show modal
-    modal.classList.add('show');
+        // Cập nhật tổng số lượng và tổng tiền
+        document.getElementById('modalItemCount').textContent = parsedCartData.items.length;
+        document.getElementById('modalTotalAmount').textContent = totalAmount.toLocaleString('vi-VN') + ' đ';
+
+        // Hiển thị modal
+        document.getElementById('confirmationModal').style.display = 'block';
+    } catch (error) {
+        showErrorModal(error.message);
+    }
 }
 
-// Function to close modal
-function closeModal() {
-    const modal = document.getElementById('confirmationModal');
-    modal.classList.remove('show');
-}
-
-// Function to confirm order
 function confirmOrder() {
-    // Here you would typically send the order to your backend
-    alert('Đặt hàng thành công!');
-    closeModal();
-    // Clear cart
-    localStorage.removeItem('cart');
-    // Redirect to home page or order confirmation page
-    window.location.href = 'index.html';
+    try {
+        // Xóa giỏ hàng
+        localStorage.removeItem('cartData');
+        
+        // Hiển thị thông báo thành công
+        showSuccessModal('Đặt hàng thành công!');
+        
+        // Chuyển hướng sau 2 giây
+        setTimeout(() => {
+            window.location.href = 'index.html';
+        }, 2000);
+    } catch (error) {
+        showErrorModal('Có lỗi xảy ra khi xử lý đơn hàng: ' + error.message);
+    }
+}
+
+function showSuccessModal(message) {
+    const modalHtml = `
+        <div id="successModal" class="modal">
+            <div class="modal-content success-content">
+                <div class="modal-header">
+                    <i class="fas fa-check-circle" style="color: #52c41a;"></i>
+                    <h2>Thành công</h2>
+                </div>
+                <div class="modal-body">
+                    <p>${message}</p>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', modalHtml);
+    const modal = document.getElementById('successModal');
+    modal.style.display = 'block';
+}
+
+function closeModal() {
+    document.getElementById('confirmationModal').style.display = 'none';
 }
 
 // Close modal when clicking outside
