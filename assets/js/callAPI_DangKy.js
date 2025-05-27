@@ -2,27 +2,25 @@ function callRegisterAPI(event) {
   event.preventDefault(); // Ngăn reload
 
   const fullName = document.getElementById("fullName").value.trim();
-  const username = document.getElementById("username").value.trim();
+  const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value.trim();
 
-  const usernameErrorDiv = document.getElementById("username-error");
+  const usernameErrorDiv = document.getElementById("email-error");
   const passwordErrorDiv = document.getElementById("password-error");
 
   // Ẩn tất cả thông báo lỗi trước khi kiểm tra
   usernameErrorDiv.classList.add("hidden");
   passwordErrorDiv.classList.add("hidden");
 
-  if (!fullName || !username || !password) {
-    // Nếu backend yêu cầu userName, có thể sinh từ email hoặc fullName
-    // const userName = email.split('@')[0];
+  if (!fullName || !email || !password) {
     alert("Vui lòng điền đầy đủ thông tin!");
     return false;
   }
 
-  // Kiểm tra tên đăng nhập: ít nhất 8 ký tự, bao gồm chữ và số
-  const usernameRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]{8,}$/;
-  if (!usernameRegex.test(username)) {
-    usernameErrorDiv.textContent = "Tên đăng nhập không hợp lệ! Phải có ít nhất 8 ký tự, bao gồm chữ và số.";
+  // Kiểm tra email: ít nhất 8 ký tự, bao gồm chữ và số
+  const emailRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]{8,}$/;
+  if (!emailRegex.test(email)) {
+    usernameErrorDiv.textContent = "Email không hợp lệ! Phải có ít nhất 8 ký tự, bao gồm chữ và số.";
     usernameErrorDiv.classList.remove("hidden");
     return false;
   }
@@ -35,17 +33,17 @@ function callRegisterAPI(event) {
     return false;
   }
 
-  console.log("Attempting to register user:", { fullName, UserName: username, Password: password }); // Log trước khi fetch
+  console.log("Attempting to register user:", { fullName, adminName: email, password: password }); // Log trước khi fetch
 
-  fetch("https://tiemsachnhaem-be-mu.vercel.app/api/user_logs", {
+  fetch("https://tiemsachnhaem-be-mu.vercel.app/api/auth/register", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
       fullName: fullName,
-      UserName: username, // Mengirim nilai username với key UserName theo API mới
-      Password: password // Mengirim nilai password với key Password theo API mới
+      email: email,
+      password: password
     })
   })
   .then(res => {
