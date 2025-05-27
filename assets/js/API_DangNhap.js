@@ -60,25 +60,27 @@ function callLoginAPI(event) {
     .then(data => {
         console.log("Dữ liệu phản hồi:", data);
         
-        // Kiểm tra nếu đăng nhập thành công và có token
-        if (data && data.token) {
-            // Lưu token vào localStorage
-            localStorage.setItem("userToken", data.token);
-            // Lưu thông tin người dùng nếu có
+        // Nếu có dữ liệu phản hồi
+        if (data) {
+            // Nếu có thông tin user trong phản hồi
             if (data.user) {
+                // Lưu thông tin người dùng vào localStorage
                 localStorage.setItem("userInfo", JSON.stringify(data.user));
+                
+                console.log("Đã lưu thông tin người dùng:", data.user);
+                
+                alert("Đăng nhập thành công!");
+                // Chuyển hướng đến trang chủ
+                window.location.href = "../index.html";
+            } else {
+                console.error("Phản hồi không có thông tin user:", data);
+                alert("Đăng nhập không thành công: Không nhận được thông tin người dùng.");
+                passwordError.classList.add("hidden");
             }
-            
-            alert("Đăng nhập thành công!");
-            // Chuyển hướng đến trang chủ
-            window.location.href = "../index.html";
         } else {
-            // Nếu phản hồi thành công (res.ok) nhưng không có token,
-            // hiển thị thông báo lỗi từ server hoặc thông báo mặc định
-            console.error("Phản hồi thành công nhưng thiếu token:", data); // Log thêm thông tin
-            alert(data.message || "Đăng nhập không thành công: Phản hồi server không hợp lệ.");
-            // Đảm bảo div lỗi trên trang ẩn đi nếu có
-            document.getElementById("password-error").classList.add("hidden");
+            console.error("Phản hồi thành công nhưng dữ liệu không hợp lệ:", data);
+            alert("Đăng nhập không thành công: Phản hồi server không hợp lệ.");
+            passwordError.classList.add("hidden");
         }
     })
     .catch(error => {
