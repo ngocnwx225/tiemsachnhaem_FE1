@@ -1,0 +1,262 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    background-color: white;
+  }
+
+
+  p{
+    margin: 0;
+  }
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  footer {
+    margin: 0;
+    padding: 1rem 0;
+    color: white;
+    text-align: center;
+  }
+
+  /*Logo_header*/
+  .logo-section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    justify-content: center; /* canh giữa theo chiều ngang */
+  }
+ 
+   /*Check_out*/
+   .checkout-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 90px;
+    padding: 40px;
+    font-family: Arial, sans-serif;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  .checkout-left {
+    flex: 2;
+    min-width: 350px;
+    max-width: 600px;
+  }
+    
+
+  .checkout-left h2 {
+    font-size: 18px;
+    margin-bottom: 15px;
+  }
+  
+  .checkout-left input,
+  .checkout-left select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .note {
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 10px;
+  }
+  
+  .address-options {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .address-row {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .checkout-section {
+    font-family: Arial, sans-serif;
+    margin-top: 30px;
+  }
+  
+  .checkout-section h3 {
+    font-size: 18px;
+    margin: 25px 0 15px;
+  }
+  
+  
+  .checkout-right {
+    flex: 1;
+    min-width: 300px;
+    background-color: rgba(245, 245, 247, 1);
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .checkout-right h2 {
+    margin-bottom: 15px;
+  }
+  
+  .order-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  
+  .order-item img {
+    width: 60px;
+    height: 100px;
+    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+  
+  .order-item .info {
+    flex: 1;
+  }
+  
+  .order-item .title {
+    font-size: 14px;
+    margin: 0;
+    font-weight: bold;
+  }
+  
+  .order-item .qty {
+    font-size: 13px;
+    color: #888;
+  }
+  
+  .order-item .price {
+    font-size: 14px;
+    white-space: nowrap;
+  }
+  
+  .coupon {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+  }
+  
+  .coupon input {
+    flex: 1;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .coupon button {
+    padding: 8px 12px;
+    background-color: #e0e5e1;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .summary {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  
+  .summary div {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+  }
+  
+  .total {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    font-size: 16px;
+    margin: 20px 0;
+  }
+  
+  .checkout-btn {
+    width: 100%;
+    background-color: #88b293;
+    color: white;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+   /*footer*/
+ .site-footer {
+    background-color: #1e2b23;
+    color: white;
+    padding: 40px 0 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+  
+  .footer-logo-info {
+    display: flex;
+    gap: 16px;
+    max-width: none;
+    flex: 1;
+  }
+  
+  .footer-logo-info img {
+    width: 120px;
+    height: auto;
+    flex-shrink: 0;
+  }
+  
+  .footer-description h4 {
+    font-size: 16px;
+    margin: 0 0 6px;
+  }
+  
+  .footer-description p {
+    font-size: 13px;
+    color: #ccc;
+    margin: 0;
+  }
+  
+  .footer-block {
+    flex: 1;
+    min-width: 150px;
+  }
+  
+  .footer-block h4 {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  
+  .footer-block p {
+    font-size: 13px;
+    margin: 6px 0;
+    color: #ccc;
+  }
+  
+  .footer-block i {
+    margin-right: 8px;
+    color: #9dd1b0;
+  }
+  
+  .footer-bottom {
+    border-top: 1px solid #ccc;
+    margin-top: 30px;
+    padding-top: 10px;
+    text-align: center;
+    font-size: 13px;
+    color: #bbb;
+  }
