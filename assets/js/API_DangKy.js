@@ -55,21 +55,17 @@ function callRegisterAPI(event) {
           throw new Error(`Đăng ký thất bại (${res.status}): ${text}`);
         });
       }
-      return res.json().then(data => {
-        console.log("Response data:", data);
-        if (!data || !data.success) {
-          throw new Error(data?.message || "Đăng ký không thành công");
-        }
-        return data;
-      });
+      return res.json();
     })
     .then(data => {
-      console.log("Registration successful, data:", data);
+      console.log("Response data:", data);
+      // Nếu có data.success và nó là false thì mới throw error
+      if (data && data.success === false) {
+        throw new Error(data.message || "Đăng ký không thành công");
+      }
+      // Nếu thành công thì hiển thị thông báo và chuyển trang
       alert("Đăng ký thành công!");
-      // Thêm timeout để đảm bảo alert hiển thị trước khi chuyển trang
-      setTimeout(() => {
-        window.location.href = "../pages/dangnhap1.html";
-      }, 100);
+      window.location.href = "../pages/dangnhap1.html";
     })
     .catch(error => {
       console.error("Registration error details:", error);

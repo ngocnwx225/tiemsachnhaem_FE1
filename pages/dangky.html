@@ -3,8 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>Đăng ký tài khoản</title>
-  <script src="../assets/js/javascriptDangKy.js" defer></script>
-  <script src="../assets/js/API_DangKy.js" defer></script>   <!-- Gọi API -->
   <link rel="stylesheet" href="../assets/css/styledangky.css">
 </head>
 <body>
@@ -16,11 +14,12 @@
       <h1>Đăng ký tài khoản</h1>
       <p>Tạo tài khoản để bắt đầu hành trình khám phá những cuốn sách hay dành riêng cho bạn.</p>
       <br>
-      <form id="registerForm" onsubmit="return handleSubmit(event)">
+      <form id="registerForm" onsubmit="return callRegisterAPI(event)">
         <h4>Họ và tên</h4>
         <input type="text" id="fullName" placeholder="Nhập tên đầy đủ của bạn" required oninvalid="setRequiredError(this, 'Vui lòng nhập họ và tên!')">
         <h4>Email</h4>
         <input type="email" id="email" placeholder="Nhập email" required oninvalid="setEmailError(this)">
+        <div id="email-error" class="error-message hidden"></div>
         <h4>Mật khẩu</h4>
         <div class="pass-wrapper">
           <input type="password" id="password" placeholder="Nhập mật khẩu" required oninvalid="setRequiredError(this, 'Vui lòng nhập mật khẩu!')">
@@ -33,5 +32,7 @@
       </form>
     </div>
   </div>
+  <script src="../assets/js/javascriptDangKy.js" defer></script>
+  <script src="../assets/js/API_DangKy.js" defer></script>   <!-- Gọi API -->
 </body>
 </html>
