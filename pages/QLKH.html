@@ -5,36 +5,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Quản lý khách hàng</title>
     <link rel="stylesheet" href="../assets/css/style_QLKH.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      .container-all {
+        display: flex;
+        margin: 0 auto;
+        overflow: hidden;
+        background-color: #F5F5F7;
+      }
+      
+      .main {
+        flex: 1;
+        margin-left: 300px; /* Chiều rộng của sidebar */
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      body, h1, h2, h3, h4, p, button, input, select, textarea {
+        font-family: 'Montserrat', sans-serif;
+      }
+    </style>
 </head>
 <body>
-  <h1>QUẢN LÝ KHÁCH HÀNG</h1>
+  <div class="container-all">
+    
+    <div id="sidebar-container" class="sidebar"></div>
 
-  <div class="search-filter">
-    <input type="text" class="search-bar" id="searchInput" placeholder="Tìm theo tên, email, số điện thoại...">
-    <div class="status-dropdown">
-      <select id="statusFilter" onchange="filterStatus(this.value)">
-        <option value="all">Tất cả trạng thái</option>
-        <option value="active">Active</option>
-        <option value="lock">Lock</option>
-      </select>
+    <div class="main">
+      <h1>QUẢN LÝ KHÁCH HÀNG</h1>
+
+      <div class="search-filter">
+        <input type="text" class="search-bar" id="searchInput" placeholder="Tìm theo tên, email, số điện thoại...">
+        <div class="status-dropdown">
+          <select id="statusFilter" onchange="filterStatus(this.value)">
+            <option value="all">Tất cả trạng thái</option>
+            <option value="active">Active</option>
+            <option value="lock">Lock</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table id="customerTable">
+          <thead>
+            <tr>
+              <th>Khách hàng</th>
+              <th>Số đơn hàng</th>
+              <th>Tổng chi tiêu</th>
+              <th>Trạng thái</th>
+              <th>Thao tác</th>
+            </tr>
+          </thead>
+          <tbody id="customerList">
+            <!-- Dữ liệu sẽ được tải từ API -->
+          </tbody>
+        </table>
+      </div>
     </div>
-  </div>
-
-  <div class="table-container">
-    <table id="customerTable">
-      <thead>
-        <tr>
-          <th>Khách hàng</th>
-          <th>Số đơn hàng</th>
-          <th>Tổng chi tiêu</th>
-          <th>Trạng thái</th>
-          <th>Thao tác</th>
-        </tr>
-      </thead>
-      <tbody id="customerList">
-        <!-- Dữ liệu sẽ được tải từ API -->
-      </tbody>
-    </table>
   </div>
 
   <!-- Popup Thông Tin Khách Hàng -->
@@ -117,5 +146,6 @@
     </div>
   </div>
 <script src="../assets/js/script_QLKH.js"></script>
+<script src="../assets/js/sidebar.js"></script>
 </body>
 </html>
