@@ -528,7 +528,7 @@ td strong {
   }
 
   #statusFilter {
-    width: 100%;
+    width: 120%;
     font-size: 14px;
     padding: 8px 10px;
   }
@@ -658,12 +658,18 @@ td strong {
   .confirm-footer {
     flex-direction: column;
     gap: 10px;
+    align-items: center;
   }
 
   .cancel-btn, .confirm-btn {
     width: 100%;
     padding: 12px;
     font-size: 14px;
+  }
+  .confirm-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   /* Unlock Popup */
@@ -750,6 +756,7 @@ td strong {
 
   /* Confirm Popup */
   .confirm-popup {
+    width: 80%;
     padding: 10px;
   }
 
@@ -762,9 +769,24 @@ td strong {
     font-size: 12px;
   }
 
+  .confirm-footer {
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+  }
+
   .cancel-btn, .confirm-btn {
     font-size: 13px;
     padding: 10px;
+    width: 50%;
+    max-width: 200px;
+  }
+
+  .confirm-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   /* Unlock Popup */
