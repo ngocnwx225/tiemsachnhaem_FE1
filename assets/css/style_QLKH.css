@@ -10,8 +10,9 @@
 body {
   background-color: #f5f7fa;
   padding: 50px;
-  width: 1640px;
-  height: 985px;
+  width: 100%;
+  max-width: 1640px;
+  height: auto;
   margin: 0 auto;
 }
 
@@ -496,4 +497,309 @@ td strong {
   color: #666;
   margin-bottom: 20px;
   line-height: 1.5;
+}
+
+/* Responsive Styles */
+
+/* Tablet (dưới 768px) */
+@media (max-width: 768px) {
+  body {
+    padding: 20px;
+    max-width: 100%;
+  }
+
+  h1 {
+    font-size: 20px;
+    line-height: 40px;
+    margin-bottom: 20px;
+  }
+
+  .search-filter {
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+  }
+
+  #searchInput {
+    width: 100%;
+    font-size: 14px;
+    padding: 8px 10px 8px 35px;
+    background-size: 16px;
+  }
+
+  #statusFilter {
+    width: 120%;
+    font-size: 14px;
+    padding: 8px 10px;
+  }
+
+  /* Ẩn tiêu đề bảng trên tablet */
+  thead {
+    display: none;
+  }
+
+  /* Chuyển bảng thành dạng thẻ (card) */
+  .table-container {
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  table, tbody, tr {
+    display: block;
+    width: 100%;
+  }
+
+  tr {
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  }
+
+  td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    font-size: 14px;
+    border-bottom: none;
+    line-height: 1.5;
+  }
+
+  td:before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #333;
+    flex: 1;
+  }
+
+  td strong {
+    font-size: 14px;
+  }
+
+  .status {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+
+  .actions img {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* Điều chỉnh cột "Khách hàng" */
+  td:nth-child(1) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  td:nth-child(1):before {
+    display: none;
+  }
+
+  /* Popup */
+  .popup {
+    width: 90%;
+    padding: 15px;
+  }
+
+  .popup-content {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .popup-left, .popup-right {
+    width: 100%;
+  }
+
+  .popup-header h2 {
+    font-size: 18px;
+  }
+
+  .popup-left h3, .popup-right h3 {
+    font-size: 14px;
+  }
+
+  .popup-left p, .popup-right p {
+    font-size: 13px;
+  }
+
+  .popup-right th, .popup-right td {
+    font-size: 12px;
+    padding: 8px 6px;
+  }
+
+  .popup-footer {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .block-btn, .close-btn-footer {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  /* Confirm Popup */
+  .confirm-popup {
+    width: 80%;
+    padding: 15px;
+  }
+
+  .confirm-popup h3 {
+    font-size: 16px;
+  }
+
+  .confirm-popup p {
+    font-size: 13px;
+  }
+
+  .confirm-footer {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .cancel-btn, .confirm-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  /* Unlock Popup */
+  .unlock-popup {
+    width: 80%;
+    padding: 15px;
+  }
+
+  /* Success Popup */
+  .success-popup {
+    width: 80%;
+    padding: 15px;
+  }
+}
+
+/* Mobile (dưới 480px) */
+@media (max-width: 480px) {
+  body {
+    padding: 15px;
+  }
+
+  h1 {
+    font-size: 18px;
+    line-height: 30px;
+    margin-bottom: 15px;
+  }
+
+  #searchInput {
+    font-size: 13px;
+    padding: 6px 8px 6px 30px;
+    background-size: 14px;
+  }
+
+  #statusFilter {
+    font-size: 13px;
+    padding: 6px 8px;
+  }
+
+  td {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  .status {
+    font-size: 11px;
+    padding: 3px 6px;
+  }
+
+  .actions img {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Popup */
+  .popup {
+    padding: 10px;
+  }
+
+  .popup-header h2 {
+    font-size: 16px;
+  }
+
+  .popup-header .close-btn {
+    font-size: 20px;
+  }
+
+  .popup-left h3, .popup-right h3 {
+    font-size: 13px;
+  }
+
+  .popup-left p, .popup-right p {
+    font-size: 12px;
+  }
+
+  .popup-right th, .popup-right td {
+    font-size: 11px;
+    padding: 6px 4px;
+  }
+
+  .block-btn, .close-btn-footer {
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  /* Confirm Popup */
+  .confirm-popup {
+    padding: 10px;
+  }
+
+  .confirm-popup h3 {
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+
+  .confirm-popup p {
+    font-size: 12px;
+  }
+
+  .cancel-btn, .confirm-btn {
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  /* Unlock Popup */
+  .unlock-popup {
+    padding: 10px;
+  }
+
+  .unlock-popup h3 {
+    font-size: 14px;
+  }
+
+  .unlock-popup p {
+    font-size: 12px;
+  }
+
+  .unlock-btn {
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  /* Success Popup */
+  .success-popup {
+    padding: 10px;
+  }
+
+  .success-popup h3 {
+    font-size: 14px;
+  }
+
+  .success-popup p {
+    font-size: 12px;
+  }
+
+  .close-btn-footer {
+    font-size: 13px;
+    padding: 10px;
+  }
 }
