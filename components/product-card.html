@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Product Card</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .product-card {
+            width: 281.25px;
+            height: 100%;
+            padding-bottom: 24px;
+            background: white;
+            overflow: hidden;
+            border-radius: 12px;
+            outline: 0.50px #D1D5DB solid;
+            outline-offset: -0.50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .product-image-container {
+            align-self: stretch;
+            padding: 24px;
+            overflow: hidden;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .product-image {
+            width: 120px;
+            height: 182px;
+            object-fit: cover;
+        }
+
+        .product-info {
+            align-self: stretch;
+            padding: 0 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .product-title {
+            color: black;
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 28px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            height: 56px;
+        }
+
+        .product-price {
+            color: #86A788;
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 28px;
+        }
+
+        .product-price-unit {
+            text-decoration: underline;
+        }
+
+        .product-sold {
+            color: #808080;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 24px;
+        }
+
+        .product-actions {
+            align-self: stretch;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .buy-button {
+            flex: 1;
+            padding: 16px;
+            background: #86A788;
+            border-radius: 10px;
+            color: white;
+            font-size: 13px;
+            font-weight: 600;
+            line-height: 20px;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .buy-button:hover {
+            background: #75946E;
+        }
+
+        .cart-button {
+            width: 56px;
+            height: 56px;
+            padding: 5px;
+            background: rgba(75, 118, 57, 0.10);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .cart-button:hover {
+            background: rgba(75, 118, 57, 0.2);
+        }
+
+        .cart-icon {
+            width: 32px;
+            height: 32px;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+
+<div class="product-card">
+    <div class="product-image-container">
+        <img class="product-image" src="https://placehold.co/120x182" alt="Before the Coffee Gets Cold #1">
+    </div>
+    <div class="product-info">
+        <div class="product-title">Before the Coffee Gets Cold #1</div>
+        <div class="product-price">123.000<span class="product-price-unit">đ</span></div>
+        <div class="product-sold">Đã bán: 325 đã bán/tháng</div>
+        <div class="product-actions">
+            <button class="buy-button">Mua hàng</button>
+            <div class="cart-button">
+                <svg class="cart-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2.73 2.73H26.72V21.4H2.73V2.73Z" stroke="#86A788" stroke-width="1.5"/>
+                    <circle cx="10.67" cy="28" r="1.33" stroke="#86A788" stroke-width="1.5"/>
+                    <circle cx="25.33" cy="28" r="1.33" stroke="#86A788" stroke-width="1.5"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Có thể thêm JavaScript nếu cần
+    document.addEventListener('DOMContentLoaded', function() {
+        // Xử lý sự kiện khi nhấn nút mua hàng
+        document.querySelector('.buy-button').addEventListener('click', function() {
+            console.log('Mua hàng được nhấn');
+            // Thêm code xử lý mua hàng ở đây
+        });
+
+        // Xử lý sự kiện khi nhấn nút giỏ hàng
+        document.querySelector('.cart-button').addEventListener('click', function() {
+            console.log('Thêm vào giỏ hàng được nhấn');
+            // Thêm code xử lý thêm vào giỏ hàng ở đây
+        });
+    });
+</script>
+
+</body>
+</html> 
