@@ -1,23 +1,43 @@
 document.addEventListener("DOMContentLoaded", function () {
+    console.log("DOM fully loaded and parsed. Running javascriptHome.js");
     const carousels = document.querySelectorAll(".carousel-wrapper");
+    console.log(`Found ${carousels.length} carousel wrappers.`);
   
     carousels.forEach(wrapper => {
       const bookList = wrapper.querySelector(".book-list");
       const prevBtn = wrapper.querySelector(".prev");
       const nextBtn = wrapper.querySelector(".next");
   
-      const scrollAmount = 240; // Độ dài cuộn mỗi lần bấm
+      console.log("Processing a carousel wrapper:");
+      console.log("  bookList found:", !!bookList);
+      console.log("  prevBtn found:", !!prevBtn);
+      console.log("  nextBtn found:", !!nextBtn);
   
-      prevBtn.addEventListener("click", () => {
-        bookList.scrollBy({ left: -scrollAmount, behavior: "smooth" });
-      });
+      // Calculate scroll amount for one card + one gap
+      const cardWidth = 281.25;
+      const gapWidth = 16; // 1rem
+      const scrollAmount = cardWidth + gapWidth;
   
-      nextBtn.addEventListener("click", () => {
-        bookList.scrollBy({ left: scrollAmount, behavior: "smooth" });
-      });
+      // Ensure buttons exist before adding listeners
+      if (prevBtn) {
+          console.log("Adding click listener to prevBtn.");
+          prevBtn.addEventListener("click", () => {
+              console.log("Prev button clicked.");
+              bookList.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+          });
+      }
+  
+      if (nextBtn) {
+          console.log("Adding click listener to nextBtn.");
+          nextBtn.addEventListener("click", () => {
+              console.log("Next button clicked.");
+              bookList.scrollBy({ left: scrollAmount, behavior: "smooth" });
+          });
+      }
 
       // Function to render product cards
       function renderProducts(productsToRender) {
+          console.log(`Rendering ${productsToRender.length} products.`);
           bookList.innerHTML = ''; // Clear existing products
 
           if (productsToRender.length === 0) {

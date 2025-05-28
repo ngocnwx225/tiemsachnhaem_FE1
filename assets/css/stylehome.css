@@ -218,6 +218,7 @@
     position: relative;
     display: flex;
     align-items: center;
+    padding: 0 20px;
   }
 
   .carousel-wrapper {
@@ -252,10 +253,18 @@
     flex-grow: 1;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    scroll-snap-type: x mandatory;
+    -webkit-scroll-snap-type: x mandatory;
   }
   
   .book-list::-webkit-scrollbar {
     display: none;
+  }
+  
+  .book-list > .product-card {
+    scroll-snap-align: start;
+    flex-shrink: 0;
+    width: 281.25px;
   }
   
   
