@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trang quản lý - Tiệm Sách Nhà Em</title>
+  <link rel="stylesheet" href="../css/style_index.css" />
+  <style>
+    .container-all {
+      display: flex;
+      margin: 0 auto;
+      overflow: hidden;
+      background-color: #F5F5F7;
+    }
+  </style>
+</head>
+<body>
+  <div class="container-all">
+    
+    <div id="sidebar-container" class="sidebar"></div>
+
+    <div class="main">
+      <div class="container">
+        <h2>Xin chào!</h2>
+        <div class="overview-header">
+          <p>Đây là tổng quan hoạt động của ngày hôm nay.</p>
+          <div class="time-filter">
+            <button class="time-btn">Tuần</button>
+            <button class="time-btn active">Tháng</button>
+            <button class="time-btn">Năm</button>
+            <button class="time-btn custom">
+              <img src="../assets/images/Máy in.png" width="16" style="margin-right: 4px;" />
+              Tùy chỉnh
+            </button>
+          </div>
+          <div id="custom-date-range" style="display: none; margin-top: 10px;">
+            <label>Từ ngày: <input type="date" id="from-date"></label>
+            <label>Đến ngày: <input type="date" id="to-date"></label>
+            <button id="apply-filter">Lọc</button>
+          </div>
+        </div>
+
+        <div class="overview">
+          <div class="card blue">
+            <div class="icon">📦</div>
+            <h3>Tổng đơn hàng</h3>
+            <div class="value" id="total-orders">...</div>
+          </div>
+          <div class="card green">
+            <div class="icon">🛒</div>
+            <h3>Đơn hàng mới</h3>
+            <div class="value" id="new-orders">...</div>
+          </div>
+          <div class="card purple">
+            <div class="icon">👥</div>
+            <h3>Khách hàng</h3>
+            <div class="value" id="total-customers">...</div>
+          </div>
+          <div class="card yellow">
+            <div class="icon">💰</div>
+            <h3>Doanh thu</h3>
+            <div class="value" id="revenue">...</div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="box">
+            <div class="box-header">
+              <h4>Sách bán chạy</h4>
+              <a href="#">Xem tất cả</a>
+            </div>
+            <div id="product-list">Đang tải...</div>
+          </div>
+
+          <div class="box">
+            <div class="box-header">
+              <h4>Đơn hàng gần đây</h4>
+              <a href="#">Xem tất cả</a>
+            </div>
+            <div id="recent-orders">Đang tải đơn hàng gần đây...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Load sidebar và xử lý ảnh
+    fetch("../components/sidebar.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("sidebar-container").innerHTML = data;
+
+        // Sửa đường dẫn ảnh bên trong sidebar
+        document.querySelectorAll("#sidebar-container img").forEach(img => {
+          const src = img.getAttribute("src");
+          if (src && !src.startsWith("http") && !src.startsWith("../")) {
+            img.src = "../" + src;
+          }
+        });
+
+        // Active menu
+        document.getElementById("menu-overview")?.classList.add("active");
+      });
+
+    // Lấy tổng số khách hàng
+    fetch('https://tiemsachnhaem-be-mu.vercel.app/api/customers')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("total-customers").textContent = data.length.toLocaleString('vi-VN');
+      });
+
+    function renderOrders(filtered) {
+      let revenue = 0, newOrders = 0;
+      filtered.forEach(o => {
+        if (o.status === 'delivered') revenue += o.totalAmount;
+        if (o.status === 'pending') newOrders++;
+      });
+
+      document.getElementById("total-orders").textContent = filtered.length;
+      document.getElementById("new-orders").textContent = newOrders;
+      document.getElementById("revenue").textContent = revenue.toLocaleString('vi-VN') + " VND";
+
+      const sorted = filtered.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      const recent = sorted.slice(0, 3);
+      const html = recent.map(order => {
+        const statusMap = {
+          pending: { text: "pending", class: "red" },
+          delivered: { text: "delivered", class: "green" },
+          canceled: { text: "canceled", class: "gray" },
+          shipped: { text: "shipped", class: "blue" },
+          processing: { text: "processing", class: "orange" }
+        };
+        const raw = order.status?.toLowerCase();
+        const status = statusMap[raw] || { text: raw || "unknown", class: "gray" };
+        return `
+          <div class="order-item">
+            <div class="order-left">
+              <img src="../assets/images/Container.png" width="32" height="32" />
+              <div class="order-info">
+                <strong>${order.customerId}</strong>
+                <span>#${order.orderId} • ${order.productQuantity} sản phẩm</span>
+              </div>
+            </div>
+            <div class="order-dates">
+              <span>Dự kiến giao ngày:</span>${new Date(order.orderDate).toLocaleDateString('vi-VN')}
+              <span>Ngày giao:</span>${order.status === 'delivered' ? new Date(order.updatedAt).toLocaleDateString('vi-VN') : "---"}
+            </div>
+            <div class="order-status">
+              <div class="order-price">${order.totalAmount.toLocaleString()} VND</div>
+              <div class="status ${status.class}">${status.text}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+      document.getElementById("recent-orders").innerHTML = html;
+    }
+
+    function filterOrdersByTime(label, data) {
+      const now = new Date();
+      let filtered = [];
+
+      if (label === "tuần") {
+        const oneWeekAgo = new Date(now);
+        oneWeekAgo.setDate(now.getDate() - 7);
+        filtered = data.filter(o => new Date(o.orderDate) >= oneWeekAgo);
+      } else if (label === "tháng") {
+        const month = now.getMonth();
+        const year = now.getFullYear();
+        filtered = data.filter(o => {
+          const d = new Date(o.orderDate);
+          return d.getMonth() === month && d.getFullYear() === year;
+        });
+      } else if (label === "năm") {
+        const year = now.getFullYear();
+        filtered = data.filter(o => new Date(o.orderDate).getFullYear() === year);
+      } else {
+        filtered = data;
+      }
+
+      return filtered;
+    }
+
+    document.querySelectorAll(".time-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".time-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        const label = btn.innerText.trim().toLowerCase();
+
+        if (label === "tùy chỉnh") {
+          document.getElementById("custom-date-range").style.display = "block";
+        } else {
+          document.getElementById("custom-date-range").style.display = "none";
+        }
+
+        fetch('https://tiemsachnhaem-be-mu.vercel.app/api/orders')
+          .then(res => res.json())
+          .then(data => renderOrders(filterOrdersByTime(label, data)));
+      });
+    });
+
+    document.getElementById("apply-filter").addEventListener("click", () => {
+      const from = new Date(document.getElementById("from-date").value);
+      const to = new Date(document.getElementById("to-date").value);
+
+      if (isNaN(from) || isNaN(to)) {
+        alert("Vui lòng chọn cả 2 ngày.");
+        return;
+      }
+
+      fetch('https://tiemsachnhaem-be-mu.vercel.app/api/orders')
+        .then(res => res.json())
+        .then(data => {
+          const filtered = data.filter(o => {
+            const d = new Date(o.orderDate);
+            return d >= from && d <= to;
+          });
+          renderOrders(filtered);
+        });
+    });
+
+    document.querySelector(".time-btn.active")?.click();
+  </script>
+</body>
+</html>

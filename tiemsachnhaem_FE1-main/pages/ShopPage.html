@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Shop Page</title>
+  <link rel="stylesheet" href="../assets/css/style_ShopPage.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <!-- Include header -->
+  <header>
+    <!-- Assuming header.html is included here -->
+    <iframe src="../components/header.html" frameborder="0" style="width: 100%; height: 200px; border: none;"></iframe>
+</header>
+
+
+  <div class="container">
+    <img src="../assets/images/banner.png" alt="banner" width="100%" height="auto" style="margin: 30px 10px; " >
+  </div>
+
+  <main class="container">
+    <div style="display: flex; justify-content: flex-start; gap: 10px; position: relative;">
+      <aside class="filter-sidebar">
+        <h3><i class="fas fa-filter"></i> Bộ lọc tìm kiếm</h3>
+        <div id="price-filter">
+          <p class="filter-title">Lọc theo giá:</p>
+          <input type="range" id="price-range" min="0" max="1000000" step="10000" value="1000000" />
+          <div style="display: flex; justify-content: space-between;">
+            <p>0đ</p>
+            <p>1.000.000đ</p>
+          </div>
+        </div>
+        <details open>
+          <summary class="filter-title">Thể loại<hr></summary>
+          <div class="sub-filter">
+            <div class="sub-header" onclick="toggleBox(this)">
+              Tiểu thuyết <span class="icon">+</span>
+              <div><hr></div>
+            </div>
+            <div class="sub-content">
+              <label><input type="checkbox" value="Kinh điển"> Kinh điển</label>
+              <label><input type="checkbox" value="Khoa học viễn tưởng"> Khoa học viễn tưởng</label>
+              <label><input type="checkbox" value="Kinh dị"> Kinh dị</label>
+              <label><input type="checkbox" value="Trinh thám"> Trinh thám</label>
+            </div>
+          </div>
+          <div class="sub-filter">
+            <div class="sub-header" onclick="toggleBox(this)">
+              Phi hư cấu <span class="icon">+</span>
+              <div><hr></div>
+            </div>
+            <div class="sub-content">
+              <label><input type="checkbox" value="Self-help"> Self-help</label>
+              <label><input type="checkbox" value="Tâm lý"> Tâm lý</label>
+              <label><input type="checkbox" value="Khoa học tự nhiên"> Khoa học tự nhiên</label>
+            </div>
+          </div>
+        </details>
+      
+        <br>
+        <div class="buttons">
+          <input type="button" class="delete-button" value="Xóa tất cả">
+          <input type="button" class="apply-button" value="Áp dụng">
+        </div>
+      </aside>
+      
+      <div class="book-layout"> 
+        
+          <div class="tags-container">
+            <span class="filter-label">Bộ lọc đang áp dụng:</span>
+            <!-- Các tag động ở đây -->
+          </div>
+          
+      
+          <div class="sort-wrapper">
+            <label class="sort-title" for="sort-select">Sắp xếp</label>
+            <select id="sort-select" class="sort-select" onchange="handleSortChange(this)">
+              <option value="popular">Phổ biến</option>
+              <option value="az">Từ A - Z</option>
+              <option value="za">Từ Z - A</option>
+              <option value="price-asc">Giá tăng</option>
+              <option value="price-desc">Giá giảm</option>
+            </select>
+          </div>
+          
+          <div>
+          <div id="product-grid">
+          
+            <!-- render sản phẩm ở đây -->
+          </div>
+        </div>
+
+      </div>
+      
+    </div>
+  </main>
+
+<!-- Include footer -->
+<footer>
+  <!-- Assuming footer.html is included here -->
+  <iframe src="../components/footer.html" frameborder="0" style="width: 100%; height: 340px; border: none;"></iframe>
+</footer>
+
+  <script src="../assets/js/script_ShopPage.js"></script>
+</body>
+</html>

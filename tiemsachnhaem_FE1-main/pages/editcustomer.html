@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chỉnh sửa thông tin - Tiệm Sách Nhà Em</title>
+    <link rel="stylesheet" href="../asset/css/editcustomer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    <main class="edit-customer-page-content">
+        <div class="container">
+            <h1 class="page-main-title">Thông tin tài khoản</h1>
+            <div class="form-section-wrapper">
+                <div class="form-title-header">
+                    <a href="profilecustomer.html" class="back-arrow" aria-label="Quay lại trang thông tin cá nhân">
+                        <i class="fas fa-arrow-left"></i>
+                    </a>
+                    <h2>Chỉnh sửa tài khoản</h2>
+                </div>
+                <form id="editCustomerForm" class="edit-form">
+                    <div class="form-group">
+                        <label for="fullName">Họ và tên</label>
+                        <input type="text" id="fullName" name="fullName" value="Nguyễn Văn A" placeholder="Nhập họ và tên của bạn">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" value="d**@gmail.com" placeholder="Nhập địa chỉ email">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Số điện thoại</label>
+                        <input type="tel" id="phone" name="phone" value="0987654321" placeholder="Nhập số điện thoại">
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="save-button">Lưu thông tin</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+    <div id="footer-placeholder"></div>
+    <script>
+    // Tự động load header/footer component
+    function loadComponent(id, url) {
+        fetch(url)
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById(id).innerHTML = html;
+            });
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        loadComponent('header-placeholder', '../components/header.html');
+        loadComponent('footer-placeholder', '../components/footer.html');
+    });
+    </script>
+    <script src="../asset/js/editcustomer.js"></script>
+</body>
+</html>

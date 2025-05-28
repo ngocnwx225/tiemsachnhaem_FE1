@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Đăng nhập lỗi</title>
+  <script src="../assets/js/javascript.js"></script>
+  <link rel="stylesheet" href="../assets/css/styledangky.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Logo bên trái -->
+    <div class="logo-box">
+      <img src="../assets/Hình/logo.png" alt="Logo">
+    </div>
+
+    <!-- Form đăng nhập bên phải -->
+    <div class="form-box">
+      <h1>Đăng nhập Lỗi</h1>
+      <br>
+      <form>
+        <h4>Email hoặc Số điện thoại</h4>
+        <input type="email" style="font-size: 16px;" placeholder="Nhập email hoặc số điện thoại" required>
+        <h5 class="Error">Email hoặc số điện thoại không đúng. Vui lòng kiểm tra lại.</h5>
+        <h4>Mật khẩu</h4>
+        <div class="pass-wrapper">
+          <input id="pass" type="password" placeholder="Nhập mật khẩu" required>
+          <img onclick="myfunction()" src="../assets/Hình/view.png" class="eye-icon" alt="Hiện mật khẩu">
+        </div>
+        <h5 class="Error">Mật khẩu không hợp lệ, cần ít nhất 8 ký tự, chữ hoa, thường, số.</h5>
+        <a href="../pages/quenMK1.html" class="quenMK-link">Quên mật khẩu?</a> <br>
+
+        <button type="submit">Đăng nhập</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

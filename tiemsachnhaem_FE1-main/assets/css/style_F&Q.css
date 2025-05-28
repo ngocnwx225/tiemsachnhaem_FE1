@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
+.faq-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Montserrat', sans-serif;
+    margin-left: 110px;
+    margin-top: 2px;
+    margin-right: 50px;
+}
+
+.faq-section h1 {
+    font-size: 32px;
+    color: #333;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.faq-section h2 {
+    font-size: 24px;
+    color: #666;
+    text-align: left;
+    margin-bottom: 50px;
+}
+
+.faq-category {
+    margin-bottom: 30px;
+}
+
+.faq-category h3 {
+    font-size: 18px;
+    color: #444;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+}
+.faq-category p {
+    font-size: 16px;
+    color: #666;
+    line-height: 1.6;
+}
+.faq-item {
+    margin-bottom: 20px;
+}
+
+.faq-item h4 {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.faq-item p {
+    color: #666;
+    line-height: 1.6;
+    font-size: 16px;
+}
+
+.faq-item ul {
+    color: #666;
+    margin-left: 20px;
+    list-style-type: disc;
+}
+
+.faq-item ul li {
+    margin-bottom: 5px;
+    line-height: 1.5;
+}
+.faq-item ol li {
+    margin-bottom: 5px;
+    line-height: 1.5;
+}
+a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}

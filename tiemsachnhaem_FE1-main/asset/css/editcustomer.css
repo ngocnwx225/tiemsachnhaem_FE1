@@ -1,0 +1,157 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #F5F5F7;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    min-height: 100vh;
+}
+
+.edit-customer-page-content {
+    background: #F5F5F7;
+    min-height: 100vh;
+    padding-top: 40px;
+    padding-bottom: 60px;
+}
+
+.container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.page-main-title {
+    font-size: 32px;
+    font-weight: 600;
+    color: #1A3229;
+    margin-bottom: 32px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.form-section-wrapper {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    padding: 48px 56px;
+}
+
+.form-title-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 32px;
+}
+
+.form-title-header .back-arrow {
+    font-size: 26px;
+    color: #1A3229;
+    text-decoration: none;
+    margin-right: 8px;
+}
+
+.form-title-header h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1A3229;
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.edit-form .form-group {
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.edit-form label {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1A3229;
+    margin-bottom: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.edit-form input[type="text"],
+.edit-form input[type="email"],
+.edit-form input[type="tel"] {
+    padding: 18px;
+    border-radius: 12px;
+    border: 1px solid #D8DADC;
+    background: #fff;
+    font-size: 16px;
+    color: #1A3229;
+    font-family: 'Montserrat', sans-serif;
+    line-height: 24px;
+}
+
+.edit-form input[type="text"]::placeholder,
+.edit-form input[type="email"]::placeholder,
+.edit-form input[type="tel"]::placeholder {
+    color: rgba(0,0,0,0.5);
+    font-weight: 400;
+}
+
+.form-actions {
+    margin-top: 32px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.save-button {
+    padding: 16px 40px;
+    background: #86A788;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+    line-height: 20px;
+}
+
+.save-button:hover {
+    background: #6e8e6e;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .form-section-wrapper {
+        padding: 32px 16px;
+    }
+    .container {
+        max-width: 98vw;
+        padding: 0 4vw;
+    }
+}
+
+@media (max-width: 600px) {
+    .page-main-title {
+        font-size: 26px;
+        margin-bottom: 20px;
+    }
+    .form-section-wrapper {
+        padding: 16px 4vw;
+        border-radius: 10px;
+    }
+    .form-title-header h2 {
+        font-size: 20px;
+    }
+    .edit-form label {
+        font-size: 15px;
+    }
+    .edit-form input[type="text"],
+    .edit-form input[type="email"],
+    .edit-form input[type="tel"] {
+        padding: 12px;
+        font-size: 15px;
+        border-radius: 8px;
+    }
+    .save-button {
+        padding: 12px 20px;
+        font-size: 13px;
+        border-radius: 8px;
+    }
+}

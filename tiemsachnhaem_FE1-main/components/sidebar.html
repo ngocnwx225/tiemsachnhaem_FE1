@@ -1,0 +1,368 @@
+<div
+  class="sidebar"
+  style="
+    background: #ffffff;
+    color: #333;
+    padding: 15px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    border-right: 1px solid #f0f0f0;
+    width: 260px;
+    box-sizing: border-box;
+    overflow: visible;
+    position: relative;
+  "
+>
+  <div>
+    <div
+      class="logo"
+      style="text-align: center; margin-bottom: 35px; padding-top: 10px"
+    >
+      <img
+        src="assets/images/Logo to.png"
+        alt="Tiệm Sách Nhà Em"
+        style="max-width: 90%; height: auto"
+      />
+    </div>
+    <ul class="menu" style="list-style: none; padding: 0; margin: 0">
+      <li
+        id="menu-overview"
+        onclick="location.href='index.html'"
+        style="
+          display: flex;
+          align-items: center;
+          padding: 12px 15px;
+          margin-bottom: 12px;
+          border-radius: 8px;
+          transition: all 0.3s ease;
+          color: #555;
+          font-weight: 500;
+          white-space: nowrap;
+        "
+      >
+        <div
+          style="
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            flex-shrink: 0;
+          "
+        >
+          <img
+            src="assets/images/Tổng quan trắng.png"
+            width="22"
+            alt="Tổng quan"
+            style="filter: brightness(0.3)"
+          />
+        </div>
+        <span>Tổng quan</span>
+      </li>
+      <li
+        id="menu-products"
+        onclick="location.href='pages/adminQLSP.html'"
+        style="
+          display: flex;
+          align-items: center;
+          padding: 12px 15px;
+          margin-bottom: 12px;
+          border-radius: 8px;
+          transition: all 0.3s ease;
+          color: #555;
+          font-weight: 500;
+          white-space: nowrap;
+        "
+      >
+        <div
+          style="
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            flex-shrink: 0;
+          "
+        >
+          <img
+            src="assets/images/Quản lý sản phẩm.png"
+            width="22"
+            alt="Sản phẩm"
+            style="filter: brightness(0.3)"
+          />
+        </div>
+        <span>Quản lý sản phẩm</span>
+      </li>
+      <li
+        id="menu-orders"
+        onclick="location.href='pages/quanlydonhang.html'"
+        style="
+          display: flex;
+          align-items: center;
+          padding: 12px 15px;
+          margin-bottom: 12px;
+          border-radius: 8px;
+          transition: all 0.3s ease;
+          color: #555;
+          font-weight: 500;
+          white-space: nowrap;
+        "
+      >
+        <div
+          style="
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            flex-shrink: 0;
+          "
+        >
+          <img
+            src="assets/images/quản lý đơn hàng.png"
+            width="22"
+            alt="Đơn hàng"
+            style="filter: brightness(0.3)"
+          />
+        </div>
+        <span>Quản lý đơn hàng</span>
+      </li>
+      <li
+        id="menu-customers"
+        onclick="location.href='pages/QLKH.html'"
+        style="
+          display: flex;
+          align-items: center;
+          padding: 12px 15px;
+          margin-bottom: 12px;
+          border-radius: 8px;
+          transition: all 0.3s ease;
+          color: #555;
+          font-weight: 500;
+          white-space: nowrap;
+        "
+      >
+        <div
+          style="
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            flex-shrink: 0;
+          "
+        >
+          <img
+            src="assets/images/quản lý khách hàng.png"
+            width="22"
+            alt="Khách hàng"
+            style="filter: brightness(0.3)"
+          />
+        </div>
+        <span>Quản lý khách hàng</span>
+      </li>
+      <li
+        id="menu-statistics"
+        onclick="location.href='statistics.html'"
+        style="
+          display: flex;
+          align-items: center;
+          padding: 12px 15px;
+          margin-bottom: 12px;
+          border-radius: 8px;
+          transition: all 0.3s ease;
+          color: #555;
+          font-weight: 500;
+          white-space: nowrap;
+        "
+      >
+        <div
+          style="
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            flex-shrink: 0;
+          "
+        >
+          <img
+            src="assets/images/Thống kê.png"
+            width="22"
+            alt="Thống kê"
+            style="filter: brightness(0.3)"
+          />
+        </div>
+        <span>Thống kê</span>
+      </li>
+    </ul>
+
+    <div
+      class="account-info"
+      style="
+        margin-top: 20px;
+        border-top: 1px solid #f0f0f0;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        padding-left: 15px;
+        padding-right: 15px;
+        background-color: #ffffff;
+      "
+    >
+      <div
+        class="profile-section"
+        style="display: flex; flex-direction: column; align-items: center"
+      >
+        <div
+          class="profile-avatar"
+          style="
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: #6563ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+            color: #fff;
+            box-shadow: 0 4px 10px rgba(101, 99, 255, 0.2);
+          "
+        >
+          A
+        </div>
+        <div style="font-size: 14px; color: #888; margin-bottom: 2px">
+          Tài khoản của tôi
+        </div>
+        <div style="font-size: 16px; font-weight: bold; color: #333">ADMIN</div>
+      </div>
+      <button
+        id="logout-button"
+        class="logout-button"
+        style="
+          width: 100%;
+          background-color: #f44336;
+          color: white;
+          border: none;
+          padding: 8px 15px;
+          text-align: center;
+          font-size: 14px;
+          margin-top: 10px;
+          margin-bottom: 0;
+          border-radius: 8px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 8px rgba(244, 67, 54, 0.3);
+        "
+      >
+        <img
+          src="assets/images/Frame.png"
+          width="18"
+          style="margin-right: 8px; filter: brightness(0) invert(1)"
+        />
+        <span>Đăng xuất</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Thêm class active cho menu item đang được chọn
+  document.addEventListener("DOMContentLoaded", function () {
+    // Lấy tất cả các menu item
+    const menuItems = document.querySelectorAll(".menu li");
+
+    // Thêm style cho menu item active và hover
+    menuItems.forEach((item) => {
+      // Style cho hover
+      item.addEventListener("mouseover", function () {
+        this.style.backgroundColor = "#f9e8ea";
+        this.style.transform = "translateX(5px)";
+        this.style.boxShadow = "0 4px 10px rgba(0,0,0,0.05)";
+      });
+
+      item.addEventListener("mouseout", function () {
+        if (!this.classList.contains("active")) {
+          this.style.backgroundColor = "";
+          this.style.transform = "";
+          this.style.boxShadow = "";
+        }
+      });
+
+      // Kiểm tra nếu là trang hiện tại để thêm class active
+      const currentPage = window.location.pathname.split("/").pop();
+      const itemHref = item
+        .getAttribute("onclick")
+        .match(/href=\'([^\']+)\'/)[1];
+      const itemPage = itemHref.split("/").pop();
+
+      if (
+        currentPage === itemPage ||
+        (currentPage === "" && itemPage === "index.html")
+      ) {
+        item.classList.add("active");
+        item.style.backgroundColor = "#f9e8ea";
+        item.style.color = "#333";
+        item.style.fontWeight = "bold";
+        item.style.boxShadow = "0 4px 10px rgba(0,0,0,0.05)";
+      }
+    });
+
+    // Style và chức năng cho nút đăng xuất
+    const logoutBtn = document.getElementById("logout-button");
+
+    // Thêm hiệu ứng hover
+    logoutBtn.addEventListener("mouseover", function () {
+      this.style.backgroundColor = "#d32f2f";
+      this.style.transform = "translateY(-2px)";
+      this.style.boxShadow = "0 6px 12px rgba(244, 67, 54, 0.4)";
+    });
+
+    logoutBtn.addEventListener("mouseout", function () {
+      this.style.backgroundColor = "#f44336";
+      this.style.transform = "";
+      this.style.boxShadow = "0 4px 8px rgba(244, 67, 54, 0.3)";
+    });
+
+    // Thêm hiệu ứng khi click
+    logoutBtn.addEventListener("mousedown", function () {
+      this.style.transform = "scale(0.98)";
+      this.style.boxShadow = "0 2px 4px rgba(244, 67, 54, 0.3)";
+    });
+
+    logoutBtn.addEventListener("mouseup", function () {
+      this.style.transform = "";
+      this.style.boxShadow = "0 4px 8px rgba(244, 67, 54, 0.3)";
+    });
+
+    // Chức năng đăng xuất - chuyển đến trang đăng nhập
+    logoutBtn.addEventListener("click", function () {
+      // Thêm hiệu ứng trước khi chuyển trang
+      this.style.backgroundColor = "#b71c1c";
+      this.style.transform = "scale(0.95)";
+
+      // Xóa session hoặc local storage nếu cần
+      localStorage.removeItem("user");
+      sessionStorage.removeItem("user");
+
+      // Chuyển đến trang đăng nhập sau 300ms để hiển thị hiệu ứng
+      setTimeout(function () {
+        window.location.href = "pages/dangnhap1.html";
+      }, 300);
+    });
+  });
+</script>
+
+<!-- Thêm file JavaScript cho sidebar -->
+<script src="assets/js/sidebar.js"></script>

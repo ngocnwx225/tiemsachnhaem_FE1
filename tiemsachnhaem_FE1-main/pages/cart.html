@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ hàng</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/styleCart.css">
+</head>
+<body>
+        <!-- Include header -->
+    <div id="header-placeholder"></div>
+    <script>
+        fetch('../components/header.html')
+          .then(response => response.text())
+          .then(data => {
+            document.getElementById('header-placeholder').innerHTML = data;
+          });
+    </script>
+
+    <main>
+        <div class="cart-page">
+            <!-- Phần 1: Giỏ hàng -->
+            <section class="cart-section">
+                <h2>Giỏ hàng của bạn</h2>
+                <div class="cart-items" id="cartItems">
+                    <!-- Danh sách sản phẩm sẽ được render động -->
+                </div>
+                <div class="empty-cart" id="emptyCart" style="display: none;">
+                    <div class="empty-cart-content">
+                        <img src="../assets/images/emptycart.png" alt="Empty Cart" class="empty-cart-icon">
+                        <h3>Giỏ hàng của bạn đang trống</h3>
+                        <p>Hãy thêm sản phẩm vào giỏ hàng để tiếp tục mua sắm!</p>
+                        <button class="continue-btn" id="continueShopping">Tiếp tục mua sắm</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Phần 2: Thanh toán -->
+            <aside class="checkout-section" id="checkoutSection">
+                <h3>Thanh toán</h3>
+                <div class="checkout-summary">
+                    <p><span class="label">Tổng cộng (<span id="itemCount">0</span> sản phẩm):</span> <span id="subtotal">0 đ</span></p>
+                    <p><span class="label">Ước tính vận chuyển:</span> <span id="shipping">0 đ</span></p>
+                    <p><span class="label">Giảm giá:</span> <span id="discount">0 đ</span></p>
+                    <hr>
+                    <p><span class="label">Tổng đơn hàng:</span> <span id="totalPrice">0 đ</span></p>
+                </div>
+                <!-- Thêm phần nhập mã giảm giá -->
+                <div class="discount-code">
+                    <input type="text" id="discountCode" placeholder="Mã khuyến mãi">
+                    <button id="applyDiscountBtn">Áp dụng</button>
+                </div>
+                <button class="checkout-btn" id="checkoutBtn">Thanh toán</button>
+            </aside>
+        </div>
+
+        <!-- Modal thông báo giảm giá -->
+        <div id="discountMessageModal" class="modal discount-modal">
+            <div class="modal-content discount-content">
+                <p id="discountMessageText"></p>
+            </div>
+        </div>
+
+        <!-- Modal xác nhận xóa -->
+        <div id="deleteModal" class="modal">
+            <div class="modal-content">
+                <h3>Xác nhận xóa sản phẩm</h3>
+                <p>Sách này sẽ được xóa khỏi giỏ hàng, bạn có chắc chắn muốn xóa sách không?</p>
+                <div class="modal-actions">
+                    <button class="cancel-btn" id="cancelDelete">Hủy</button>
+                    <button class="confirm-btn" id="confirmDelete">Xóa</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+      <!-- Include footer -->
+    <div id="footer-placeholder"></div>
+    <script>
+        fetch('../components/footer.html')
+          .then(response => response.text())
+          .then(data => {
+            document.getElementById('footer-placeholder').innerHTML = data;
+          });
+    </script>
+
+    <script src="../assets/js/javascriptCart.js"></script>
+</body>
+</html>

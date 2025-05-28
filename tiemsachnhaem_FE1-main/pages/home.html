@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Trang chủ</title>
+  <script src="../assets/js/javascript.js"></script>
+  <link rel="stylesheet" href="../assets/css/stylehome.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <header>
+    <!-- Assuming header.html is included here -->
+    <iframe src="../components/header.html" frameborder="0" style="width: 100%; height: 200px; border: none;"></iframe>
+  </header>
+
+  <hr style="color: lightgrey;">
+
+    <main class="container">
+                  <!-- Include header -->
+        <div class="banner-wrapper">
+          <div class="banner-container">
+            <img src="../assets/Hình/Welcome.png" alt="Tiệm sách nhà em" class="banner-image">
+          </div>
+        </div>
+
+        
+        <section class="book-banners" aria-label="Các banner sách nổi bật">
+            <div class="banner-item">
+                <img src="../assets/Hình/h1.jpg" alt="Combo sách trí tuệ của thiên nhiên">
+            </div>
+            <div class="banner-item">
+                <img src="../assets/Hình/h2.jpg" alt="Bestseller Books">
+            </div>
+            <div class="banner-item">
+                <img src="../assets/Hình/h3.jpg" alt="Đường xưa mây trắng - Truyện về Đức Phật">
+            </div>
+        </section>
+
+
+      <section class="popular-books">
+  <!-- TIÊU ĐỀ NẰM RIÊNG 1 DÒNG -->
+  <h3>Sách nổi bật</h3>
+
+  <!-- DÒNG NÚT + XEM TẤT CẢ -->
+  <div class="control-row">
+    <div class="left-controls">
+      <button onclick="scrollBooks(-1)"><i class="fas fa-arrow-left"></i></button>
+      <button onclick="scrollBooks(1)"><i class="fas fa-arrow-right"></i></button>
+    </div>
+    <div class="right-controls">
+      <button class="see-all-btn">Xem tất cả</button>
+    </div>
+  </div>
+
+  <!-- 2 DÒNG SÁCH CUỘN -->
+  <div class="carousel-container">
+    <div class="book-list" id="row1">
+            <div class="product-card">
+              <img src="../assets/Hình/TheBodyIllustrated.jpg" alt="Cloud Atlas" class="product-img">
+              <h4 class="product-title">Cloud Atlas: 20Th<br>Anniversary Edition</h4>
+              <p class="product-price">990.000đ</p>
+              <div class="product-rating">
+                <span class="star">⭐</span>
+                <span class="rating-score">4.8</span>
+                <span class="sales">· 325 đã bán/tháng</span>
+              </div>
+              <div class="product-actions">
+                <button class="buy-button">Mua hàng</button>
+                <div class="cart-icon">
+                  <i class="fas fa-shopping-cart"></i>
+                </div>
+              </div>
+            </div>
+          
+            <div class="product-card">
+              <img src="../assets/Hình/TheFaultInOurStars.jpg" alt="Cloud Atlas" class="product-img">
+              <h4 class="product-title">Cloud Atlas: 20Th<br>Anniversary Edition</h4>
+              <p class="product-price">990.000đ</p>
+              <div class="product-rating">
+                <span class="star">⭐</span>
+                <span class="rating-score">4.8</span>
+                <span class="sales">· 325 đã bán/tháng</span>
+              </div>
+              <div class="product-actions">
+                <button class="buy-button">Mua hàng</button>
+                <div class="cart-icon">
+                  <i class="fas fa-shopping-cart"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="product-card">
+              <img src="../assets/Hình/ThousandCranes.jpg" alt="Cloud Atlas" class="product-img">
+              <h4 class="product-title">Cloud Atlas: 20Th<br>Anniversary Edition</h4>
+              <p class="product-price">990.000đ</p>
+              <div class="product-rating">
+                <span class="star">⭐</span>
+                <span class="rating-score">4.8</span>
+                <span class="sales">· 325 đã bán/tháng</span>
+              </div>
+              <div class="product-actions">
+                <button class="buy-button">Mua hàng</button>
+                <div class="cart-icon">
+                  <i class="fas fa-shopping-cart"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="product-card">
+              <img src="../assets/Hình/ThePictureOfDorianGrayClassic.jpg" alt="Cloud Atlas" class="product-img">
+              <h4 class="product-title">Cloud Atlas: 20Th<br>Anniversary Edition</h4>
+              <p class="product-price">990.000đ</p>
+              <div class="product-rating">
+                <span class="star">⭐</span>
+                <span class="rating-score">4.8</span>
+                <span class="sales">· 325 đã bán/tháng</span>
+              </div>
+              <div class="product-actions">
+                <button class="buy-button">Mua hàng</button>
+                <div class="cart-icon">
+                  <i class="fas fa-shopping-cart"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="product-card">
+              <img src="../assets/Hình/ThePictureOfDorianGray.jpg" alt="Cloud Atlas" class="product-img">
+              <h4 class="product-title">Cloud Atlas: 20Th<br>Anniversary Edition</h4>
+              <p class="product-price">990.000đ</p>
+              <div class="product-rating">
+                <span class="star">⭐</span>
+                <span class="rating-score">4.8</span>
+                <span class="sales">· 325 đã bán/tháng</span>
+              </div>
+              <div class="product-actions">
+                <button class="buy-button">Mua hàng</button>
+                <div class="cart-icon">
+                  <i class="fas fa-shopping-cart"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="product-card">
+              <img src="../assets/Hình/TheBodyIllustrated.jpg" alt="Cloud Atlas" class="product-img">
+              <h4 class="product-title">Cloud Atlas: 20Th<br>Anniversary Edition</h4>
+              <p class="product-price">990.000đ</p>
+              <div class="product-rating">
+                <span class="star">⭐</span>
+                <span class="rating-score">4.8</span>
+                <span class="sales">· 325 đã bán/tháng</span>
+              </div>
+              <div class="product-actions">
+                <button class="buy-button">Mua hàng</button>
+                <div class="cart-icon">
+                  <i class="fas fa-shopping-cart"></i>
+                </div>
+              </div>
+            </div>
+          
+            <div class="product-card">
+              <img src="../assets/Hình/TheFaultInOurStars.jpg" alt="Cloud Atlas" class="product-img">
+              <h4 class="product-title">Cloud Atlas: 20Th<br>Anniversary Edition</h4>
+              <p class="product-price">990.000đ</p>
+              <div class="product-rating">
+                <span class="star">⭐</span>
+                <span class="rating-score">4.8</span>
+                <span class="sales">· 325 đã bán/tháng</span>
+              </div>
+              <div class="product-actions">
+                <button class="buy-button">Mua hàng</button>
+                <div class="cart-icon">
+                  <i class="fas fa-shopping-cart"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="product-card">
+              <img src="../assets/Hình/ThousandCranes.jpg" alt="Cloud Atlas" class="product-img">
+              <h4 class="product-title">Cloud Atlas: 20Th<br>Anniversary Edition</h4>
+              <p class="product-price">990.000đ</p>
+              <div class="product-rating">
+                <span class="star">⭐</span>
+                <span class="rating-score">4.8</span>
+                <span class="sales">· 325 đã bán/tháng</span>
+              </div>
+              <div class="product-actions">
+                <button class="buy-button">Mua hàng</button>
+                <div class="cart-icon">
+                  <i class="fas fa-shopping-cart"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="product-card">
+              <img src="../assets/Hình/ThePictureOfDorianGrayClassic.jpg" alt="Cloud Atlas" class="product-img">
+              <h4 class="product-title">Cloud Atlas: 20Th<br>Anniversary Edition</h4>
+              <p class="product-price">990.000đ</p>
+              <div class="product-rating">
+                <span class="star">⭐</span>
+                <span class="rating-score">4.8</span>
+                <span class="sales">· 325 đã bán/tháng</span>
+              </div>
+              <div class="product-actions">
+                <button class="buy-button">Mua hàng</button>
+                <div class="cart-icon">
+                  <i class="fas fa-shopping-cart"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="product-card">
+              <img src="../assets/Hình/ThePictureOfDorianGray.jpg" alt="Cloud Atlas" class="product-img">
+              <h4 class="product-title">Cloud Atlas: 20Th<br>Anniversary Edition</h4>
+              <p class="product-price">990.000đ</p>
+              <div class="product-rating">
+                <span class="star">⭐</span>
+                <span class="rating-score">4.8</span>
+                <span class="sales">· 325 đã bán/tháng</span>
+              </div>
+              <div class="product-actions">
+                <button class="buy-button">Mua hàng</button>
+                <div class="cart-icon">
+                  <i class="fas fa-shopping-cart"></i>
+                </div>
+              </div>
+            </div>
+      
+        </div>
+    <div class="book-list" id="row2">
+            <div class="product-card">
+              <img src="../assets/Hình/TheBodyIllustrated.jpg" alt="Cloud Atlas" class="product-img">
+              <h4 class="product-title">Cloud Atlas: 20Th<br>Anniversary Edition</h4>
+              <p class="product-price">990.000đ</p>
+              <div class="product-rating">
+                <span class="star">⭐</span>
+                <span class="rating-score">4.8</span>
+                <span class="sales">· 325 đã bán/tháng</span>
+              </div>
+              <div class="product-actions">
+                <button class="buy-button">Mua hàng</button>
+                <div class="cart-icon">
+                  <i class="fas fa-shopping-cart"></i>
+                </div>
+              </div>
+            </div>
+          
+            <div class="product-card">
+              <img src="../assets/Hình/TheFaultInOurStars.jpg" alt="Cloud Atlas" class="product-img">
+              <h4 class="product-title">Cloud Atlas: 20Th<br>Anniversary Edition</h4>
+              <p class="product-price">990.000đ</p>
+              <div class="product-rating">
+                <span class="star">⭐</span>
+                <span class="rating-score">4.8</span>
+                <span class="sales">· 325 đã bán/tháng</span>
+              </div>
+              <div class="product-actions">
+                <button class="buy-button">Mua hàng</button>
+                <div class="cart-icon">
+                  <i class="fas fa-shopping-cart"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="product-card">
+              <img src="../assets/Hình/ThousandCranes.jpg" alt="Cloud Atlas" class="product-img">
+              <h4 class="product-title">Cloud Atlas: 20Th<br>Anniversary Edition</h4>
+              <p class="product-price">990.000đ</p>
+              <div class="product-rating">
+                <span class="star">⭐</span>
+                <span class="rating-score">4.8</span>
+                <span class="sales">· 325 đã bán/tháng</span>
+              </div>
+              <div class="product-actions">
+                <button class="buy-button">Mua hàng</button>
+                <div class="cart-icon">
+                  <i class="fas fa-shopping-cart"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="product-card">
+              <img src="../assets/Hình/ThePictureOfDorianGrayClassic.jpg" alt="Cloud Atlas" class="product-img">
+              <h4 class="product-title">Cloud Atlas: 20Th<br>Anniversary Edition</h4>
+              <p class="product-price">990.000đ</p>
+              <div class="product-rating">
+                <span class="star">⭐</span>
+                <span class="rating-score">4.8</span>
+                <span class="sales">· 325 đã bán/tháng</span>
+              </div>
+              <div class="product-actions">
+                <button class="buy-button">Mua hàng</button>
+                <div class="cart-icon">
+                  <i class="fas fa-shopping-cart"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="product-card">
+              <img src="../assets/Hình/ThePictureOfDorianGray.jpg" alt="Cloud Atlas" class="product-img">
+              <h4 class="product-title">Cloud Atlas: 20Th<br>Anniversary Edition</h4>
+              <p class="product-price">990.000đ</p>
+              <div class="product-rating">
+                <span class="star">⭐</span>
+                <span class="rating-score">4.8</span>
+                <span class="sales">· 325 đã bán/tháng</span>
+              </div>
+              <div class="product-actions">
+                <button class="buy-button">Mua hàng</button>
+                <div class="cart-icon">
+                  <i class="fas fa-shopping-cart"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="product-card">
+              <img src="../assets/Hình/TheBodyIllustrated.jpg" alt="Cloud Atlas" class="product-img">
+              <h4 class="product-title">Cloud Atlas: 20Th<br>Anniversary Edition</h4>
+              <p class="product-price">990.000đ</p>
+              <div class="product-rating">
+                <span class="star">⭐</span>
+                <span class="rating-score">4.8</span>
+                <span class="sales">· 325 đã bán/tháng</span>
+              </div>
+              <div class="product-actions">
+                <button class="buy-button">Mua hàng</button>
+                <div class="cart-icon">
+                  <i class="fas fa-shopping-cart"></i>
+                </div>
+              </div>
+            </div>
+          
+            <div class="product-card">
+              <img src="../assets/Hình/TheFaultInOurStars.jpg" alt="Cloud Atlas" class="product-img">
+              <h4 class="product-title">Cloud Atlas: 20Th<br>Anniversary Edition</h4>
+              <p class="product-price">990.000đ</p>
+              <div class="product-rating">
+                <span class="star">⭐</span>
+                <span class="rating-score">4.8</span>
+                <span class="sales">· 325 đã bán/tháng</span>
+              </div>
+              <div class="product-actions">
+                <button class="buy-button">Mua hàng</button>
+                <div class="cart-icon">
+                  <i class="fas fa-shopping-cart"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="product-card">
+              <img src="../assets/Hình/ThousandCranes.jpg" alt="Cloud Atlas" class="product-img">
+              <h4 class="product-title">Cloud Atlas: 20Th<br>Anniversary Edition</h4>
+              <p class="product-price">990.000đ</p>
+              <div class="product-rating">
+                <span class="star">⭐</span>
+                <span class="rating-score">4.8</span>
+                <span class="sales">· 325 đã bán/tháng</span>
+              </div>
+              <div class="product-actions">
+                <button class="buy-button">Mua hàng</button>
+                <div class="cart-icon">
+                  <i class="fas fa-shopping-cart"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="product-card">
+              <img src="../assets/Hình/ThePictureOfDorianGrayClassic.jpg" alt="Cloud Atlas" class="product-img">
+              <h4 class="product-title">Cloud Atlas: 20Th<br>Anniversary Edition</h4>
+              <p class="product-price">990.000đ</p>
+              <div class="product-rating">
+                <span class="star">⭐</span>
+                <span class="rating-score">4.8</span>
+                <span class="sales">· 325 đã bán/tháng</span>
+              </div>
+              <div class="product-actions">
+                <button class="buy-button">Mua hàng</button>
+                <div class="cart-icon">
+                  <i class="fas fa-shopping-cart"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="product-card">
+              <img src="../assets/Hình/ThePictureOfDorianGray.jpg" alt="Cloud Atlas" class="product-img">
+              <h4 class="product-title">Cloud Atlas: 20Th<br>Anniversary Edition</h4>
+              <p class="product-price">990.000đ</p>
+              <div class="product-rating">
+                <span class="star">⭐</span>
+                <span class="rating-score">4.8</span>
+                <span class="sales">· 325 đã bán/tháng</span>
+              </div>
+              <div class="product-actions">
+                <button class="buy-button">Mua hàng</button>
+                <div class="cart-icon">
+                  <i class="fas fa-shopping-cart"></i>
+                </div>
+              </div>
+            </div>
+      
+        </div>
+  </div>
+</section>
+
+        <section class="book-banners2" aria-label="Poster">
+            <div class="banner-item2">
+                <img src="../assets/Hình/h4.jpg" alt="New Releases">
+            </div>
+            <div class="banner-item2">
+                <img src="../assets/Hình/h5.jpg" alt="Must read book for teen">
+            </div>
+            <div class="banner-item2">
+                <img src="../assets/Hình/h6.jpg" alt="Jigsaw puzzles play and learn">
+            </div>
+            <div class="banner-item2">
+                <img src="../assets/Hình/h7.jpg" alt="Top books for self-improvement">
+            </div>
+        </section>
+
+            <section class="service-features">
+        <div class="feature-item">
+          <i class="fas fa-shipping-fast"></i>
+          <h4>Giao hàng miễn phí</h4>
+          <p>Miễn phí nội thành HN, TP.HCM, ĐN</p>
+        </div>
+        <div class="feature-item">
+          <i class="fas fa-credit-card"></i>
+          <h4>Thanh toán an toàn</h4>
+          <p>Thanh toán linh hoạt, an toàn và tiện lợi</p>
+        </div>
+        <div class="feature-item">
+          <i class="fas fa-shopping-bag"></i>
+          <h4>Đổi hàng theo yêu cầu</h4>
+          <p>Đổi hàng dễ dàng trong 7 ngày nếu có lỗi</p>
+        </div>
+        <div class="feature-item">
+          <i class="fas fa-recycle"></i>
+          <h4>Đổi mới vì môi trường</h4>
+          <p>Giảm thiểu rác thải sử dụng</p>
+        </div>
+    </main>
+    
+  </div>
+  <footer>
+    <!-- Assuming footer.html is included here -->
+    <iframe src="../components/footer.html" frameborder="0" style="width: 100%; height: 340px; border: none;"></iframe>
+  </footer>
+</body>
+</html>

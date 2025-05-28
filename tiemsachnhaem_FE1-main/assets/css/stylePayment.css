@@ -1,0 +1,464 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    background-color: white;
+    font-size: 14px;
+}
+
+p {
+    margin: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+
+/* Check_out - Chỉnh sửa */
+.checkout-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    padding: 40px;
+    font-family: 'Montserrat', sans-serif;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    margin-bottom: 80px; /* Thêm khoảng cách với footer */
+}
+
+.checkout-left {
+    flex: 2;
+    min-width: 350px;
+    max-width: 600px;
+}
+
+.checkout-left h2 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.checkout-left input,
+.checkout-left select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 8px; /* Giảm khoảng cách giữa các ô */
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+}
+
+.checkout-left label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+}
+
+.checkout-left input[type="radio"] {
+    margin-right: 10px;
+    width: auto;
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.radio-label input[type="radio"] {
+    margin: 0;
+}
+
+.radio-label span {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    color: #333;
+}
+
+.radio-label .radio-value {
+    margin-left: auto;
+    color: #666;
+}
+
+.note {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 15px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.address-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 8px; /* Giảm khoảng cách với ô Huyện */
+}
+
+.address-row select {
+    flex: 1;
+}
+
+.checkout-right {
+    flex: 1;
+    min-width: 300px;
+    background-color: #f5f5f7;
+    padding: 25px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; /* Thêm thanh cuộn nếu nội dung dài */
+    height:fit-content;
+}
+
+.checkout-right h2 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #333;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.order-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.order-item img {
+    width: 60px;
+    height: 90px;
+    object-fit: cover;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.order-item .info {
+    flex: 1;
+}
+
+.order-item .title {
+    font-size: 14px;
+    margin: 0;
+    font-weight: 500;
+    color: #333;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.order-item .qty {
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.order-item .price {
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    color: #333;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.summary {
+    font-size: 14px;
+    margin-bottom: 15px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.summary div {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+    color: #666;
+}
+
+.summary div span:first-child {
+    font-weight: 500;
+}
+
+.total {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 700;
+    font-size: 16px;
+    margin: 20px 0;
+    color: #333;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.checkout-btn {
+    width: 100%;
+    background-color: #88b293;
+    color: white;
+    padding: 15px;
+    font-size: 16px;
+    font-weight: 700;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid #e0e0e0;
+    margin: 15px 0;
+}
+
+/* Modal styles */
+.modal {
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none; /* Ẩn modal ban đầu */
+}
+
+.modal.show {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal-content {
+  background-color: #fff;
+  width: 500px;
+  max-width: 95%;
+  border-radius: 8px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: modalFadeIn 0.3s;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  text-align: center;
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.modal-header i {
+  color: #4A90E2;
+  font-size: 18px;
+  margin-bottom: 6px;
+}
+
+.modal-header h2 {
+  color: #333;
+  margin: 6px 0;
+  font-size: 18px;
+}
+
+.modal-header p {
+  color: #666;
+  margin: 0;
+  font-size: 12px;
+}
+
+.modal-body {
+  padding: 12px;
+  background-color: #f9f9f9;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.recipient-info, .order-info {
+  background-color: #fff;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+
+.recipient-info h3, .order-info h3 {
+  font-size: 14px;
+  margin: 0 0 8px 0;
+}
+
+.info-group {
+  margin-top: 6px;
+}
+
+.info-group p {
+  margin: 3px 0;
+  color: #333;
+  font-size: 12px;
+}
+
+.total-amount {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+  font-size: 12px;
+}
+
+.total-amount h3 {
+  font-size: 14px;
+  margin: 0;
+}
+
+.modal-footer {
+  padding: 12px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  background-color: #fff;
+  border-top: 1px solid #eee;
+  border-radius: 0 0 8px 8px;
+}
+
+.btn-cancel, .btn-confirm {
+  padding: 6px 20px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 13px;
+  transition: background-color 0.3s;
+}
+
+#modalOrderDetails {
+  font-size: 12px;
+}
+
+#modalOrderDetails > div {
+  padding: 4px 0;
+}
+
+.btn-cancel {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  color: #333;
+}
+
+.btn-confirm {
+  background-color: #8BA989;
+  color: white;
+}
+
+.btn-cancel:hover {
+  background-color: #f5f5f5;
+}
+
+.btn-confirm:hover {
+  background-color: #7a987b;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    top: 45%;
+  }
+  to {
+    opacity: 1;
+    top: 50%;
+  }
+}
+
+.error-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: modalFadeIn 0.3s;
+}
+
+.error-content .modal-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    border: none;
+}
+
+.error-content .modal-header i {
+    font-size: 32px;
+    color: #ff4d4f;
+}
+
+.error-content .modal-header h2 {
+    font-size: 16px;
+    margin: 0;
+}
+
+.error-content .modal-body {
+    background: none;
+    padding: 0;
+    margin-bottom: 15px;
+    font-size: 14px;
+    color: #666;
+}
+
+.error-content .modal-footer {
+    border: none;
+    padding: 0;
+    justify-content: center;
+}
+
+.error-content .btn-confirm {
+    padding: 8px 25px;
+}
+
+.success-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: modalFadeIn 0.3s;
+}
+
+.success-content .modal-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    border: none;
+}
+
+.success-content .modal-header i {
+    font-size: 32px;
+}
+
+.success-content .modal-body {
+    background: none;
+    padding: 0;
+    color: #666;
+    font-size: 14px;
+}

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý sản phẩm</title>
+    <link rel="stylesheet" href="../assets/css/styleadminQLSP.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Quản lý sản phẩm</h1>
+        <div class="header">
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Tìm sách theo tên, tác giả...">
+            </div>
+            <div class="actions">
+                <select id="categoryFilter">
+                    <option value="">Tất cả thể loại</option>
+                    <option value="Khoa học tự nhiên">Khoa học tự nhiên</option>
+                    <option value="Kinh điển">Kinh điển</option>
+                    <option value="Trinh thám">Trinh thám</option>
+                    <option value="Self-help">Self-help</option>
+                    <option value="Kinh dị">Kinh dị</option>
+                    <option value="Tâm lý">Tâm lý</option>
+                    <option value="Khoa học viễn tưởng">Khoa học viễn tưởng</option>
+                </select>
+                <button class="add-product">+ Thêm sản phẩm</button>
+            </div>
+        </div>
+        <table style="width: 100%; table-layout: fixed;">
+            <colgroup>
+                <col style="width: 35%">
+                <col style="width: 15%">
+                <col style="width: 15%">
+                <col style="width: 10%">
+                <col style="width: 15%">
+                <col style="width: 10%">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>Sản phẩm</th>
+                    <th>Tác giả</th>
+                    <th>Nhà xuất bản</th>
+                    <th>Giá</th>
+                    <th>Thể loại</th>
+                    <th style="white-space: nowrap;">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody id="productTableBody">
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal Thêm sản phẩm -->
+    <div id="addModal" class="modal">
+        <div class="modal-content">
+            <h2>Thêm sản phẩm mới</h2>
+            <form id="addProductForm">
+                <div class="error" id="addErrorMessage"></div>
+                <div class="form-container">
+                    <div class="form-info">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="add-isbn">ISBN:</label>
+                                <input type="text" id="add-isbn" name="isbn" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="add-product-name">Tên sách:</label>
+                                <input type="text" id="add-product-name" name="product-name" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="add-author">Tác giả:</label>
+                                <input type="text" id="add-author" name="author" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="add-publisher">Nhà xuất bản:</label>
+                                <input type="text" id="add-publisher" name="publisher" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="add-price">Giá:</label>
+                                <input type="number" id="add-price" name="price" required min="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="add-category">Thể loại:</label>
+                                <select id="add-category" name="category" required>
+                                    <option value="">Chọn thể loại</option>
+                                    <option value="Khoa học tự nhiên">Khoa học tự nhiên</option>
+                                    <option value="Kinh điển">Kinh điển</option>
+                                    <option value="Trinh thám">Trinh thám</option>
+                                    <option value="Self-help">Self-help</option>
+                                    <option value="Kinh dị">Kinh dị</option>
+                                    <option value="Tâm lý">Tâm lý</option>
+                                    <option value="Khoa học viễn tưởng">Khoa học viễn tưởng</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="add-pageCount">Số trang:</label>
+                                <input type="number" id="add-pageCount" name="pageCount" required min="1">
+                            </div>
+                            <div class="form-group">
+                                <label for="add-bookWeight">Trọng lượng:</label>
+                                <input type="text" id="add-bookWeight" name="bookWeight" required placeholder="Ví dụ: 0.5kg">
+                            </div>
+                        </div>
+                        <div class="form-row full-width">
+                            <div class="form-group">
+                                <label for="add-notes">Ghi chú:</label>
+                                <textarea id="add-notes" name="notes"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-image">
+                        <label>URL ảnh bìa:</label>
+                        <div class="custom-url-input">
+                            <input type="text" id="add-imageURL" name="imageUrl" placeholder="Nhập URL ảnh từ Cloudinary">
+                        </div>
+                        <div class="image-preview" id="add-imagePreview"></div>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="cancel-btn" id="add-cancel-btn">Hủy</button>
+                    <button type="submit" class="add-btn" id="add-submit-btn">Thêm sản phẩm</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Chỉnh sửa sản phẩm -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <h2>Chỉnh sửa sản phẩm</h2>
+            <form id="editProductForm">
+                <div class="error" id="editErrorMessage"></div>
+                <div class="form-container">
+                    <div class="form-info">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="edit-isbn">ISBN:</label>
+                                <input type="text" id="edit-isbn" name="isbn" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-product-name">Tên sách:</label>
+                                <input type="text" id="edit-product-name" name="product-name" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="edit-author">Tác giả:</label>
+                                <input type="text" id="edit-author" name="author" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-publisher">Nhà xuất bản:</label>
+                                <input type="text" id="edit-publisher" name="publisher" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="edit-price">Giá:</label>
+                                <input type="number" id="edit-price" name="price" required min="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-category">Thể loại:</label>
+                                <select id="edit-category" name="category" required>
+                                    <option value="">Chọn thể loại</option>
+                                    <option value="Khoa học tự nhiên">Khoa học tự nhiên</option>
+                                    <option value="Kinh điển">Kinh điển</option>
+                                    <option value="Trinh thám">Trinh thám</option>
+                                    <option value="Self-help">Self-help</option>
+                                    <option value="Kinh dị">Kinh dị</option>
+                                    <option value="Tâm lý">Tâm lý</option>
+                                    <option value="Khoa học viễn tưởng">Khoa học viễn tưởng</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="edit-pageCount">Số trang:</label>
+                                <input type="number" id="edit-pageCount" name="pageCount" required min="1">
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-bookWeight">Trọng lượng:</label>
+                                <input type="text" id="edit-bookWeight" name="bookWeight" required placeholder="Ví dụ: 0.5kg">
+                            </div>
+                        </div>
+                        <div class="form-row full-width">
+                            <div class="form-group">
+                                <label for="edit-notes">Ghi chú:</label>
+                                <textarea id="edit-notes" name="notes"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-image">
+                        <label>URL ảnh bìa:</label>
+                        <div class="custom-url-input">
+                            <input type="text" id="edit-imageURL" name="imageUrl" placeholder="Nhập URL ảnh từ Cloudinary">
+                        </div>
+                        <div class="image-preview" id="edit-imagePreview"></div>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="cancel-btn" id="edit-cancel-btn">Hủy</button>
+                    <button type="submit" class="add-btn" id="edit-submit-btn">Lưu thay đổi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal thông báo thành công -->
+    <div id="successModal" class="modal success-modal">
+        <div class="modal-content success-content">
+            <div class="success-icon">✔</div>
+            <h2>Thành công</h2>
+            <p id="successMessage">Thêm thành công sản phẩm mới vào danh sách</p>
+            <div class="modal-actions">
+                <button type="button" class="cancel-btn success-cancel">Hủy</button>
+                <button type="button" class="add-btn success-ok">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal xác nhận xóa -->
+    <div id="deleteModal" class="modal delete-modal">
+        <div class="modal-content delete-content">
+            <h2>Xác nhận xóa sản phẩm</h2>
+            <p>Bạn có chắc chắn muốn xóa sản phẩm này?<br>Hành động này không thể hoàn tác.</p>
+            <div class="modal-actions">
+                <button type="button" class="cancel-btn delete-cancel">Hủy</button>
+                <button type="button" class="add-btn delete-confirm" style="background-color: #ff4d4f; border: 1px solid #ffe6e6;">Xóa</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/js/apiQLSP.js"></script>
+    <script src="../assets/js/javascriptadminQLSP.js"></script>
+</body>
+</html>
