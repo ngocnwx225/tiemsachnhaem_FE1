@@ -731,7 +731,7 @@ td span br {
     }
 
     table {
-        min-width: 600px;
+        min-width: 200px;
         display: block;
         overflow-x: auto;
         white-space: nowrap;
