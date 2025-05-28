@@ -11,11 +11,13 @@
   .container {
     max-width: 1200px;
     margin: 0 auto;
+    margin-bottom: 12px;
   }
 
 .banner-container {
   width: 100%;
-  max-width: 1200px;
+  margin-bottom: 12px;
+  margin-top: 20px;
 }
 
 .banner-image {
@@ -26,7 +28,7 @@
 
 
   section.book-banners {
-      max-width: 1200px;
+      width: 100%;
       display: flex;
       justify-content: space-around;
       align-items: center;
@@ -47,17 +49,18 @@
     }
 
     section.book-banners2 {
-      max-width: 1200px;
+      width: 100%;
       display: flex;
       justify-content: space-around;
       align-items: center;
-      gap: 10px;
+      gap: 1rem;
       margin-top: 25px;
-    } 
+    }
 
     .banner-item2 img {
-      width: 100%;
-      max-width: 396px;
+      width: 300px;
+      height: 400px;
+      object-fit: cover;
       box-shadow: 0 6px 12px rgba(0,0,0,0.1);
       transition: transform 0.3s ease;
     }
@@ -263,7 +266,7 @@
     padding: 30px 20px;
     border-radius: 10px;
     margin: 20px auto;
-    max-width: 1200px;
+    width: 100%;
   }
   
   .feature-item {
@@ -496,6 +499,7 @@ footer {
       font-size: 24px;
       font-weight: bold;
       margin-bottom: 12px;
+      background-color: #729775;
     }
 
     /* HÀNG NÚT ĐIỀU KHIỂN + XEM TẤT CẢ */
@@ -537,10 +541,10 @@ footer {
     /* 2 HÀNG SÁCH CUỘN NGANG */
     .carousel-container {
       display: flex;
-      flex-direction: column;
+      align-items: center;
       gap: 12px;
-      overflow: hidden;
     }
+
 .control-row {
   display: flex;
   justify-content: space-between;
@@ -580,4 +584,26 @@ footer {
   background-color: #729775;
 }
 
-  
+.right-carousel-btn {
+  width: 36px;
+  height: 36px;
+  border: none;
+  background-color: #eef3ec;
+  color: #4a6d5a;
+  border-radius: 50%;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.right-carousel-btn:hover {
+  background-color: #dbe6db;
+}
+
+/* Style for the header of popular books section */
+.popular-books-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px; /* Add some space below the header */
+}
