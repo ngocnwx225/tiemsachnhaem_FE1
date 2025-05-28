@@ -3,18 +3,16 @@
 body {
     font-family: 'Montserrat', sans-serif;
     background-color: #f8f9fa;
-    margin: 30px auto;;
-    padding: 25px;;
 }
 
-.container {
+/* .container {
     max-width: 1200px;
     margin: 30px auto;
     background-color: #fff;
     border-radius: 15px;
     padding: 25px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-}
+} */
 
 /* Điều chỉnh container khi hiển thị trong iframe */
 .container.in-iframe {

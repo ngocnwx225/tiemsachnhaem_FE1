@@ -9,14 +9,14 @@
     <link rel="stylesheet" href="../assets/css/styleCart.css">
 </head>
 <body>
-        <!-- Include header -->
+    <!-- Include header -->
     <div id="header-placeholder"></div>
     <script>
         fetch('../components/header.html')
-          .then(response => response.text())
-          .then(data => {
+        .then(response => response.text())
+        .then(data => {
             document.getElementById('header-placeholder').innerHTML = data;
-          });
+        });
     </script>
 
     <main>
@@ -76,14 +76,14 @@
         </div>
     </main>
 
-      <!-- Include footer -->
+    <!-- Include footer -->
     <div id="footer-placeholder"></div>
     <script>
         fetch('../components/footer.html')
-          .then(response => response.text())
-          .then(data => {
+        .then(response => response.text())
+        .then(data => {
             document.getElementById('footer-placeholder').innerHTML = data;
-          });
+        });
     </script>
 
     <script src="../assets/js/javascriptCart.js"></script>

@@ -1,11 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
+body {
+    margin: 0;
+}
 .faq-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
     font-family: 'Montserrat', sans-serif;
     margin-left: 110px;
-    margin-top: 2px;
+    margin-top: 0; /* Đặt margin-top về 0 để loại bỏ khoảng trống thừa */
     margin-right: 50px;
 }
 
@@ -20,7 +23,7 @@
     font-size: 24px;
     color: #666;
     text-align: left;
-    margin-bottom: 50px;
+    margin-bottom: 10px; /* Giảm từ 50px xuống 10px để giảm khoảng trống */
 }
 
 .faq-category {
@@ -34,11 +37,13 @@
     border-bottom: 1px solid #ddd;
     padding-bottom: 5px;
 }
+
 .faq-category p {
     font-size: 16px;
     color: #666;
     line-height: 1.6;
 }
+
 .faq-item {
     margin-bottom: 20px;
 }
@@ -65,10 +70,12 @@
     margin-bottom: 5px;
     line-height: 1.5;
 }
+
 .faq-item ol li {
     margin-bottom: 5px;
     line-height: 1.5;
 }
+
 a {
     color: #007BFF;
     text-decoration: none;

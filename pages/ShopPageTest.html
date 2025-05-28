@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Shop Page Test</title>
+  <link rel="stylesheet" href="../assets/css/global.css">
+  <link rel="stylesheet" href="../assets/css/style_ShopPage.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* CSS cho Product Card */
+    .product-card {
+        width: 23%; /* Khoảng 1/4 chiều rộng, để lại khoảng trống cho gap */
+        min-width: 210px;
+        height: auto;
+        padding-bottom: 16px;
+        background: white;
+        overflow: hidden;
+        border-radius: 12px;
+        outline: 0.50px #D1D5DB solid;
+        outline-offset: -0.50px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 6px;
+        transition: all 0.3s ease;
+        margin: 0;
+    }
+
+    .product-card:hover {
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        transform: translateY(-5px);
+    }
+
+    /* CSS cho thanh lọc theo giá */
+    #price-range {
+      accent-color: #004d3f;
+      height: 5px;
+      width: 100%;
+    }
+    
+    #price-range::-webkit-slider-thumb {
+      background: #004d3f;
+    }
+    
+    #price-range::-moz-range-thumb {
+      background: #004d3f;
+    }
+    
+    #price-range::-ms-thumb {
+      background: #004d3f;
+    }
+
+    .product-image-container {
+        align-self: stretch;
+        padding: 16px;
+        overflow: hidden;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 220px; /* Đủ cao để chứa ảnh và padding */
+    }
+
+    .product-image {
+        width: 120px;
+        height: 182px;
+        aspect-ratio: 60/91;
+        object-fit: cover;
+    }
+
+    .product-info {
+        align-self: stretch;
+        padding: 0 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .product-title {
+        color: black;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 22px;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        height: 44px;
+        text-overflow: ellipsis;
+        word-break: break-word;
+    }
+
+    .product-price {
+        color: #86A788;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 24px;
+    }
+
+    .product-price-unit {
+        text-decoration: underline;
+    }
+
+    .product-sold {
+        color: #808080;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 20px;
+    }
+
+    .product-actions {
+        align-self: stretch;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .buy-button {
+        flex: 1;
+        padding: 10px;
+        background: #86A788;
+        border-radius: 10px;
+        color: white;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 18px;
+        text-align: center;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+    .buy-button:hover {
+        background: #75946E;
+    }
+
+    .cart-button {
+        width: 42px;
+        height: 42px;
+        padding: 5px;
+        background: rgba(75, 118, 57, 0.10);
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+    .cart-button:hover {
+        background: rgba(75, 118, 57, 0.2);
+    }
+
+    .cart-icon {
+        width: 22px;
+        height: 22px;
+        position: relative;
+    }
+
+    /* CSS cho grid hiển thị sản phẩm */
+    #product-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: flex-start;
+    }
+    
+    /* CSS cho book-layout */
+    .book-layout {
+      width: 100%;
+      max-width: calc(100% - 260px); /* Trừ đi chiều rộng của sidebar */
+      padding-right: 16px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Include header -->
+  <header>
+    <!-- Assuming header.html is included here -->
+    <iframe src="../components/header.html" frameborder="0" style="width: 100%; height: 200px; border: none;"></iframe>
+</header>
+
+
+  <div class="container">
+    <img src="../assets/images/banner.png" alt="banner" width="100%" height="auto" style="margin: 30px 10px; " >
+  </div>
+
+  <main class="container">
+    <div style="display: flex; justify-content: flex-start; gap: 10px; position: relative;">
+      <aside class="filter-sidebar">
+        <h3><i class="fas fa-filter"></i> Bộ lọc tìm kiếm</h3>
+        <div id="price-filter">
+          <p class="filter-title">Lọc theo giá:</p>
+          <input type="range" id="price-range" min="0" max="1000000" step="10000" value="1000000" />
+          <div style="display: flex; justify-content: space-between;">
+            <p>0đ</p>
+            <p>1.000.000đ</p>
+          </div>
+        </div>
+        <details open>
+          <summary class="filter-title">Thể loại<hr></summary>
+          <div class="sub-filter">
+            <div class="sub-header" onclick="toggleBox(this)">
+              Tiểu thuyết <span class="icon">+</span>
+              <div><hr></div>
+            </div>
+            <div class="sub-content">
+              <label><input type="checkbox" value="Kinh điển"> Kinh điển</label>
+              <label><input type="checkbox" value="Khoa học viễn tưởng"> Khoa học viễn tưởng</label>
+              <label><input type="checkbox" value="Kinh dị"> Kinh dị</label>
+              <label><input type="checkbox" value="Trinh thám"> Trinh thám</label>
+            </div>
+          </div>
+          <div class="sub-filter">
+            <div class="sub-header" onclick="toggleBox(this)">
+              Phi hư cấu <span class="icon">+</span>
+              <div><hr></div>
+            </div>
+            <div class="sub-content">
+              <label><input type="checkbox" value="Self-help"> Self-help</label>
+              <label><input type="checkbox" value="Tâm lý"> Tâm lý</label>
+              <label><input type="checkbox" value="Khoa học tự nhiên"> Khoa học tự nhiên</label>
+            </div>
+          </div>
+        </details>
+      
+        <br>
+        <div class="buttons">
+          <input type="button" class="delete-button" value="Xóa tất cả">
+          <input type="button" class="apply-button" value="Áp dụng">
+        </div>
+      </aside>
+      
+      <div class="book-layout"> 
+        
+          <div class="tags-container">
+            <span class="filter-label">Bộ lọc đang áp dụng:</span>
+            <!-- Các tag động ở đây -->
+          </div>
+          
+      
+          <div class="sort-wrapper">
+            <label class="sort-title" for="sort-select">Sắp xếp</label>
+            <select id="sort-select" class="sort-select" onchange="handleSortChange(this)">
+              <option value="popular">Phổ biến</option>
+              <option value="az">Từ A - Z</option>
+              <option value="za">Từ Z - A</option>
+              <option value="price-asc">Giá tăng</option>
+              <option value="price-desc">Giá giảm</option>
+            </select>
+          </div>
+          
+          <div>
+            <div id="product-grid">
+              <!-- Thêm các card sản phẩm để test -->
+              <div class="product-card">
+                <div class="product-image-container">
+                  <img class="product-image" src="https://placehold.co/120x182" alt="Before the Coffee Gets Cold #1">
+                </div>
+                <div class="product-info">
+                  <div class="product-title">Before the Coffee Gets Cold #1</div>
+                  <div class="product-price">123.000<span class="product-price-unit">đ</span></div>
+                  <div class="product-sold">325 đã bán/tháng</div>
+                  <div class="product-actions">
+                    <button class="buy-button">Mua hàng</button>
+                    <div class="cart-button">
+                      <svg class="cart-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7.5 7.67001V6.70001C7.5 4.45001 9.31 2.24001 11.56 2.03001C14.24 1.77001 16.5 3.88001 16.5 6.51001V7.89001" stroke="#86A788" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.99999 22H15C19.02 22 19.74 20.39 19.95 18.43L20.7 12.43C20.97 9.99 20.27 8 16 8H7.99999C3.72999 8 3.02999 9.99 3.29999 12.43L4.04999 18.43C4.25999 20.39 4.97999 22 8.99999 22Z" stroke="#86A788" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M15.5 12H15.51" stroke="#86A788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.5 12H8.51" stroke="#86A788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="product-card">
+                <div class="product-image-container">
+                  <img class="product-image" src="https://placehold.co/120x182" alt="Atomic Habits">
+                </div>
+                <div class="product-info">
+                  <div class="product-title">Atomic Habits: Thay đổi nhỏ, hiệu quả lớn</div>
+                  <div class="product-price">145.000<span class="product-price-unit">đ</span></div>
+                  <div class="product-sold">562 đã bán/tháng</div>
+                  <div class="product-actions">
+                    <button class="buy-button">Mua hàng</button>
+                    <div class="cart-button">
+                      <svg class="cart-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7.5 7.67001V6.70001C7.5 4.45001 9.31 2.24001 11.56 2.03001C14.24 1.77001 16.5 3.88001 16.5 6.51001V7.89001" stroke="#86A788" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.99999 22H15C19.02 22 19.74 20.39 19.95 18.43L20.7 12.43C20.97 9.99 20.27 8 16 8H7.99999C3.72999 8 3.02999 9.99 3.29999 12.43L4.04999 18.43C4.25999 20.39 4.97999 22 8.99999 22Z" stroke="#86A788" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M15.5 12H15.51" stroke="#86A788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.5 12H8.51" stroke="#86A788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="product-card">
+                <div class="product-image-container">
+                  <img class="product-image" src="https://placehold.co/120x182" alt="Sherlock Holmes">
+                </div>
+                <div class="product-info">
+                  <div class="product-title">Sherlock Holmes: Toàn tập</div>
+                  <div class="product-price">210.000<span class="product-price-unit">đ</span></div>
+                  <div class="product-sold">198 đã bán/tháng</div>
+                  <div class="product-actions">
+                    <button class="buy-button">Mua hàng</button>
+                    <div class="cart-button">
+                      <svg class="cart-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7.5 7.67001V6.70001C7.5 4.45001 9.31 2.24001 11.56 2.03001C14.24 1.77001 16.5 3.88001 16.5 6.51001V7.89001" stroke="#86A788" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.99999 22H15C19.02 22 19.74 20.39 19.95 18.43L20.7 12.43C20.97 9.99 20.27 8 16 8H7.99999C3.72999 8 3.02999 9.99 3.29999 12.43L4.04999 18.43C4.25999 20.39 4.97999 22 8.99999 22Z" stroke="#86A788" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M15.5 12H15.51" stroke="#86A788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.5 12H8.51" stroke="#86A788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="product-card">
+                <div class="product-image-container">
+                  <img class="product-image" src="https://placehold.co/120x182" alt="Sapiens">
+                </div>
+                <div class="product-info">
+                  <div class="product-title">Sapiens: Lược sử loài người</div>
+                  <div class="product-price">189.000<span class="product-price-unit">đ</span></div>
+                  <div class="product-sold">412 đã bán/tháng</div>
+                  <div class="product-actions">
+                    <button class="buy-button">Mua hàng</button>
+                    <div class="cart-button">
+                      <svg class="cart-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7.5 7.67001V6.70001C7.5 4.45001 9.31 2.24001 11.56 2.03001C14.24 1.77001 16.5 3.88001 16.5 6.51001V7.89001" stroke="#86A788" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.99999 22H15C19.02 22 19.74 20.39 19.95 18.43L20.7 12.43C20.97 9.99 20.27 8 16 8H7.99999C3.72999 8 3.02999 9.99 3.29999 12.43L4.04999 18.43C4.25999 20.39 4.97999 22 8.99999 22Z" stroke="#86A788" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M15.5 12H15.51" stroke="#86A788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.5 12H8.51" stroke="#86A788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Thêm sản phẩm thứ 5-8 để kiểm tra hiển thị hàng thứ 2 -->
+              <div class="product-card">
+                <div class="product-image-container">
+                  <img class="product-image" src="https://placehold.co/120x182" alt="The Lord of the Rings">
+                </div>
+                <div class="product-info">
+                  <div class="product-title">The Lord of the Rings: Trilogy</div>
+                  <div class="product-price">299.000<span class="product-price-unit">đ</span></div>
+                  <div class="product-sold">278 đã bán/tháng</div>
+                  <div class="product-actions">
+                    <button class="buy-button">Mua hàng</button>
+                    <div class="cart-button">
+                      <svg class="cart-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7.5 7.67001V6.70001C7.5 4.45001 9.31 2.24001 11.56 2.03001C14.24 1.77001 16.5 3.88001 16.5 6.51001V7.89001" stroke="#86A788" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.99999 22H15C19.02 22 19.74 20.39 19.95 18.43L20.7 12.43C20.97 9.99 20.27 8 16 8H7.99999C3.72999 8 3.02999 9.99 3.29999 12.43L4.04999 18.43C4.25999 20.39 4.97999 22 8.99999 22Z" stroke="#86A788" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M15.5 12H15.51" stroke="#86A788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.5 12H8.51" stroke="#86A788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="product-card">
+                <div class="product-image-container">
+                  <img class="product-image" src="https://placehold.co/120x182" alt="1984">
+                </div>
+                <div class="product-info">
+                  <div class="product-title">1984 - George Orwell</div>
+                  <div class="product-price">156.000<span class="product-price-unit">đ</span></div>
+                  <div class="product-sold">341 đã bán/tháng</div>
+                  <div class="product-actions">
+                    <button class="buy-button">Mua hàng</button>
+                    <div class="cart-button">
+                      <svg class="cart-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7.5 7.67001V6.70001C7.5 4.45001 9.31 2.24001 11.56 2.03001C14.24 1.77001 16.5 3.88001 16.5 6.51001V7.89001" stroke="#86A788" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.99999 22H15C19.02 22 19.74 20.39 19.95 18.43L20.7 12.43C20.97 9.99 20.27 8 16 8H7.99999C3.72999 8 3.02999 9.99 3.29999 12.43L4.04999 18.43C4.25999 20.39 4.97999 22 8.99999 22Z" stroke="#86A788" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M15.5 12H15.51" stroke="#86A788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.5 12H8.51" stroke="#86A788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="product-card">
+                <div class="product-image-container">
+                  <img class="product-image" src="https://placehold.co/120x182" alt="To Kill a Mockingbird">
+                </div>
+                <div class="product-info">
+                  <div class="product-title">To Kill a Mockingbird</div>
+                  <div class="product-price">143.000<span class="product-price-unit">đ</span></div>
+                  <div class="product-sold">245 đã bán/tháng</div>
+                  <div class="product-actions">
+                    <button class="buy-button">Mua hàng</button>
+                    <div class="cart-button">
+                      <svg class="cart-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7.5 7.67001V6.70001C7.5 4.45001 9.31 2.24001 11.56 2.03001C14.24 1.77001 16.5 3.88001 16.5 6.51001V7.89001" stroke="#86A788" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.99999 22H15C19.02 22 19.74 20.39 19.95 18.43L20.7 12.43C20.97 9.99 20.27 8 16 8H7.99999C3.72999 8 3.02999 9.99 3.29999 12.43L4.04999 18.43C4.25999 20.39 4.97999 22 8.99999 22Z" stroke="#86A788" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M15.5 12H15.51" stroke="#86A788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.5 12H8.51" stroke="#86A788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="product-card">
+                <div class="product-image-container">
+                  <img class="product-image" src="https://placehold.co/120x182" alt="The Great Gatsby">
+                </div>
+                <div class="product-info">
+                  <div class="product-title">The Great Gatsby</div>
+                  <div class="product-price">135.000<span class="product-price-unit">đ</span></div>
+                  <div class="product-sold">210 đã bán/tháng</div>
+                  <div class="product-actions">
+                    <button class="buy-button">Mua hàng</button>
+                    <div class="cart-button">
+                      <svg class="cart-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7.5 7.67001V6.70001C7.5 4.45001 9.31 2.24001 11.56 2.03001C14.24 1.77001 16.5 3.88001 16.5 6.51001V7.89001" stroke="#86A788" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.99999 22H15C19.02 22 19.74 20.39 19.95 18.43L20.7 12.43C20.97 9.99 20.27 8 16 8H7.99999C3.72999 8 3.02999 9.99 3.29999 12.43L4.04999 18.43C4.25999 20.39 4.97999 22 8.99999 22Z" stroke="#86A788" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M15.5 12H15.51" stroke="#86A788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.5 12H8.51" stroke="#86A788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+<!-- Include footer -->
+<footer>
+  <!-- Assuming footer.html is included here -->
+  <iframe src="../components/footer.html" frameborder="0" style="width: 100%; height: 340px; border: none;"></iframe>
+</footer>
+
+  <script src="../assets/js/script_ShopPage.js"></script>
+  <script>
+    // JavaScript để xử lý các sự kiện cho card sản phẩm
+    document.addEventListener('DOMContentLoaded', function() {
+      // Xử lý sự kiện khi nhấn nút mua hàng
+      document.querySelectorAll('.buy-button').forEach(button => {
+        button.addEventListener('click', function() {
+          const productTitle = this.closest('.product-card').querySelector('.product-title').textContent;
+          console.log('Mua hàng được nhấn cho sản phẩm:', productTitle);
+          alert('Đã thêm sản phẩm "' + productTitle + '" vào giỏ hàng!');
+        });
+      });
+
+      // Xử lý sự kiện khi nhấn nút giỏ hàng
+      document.querySelectorAll('.cart-button').forEach(button => {
+        button.addEventListener('click', function() {
+          const productTitle = this.closest('.product-card').querySelector('.product-title').textContent;
+          console.log('Thêm vào giỏ hàng được nhấn cho sản phẩm:', productTitle);
+          alert('Đã thêm sản phẩm "' + productTitle + '" vào giỏ hàng!');
+        });
+      });
+
+      // Hàm để toggle các box trong filter
+      window.toggleBox = function(element) {
+        const content = element.nextElementSibling;
+        const icon = element.querySelector('.icon');
+        
+        if (content.style.display === 'block') {
+          content.style.display = 'none';
+          icon.textContent = '+';
+        } else {
+          content.style.display = 'block';
+          icon.textContent = '-';
+        }
+      };
+
+      // Hàm để xử lý thay đổi sắp xếp
+      window.handleSortChange = function(selectElement) {
+        console.log('Sắp xếp theo:', selectElement.value);
+        // Thêm logic sắp xếp sản phẩm ở đây
+      };
+    });
+  </script>
+</body>
+</html> 

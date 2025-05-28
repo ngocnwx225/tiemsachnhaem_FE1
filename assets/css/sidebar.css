@@ -5,6 +5,7 @@
 .sidebar {
   font-family: 'Montserrat', sans-serif;
   overflow: visible;
+  position: relative !important;
 }
 
 .sidebar .logo {
@@ -93,10 +94,20 @@
   font-family: 'Montserrat', sans-serif;
 }
 
+.account-info {
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .sidebar .profile-section {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center !important;
+  gap: 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4); /* đường kẻ ngăn cách */
+  width: 100%;
 }
 
 .sidebar .profile-avatar {

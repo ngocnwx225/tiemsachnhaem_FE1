@@ -62,10 +62,6 @@ body {
   margin-bottom: 32px;
 }
 
-.sidebar .logo img {
-  width: 120px;
-}
-
 .menu {
   list-style: none;
   padding: 0;
@@ -87,24 +83,7 @@ body {
   border-radius: 6px;
 }
 
-.account-info {
-  padding: 0 24px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start; /* căn trái */
-  gap: 8px;
-}
 
-.profile-section {
-  display: flex;
-  flex-direction: column; /* sắp xếp theo chiều dọc */
-  align-items: flex-start; /* căn trái */
-  gap: 4px;
-  margin-bottom: 8px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.4); /* đường kẻ ngăn cách */
-  padding-bottom: 12px;
-  width: 100%;
-}
 
 .profile-avatar {
   width: 40px;
@@ -122,15 +101,6 @@ body {
   font-size: 14px;
 }
 
-.main {
-  flex: 1;
-  padding: 32px;
-}
-
-.container {
-  background-color: #F5F5F7;
-  padding: 32px;
-}
 
 .header {
   display: flex;

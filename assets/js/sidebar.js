@@ -6,9 +6,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Xử lý active menu item dựa trên trang hiện tại
     highlightCurrentPage();
     
-    // Xử lý sự kiện đăng xuất
-    setupLogout();
-    
     // Hiển thị thông tin người dùng nếu đã đăng nhập
     displayUserInfo();
 });
@@ -62,6 +59,9 @@ function loadSidebar() {
             
             // Highlight menu item phù hợp sau khi tải sidebar
             highlightCurrentPage();
+            
+            // Thiết lập sự kiện đăng xuất sau khi sidebar được tải
+            setupLogout();
         })
         .catch(error => {
             console.error("Lỗi khi tải sidebar:", error);
@@ -116,11 +116,19 @@ function highlightMenuItem(menuId) {
 
 // Thiết lập sự kiện đăng xuất
 function setupLogout() {
+    console.log("Setting up logout button...");
     const logoutButton = document.getElementById('logout-button');
     if (logoutButton) {
+        console.log("Logout button found, attaching event listener");
         logoutButton.addEventListener('click', function(e) {
+            console.log("Logout button clicked");
             // Ngăn chặn hành vi mặc định của onclick inline (nếu có)
             e.preventDefault();
+            
+            // Xóa thông tin người dùng khỏi localStorage
+            localStorage.removeItem('userInfo');
+            localStorage.removeItem('token');
+            localStorage.removeItem('userId');
             
             // Xác định đường dẫn đến trang đăng nhập dựa trên vị trí hiện tại
             const currentPath = window.location.pathname;
@@ -128,21 +136,23 @@ function setupLogout() {
             
             // Nếu đang ở trang chính (root)
             if (currentPath.endsWith("index.html") || currentPath === "/" || currentPath.endsWith("/")) {
-                loginPath = "pages/dangnhap1.html";
+                loginPath = "dangnhap1.html";
             } 
             // Nếu đang ở trong thư mục pages
             else if (currentPath.includes("/pages/")) {
-                loginPath = "../pages/dangnhap1.html";
+                loginPath = "dangnhap1.html";
             }
             // Trường hợp khác
             else {
                 loginPath = "pages/dangnhap1.html";
             }
             
-            console.log("Chuyển hướng đến:", loginPath);
+            console.log("Đăng xuất thành công, chuyển hướng đến:", loginPath);
             // Chuyển hướng đến trang đăng nhập
             window.location.href = loginPath;
         });
+    } else {
+        console.log("Logout button not found!");
     }
 }
 
