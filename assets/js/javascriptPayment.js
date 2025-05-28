@@ -102,9 +102,9 @@ function renderOrderDetails() {
         parsedCartData.items.forEach(item => {
             html += `
                 <div class="order-item">
-                    <img src="${item.image}" alt="sách">
+                    <img src="${item.imageUrl || item.image}" alt="${item.bookTitle || item.name}">
                     <div class="info">
-                        <p class="title">${item.name}</p>
+                        <p class="title">${item.bookTitle || item.name}</p>
                         <p class="qty">Số lượng: ${item.quantity}</p>
                     </div>
                     <p class="price">${item.price.toLocaleString('vi-VN')} đ</p>
@@ -197,7 +197,7 @@ function showConfirmationModal() {
             itemDiv.style.justifyContent = 'space-between';
             itemDiv.style.marginBottom = '10px';
             itemDiv.innerHTML = `
-                <span>${item.name} × ${item.quantity} quyển</span>
+                <span>${item.bookTitle || item.name} × ${item.quantity} quyển</span>
                 <span>${(item.price * item.quantity).toLocaleString('vi-VN')} đ</span>
             `;
             modalOrderDetails.appendChild(itemDiv);
@@ -217,15 +217,38 @@ function showConfirmationModal() {
 
 function confirmOrder() {
     try {
-        // Xóa giỏ hàng
+        // Lấy dữ liệu giỏ hàng đã thanh toán từ localStorage
+        const cartData = localStorage.getItem('cartData');
+        if (!cartData) {
+            throw new Error('Không tìm thấy thông tin giỏ hàng');
+        }
+
+        const parsedCartData = JSON.parse(cartData);
+        if (!parsedCartData || !parsedCartData.items || parsedCartData.items.length === 0) {
+            throw new Error('Giỏ hàng trống');
+        }
+
+        // Lấy danh sách giỏ hàng gốc từ localStorage
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        // Lấy danh sách ID của các sản phẩm đã thanh toán
+        const paidItemIds = parsedCartData.items.map(item => item.id);
+
+        // Xóa các sản phẩm đã thanh toán khỏi giỏ hàng gốc
+        cart = cart.filter(item => !paidItemIds.includes(item.id));
+
+        // Cập nhật giỏ hàng gốc trong localStorage
+        localStorage.setItem('cart', JSON.stringify(cart));
+
+        // Xóa dữ liệu giỏ hàng đã thanh toán
         localStorage.removeItem('cartData');
         
         // Hiển thị thông báo thành công
         showSuccessModal('Đặt hàng thành công!');
         
-        // Chuyển hướng sau 2 giây
+        // Chuyển hướng về home.html sau 2 giây
         setTimeout(() => {
-            window.location.href = 'index.html';
+            window.location.href = 'home.html';
         }, 2000);
     } catch (error) {
         showErrorModal('Có lỗi xảy ra khi xử lý đơn hàng: ' + error.message);
