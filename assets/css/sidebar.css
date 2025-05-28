@@ -5,7 +5,7 @@
 .sidebar {
   font-family: 'Montserrat', sans-serif;
   overflow: visible;
-  position: relative !important;
+  /* position: relative !important; */
 }
 
 .sidebar .logo {

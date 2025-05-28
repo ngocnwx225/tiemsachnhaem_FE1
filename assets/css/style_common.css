@@ -20,12 +20,11 @@ body {
 }
 
 .sidebar {
-  background-color: #86A788;
+  /* background-color: #86A788; */
   color: white;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100vh;
 }
 
 .main {
@@ -36,7 +35,7 @@ body {
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 1200px !important;
   margin: 15px auto;
   background-color: #fff;
   border-radius: 15px;

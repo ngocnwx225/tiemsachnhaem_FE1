@@ -50,10 +50,8 @@ function loadSidebar() {
             // Điều chỉnh vị trí của sidebar để nằm sát lề trái
             const sidebarElement = document.querySelector("#sidebar-container .sidebar");
             if (sidebarElement) {
-                sidebarElement.style.position = "fixed";
                 sidebarElement.style.left = "0";
                 sidebarElement.style.top = "0";
-                sidebarElement.style.height = "100vh";
                 sidebarElement.style.overflow = "visible";
             }
             

@@ -281,7 +281,7 @@ table.table thead.table-success th {
     background-color: rgba(0, 0, 0, 0.5);
     display: none;
     justify-content: center;
-    align submet-items: center;
+    align-items: center;
     z-index: 1050;
     transition: opacity 0.3s ease;
 }

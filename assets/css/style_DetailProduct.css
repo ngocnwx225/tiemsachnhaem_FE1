@@ -227,16 +227,10 @@ section h3 {
   margin-bottom: 10px;
 }
 
-.product-rating {
+.sales {
   font-size: 13px;
   color: #555;
   margin-bottom: 12px;
-}
-
-.product-rating .star {
-  color: gold;
-  font-size: 16px;
-  margin-right: 5px;
 }
 
 .product-actions {
