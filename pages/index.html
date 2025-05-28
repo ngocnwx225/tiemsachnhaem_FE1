@@ -4,13 +4,20 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Trang quản lý - Tiệm Sách Nhà Em</title>
-  <link rel="stylesheet" href="../css/style_index.css" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../assets/css/sidebar.css" />
   <style>
     .container-all {
       display: flex;
       margin: 0 auto;
       overflow: hidden;
       background-color: #F5F5F7;
+    }
+    
+    .main {
+      flex: 1;
+      margin-left: 260px; /* Chiều rộng của sidebar */
+      min-height: 100vh;
     }
   </style>
 </head>
@@ -91,15 +98,28 @@
       .then(data => {
         document.getElementById("sidebar-container").innerHTML = data;
 
-        // Sửa đường dẫn ảnh bên trong sidebar
-        document.querySelectorAll("#sidebar-container img").forEach(img => {
-          const src = img.getAttribute("src");
+        // Fix các đường dẫn trong sidebar nếu cần
+        document.querySelectorAll("#sidebar-container a, #sidebar-container img").forEach(el => {
+          const src = el.getAttribute("src") || el.getAttribute("href");
           if (src && !src.startsWith("http") && !src.startsWith("../")) {
-            img.src = "../" + src;
+            if (el.tagName === "IMG") {
+              el.src = "../" + src;
+            } else {
+              el.href = "../" + src;
+            }
           }
         });
 
-        // Active menu
+        // Điều chỉnh vị trí của sidebar để nằm sát lề trái
+        const sidebarElement = document.querySelector("#sidebar-container .sidebar");
+        if (sidebarElement) {
+          sidebarElement.style.position = "fixed";
+          sidebarElement.style.left = "0";
+          sidebarElement.style.top = "0";
+          sidebarElement.style.height = "100vh";
+        }
+
+        // Nếu trang là index.html thì highlight menu "Tổng quan"
         document.getElementById("menu-overview")?.classList.add("active");
       });
 
@@ -222,4 +242,4 @@
     document.querySelector(".time-btn.active")?.click();
   </script>
 </body>
-</html>
+</html> 
