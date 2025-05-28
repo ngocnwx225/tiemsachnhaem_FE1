@@ -100,7 +100,7 @@
       </li>
       <li
         id="menu-orders"
-        onclick="location.href='pages/quanlydonhang.html'"
+        onclick="location.href='quanlydonhang.html'"
         style="
           display: flex;
           align-items: center;
@@ -276,93 +276,6 @@
     </div>
   </div>
 </div>
-
-<script>
-  // Thêm class active cho menu item đang được chọn
-  document.addEventListener("DOMContentLoaded", function () {
-    // Lấy tất cả các menu item
-    const menuItems = document.querySelectorAll(".menu li");
-
-    // Thêm style cho menu item active và hover
-    menuItems.forEach((item) => {
-      // Style cho hover
-      item.addEventListener("mouseover", function () {
-        this.style.backgroundColor = "#f9e8ea";
-        this.style.transform = "translateX(5px)";
-        this.style.boxShadow = "0 4px 10px rgba(0,0,0,0.05)";
-      });
-
-      item.addEventListener("mouseout", function () {
-        if (!this.classList.contains("active")) {
-          this.style.backgroundColor = "";
-          this.style.transform = "";
-          this.style.boxShadow = "";
-        }
-      });
-
-      // Kiểm tra nếu là trang hiện tại để thêm class active
-      const currentPage = window.location.pathname.split("/").pop();
-      const itemHref = item
-        .getAttribute("onclick")
-        .match(/href=\'([^\']+)\'/)[1];
-      const itemPage = itemHref.split("/").pop();
-
-      if (
-        currentPage === itemPage ||
-        (currentPage === "" && itemPage === "index.html")
-      ) {
-        item.classList.add("active");
-        item.style.backgroundColor = "#f9e8ea";
-        item.style.color = "#333";
-        item.style.fontWeight = "bold";
-        item.style.boxShadow = "0 4px 10px rgba(0,0,0,0.05)";
-      }
-    });
-
-    // Style và chức năng cho nút đăng xuất
-    const logoutBtn = document.getElementById("logout-button");
-
-    // Thêm hiệu ứng hover
-    logoutBtn.addEventListener("mouseover", function () {
-      this.style.backgroundColor = "#d32f2f";
-      this.style.transform = "translateY(-2px)";
-      this.style.boxShadow = "0 6px 12px rgba(244, 67, 54, 0.4)";
-    });
-
-    logoutBtn.addEventListener("mouseout", function () {
-      this.style.backgroundColor = "#f44336";
-      this.style.transform = "";
-      this.style.boxShadow = "0 4px 8px rgba(244, 67, 54, 0.3)";
-    });
-
-    // Thêm hiệu ứng khi click
-    logoutBtn.addEventListener("mousedown", function () {
-      this.style.transform = "scale(0.98)";
-      this.style.boxShadow = "0 2px 4px rgba(244, 67, 54, 0.3)";
-    });
-
-    logoutBtn.addEventListener("mouseup", function () {
-      this.style.transform = "";
-      this.style.boxShadow = "0 4px 8px rgba(244, 67, 54, 0.3)";
-    });
-
-    // Chức năng đăng xuất - chuyển đến trang đăng nhập
-    logoutBtn.addEventListener("click", function () {
-      // Thêm hiệu ứng trước khi chuyển trang
-      this.style.backgroundColor = "#b71c1c";
-      this.style.transform = "scale(0.95)";
-
-      // Xóa session hoặc local storage nếu cần
-      localStorage.removeItem("user");
-      sessionStorage.removeItem("user");
-
-      // Chuyển đến trang đăng nhập sau 300ms để hiển thị hiệu ứng
-      setTimeout(function () {
-        window.location.href = "pages/dangnhap1.html";
-      }, 300);
-    });
-  });
-</script>
 
 <!-- Thêm file JavaScript cho sidebar -->
 <script src="assets/js/sidebar.js"></script>
