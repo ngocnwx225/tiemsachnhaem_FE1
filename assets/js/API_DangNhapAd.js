@@ -1,3 +1,11 @@
+document.addEventListener("DOMContentLoaded", function () {
+  // Gán sự kiện submit cho form
+  const loginForm = document.getElementById("loginForm");
+  if (loginForm) {
+    loginForm.addEventListener("submit", callLoginAPI);
+  }
+});
+
 // Hàm gọi API đăng nhập
 function callLoginAPI(event) {
   event.preventDefault(); // Ngăn form reload trang
@@ -64,14 +72,12 @@ function callLoginAPI(event) {
 
       // Nếu có dữ liệu phản hồi và thông tin user trong phản hồi
       if (data && data.user) {
-        // --- Bổ sung: Kiểm tra role của người dùng ---
-        if (data.user.role === "admin") { // Giả định role admin được trả về là chuỗi "admin"
+        // Kiểm tra role của người dùng
+        if (data.user.role === "admin") {
           console.log("Người dùng có role:", data.user.role);
           // Lưu thông tin người dùng vào localStorage
           localStorage.setItem("userInfo", JSON.stringify(data.user));
-
           console.log("Đã lưu thông tin người dùng:", data.user);
-
           alert("Đăng nhập thành công!");
           // Chuyển hướng đến trang chủ (hoặc trang admin)
           window.location.href = "../pages/home.html"; // Bạn có thể đổi sang trang admin nếu có
@@ -83,7 +89,6 @@ function callLoginAPI(event) {
           localStorage.removeItem("userInfo");
           passwordError.classList.add("hidden"); // Ẩn thông báo lỗi nếu có
         }
-        // --- Kết thúc bổ sung ---
       } else {
         console.error("Phản hồi thành công nhưng dữ liệu user không hợp lệ:", data);
         alert("Đăng nhập không thành công: Không nhận được thông tin người dùng.");
@@ -94,12 +99,11 @@ function callLoginAPI(event) {
       console.error("Chi tiết lỗi đăng nhập (lỗi mạng/server):", error); // Log chi tiết lỗi bắt được
       // Ẩn div lỗi trên trang
       document.getElementById("password-error").classList.add("hidden");
-      // Hiển thị lỗi trong alert box
       // Kiểm tra nếu lỗi là từ phản hồi server 4xx/5xx đã xử lý
       if (error.message.startsWith("Đăng nhập thất bại")) {
-           alert(error.message);
+        alert(error.message);
       } else {
-           alert("Đăng nhập thất bại do lỗi kết nối hoặc server. Vui lòng thử lại.");
+        alert("Đăng nhập thất bại do lỗi kết nối hoặc server. Vui lòng thử lại.");
       }
     });
 
