@@ -122,24 +122,29 @@ function setupLogout() {
             // Ngăn chặn hành vi mặc định của onclick inline (nếu có)
             e.preventDefault();
             
+            // Xóa thông tin người dùng khỏi localStorage
+            localStorage.removeItem('userInfo');
+            localStorage.removeItem('token');
+            localStorage.removeItem('userId');
+            
             // Xác định đường dẫn đến trang đăng nhập dựa trên vị trí hiện tại
             const currentPath = window.location.pathname;
             let loginPath;
             
             // Nếu đang ở trang chính (root)
             if (currentPath.endsWith("index.html") || currentPath === "/" || currentPath.endsWith("/")) {
-                loginPath = "pages/dangnhap1.html";
+                loginPath = "dangnhap1.html";
             } 
             // Nếu đang ở trong thư mục pages
             else if (currentPath.includes("/pages/")) {
-                loginPath = "../pages/dangnhap1.html";
+                loginPath = "dangnhap1.html";
             }
             // Trường hợp khác
             else {
                 loginPath = "pages/dangnhap1.html";
             }
             
-            console.log("Chuyển hướng đến:", loginPath);
+            console.log("Đăng xuất thành công, chuyển hướng đến:", loginPath);
             // Chuyển hướng đến trang đăng nhập
             window.location.href = loginPath;
         });

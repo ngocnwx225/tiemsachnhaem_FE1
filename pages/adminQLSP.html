@@ -5,50 +5,78 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản lý sản phẩm</title>
     <link rel="stylesheet" href="../assets/css/styleadminQLSP.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      .container-all {
+        display: flex;
+        margin: 0 auto;
+        overflow: hidden;
+        background-color: #F5F5F7;
+      }
+      
+      .main {
+        flex: 1;
+        margin-left: 300px; /* Chiều rộng của sidebar */
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      body, h1, h2, h3, h4, p, button, input, select, textarea {
+        font-family: 'Montserrat', sans-serif;
+      }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Quản lý sản phẩm</h1>
-        <div class="header">
-            <div class="search-bar">
-                <input type="text" id="searchInput" placeholder="Tìm sách theo tên, tác giả...">
-            </div>
-            <div class="actions">
-                <select id="categoryFilter">
-                    <option value="">Tất cả thể loại</option>
-                    <option value="Khoa học tự nhiên">Khoa học tự nhiên</option>
-                    <option value="Kinh điển">Kinh điển</option>
-                    <option value="Trinh thám">Trinh thám</option>
-                    <option value="Self-help">Self-help</option>
-                    <option value="Kinh dị">Kinh dị</option>
-                    <option value="Tâm lý">Tâm lý</option>
-                    <option value="Khoa học viễn tưởng">Khoa học viễn tưởng</option>
-                </select>
-                <button class="add-product">+ Thêm sản phẩm</button>
+    <div class="container-all">
+        <div id="sidebar-container" class="sidebar"></div>
+        
+        <div class="main">
+            <div class="container">
+                <h1>Quản lý sản phẩm</h1>
+                <div class="header">
+                    <div class="search-bar">
+                        <input type="text" id="searchInput" placeholder="Tìm sách theo tên, tác giả...">
+                    </div>
+                    <div class="actions">
+                        <select id="categoryFilter">
+                            <option value="">Tất cả thể loại</option>
+                            <option value="Khoa học tự nhiên">Khoa học tự nhiên</option>
+                            <option value="Kinh điển">Kinh điển</option>
+                            <option value="Trinh thám">Trinh thám</option>
+                            <option value="Self-help">Self-help</option>
+                            <option value="Kinh dị">Kinh dị</option>
+                            <option value="Tâm lý">Tâm lý</option>
+                            <option value="Khoa học viễn tưởng">Khoa học viễn tưởng</option>
+                        </select>
+                        <button class="add-product">+ Thêm sản phẩm</button>
+                    </div>
+                </div>
+                <table style="width: 100%; table-layout: fixed;">
+                    <colgroup>
+                        <col style="width: 25%">
+                        <col style="width: 15%">
+                        <col style="width: 15%">
+                        <col style="width: 8%">
+                        <col style="width: 18%">
+                        <col style="width: 3%">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>Sản phẩm</th>
+                            <th>Tác giả</th>
+                            <th>Nhà xuất bản</th>
+                            <th>Giá</th>
+                            <th>Thể loại</th>
+                            <th style="white-space: nowrap;">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productTableBody">
+                    </tbody>
+                </table>
             </div>
         </div>
-        <table style="width: 100%; table-layout: fixed;">
-            <colgroup>
-                <col style="width: 25%">
-                <col style="width: 15%">
-                <col style="width: 15%">
-                <col style="width: 8%">
-                <col style="width: 18%">
-                <col style="width: 3%">
-            </colgroup>
-            <thead>
-                <tr>
-                    <th>Sản phẩm</th>
-                    <th>Tác giả</th>
-                    <th>Nhà xuất bản</th>
-                    <th>Giá</th>
-                    <th>Thể loại</th>
-                    <th style="white-space: nowrap;">Thao tác</th>
-                </tr>
-            </thead>
-            <tbody id="productTableBody">
-            </tbody>
-        </table>
     </div>
 
     <!-- Modal Thêm sản phẩm -->
@@ -238,5 +266,6 @@
 
     <script src="../assets/js/apiQLSP.js"></script>
     <script src="../assets/js/javascriptadminQLSP.js"></script>
+    <script src="../assets/js/sidebar.js"></script>
 </body>
 </html>
