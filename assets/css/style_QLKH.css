@@ -753,6 +753,11 @@ td strong {
     font-size: 13px;
     padding: 10px;
   }
+  .block-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
   /* Confirm Popup */
   .confirm-popup {
