@@ -10,7 +10,8 @@
   <style>
     /* CSS cho Product Card */
     .product-card {
-        width: 230px;
+        width: 23%; /* Khoảng 1/4 chiều rộng, để lại khoảng trống cho gap */
+        min-width: 210px;
         height: auto;
         padding-bottom: 16px;
         background: white;
@@ -32,21 +33,41 @@
         transform: translateY(-5px);
     }
 
+    /* CSS cho thanh lọc theo giá */
+    #price-range {
+      accent-color: #004d3f;
+      height: 5px;
+      width: 100%;
+    }
+    
+    #price-range::-webkit-slider-thumb {
+      background: #004d3f;
+    }
+    
+    #price-range::-moz-range-thumb {
+      background: #004d3f;
+    }
+    
+    #price-range::-ms-thumb {
+      background: #004d3f;
+    }
+
     .product-image-container {
         align-self: stretch;
-        padding: 8px;
+        padding: 16px;
         overflow: hidden;
         border-top-left-radius: 12px;
         border-top-right-radius: 12px;
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 120px; /* Giới hạn chiều cao phần chứa ảnh */
+        height: 220px; /* Đủ cao để chứa ảnh và padding */
     }
 
     .product-image {
-        width: 70px;
-        height: 105px;
+        width: 120px;
+        height: 182px;
+        aspect-ratio: 60/91;
         object-fit: cover;
     }
 
@@ -142,7 +163,7 @@
     #product-grid {
       display: flex;
       flex-wrap: wrap;
-      gap: 24px;
+      gap: 16px;
       justify-content: flex-start;
     }
     
@@ -241,14 +262,15 @@
                 <div class="product-info">
                   <div class="product-title">Before the Coffee Gets Cold #1</div>
                   <div class="product-price">123.000<span class="product-price-unit">đ</span></div>
-                  <div class="product-sold">Đã bán: 325 đã bán/tháng</div>
+                  <div class="product-sold">325 đã bán/tháng</div>
                   <div class="product-actions">
                     <button class="buy-button">Mua hàng</button>
                     <div class="cart-button">
-                      <svg class="cart-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2.73 2.73H26.72V21.4H2.73V2.73Z" stroke="#86A788" stroke-width="1.5"/>
-                        <circle cx="10.67" cy="28" r="1.33" stroke="#86A788" stroke-width="1.5"/>
-                        <circle cx="25.33" cy="28" r="1.33" stroke="#86A788" stroke-width="1.5"/>
+                      <svg class="cart-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7.5 7.67001V6.70001C7.5 4.45001 9.31 2.24001 11.56 2.03001C14.24 1.77001 16.5 3.88001 16.5 6.51001V7.89001" stroke="#86A788" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.99999 22H15C19.02 22 19.74 20.39 19.95 18.43L20.7 12.43C20.97 9.99 20.27 8 16 8H7.99999C3.72999 8 3.02999 9.99 3.29999 12.43L4.04999 18.43C4.25999 20.39 4.97999 22 8.99999 22Z" stroke="#86A788" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M15.5 12H15.51" stroke="#86A788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.5 12H8.51" stroke="#86A788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                       </svg>
                     </div>
                   </div>
@@ -262,14 +284,15 @@
                 <div class="product-info">
                   <div class="product-title">Atomic Habits: Thay đổi nhỏ, hiệu quả lớn</div>
                   <div class="product-price">145.000<span class="product-price-unit">đ</span></div>
-                  <div class="product-sold">Đã bán: 562 đã bán/tháng</div>
+                  <div class="product-sold">562 đã bán/tháng</div>
                   <div class="product-actions">
                     <button class="buy-button">Mua hàng</button>
                     <div class="cart-button">
-                      <svg class="cart-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2.73 2.73H26.72V21.4H2.73V2.73Z" stroke="#86A788" stroke-width="1.5"/>
-                        <circle cx="10.67" cy="28" r="1.33" stroke="#86A788" stroke-width="1.5"/>
-                        <circle cx="25.33" cy="28" r="1.33" stroke="#86A788" stroke-width="1.5"/>
+                      <svg class="cart-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7.5 7.67001V6.70001C7.5 4.45001 9.31 2.24001 11.56 2.03001C14.24 1.77001 16.5 3.88001 16.5 6.51001V7.89001" stroke="#86A788" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.99999 22H15C19.02 22 19.74 20.39 19.95 18.43L20.7 12.43C20.97 9.99 20.27 8 16 8H7.99999C3.72999 8 3.02999 9.99 3.29999 12.43L4.04999 18.43C4.25999 20.39 4.97999 22 8.99999 22Z" stroke="#86A788" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M15.5 12H15.51" stroke="#86A788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.5 12H8.51" stroke="#86A788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                       </svg>
                     </div>
                   </div>
@@ -283,14 +306,15 @@
                 <div class="product-info">
                   <div class="product-title">Sherlock Holmes: Toàn tập</div>
                   <div class="product-price">210.000<span class="product-price-unit">đ</span></div>
-                  <div class="product-sold">Đã bán: 198 đã bán/tháng</div>
+                  <div class="product-sold">198 đã bán/tháng</div>
                   <div class="product-actions">
                     <button class="buy-button">Mua hàng</button>
                     <div class="cart-button">
-                      <svg class="cart-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2.73 2.73H26.72V21.4H2.73V2.73Z" stroke="#86A788" stroke-width="1.5"/>
-                        <circle cx="10.67" cy="28" r="1.33" stroke="#86A788" stroke-width="1.5"/>
-                        <circle cx="25.33" cy="28" r="1.33" stroke="#86A788" stroke-width="1.5"/>
+                      <svg class="cart-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7.5 7.67001V6.70001C7.5 4.45001 9.31 2.24001 11.56 2.03001C14.24 1.77001 16.5 3.88001 16.5 6.51001V7.89001" stroke="#86A788" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.99999 22H15C19.02 22 19.74 20.39 19.95 18.43L20.7 12.43C20.97 9.99 20.27 8 16 8H7.99999C3.72999 8 3.02999 9.99 3.29999 12.43L4.04999 18.43C4.25999 20.39 4.97999 22 8.99999 22Z" stroke="#86A788" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M15.5 12H15.51" stroke="#86A788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.5 12H8.51" stroke="#86A788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                       </svg>
                     </div>
                   </div>
@@ -304,14 +328,104 @@
                 <div class="product-info">
                   <div class="product-title">Sapiens: Lược sử loài người</div>
                   <div class="product-price">189.000<span class="product-price-unit">đ</span></div>
-                  <div class="product-sold">Đã bán: 412 đã bán/tháng</div>
+                  <div class="product-sold">412 đã bán/tháng</div>
                   <div class="product-actions">
                     <button class="buy-button">Mua hàng</button>
                     <div class="cart-button">
-                      <svg class="cart-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2.73 2.73H26.72V21.4H2.73V2.73Z" stroke="#86A788" stroke-width="1.5"/>
-                        <circle cx="10.67" cy="28" r="1.33" stroke="#86A788" stroke-width="1.5"/>
-                        <circle cx="25.33" cy="28" r="1.33" stroke="#86A788" stroke-width="1.5"/>
+                      <svg class="cart-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7.5 7.67001V6.70001C7.5 4.45001 9.31 2.24001 11.56 2.03001C14.24 1.77001 16.5 3.88001 16.5 6.51001V7.89001" stroke="#86A788" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.99999 22H15C19.02 22 19.74 20.39 19.95 18.43L20.7 12.43C20.97 9.99 20.27 8 16 8H7.99999C3.72999 8 3.02999 9.99 3.29999 12.43L4.04999 18.43C4.25999 20.39 4.97999 22 8.99999 22Z" stroke="#86A788" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M15.5 12H15.51" stroke="#86A788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.5 12H8.51" stroke="#86A788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Thêm sản phẩm thứ 5-8 để kiểm tra hiển thị hàng thứ 2 -->
+              <div class="product-card">
+                <div class="product-image-container">
+                  <img class="product-image" src="https://placehold.co/120x182" alt="The Lord of the Rings">
+                </div>
+                <div class="product-info">
+                  <div class="product-title">The Lord of the Rings: Trilogy</div>
+                  <div class="product-price">299.000<span class="product-price-unit">đ</span></div>
+                  <div class="product-sold">278 đã bán/tháng</div>
+                  <div class="product-actions">
+                    <button class="buy-button">Mua hàng</button>
+                    <div class="cart-button">
+                      <svg class="cart-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7.5 7.67001V6.70001C7.5 4.45001 9.31 2.24001 11.56 2.03001C14.24 1.77001 16.5 3.88001 16.5 6.51001V7.89001" stroke="#86A788" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.99999 22H15C19.02 22 19.74 20.39 19.95 18.43L20.7 12.43C20.97 9.99 20.27 8 16 8H7.99999C3.72999 8 3.02999 9.99 3.29999 12.43L4.04999 18.43C4.25999 20.39 4.97999 22 8.99999 22Z" stroke="#86A788" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M15.5 12H15.51" stroke="#86A788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.5 12H8.51" stroke="#86A788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="product-card">
+                <div class="product-image-container">
+                  <img class="product-image" src="https://placehold.co/120x182" alt="1984">
+                </div>
+                <div class="product-info">
+                  <div class="product-title">1984 - George Orwell</div>
+                  <div class="product-price">156.000<span class="product-price-unit">đ</span></div>
+                  <div class="product-sold">341 đã bán/tháng</div>
+                  <div class="product-actions">
+                    <button class="buy-button">Mua hàng</button>
+                    <div class="cart-button">
+                      <svg class="cart-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7.5 7.67001V6.70001C7.5 4.45001 9.31 2.24001 11.56 2.03001C14.24 1.77001 16.5 3.88001 16.5 6.51001V7.89001" stroke="#86A788" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.99999 22H15C19.02 22 19.74 20.39 19.95 18.43L20.7 12.43C20.97 9.99 20.27 8 16 8H7.99999C3.72999 8 3.02999 9.99 3.29999 12.43L4.04999 18.43C4.25999 20.39 4.97999 22 8.99999 22Z" stroke="#86A788" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M15.5 12H15.51" stroke="#86A788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.5 12H8.51" stroke="#86A788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="product-card">
+                <div class="product-image-container">
+                  <img class="product-image" src="https://placehold.co/120x182" alt="To Kill a Mockingbird">
+                </div>
+                <div class="product-info">
+                  <div class="product-title">To Kill a Mockingbird</div>
+                  <div class="product-price">143.000<span class="product-price-unit">đ</span></div>
+                  <div class="product-sold">245 đã bán/tháng</div>
+                  <div class="product-actions">
+                    <button class="buy-button">Mua hàng</button>
+                    <div class="cart-button">
+                      <svg class="cart-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7.5 7.67001V6.70001C7.5 4.45001 9.31 2.24001 11.56 2.03001C14.24 1.77001 16.5 3.88001 16.5 6.51001V7.89001" stroke="#86A788" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.99999 22H15C19.02 22 19.74 20.39 19.95 18.43L20.7 12.43C20.97 9.99 20.27 8 16 8H7.99999C3.72999 8 3.02999 9.99 3.29999 12.43L4.04999 18.43C4.25999 20.39 4.97999 22 8.99999 22Z" stroke="#86A788" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M15.5 12H15.51" stroke="#86A788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.5 12H8.51" stroke="#86A788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="product-card">
+                <div class="product-image-container">
+                  <img class="product-image" src="https://placehold.co/120x182" alt="The Great Gatsby">
+                </div>
+                <div class="product-info">
+                  <div class="product-title">The Great Gatsby</div>
+                  <div class="product-price">135.000<span class="product-price-unit">đ</span></div>
+                  <div class="product-sold">210 đã bán/tháng</div>
+                  <div class="product-actions">
+                    <button class="buy-button">Mua hàng</button>
+                    <div class="cart-button">
+                      <svg class="cart-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7.5 7.67001V6.70001C7.5 4.45001 9.31 2.24001 11.56 2.03001C14.24 1.77001 16.5 3.88001 16.5 6.51001V7.89001" stroke="#86A788" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.99999 22H15C19.02 22 19.74 20.39 19.95 18.43L20.7 12.43C20.97 9.99 20.27 8 16 8H7.99999C3.72999 8 3.02999 9.99 3.29999 12.43L4.04999 18.43C4.25999 20.39 4.97999 22 8.99999 22Z" stroke="#86A788" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M15.5 12H15.51" stroke="#86A788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.5 12H8.51" stroke="#86A788" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                       </svg>
                     </div>
                   </div>
