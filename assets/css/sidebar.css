@@ -1,0 +1,164 @@
+/* CSS cho sidebar - Tiệm Sách Nhà Em */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+/* Các style chung cho sidebar sẽ được áp dụng khi không có style inline */
+.sidebar {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.sidebar .logo {
+  text-align: center;
+  margin-bottom: 35px;
+  padding-top: 10px;
+}
+
+.sidebar .logo img {
+  max-width: 90%;
+  height: auto;
+  transition: transform 0.3s ease;
+}
+
+.sidebar .logo img:hover {
+  transform: scale(1.05);
+}
+
+/* Menu chính */
+.sidebar .menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar .menu li {
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  color: #555;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.sidebar .menu li:hover {
+  background-color: #f9e8ea;
+  transform: translateX(5px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.sidebar .menu li:focus,
+.sidebar .menu li:focus-visible {
+  outline: 2px solid #f44336;
+  background-color: #f9e8ea;
+}
+
+.sidebar .menu li.active {
+  background-color: #f9e8ea;
+  color: #333;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.sidebar .menu li .menu-icon {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.sidebar .menu li .menu-icon img {
+  width: 22px;
+  filter: brightness(0.3);
+  transition: filter 0.3s ease;
+}
+
+.sidebar .menu li:hover .menu-icon img,
+.sidebar .menu li.active .menu-icon img {
+  filter: brightness(0.5);
+}
+
+/* Phần profile và đăng xuất */
+.sidebar .account-info {
+  margin-top: 20px;
+  border-top: 1px solid #f0f0f0;
+  padding: 20px 15px;
+  background-color: #ffffff;
+}
+
+.sidebar .profile-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sidebar .profile-avatar {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background: #6563ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 20px;
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(101, 99, 255, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sidebar .profile-avatar:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(101, 99, 255, 0.3);
+}
+
+.sidebar .profile-section div {
+  margin-top: 8px;
+  text-align: center;
+}
+
+.sidebar .logout-button {
+  width: 100%;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  text-align: center;
+  font-size: 14px;
+  margin-top: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(244, 67, 54, 0.3);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+}
+
+.sidebar .logout-button:hover {
+  background-color: #d32f2f;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(244, 67, 54, 0.4);
+}
+
+.sidebar .logout-button:focus,
+.sidebar .logout-button:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+.sidebar .logout-button:active {
+  transform: scale(0.98);
+  box-shadow: 0 2px 4px rgba(244, 67, 54, 0.3);
+}
+
+.sidebar .logout-button img {
+  margin-right: 8px;
+  filter: brightness(0) invert(1);
+} 
