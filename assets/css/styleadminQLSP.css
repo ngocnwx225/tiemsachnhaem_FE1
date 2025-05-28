@@ -41,7 +41,7 @@ h1 {
     font-size: 26px;
     font-weight: 700;
     margin-bottom: 20px;
-    text-align: center;
+    text-align: left;
 }
 
 /* Header */
@@ -731,7 +731,7 @@ td span br {
     }
 
     table {
-        min-width: 600px;
+        min-width: 200px;
         display: block;
         overflow-x: auto;
         white-space: nowrap;
