@@ -130,26 +130,18 @@ function setupLogout() {
             localStorage.removeItem('token');
             localStorage.removeItem('userId');
             
-            // Xác định đường dẫn đến trang đăng nhập dựa trên vị trí hiện tại
-            const currentPath = window.location.pathname;
-            let loginPath;
-            
-            // Nếu đang ở trang chính (root)
-            if (currentPath.endsWith("index.html") || currentPath === "/" || currentPath.endsWith("/")) {
-                loginPath = "dangnhap1.html";
-            } 
-            // Nếu đang ở trong thư mục pages
-            else if (currentPath.includes("/pages/")) {
-                loginPath = "dangnhap1.html";
-            }
-            // Trường hợp khác
-            else {
-                loginPath = "pages/dangnhap1.html";
-            }
-            
-            console.log("Đăng xuất thành công, chuyển hướng đến:", loginPath);
             // Chuyển hướng đến trang đăng nhập
-            window.location.href = loginPath;
+            const currentPath = window.location.pathname;
+            
+            // Nếu đang trong thư mục pages
+            if (currentPath.includes("/pages/")) {
+                window.location.href = "dangnhap1.html";
+            } else {
+                // Nếu ở root hoặc nơi khác
+                window.location.href = "pages/dangnhap1.html";
+            }
+            
+            console.log("Đăng xuất thành công");
         });
     } else {
         console.log("Logout button not found!");
