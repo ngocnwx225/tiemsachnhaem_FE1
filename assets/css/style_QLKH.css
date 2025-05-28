@@ -754,6 +754,12 @@ td strong {
     padding: 10px;
   }
 
+  .block-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
   /* Confirm Popup */
   .confirm-popup {
     width: 80%;
