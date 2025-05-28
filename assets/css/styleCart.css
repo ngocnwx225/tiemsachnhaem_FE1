@@ -8,7 +8,6 @@ body {
     font-size: 14px;
 }
 
-
 .cart-page {
     max-width: 1200px;
     min-height: 500px;
@@ -144,18 +143,18 @@ body {
     color: #333;
     margin-bottom: 10px;
     display: flex;
-    justify-content: space-between; /* Đẩy giá trị sang bên phải */
-    align-items: center; /* Căn giữa theo chiều dọc */
+    justify-content: space-between;
+    align-items: center;
 }
 
 .checkout-summary .label {
-    flex: 1; /* Chiếm không gian bên trái */
-    max-width: 70%; /* Giới hạn độ rộng để giá trị không bị đẩy quá xa */
+    flex: 1;
+    max-width: 70%;
 }
 
 .checkout-summary span:not(.label) {
     font-weight: bold;
-    flex-shrink: 0; /* Không cho giá trị (0 đ) co lại */
+    flex-shrink: 0;
 }
 
 .checkout-summary span {
@@ -213,6 +212,7 @@ hr {
 }
 
 .continue-btn {
+    font-family: 'Montserrat', sans-serif;
     padding: 10px 20px;
     background-color: #86A788;
     color: #fff;
@@ -351,4 +351,23 @@ hr {
     font-size: 14px;
     color: #333;
     margin: 0;
+}
+
+/* Responsive Design - Mobile (dưới 768px) */
+@media (max-width: 768px) {
+    .cart-page {
+        flex-direction: column; /* Chuyển sang cột để .checkout-section xuống dưới */
+        padding: 0 10px; /* Giảm padding cho phù hợp với mobile */
+    }
+
+    .cart-section {
+        flex: none; /* Bỏ flex để chiếm toàn bộ chiều rộng */
+        width: 100%; /* Đảm bảo chiếm toàn bộ chiều rộng */
+    }
+
+    .checkout-section {
+        flex: none; /* Bỏ flex để chiếm toàn bộ chiều rộng */
+        width: 100%; /* Đảm bảo chiếm toàn bộ chiều rộng */
+        position: static; /* Bỏ sticky để không dính trên mobile */
+    }
 }
