@@ -1,11 +1,7 @@
 // --- Logic cho Giỏ hàng ---
 
-// Dữ liệu giỏ hàng mẫu
-let cartItems = [
-    { id: 1, name: "Viral: The Search for the Origin of COVID-19", price: 300000, quantity: 1, image: "https://th.bing.com/th/id/OIP.41YOPVU57YEnQiDVlHvbowAAAA?rs=1&pid=ImgDetMain/60x90", checked: false },
-    { id: 2, name: "The Forever Dog", price: 560000, quantity: 1, image: "https://th.bing.com/th/id/OIP.FO0fr8_PTvFtEeQlDd2BewAAAA?w=300&h=459&rs=1&pid=ImgDetMain/60x90", checked: false },
-    { id: 3, name: "Think Like a Therapist", price: 400000, quantity: 1, image: "https://th.bing.com/th/id/OIP.6fAsPdK6Ob_PjYKwBcvP_wHaKc?rs=1&pid=ImgDetMain/60x90", checked: false }
-];
+// Lấy dữ liệu giỏ hàng từ localStorage, nếu không có thì tạo mảng rỗng
+let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
 
 // Biến lưu trạng thái giảm giá
 let appliedDiscount = 0; // Số tiền giảm giá (ban đầu là 0)
@@ -65,9 +61,9 @@ function renderCart() {
         cartItem.className = 'cart-item';
         cartItem.innerHTML = `
             <input type="checkbox" class="item-checkbox" data-id="${item.id}" ${item.checked ? 'checked' : ''}>
-            <img src="${item.image}" alt="${item.name}">
+            <img src="${item.imageUrl || item.image}" alt="${item.bookTitle || item.name}">
             <div class="item-details">
-                <h3>${item.name}</h3>
+                <h3>${item.bookTitle || item.name}</h3>
                 <p class="item-price">${formatPrice(item.price)}</p>
                 <div class="quantity-control">
                     <button class="decrease" data-id="${item.id}">-</button>
@@ -111,7 +107,7 @@ function setupCartEvents() {
     if (!cartDOM.cartItems) return; // Kiểm tra nếu không phải trang giỏ hàng
 
     cartDOM.cartItems.addEventListener('click', (e) => {
-        const id = parseInt(e.target.dataset.id);
+        const id = e.target.dataset.id;
         const item = cartItems.find(i => i.id === id);
 
         if (e.target.classList.contains('increase')) {
@@ -125,6 +121,7 @@ function setupCartEvents() {
         } else if (e.target.classList.contains('item-checkbox')) {
             item.checked = e.target.checked;
         }
+        localStorage.setItem('cart', JSON.stringify(cartItems)); // Cập nhật localStorage sau khi thay đổi
         renderCart();
     });
 
@@ -132,14 +129,15 @@ function setupCartEvents() {
     cartDOM.deleteModal.addEventListener('click', (e) => e.target === cartDOM.deleteModal && (cartDOM.deleteModal.style.display = 'none'));
 
     cartDOM.confirmDelete.addEventListener('click', () => {
-        const id = parseInt(cartDOM.confirmDelete.dataset.id);
+        const id = cartDOM.confirmDelete.dataset.id;
         cartItems = cartItems.filter(item => item.id !== id);
         cartDOM.deleteModal.style.display = 'none';
+        localStorage.setItem('cart', JSON.stringify(cartItems)); // Cập nhật localStorage sau khi xóa
         renderCart();
     });
 
     cartDOM.continueShopping.addEventListener('click', () => {
-        window.history.back(); // Quay lại trang trước
+        window.location.href = 'ShopPage.html'; // Quay lại shop page
     });
 
     cartDOM.checkoutBtn.addEventListener('click', () => {
