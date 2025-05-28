@@ -26,9 +26,10 @@ function showOrderDetail(orderCode) {
   `).join('');
 
   // Đặt trạng thái hiện tại của đơn hàng trong dropdown
-  const statusElement = document.getElementById(`status${orderCode.slice(1)}`); // Sử dụng ID
+  const statusElement = document.getElementById(`status${orderCode.slice(1)}`);
   const currentStatus = statusElement.classList[2].split('-')[1];
   document.getElementById("orderStatusSelect").value = currentStatus;
+  document.getElementById("orderStatus").textContent = statusElement.textContent;
 
   const myModal = new bootstrap.Modal(document.getElementById('orderModal'));
   myModal.show();
@@ -46,11 +47,14 @@ function updateOrderStatus() {
   }[status];
   
   // Cập nhật trạng thái trên bảng chính
-  const statusElement = document.getElementById(`status${orderCode.slice(1)}`); // Sử dụng ID
+  const statusElement = document.getElementById(`status${orderCode.slice(1)}`);
   if (statusElement) {
     statusElement.textContent = statusText;
-    statusElement.className = `badge rounded-pill status-${status}`; // Cập nhật cả nội dung và lớp CSS
+    statusElement.className = `badge rounded-pill status-${status}`;
   }
+
+  // Cập nhật trạng thái trong modal
+  document.getElementById("orderStatus").textContent = statusText;
 
   // Hiển thị popup thành công
   document.getElementById("successStatus").textContent = statusText;
@@ -79,6 +83,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function toggleSidebar() {
-    const sidebar = document.querySelector('.sidebar');
-    sidebar.classList.toggle('active');
+  const sidebar = document.querySelector('.sidebar');
+  sidebar.classList.toggle('active');
 }
