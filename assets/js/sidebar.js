@@ -6,9 +6,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Xử lý active menu item dựa trên trang hiện tại
     highlightCurrentPage();
     
-    // Xử lý sự kiện đăng xuất
-    setupLogout();
-    
     // Hiển thị thông tin người dùng nếu đã đăng nhập
     displayUserInfo();
 });
@@ -62,6 +59,9 @@ function loadSidebar() {
             
             // Highlight menu item phù hợp sau khi tải sidebar
             highlightCurrentPage();
+            
+            // Thiết lập sự kiện đăng xuất sau khi sidebar được tải
+            setupLogout();
         })
         .catch(error => {
             console.error("Lỗi khi tải sidebar:", error);
@@ -116,9 +116,12 @@ function highlightMenuItem(menuId) {
 
 // Thiết lập sự kiện đăng xuất
 function setupLogout() {
+    console.log("Setting up logout button...");
     const logoutButton = document.getElementById('logout-button');
     if (logoutButton) {
+        console.log("Logout button found, attaching event listener");
         logoutButton.addEventListener('click', function(e) {
+            console.log("Logout button clicked");
             // Ngăn chặn hành vi mặc định của onclick inline (nếu có)
             e.preventDefault();
             
@@ -148,6 +151,8 @@ function setupLogout() {
             // Chuyển hướng đến trang đăng nhập
             window.location.href = loginPath;
         });
+    } else {
+        console.log("Logout button not found!");
     }
 }
 
