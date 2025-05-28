@@ -1,9 +1,10 @@
 /* CSS cho sidebar - Tiệm Sách Nhà Em */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 
 /* Các style chung cho sidebar sẽ được áp dụng khi không có style inline */
 .sidebar {
   font-family: 'Montserrat', sans-serif;
+  overflow: visible;
 }
 
 .sidebar .logo {
@@ -13,8 +14,8 @@
 }
 
 .sidebar .logo img {
-  max-width: 90%;
-  height: auto;
+  width: 140px;
+  height: 109px;
   transition: transform 0.3s ease;
 }
 
@@ -38,6 +39,7 @@
   transition: all 0.3s ease;
   color: #555;
   font-weight: 500;
+  font-family: 'Montserrat', sans-serif;
   white-space: nowrap;
   cursor: pointer;
 }
@@ -88,6 +90,7 @@
   border-top: 1px solid #f0f0f0;
   padding: 20px 15px;
   background-color: #ffffff;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .sidebar .profile-section {
