@@ -9,22 +9,6 @@
     box-sizing: border-box;
 }
 
-body {
-    background-color: #f8f9fa;
-    margin: 15px auto;
-    padding: 15px;
-}
-
-/* Container */
-.container {
-    max-width: 1400px;
-    margin: 15px auto;
-    background-color: #fff;
-    border-radius: 15px;
-    padding: 20px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    overflow-x: auto;
-}
 
 /* Điều chỉnh container khi hiển thị trong iframe */
 .container.in-iframe {
@@ -573,10 +557,10 @@ td span br {
 
 /* Responsive Design - Chỉ tối ưu cho iPhone 14 (dưới 390px) */
 @media (max-width: 390px) {
-    body {
+    /* body {
         margin: 5px auto;
         padding: 5px;
-    }
+    } */
     .container {
         margin: 5px auto;
         padding: 10px;

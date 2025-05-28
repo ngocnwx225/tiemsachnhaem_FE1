@@ -13,16 +13,13 @@ html, body {
   overflow-x: hidden; /* tránh tràn chiều ngang */
 }
 
+
 body {
   display: flex;
   background-color: #F5F5F7;
   font-family: 'Montserrat', sans-serif;
 }
 
-.container {
-  background-color: #F5F5F7;
-  padding: 32px;
-}
 
 .header {
   display: flex;
@@ -286,24 +283,10 @@ body {
   background-color: #F5F5F7;
 }
 
-.sidebar {
-  width: 240px;
-  background-color: #86A788;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100vh;
-  padding: 24px 0;
-}
 
 .sidebar .logo {
   text-align: center;
   margin-bottom: 32px;
-}
-
-.sidebar .logo img {
-  width: 120px;
 }
 
 .menu {
@@ -327,24 +310,6 @@ body {
   border-radius: 6px;
 }
 
-.account-info {
-  padding: 0 24px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start; /* căn trái */
-  gap: 8px;
-}
-
-.profile-section {
-  display: flex;
-  flex-direction: column; /* sắp xếp theo chiều dọc */
-  align-items: flex-start; /* căn trái */
-  gap: 4px;
-  margin-bottom: 8px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.4); /* đường kẻ ngăn cách */
-  padding-bottom: 12px;
-  width: 100%;
-}
 
 .profile-avatar {
   width: 40px;
@@ -362,10 +327,6 @@ body {
   font-size: 14px;
 }
 
-.main {
-  flex: 1;
-  padding: 32px;
-}
 
 .grid {
   display: grid;

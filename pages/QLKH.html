@@ -1,152 +1,210 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin - Quản lý khách hàng</title>
-    <link rel="stylesheet" href="../assets/css/global.css">
-    <link rel="stylesheet" href="../assets/css/style_QLKH.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style_common.css" />
+    <link rel="stylesheet" href="../assets/css/global.css" />
+    <link rel="stylesheet" href="../assets/css/style_QLKH.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
       .container-all {
         display: flex;
         margin: 0 auto;
         overflow: hidden;
-        background-color: #F5F5F7;
+        background-color: #f5f5f7;
       }
-      
-      .main {
-        flex: 1;
-        margin-left: 300px; /* Chiều rộng của sidebar */
-        min-height: 100vh;
-        padding: 20px;
-      }
-
-      body, h1, h2, h3, h4, p, button, input, select, textarea {
-        font-family: 'Montserrat', sans-serif;
+      body,
+      h1,
+      h2,
+      h3,
+      h4,
+      p,
+      button,
+      input,
+      select,
+      textarea {
+        font-family: "Montserrat", sans-serif;
       }
     </style>
-</head>
-<body>
-  <div class="container-all">
-    
-    <div id="sidebar-container" class="sidebar"></div>
+  </head>
+  <body>
+    <div class="container-all">
+      <div id="sidebar-container" class="sidebar"></div>
 
-    <div class="main">
-      <h1>QUẢN LÝ KHÁCH HÀNG</h1>
+      <div class="main">
+        <div class="container">
+          <h1>QUẢN LÝ KHÁCH HÀNG</h1>
 
-      <div class="search-filter">
-        <input type="text" class="search-bar" id="searchInput" placeholder="Tìm theo tên, email, số điện thoại...">
-        <div class="status-dropdown">
-          <select id="statusFilter" onchange="filterStatus(this.value)">
-            <option value="all">Tất cả trạng thái</option>
-            <option value="active">Active</option>
-            <option value="lock">Lock</option>
-          </select>
+          <div class="search-filter">
+            <input
+              type="text"
+              class="search-bar"
+              id="searchInput"
+              placeholder="Tìm theo tên, email, số điện thoại..."
+            />
+            <div class="status-dropdown">
+              <select id="statusFilter" onchange="filterStatus(this.value)">
+                <option value="all">Tất cả trạng thái</option>
+                <option value="active">Active</option>
+                <option value="lock">Lock</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="table-container">
+            <table id="customerTable">
+              <thead>
+                <tr>
+                  <th>Khách hàng</th>
+                  <th>Số đơn hàng</th>
+                  <th>Tổng chi tiêu</th>
+                  <th>Trạng thái</th>
+                  <th>Thao tác</th>
+                </tr>
+              </thead>
+              <tbody id="customerList">
+                <!-- Dữ liệu sẽ được tải từ API -->
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-
-      <div class="table-container">
-        <table id="customerTable">
-          <thead>
-            <tr>
-              <th>Khách hàng</th>
-              <th>Số đơn hàng</th>
-              <th>Tổng chi tiêu</th>
-              <th>Trạng thái</th>
-              <th>Thao tác</th>
-            </tr>
-          </thead>
-          <tbody id="customerList">
-            <!-- Dữ liệu sẽ được tải từ API -->
-          </tbody>
-        </table>
-      </div>
     </div>
-  </div>
 
-  <!-- Popup Thông Tin Khách Hàng -->
-  <div class="popup-overlay" id="popupOverlay">
-    <div class="popup">
-      <div class="popup-header">
-        <h2>THÔNG TIN KHÁCH HÀNG</h2>
-        <button class="close-btn" onclick="closePopup()">✖</button>
-      </div>
-      <div class="popup-content">
-        <div class="popup-left">
-          <h3>Thông tin cá nhân</h3>
-          <p><strong>Tên:</strong> <span id="popupName"></span></p>
-          <p><strong>Email:</strong> <span id="popupEmail"></span></p>
-          <p><strong>Số điện thoại:</strong> <span id="popupPhone"></span></p>
-          <p><strong>Địa chỉ:</strong> <span id="popupAddress"></span></p>
-          <p><strong>Ngày đăng ký:</strong> <span id="popupRegDate"></span></p>
-          <p><strong>Trạng thái:</strong> <span id="popupStatus"></span></p>
+    <!-- Popup Thông Tin Khách Hàng -->
+    <div class="popup-overlay" id="popupOverlay">
+      <div class="popup">
+        <div class="popup-header">
+          <h2>THÔNG TIN KHÁCH HÀNG</h2>
+          <button class="close-btn" onclick="closePopup()">✖</button>
         </div>
-        <div class="popup-right">
-          <h3>Thông kê mua hàng</h3>
-          <p><strong>Tổng số đơn hàng:</strong> <span id="popupOrderCount"></span></p>
-          <p><strong>Tổng chi tiêu:</strong> <span id="popupTotalSpent"></span></p>
-          <p><strong>Đơn hàng gần nhất:</strong> <span id="popupLastOrder"></span></p>
-          <h3>Lịch sử đơn hàng</h3>
-          <table>
-            <thead>
-              <tr>
-                <th>Mã đơn</th>
-                <th>Ngày đặt</th>
-                <th>Tổng tiền</th>
-                <th>Trạng thái</th>
-              </tr>
-            </thead>
-            <tbody id="popupOrderHistory">
-            </tbody>
-          </table>
+        <div class="popup-content">
+          <div class="popup-left">
+            <h3>Thông tin cá nhân</h3>
+            <p><strong>Tên:</strong> <span id="popupName"></span></p>
+            <p><strong>Email:</strong> <span id="popupEmail"></span></p>
+            <p><strong>Số điện thoại:</strong> <span id="popupPhone"></span></p>
+            <p><strong>Địa chỉ:</strong> <span id="popupAddress"></span></p>
+            <p>
+              <strong>Ngày đăng ký:</strong> <span id="popupRegDate"></span>
+            </p>
+            <p><strong>Trạng thái:</strong> <span id="popupStatus"></span></p>
+          </div>
+          <div class="popup-right">
+            <h3>Thông kê mua hàng</h3>
+            <p>
+              <strong>Tổng số đơn hàng:</strong>
+              <span id="popupOrderCount"></span>
+            </p>
+            <p>
+              <strong>Tổng chi tiêu:</strong> <span id="popupTotalSpent"></span>
+            </p>
+            <p>
+              <strong>Đơn hàng gần nhất:</strong>
+              <span id="popupLastOrder"></span>
+            </p>
+            <h3>Lịch sử đơn hàng</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Mã đơn</th>
+                  <th>Ngày đặt</th>
+                  <th>Tổng tiền</th>
+                  <th>Trạng thái</th>
+                </tr>
+              </thead>
+              <tbody id="popupOrderHistory"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="popup-footer">
+          <button
+            class="block-btn"
+            onclick="showConfirmPopupFromPopup(document.getElementById('popupName').textContent, document.getElementById('popupStatus').textContent === 'lock')"
+          >
+            <img
+              src="https://img.icons8.com/material-outlined/24/ffffff/lock.png"
+              alt="lock"
+            />
+            KHÓA TÀI KHOẢN
+          </button>
+          <button class="close-btn-footer" onclick="closePopup()">ĐÓNG</button>
         </div>
       </div>
-      <div class="popup-footer">
-        <button class="block-btn" onclick="showConfirmPopupFromPopup(document.getElementById('popupName').textContent, document.getElementById('popupStatus').textContent === 'lock')"><img src="https://img.icons8.com/material-outlined/24/ffffff/lock.png" alt="lock"> KHÓA TÀI KHOẢN</button>
-        <button class="close-btn-footer" onclick="closePopup()">ĐÓNG</button>
+    </div>
+
+    <!-- Popup Xác Nhận Khóa Tài Khoản -->
+    <div class="confirm-overlay" id="confirmOverlay">
+      <div class="confirm-popup">
+        <h3>Xác nhận khóa tài khoản</h3>
+        <p>
+          Bạn có chắc chắn muốn khóa tài khoản này không? Tài khoản này sẽ bị vô
+          hiệu hóa và không thể thực hiện mua sắm trong thời gian bị khóa.
+        </p>
+        <div class="confirm-footer">
+          <button class="cancel-btn" onclick="closeConfirmPopup()">Hủy</button>
+          <button class="confirm-btn" onclick="confirmBlockAction()">
+            <img
+              src="https://img.icons8.com/material-outlined/24/ffffff/lock.png"
+              alt="lock"
+            />
+            KHÓA
+          </button>
+        </div>
       </div>
     </div>
-  </div>
 
-<!-- Popup Xác Nhận Khóa Tài Khoản -->
-<div class="confirm-overlay" id="confirmOverlay">
-  <div class="confirm-popup">
-    <h3>Xác nhận khóa tài khoản</h3>
-    <p>Bạn có chắc chắn muốn khóa tài khoản này không? Tài khoản này sẽ bị vô hiệu hóa và không thể thực hiện mua sắm trong thời gian bị khóa.</p>
-    <div class="confirm-footer">
-      <button class="cancel-btn" onclick="closeConfirmPopup()">Hủy</button>
-      <button class="confirm-btn" onclick="confirmBlockAction()"><img src="https://img.icons8.com/material-outlined/24/ffffff/lock.png" alt="lock"> KHÓA</button>
-    </div>
-  </div>
-</div>
-
-  <!-- Popup Xác Nhận Mở Khóa -->
-  <div class="unlock-overlay" id="unlockOverlay">
-    <div class="unlock-popup">
-      <h3><img src="https://img.icons8.com/material-outlined/24/4caf50/checkmark.png" alt="check"> Khóa thành công</h3>
-      <p>Tài khoản này đã bị khóa trước đó.</p>
-      <p>Bạn có muốn mở khóa tài khoản này ngay không?</p>
-      <div class="confirm-footer">
-        <button class="cancel-btn" onclick="closeUnlockPopup()">Hủy</button>
-        <button class="unlock-btn" onclick="confirmUnlockAction()"><img src="https://img.icons8.com/material-outlined/24/ffffff/unlock.png" alt="unlock"> MỞ KHÓA</button>
+    <!-- Popup Xác Nhận Mở Khóa -->
+    <div class="unlock-overlay" id="unlockOverlay">
+      <div class="unlock-popup">
+        <h3>
+          <img
+            src="https://img.icons8.com/material-outlined/24/4caf50/checkmark.png"
+            alt="check"
+          />
+          Khóa thành công
+        </h3>
+        <p>Tài khoản này đã bị khóa trước đó.</p>
+        <p>Bạn có muốn mở khóa tài khoản này ngay không?</p>
+        <div class="confirm-footer">
+          <button class="cancel-btn" onclick="closeUnlockPopup()">Hủy</button>
+          <button class="unlock-btn" onclick="confirmUnlockAction()">
+            <img
+              src="https://img.icons8.com/material-outlined/24/ffffff/unlock.png"
+              alt="unlock"
+            />
+            MỞ KHÓA
+          </button>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- Popup Khóa Thành Công -->
-  <div class="success-overlay" id="successOverlay">
-    <div class="success-popup">
-      <h3><img src="https://img.icons8.com/material-outlined/24/4caf50/checkmark.png" alt="check"> Khóa thành công</h3>
-      <p>Tài khoản đã được khóa thành công.</p>
-      <div class="confirm-footer">
-        <button class="close-btn-footer" onclick="closeSuccessPopup()">Đóng</button>
+    <!-- Popup Khóa Thành Công -->
+    <div class="success-overlay" id="successOverlay">
+      <div class="success-popup">
+        <h3>
+          <img
+            src="https://img.icons8.com/material-outlined/24/4caf50/checkmark.png"
+            alt="check"
+          />
+          Khóa thành công
+        </h3>
+        <p>Tài khoản đã được khóa thành công.</p>
+        <div class="confirm-footer">
+          <button class="close-btn-footer" onclick="closeSuccessPopup()">
+            Đóng
+          </button>
+        </div>
       </div>
     </div>
-  </div>
-<script src="../assets/js/script_QLKH.js"></script>
-<script src="../assets/js/sidebar.js"></script>
-</body>
+    <script src="../assets/js/script_QLKH.js"></script>
+    <script src="../assets/js/sidebar.js"></script>
+  </body>
 </html>

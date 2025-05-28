@@ -9,11 +9,8 @@
 
 body {
   background-color: #f5f7fa;
-  padding: 50px;
   width: 100%;
-  max-width: 1640px;
   height: auto;
-  margin: 0 auto;
 }
 
 h1 {
@@ -503,10 +500,6 @@ td strong {
 
 /* Tablet (dưới 768px) */
 @media (max-width: 768px) {
-  body {
-    padding: 20px;
-    max-width: 100%;
-  }
 
   h1 {
     font-size: 20px;
