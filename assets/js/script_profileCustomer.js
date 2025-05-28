@@ -1,4 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
+    //lấy thông tin user trong localstorage
+    const user = localStorage.getItem("userInfo");
+    const userInfo = JSON.parse(user);
+
+
     const mobileMenuToggle = document.getElementById('mobileMenuToggle');
     const mobileNav = document.getElementById('mobileNav');
     const accountSidebarButtons = document.querySelectorAll('.account-sidebar .sidebar-btn');
