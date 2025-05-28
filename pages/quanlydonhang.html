@@ -1,289 +1,434 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Quản lý đơn hàng</title>
-  
-  <!-- Load Bootstrap trước -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản lý đơn hàng</title>
 
-  <!-- Load CSS custom sau để đè Bootstrap -->
-  <link rel="stylesheet" href="css/style.css">
+    <!-- Load fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</head>
-<body>
+    <!-- Load sidebar -->
+    <link rel="stylesheet" href="../assets/css/style_common.css" />
+    <link rel="stylesheet" href="../assets/css/style_sidebar.css" />
 
-  <!-- Sidebar -->
-  <div class="sidebar">
-    <div>
-      <div class="logo">
-        <img src="assets/images/logo.png" alt="Tiệm Sách Nhà Em" />
-      </div>
-      <ul class="menu">
-        <li id="menu-overview" onclick="location.href='index.html'">
-          <img src="assets/images/Tổng quan trắng.png" width="20" alt="Tổng quan" />
-          Tổng quan
-        </li>
-        <li id="menu-products" onclick="location.href='products.html'">
-          <img src="assets/images/Quản lý sản phẩm.png" width="20" alt="Sản phẩm" />
-          Quản lý sản phẩm
-        </li>
-        <li id="menu-orders" class="active" onclick="location.href='orders.html'">
-          <img src="assets/images/quản lý đơn hàng.png" width="20" alt="Đơn hàng" />
-          Quản lý đơn hàng
-        </li>
-        <li id="menu-customers" onclick="location.href='customers.html'">
-          <img src="assets/images/quản lý khách hàng.png" width="20" alt="Khách hàng" />
-          Quản lý khách hàng
-        </li>
-        <li id="menu-statistics" onclick="location.href='statistics.html'">
-          <img src="assets/images/Thống kê.png" width="20" alt="Thống kê" />
-          Thống kê
-        </li>
-      </ul>
-    </div>
-    <div class="account-info text-white">
-      <div class="profile-avatar"></div>
-      <div style="font-size: 14px;">Tài khoản của tôi</div>
-      <div style="font-size: 13px;"><b>ADMIN</b></div>
-      <div class="logout mt-3 d-flex align-items-center gap-2" style="cursor:pointer;">
-        <img src="assets/images/Frame.png" width="18" />
-        <span>Đăng xuất</span>
-      </div>
-    </div>
-  </div>
+    <!-- Load Bootstrap trước -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
 
-  <!-- Content -->
-  <div class="content container-fluid">
-    <h3 class="mb-4">Quản lý đơn hàng</h3>
-    <table class="table table-hover align-middle">
-      <thead class="table-success">
-        <tr>
-          <th>Mã đơn</th>
-          <th>Khách hàng</th>
-          <th>Ngày đặt</th>
-          <th>Tổng tiền</th>
-          <th>Trạng thái</th>
-          <th>Thao tác</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>#DH001</td>
-          <td>
-            <strong>Nguyễn Văn A</strong><br>
-            <small class="text-muted">nguyenvana@example.com</small>
-          </td>
-          <td>20/05/2025</td>
-          <td>850,000₫</td>
-          <td><span class="badge rounded-pill status-pending" id="statusDH001">Đang xử lý</span></td>
-          <td>
-            <button class="btn btn-outline-primary btn-sm" onclick="showOrderDetail('#DH001')">👁️</button>
-          </td>
-        </tr>
-        <tr>
-          <td>#DH002</td>
-          <td>
-            <strong>Trần Thị B</strong><br>
-            <small class="text-muted">tranthib@example.com</small>
-          </td>
-          <td>18/05/2025</td>
-          <td>1,200,000₫</td>
-          <td><span class="badge rounded-pill status-delivered" id="statusDH002">Đã giao</span></td>
-          <td>
-            <button class="btn btn-outline-primary btn-sm" onclick="showOrderDetail('#DH002')">👁️</button>
-          </td>
-        </tr>
-        <tr>
-          <td>#DH003</td>
-          <td>
-            <strong>Lê Văn C</strong><br>
-            <small class="text-muted">levanc@example.com</small>
-          </td>
-          <td>17/05/2025</td>
-          <td>720,000₫</td>
-          <td><span class="badge rounded-pill status-shipping" id="statusDH003">Đang giao</span></td>
-          <td>
-            <button class="btn btn-outline-primary btn-sm" onclick="showOrderDetail('#DH003')">👁️</button>
-          </td>
-        </tr>
-        <tr>
-          <td>#DH004</td>
-          <td>
-            <strong>Phạm Thị D</strong><br>
-            <small class="text-muted">phamthid@example.com</small>
-          </td>
-          <td>16/05/2025</td>
-          <td>450,000₫</td>
-          <td><span class="badge rounded-pill status-cancelled" id="statusDH004">Đã hủy</span></td>
-          <td>
-            <button class="btn btn-outline-primary btn-sm" onclick="showOrderDetail('#DH004')">👁️</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+    <!-- Load CSS custom sau để đè Bootstrap -->
+    <link rel="stylesheet" href="../assets/css/style.css" />
 
-  <!-- Modal chi tiết đơn -->
-  <div class="modal fade" id="orderModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Chi tiết đơn hàng</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="col-md-6">
-              <h6>Thông tin khách hàng</h6>
-              <p><strong>Tên:</strong> <span id="orderCustomer"></span></p>
-              <p><strong>Email:</strong> <span id="orderEmail"></span></p>
-              <p><strong>Số điện thoại:</strong> <span id="orderPhone"></span></p>
-              <p><strong>Địa chỉ:</strong> <span id="orderAddress"></span></p>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+      body,
+      h1,
+      h2,
+      h3,
+      h4,
+      p,
+      button,
+      input,
+      select,
+      textarea {
+        font-family: "Montserrat", sans-serif;
+      }
+
+      @media (max-width: 768px) {
+        .container-fluid {
+          padding-left: 15px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-all">
+      <!-- Sidebar -->
+      <div id="sidebar-container" class="sidebar"></div>
+
+      <!-- Content -->
+      <div class="main">
+        <div class="container">
+          <div class="container-fluid">
+            <h3 class="mb-4">Quản lý đơn hàng</h3>
+            <table class="table table-hover align-middle">
+              <thead class="table-success">
+                <tr>
+                  <th>Mã đơn</th>
+                  <th>Khách hàng</th>
+                  <th>Ngày đặt</th>
+                  <th>Tổng tiền</th>
+                  <th>Trạng thái</th>
+                  <th>Thao tác</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>#DH001</td>
+                  <td>
+                    <strong>Nguyễn Văn A</strong><br />
+                    <small class="text-muted">nguyenvana@example.com</small>
+                  </td>
+                  <td>20/05/2025</td>
+                  <td>850,000₫</td>
+                  <td>
+                    <span
+                      class="badge rounded-pill status-pending"
+                      id="statusDH001"
+                      >Đang xử lý</span
+                    >
+                  </td>
+                  <td>
+                    <button
+                      class="btn btn-outline-primary btn-sm"
+                      onclick="showOrderDetail('#DH001')"
+                    >
+                      👁️
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>#DH002</td>
+                  <td>
+                    <strong>Trần Thị B</strong><br />
+                    <small class="text-muted">tranthib@example.com</small>
+                  </td>
+                  <td>18/05/2025</td>
+                  <td>1,200,000₫</td>
+                  <td>
+                    <span
+                      class="badge rounded-pill status-delivered"
+                      id="statusDH002"
+                      >Đã giao</span
+                    >
+                  </td>
+                  <td>
+                    <button
+                      class="btn btn-outline-primary btn-sm"
+                      onclick="showOrderDetail('#DH002')"
+                    >
+                      👁️
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>#DH003</td>
+                  <td>
+                    <strong>Lê Văn C</strong><br />
+                    <small class="text-muted">levanc@example.com</small>
+                  </td>
+                  <td>17/05/2025</td>
+                  <td>720,000₫</td>
+                  <td>
+                    <span
+                      class="badge rounded-pill status-shipping"
+                      id="statusDH003"
+                      >Đang giao</span
+                    >
+                  </td>
+                  <td>
+                    <button
+                      class="btn btn-outline-primary btn-sm"
+                      onclick="showOrderDetail('#DH003')"
+                    >
+                      👁️
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>#DH004</td>
+                  <td>
+                    <strong>Phạm Thị D</strong><br />
+                    <small class="text-muted">phamthid@example.com</small>
+                  </td>
+                  <td>16/05/2025</td>
+                  <td>450,000₫</td>
+                  <td>
+                    <span
+                      class="badge rounded-pill status-cancelled"
+                      id="statusDH004"
+                      >Đã hủy</span
+                    >
+                  </td>
+                  <td>
+                    <button
+                      class="btn btn-outline-primary btn-sm"
+                      onclick="showOrderDetail('#DH004')"
+                    >
+                      👁️
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Modal chi tiết đơn -->
+          <div
+            class="modal fade"
+            id="orderModal"
+            tabindex="-1"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Chi tiết đơn hàng</h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <h6>Thông tin khách hàng</h6>
+                      <p>
+                        <strong>Tên:</strong> <span id="orderCustomer"></span>
+                      </p>
+                      <p>
+                        <strong>Email:</strong> <span id="orderEmail"></span>
+                      </p>
+                      <p>
+                        <strong>Số điện thoại:</strong>
+                        <span id="orderPhone"></span>
+                      </p>
+                      <p>
+                        <strong>Địa chỉ:</strong>
+                        <span id="orderAddress"></span>
+                      </p>
+                    </div>
+                    <div class="col-md-6">
+                      <h6>Thông tin đơn hàng</h6>
+                      <p>
+                        <strong>Mã đơn:</strong> <span id="orderCode"></span>
+                      </p>
+                      <p>
+                        <strong>Ngày đặt:</strong> <span id="orderDate"></span>
+                      </p>
+                      <p>
+                        <strong>Tổng tiền:</strong>
+                        <span id="orderTotal"></span>
+                      </p>
+                      <p>
+                        <strong>Trạng thái:</strong>
+                        <span id="orderStatus"></span>
+                      </p>
+                    </div>
+                  </div>
+                  <hr />
+                  <h6>Sản phẩm</h6>
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Sản phẩm</th>
+                        <th>Số lượng</th>
+                        <th>Giá</th>
+                      </tr>
+                    </thead>
+                    <tbody id="orderProducts">
+                      <!-- Dynamic content will be inserted here -->
+                    </tbody>
+                  </table>
+                  <hr />
+                  <h6>Cập nhật trạng thái đơn hàng</h6>
+                  <div class="mb-3">
+                    <select class="form-select" id="orderStatusSelect">
+                      <option value="unresolved">Chưa giải quyết</option>
+                      <option value="pending">Đang xử lý</option>
+                      <option value="shipping">Đang giao</option>
+                      <option value="delivered">Đã giao</option>
+                      <option value="cancelled">Đã hủy</option>
+                    </select>
+                  </div>
+                  <div class="d-flex gap-2">
+                    <button
+                      class="btn btn-success"
+                      onclick="updateOrderStatus()"
+                    >
+                      Cập nhật trạng thái
+                    </button>
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">
+                      Đóng
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="col-md-6">
-              <h6>Thông tin đơn hàng</h6>
-              <p><strong>Mã đơn:</strong> <span id="orderCode"></span></p>
-              <p><strong>Ngày đặt:</strong> <span id="orderDate"></span></p>
-              <p><strong>Tổng tiền:</strong> <span id="orderTotal"></span></p>
-              <p><strong>Trạng thái:</strong> <span id="orderStatus"></span></p>
+          </div>
+
+          <!-- Popup thông báo thành công -->
+          <div
+            class="success-overlay"
+            id="successOverlay"
+            onclick="closeSuccessPopup(event)"
+          >
+            <div class="success-popup">
+              <div class="popup-header">
+                <h3>
+                  <span class="checkmark">✔</span> Cập nhật trạng thái đơn hàng
+                </h3>
+              </div>
+              <div class="popup-body">
+                <p>
+                  Trạng thái đơn hàng đã được cập nhật thành:
+                  <span id="successStatus"></span>
+                </p>
+              </div>
+              <div class="popup-footer">
+                <button class="btn btn-success" onclick="closeSuccessPopup()">
+                  OK
+                </button>
+              </div>
             </div>
-          </div>
-          <hr>
-          <h6>Sản phẩm</h6>
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Sản phẩm</th>
-                <th>Số lượng</th>
-                <th>Giá</th>
-              </tr>
-            </thead>
-            <tbody id="orderProducts">
-              <!-- Dynamic content will be inserted here -->
-            </tbody>
-          </table>
-          <hr>
-          <h6>Cập nhật trạng thái đơn hàng</h6>
-          <div class="mb-3">
-            <select class="form-select" id="orderStatusSelect">
-              <option value="unresolved">Chưa giải quyết</option>
-              <option value="pending">Đang xử lý</option>
-              <option value="shipping">Đang giao</option>
-              <option value="delivered">Đã giao</option>
-              <option value="cancelled">Đã hủy</option>
-            </select>
-          </div>
-          <div class="d-flex gap-2">
-            <button class="btn btn-success" onclick="updateOrderStatus()">Cập nhật trạng thái</button>
-            <button class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Popup thông báo thành công -->
-  <div class="success-overlay" id="successOverlay" onclick="closeSuccessPopup(event)">
-    <div class="success-popup">
-      <div class="popup-header">
-        <h3><span class="checkmark">✔</span> Cập nhật trạng thái đơn hàng</h3>
-      </div>
-      <div class="popup-body">
-        <p>Trạng thái đơn hàng đã được cập nhật thành: <span id="successStatus"></span></p>
-      </div>
-      <div class="popup-footer">
-        <button class="btn btn-success" onclick="closeSuccessPopup()">OK</button>
-      </div>
-    </div>
-  </div>
+    <!-- Script -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Đảm bảo popup không hiển thị khi trang vừa tải
+        const popup = document.getElementById("successOverlay");
+        popup.style.display = "none";
 
-  <!-- Script -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      // Đảm bảo popup không hiển thị khi trang vừa tải
-      const popup = document.getElementById("successOverlay");
-      popup.style.display = "none";
-
-      window.showOrderDetail = function (orderCode) {
-        const orders = {
-          '#DH001': { customer: 'Nguyễn Văn A', email: 'nguyenvana@example.com', phone: '0901234567', address: '123 Nguyễn Văn Linh, Quận 7, TP.HCM', date: '20/05/2025', total: '850,000₫' },
-          '#DH002': { customer: 'Trần Thị B', email: 'tranthib@example.com', phone: '0912345678', address: '456 Lê Lợi, Quận 1, TP.HCM', date: '18/05/2025', total: '1,200,000₫' },
-          '#DH003': { customer: 'Lê Văn C', email: 'levanc@example.com', phone: '0923456789', address: '789 Hai Bà Trưng, Quận 3, TP.HCM', date: '17/05/2025', total: '720,000₫' },
-          '#DH004': { customer: 'Phạm Thị D', email: 'phamthid@example.com', phone: '0934567890', address: '101 Nguyễn Huệ, Quận 5, TP.HCM', date: '16/05/2025', total: '450,000₫' }
-        };
-        const products = {
-          '#DH001': [{ name: 'Dust', qty: 1, price: '365,000₫' }, { name: 'Cloud Atlas: 20th Anniversary Edition', qty: 1, price: '69,000₫' }],
-          '#DH002': [{ name: 'Book A', qty: 2, price: '600,000₫' }],
-          '#DH003': [{ name: 'Book B', qty: 1, price: '720,000₫' }],
-          '#DH004': [{ name: 'Book C', qty: 1, price: '450,000₫' }]
-        };
-        const order = orders[orderCode];
-        document.getElementById("orderCode").textContent = orderCode;
-        document.getElementById("orderCustomer").textContent = order.customer;
-        document.getElementById("orderEmail").textContent = order.email;
-        document.getElementById("orderPhone").textContent = order.phone;
-        document.getElementById("orderAddress").textContent = order.address;
-        document.getElementById("orderDate").textContent = order.date;
-        document.getElementById("orderTotal").textContent = order.total;
-        document.getElementById('orderProducts').innerHTML = products[orderCode].map(item => `
+        window.showOrderDetail = function (orderCode) {
+          const orders = {
+            "#DH001": {
+              customer: "Nguyễn Văn A",
+              email: "nguyenvana@example.com",
+              phone: "0901234567",
+              address: "123 Nguyễn Văn Linh, Quận 7, TP.HCM",
+              date: "20/05/2025",
+              total: "850,000₫",
+            },
+            "#DH002": {
+              customer: "Trần Thị B",
+              email: "tranthib@example.com",
+              phone: "0912345678",
+              address: "456 Lê Lợi, Quận 1, TP.HCM",
+              date: "18/05/2025",
+              total: "1,200,000₫",
+            },
+            "#DH003": {
+              customer: "Lê Văn C",
+              email: "levanc@example.com",
+              phone: "0923456789",
+              address: "789 Hai Bà Trưng, Quận 3, TP.HCM",
+              date: "17/05/2025",
+              total: "720,000₫",
+            },
+            "#DH004": {
+              customer: "Phạm Thị D",
+              email: "phamthid@example.com",
+              phone: "0934567890",
+              address: "101 Nguyễn Huệ, Quận 5, TP.HCM",
+              date: "16/05/2025",
+              total: "450,000₫",
+            },
+          };
+          const products = {
+            "#DH001": [
+              { name: "Dust", qty: 1, price: "365,000₫" },
+              {
+                name: "Cloud Atlas: 20th Anniversary Edition",
+                qty: 1,
+                price: "69,000₫",
+              },
+            ],
+            "#DH002": [{ name: "Book A", qty: 2, price: "600,000₫" }],
+            "#DH003": [{ name: "Book B", qty: 1, price: "720,000₫" }],
+            "#DH004": [{ name: "Book C", qty: 1, price: "450,000₫" }],
+          };
+          const order = orders[orderCode];
+          document.getElementById("orderCode").textContent = orderCode;
+          document.getElementById("orderCustomer").textContent = order.customer;
+          document.getElementById("orderEmail").textContent = order.email;
+          document.getElementById("orderPhone").textContent = order.phone;
+          document.getElementById("orderAddress").textContent = order.address;
+          document.getElementById("orderDate").textContent = order.date;
+          document.getElementById("orderTotal").textContent = order.total;
+          document.getElementById("orderProducts").innerHTML = products[
+            orderCode
+          ]
+            .map(
+              (item) => `
           <tr><td>${item.name}</td><td>${item.qty}</td><td>${item.price}</td></tr>
-        `).join('');
+        `
+            )
+            .join("");
 
-        // Đặt trạng thái hiện tại của đơn hàng trong dropdown
-        const statusElement = document.getElementById(`status${orderCode.slice(1)}`); // Sử dụng ID
-        const currentStatus = statusElement.classList[2].split('-')[1];
-        document.getElementById("orderStatusSelect").value = currentStatus;
-        document.getElementById("orderStatus").textContent = statusElement.textContent;
+          // Đặt trạng thái hiện tại của đơn hàng trong dropdown
+          const statusElement = document.getElementById(
+            `status${orderCode.slice(1)}`
+          ); // Sử dụng ID
+          const currentStatus = statusElement.classList[2].split("-")[1];
+          document.getElementById("orderStatusSelect").value = currentStatus;
+          document.getElementById("orderStatus").textContent =
+            statusElement.textContent;
 
-        const myModal = new bootstrap.Modal(document.getElementById('orderModal'));
-        myModal.show();
-      }
+          const myModal = new bootstrap.Modal(
+            document.getElementById("orderModal")
+          );
+          myModal.show();
+        };
 
-      window.updateOrderStatus = function () {
-        const orderCode = document.getElementById("orderCode").textContent;
-        const status = document.getElementById("orderStatusSelect").value;
-        const statusText = {
-          'unresolved': 'Chưa giải quyết',
-          'pending': 'Đang xử lý',
-          'shipping': 'Đang giao',
-          'delivered': 'Đã giao',
-          'cancelled': 'Đã hủy'
-        }[status];
-        
-        // Cập nhật trạng thái trên bảng chính
-        const statusElement = document.getElementById(`status${orderCode.slice(1)}`); // Sử dụng ID
-        if (statusElement) {
-          statusElement.textContent = statusText;
-          statusElement.className = `badge rounded-pill status-${status}`; // Cập nhật cả nội dung và lớp CSS
-        }
+        window.updateOrderStatus = function () {
+          const orderCode = document.getElementById("orderCode").textContent;
+          const status = document.getElementById("orderStatusSelect").value;
+          const statusText = {
+            unresolved: "Chưa giải quyết",
+            pending: "Đang xử lý",
+            shipping: "Đang giao",
+            delivered: "Đã giao",
+            cancelled: "Đã hủy",
+          }[status];
 
-        // Cập nhật trạng thái trong modal
-        document.getElementById("orderStatus").textContent = statusText;
+          // Cập nhật trạng thái trên bảng chính
+          const statusElement = document.getElementById(
+            `status${orderCode.slice(1)}`
+          ); // Sử dụng ID
+          if (statusElement) {
+            statusElement.textContent = statusText;
+            statusElement.className = `badge rounded-pill status-${status}`; // Cập nhật cả nội dung và lớp CSS
+          }
 
-        // Hiển thị popup thành công
-        document.getElementById("successStatus").textContent = statusText;
-        const popup = document.getElementById("successOverlay");
-        popup.style.display = "flex";
+          // Cập nhật trạng thái trong modal
+          document.getElementById("orderStatus").textContent = statusText;
 
-        // Đóng modal chi tiết đơn hàng
-        const modalElement = document.getElementById('orderModal');
-        const modalInstance = bootstrap.Modal.getInstance(modalElement);
-        modalInstance.hide();
-      }
+          // Hiển thị popup thành công
+          document.getElementById("successStatus").textContent = statusText;
+          const popup = document.getElementById("successOverlay");
+          popup.style.display = "flex";
 
-      window.closeSuccessPopup = function (event) {
-        const popup = document.getElementById("successOverlay");
-        if (event && !event.target.closest('.success-popup')) {
-          popup.style.display = "none";
-        } else if (!event) {
-          popup.style.display = "none";
-        }
-      }
-    });
-  </script>
+          // Đóng modal chi tiết đơn hàng
+          const modalElement = document.getElementById("orderModal");
+          const modalInstance = bootstrap.Modal.getInstance(modalElement);
+          modalInstance.hide();
+        };
 
-</body>
+        window.closeSuccessPopup = function (event) {
+          const popup = document.getElementById("successOverlay");
+          if (event && !event.target.closest(".success-popup")) {
+            popup.style.display = "none";
+          } else if (!event) {
+            popup.style.display = "none";
+          }
+        };
+      });
+    </script>
+
+    <!-- Load sidebar script -->
+    <script src="../assets/js/sidebar.js"></script>
+  </body>
 </html>
