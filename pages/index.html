@@ -99,38 +99,6 @@
   </div>
 
   <script>
-    // Load sidebar và xử lý ảnh
-    fetch("../components/sidebar.html")
-      .then(res => res.text())
-      .then(data => {
-        document.getElementById("sidebar-container").innerHTML = data;
-
-        // Fix các đường dẫn trong sidebar nếu cần
-        document.querySelectorAll("#sidebar-container a, #sidebar-container img").forEach(el => {
-          const src = el.getAttribute("src") || el.getAttribute("href");
-          if (src && !src.startsWith("http") && !src.startsWith("../")) {
-            if (el.tagName === "IMG") {
-              el.src = "../" + src;
-            } else {
-              el.href = "../" + src;
-            }
-          }
-        });
-
-        // Điều chỉnh vị trí của sidebar để nằm sát lề trái
-        const sidebarElement = document.querySelector("#sidebar-container .sidebar");
-        if (sidebarElement) {
-          sidebarElement.style.position = "fixed";
-          sidebarElement.style.left = "0";
-          sidebarElement.style.top = "0";
-          sidebarElement.style.height = "100vh";
-          sidebarElement.style.overflow = "visible";
-        }
-
-        // Nếu trang là index.html thì highlight menu "Tổng quan"
-        document.getElementById("menu-overview")?.classList.add("active");
-      });
-
     // Lấy tổng số khách hàng
     fetch('https://tiemsachnhaem-be-mu.vercel.app/api/customers')
       .then(res => res.json())
@@ -249,5 +217,6 @@
 
     document.querySelector(".time-btn.active")?.click();
   </script>
+  <script src="../assets/js/sidebar.js"></script>
 </body>
 </html> 

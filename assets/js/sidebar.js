@@ -1,5 +1,8 @@
 // Xử lý tương tác với sidebar
 document.addEventListener('DOMContentLoaded', function() {
+    // Tải sidebar
+    loadSidebar();
+    
     // Xử lý active menu item dựa trên trang hiện tại
     highlightCurrentPage();
     
@@ -9,6 +12,61 @@ document.addEventListener('DOMContentLoaded', function() {
     // Hiển thị thông tin người dùng nếu đã đăng nhập
     displayUserInfo();
 });
+
+// Tải sidebar và xử lý đường dẫn
+function loadSidebar() {
+    const sidebarContainer = document.getElementById("sidebar-container");
+    if (!sidebarContainer) return;
+    
+    // Xác định đường dẫn tới sidebar.html dựa trên vị trí trang hiện tại
+    const currentPath = window.location.pathname;
+    let sidebarPath;
+    
+    // Nếu đang ở trong thư mục pages
+    if (currentPath.includes("/pages/")) {
+        sidebarPath = "../components/sidebar.html";
+    } else {
+        sidebarPath = "components/sidebar.html";
+    }
+    
+    // Tải sidebar
+    fetch(sidebarPath)
+        .then(res => res.text())
+        .then(data => {
+            sidebarContainer.innerHTML = data;
+            
+            // Fix các đường dẫn trong sidebar nếu cần
+            document.querySelectorAll("#sidebar-container a, #sidebar-container img").forEach(el => {
+                const src = el.getAttribute("src") || el.getAttribute("href");
+                if (src && !src.startsWith("http")) {
+                    // Nếu đang ở trong thư mục pages và đường dẫn không bắt đầu bằng ../
+                    if (currentPath.includes("/pages/") && !src.startsWith("../")) {
+                        if (el.tagName === "IMG") {
+                            el.src = "../" + src;
+                        } else {
+                            el.href = "../" + src;
+                        }
+                    }
+                }
+            });
+            
+            // Điều chỉnh vị trí của sidebar để nằm sát lề trái
+            const sidebarElement = document.querySelector("#sidebar-container .sidebar");
+            if (sidebarElement) {
+                sidebarElement.style.position = "fixed";
+                sidebarElement.style.left = "0";
+                sidebarElement.style.top = "0";
+                sidebarElement.style.height = "100vh";
+                sidebarElement.style.overflow = "visible";
+            }
+            
+            // Highlight menu item phù hợp sau khi tải sidebar
+            highlightCurrentPage();
+        })
+        .catch(error => {
+            console.error("Lỗi khi tải sidebar:", error);
+        });
+}
 
 // Đánh dấu mục đang được chọn trên sidebar
 function highlightCurrentPage() {
@@ -60,35 +118,30 @@ function highlightMenuItem(menuId) {
 function setupLogout() {
     const logoutButton = document.getElementById('logout-button');
     if (logoutButton) {
-        // Chức năng đăng xuất - chuyển đến trang đăng nhập
-        logoutButton.addEventListener('click', function() {
-            // Xóa session hoặc local storage nếu cần
-            localStorage.removeItem('user');
-            localStorage.removeItem('userInfo');
-            localStorage.removeItem('userToken');
-            sessionStorage.removeItem('user');
+        logoutButton.addEventListener('click', function(e) {
+            // Ngăn chặn hành vi mặc định của onclick inline (nếu có)
+            e.preventDefault();
             
-            // Xác định đường dẫn tới trang đăng nhập
-            let loginUrl;
-            const currentUrl = window.location.href;
+            // Xác định đường dẫn đến trang đăng nhập dựa trên vị trí hiện tại
+            const currentPath = window.location.pathname;
+            let loginPath;
             
-            // Nếu URL chứa 'pages/', chúng ta đang ở trong thư mục con
-            if (currentUrl.includes('/pages/')) {
-                loginUrl = '../pages/dangnhap1.html'; // Từ thư mục pages đến thư mục pages
+            // Nếu đang ở trang chính (root)
+            if (currentPath.endsWith("index.html") || currentPath === "/" || currentPath.endsWith("/")) {
+                loginPath = "pages/dangnhap1.html";
             } 
-            // Nếu URL chứa admin hoặc quản trị viên, chúng ta có thể đang ở admin dashboard
-            else if (currentUrl.includes('/admin/') || currentUrl.includes('/quantrivien/')) {
-                loginUrl = '../pages/dangnhap1.html'; // Lên một cấp từ thư mục admin
-            } 
-            // Mặc định, giả sử chúng ta đang ở root
+            // Nếu đang ở trong thư mục pages
+            else if (currentPath.includes("/pages/")) {
+                loginPath = "../pages/dangnhap1.html";
+            }
+            // Trường hợp khác
             else {
-                loginUrl = 'pages/dangnhap1.html'; // Đến thư mục pages từ root
+                loginPath = "pages/dangnhap1.html";
             }
             
-            // Chuyển đến trang đăng nhập sau 300ms để hiển thị hiệu ứng
-            setTimeout(function() {
-                window.location.href = loginUrl;
-            }, 300);
+            console.log("Chuyển hướng đến:", loginPath);
+            // Chuyển hướng đến trang đăng nhập
+            window.location.href = loginPath;
         });
     }
 }
