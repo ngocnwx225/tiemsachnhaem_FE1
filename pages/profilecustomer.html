@@ -11,13 +11,13 @@
     <div class="page-wrapper">
         <!-- Header component sẽ được load vào đây -->
         <div id="header-placeholder"></div>
-        <script>
+        <!-- <script>
             fetch('../components/header.html')
             .then(response => response.text())
             .then(data => {
                 document.getElementById('header-placeholder').innerHTML = data;
             });
-        </script>
+        </script> -->
 
         <main class="main-content">
             <div class="container">
@@ -59,15 +59,16 @@
         <!-- Footer component sẽ được load vào đây -->
         <!-- Include footer -->
         <div id="footer-placeholder"></div>
-        <script>
+        <!-- <script>
             fetch('../components/footer.html')
             .then(response => response.text())
             .then(data => {
                 document.getElementById('footer-placeholder').innerHTML = data;
             });
-        </script>
+        </script> -->
     </div>
     <script src="../assets/js/script_profileCustomer.js"></script>
+    <script src="../assets/js/component-loader.js"></script>
     <script>
         
     // Tự động load header/footer component

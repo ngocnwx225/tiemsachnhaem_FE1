@@ -10,13 +10,13 @@
 </head>
 <body>
   <div id="header-placeholder"></div>
-  <script>
+  <!-- <script>
       fetch('../components/header.html')
         .then(response => response.text())
         .then(data => {
           document.getElementById('header-placeholder').innerHTML = data;
         });
-  </script>
+  </script> -->
 
 <hr style="color: lightgrey;">
 
@@ -68,13 +68,15 @@
 
 <!-- Include footer -->
   <div id="footer-placeholder"></div>
-  <script>
+  <!-- <script>
       fetch('../components/footer.html')
         .then(response => response.text())
         .then(data => {
           document.getElementById('footer-placeholder').innerHTML = data;
         });
-  </script>
+  </script> -->
+
+  <script src="../assets/js/component-loader.js"></script>
 
 </body>
 </html>

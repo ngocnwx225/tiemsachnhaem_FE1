@@ -1,39 +1,29 @@
+// frontend/assets/js/javascriptPayment.js
+import { orderAPI } from './API_Payment.js';
+
 function updateDistricts() {
     const citySelect = document.getElementById("city");
     const districtSelect = document.getElementById("district");
     const selectedCity = citySelect.value;
 
-    // Xóa các tùy chọn quận hiện tại
-    districtSelect.innerHTML = '<option value="">Quận</option>';
+    districtSelect.innerHTML = '<option value="">Quận/Huyện</option>';
 
-    // Danh sách quận theo từng tỉnh/thành phố
     const districts = {
-        HaNoi: [
-            "Ba Đình", "Hoàn Kiếm", "Tây Hồ", "Long Biên", "Cầu Giấy", "Đống Đa", 
+        HaNoi: ["Ba Đình", "Hoàn Kiếm", "Tây Hồ", "Long Biên", "Cầu Giấy", "Đống Đa", 
             "Hai Bà Trưng", "Hoàng Mai", "Thanh Xuân", "Nam Từ Liêm", "Bắc Từ Liêm", 
-            "Hà Đông"
-        ],
-        HoChiMinh: [
-            "Quận 1", "Quận 2", "Quận 3", "Quận 4", "Quận 5", "Quận 6", 
+            "Hà Đông"],
+        HoChiMinh: ["Quận 1", "Quận 2", "Quận 3", "Quận 4", "Quận 5", "Quận 6", 
             "Quận 7", "Quận 8", "Quận 9", "Quận 10", "Quận 11", "Quận 12", 
             "Bình Thạnh", "Gò Vấp", "Phú Nhuận", "Tân Bình", "Tân Phú", 
-            "Thủ Đức", "Bình Tân"
-        ],
-        Hue: [
-            "Hương Thủy", "Hương Trà", "Phú Vang", "Phú Lộc", "A Lưới", 
-            "Phong Điền", "Quảng Điền", "Nam Đông"
-        ],
-        CanTho: [
-            "Ninh Kiều", "Bình Thủy", "Cái Răng", "Thốt Nốt", "Ô Môn", 
-            "Phong Điền", "Cờ Đỏ", "Vĩnh Thạnh", "Thới Lai"
-        ],
-        DaNang: [
-            "Hải Châu", "Thanh Khê", "Sơn Trà", "Ngũ Hành Sơn", "Liên Chiểu", 
-            "Cẩm Lệ", "Hòa Vang"
-        ]
+            "Thủ Đức", "Bình Tân"],
+        Hue: ["Hương Thủy", "Hương Trà", "Phú Vang", "Phú Lộc", "A Lưới", 
+            "Phong Điền", "Quảng Điền", "Nam Đông"],
+        CanTho: ["Ninh Kiều", "Bình Thủy", "Cái Răng", "Thốt Nốt", "Ô Môn", 
+            "Phong Điền", "Cờ Đỏ", "Vĩnh Thạnh", "Thới Lai"],
+        DaNang: ["Hải Châu", "Thanh Khê", "Sơn Trà", "Ngũ Hành Sơn", "Liên Chiểu", 
+            "Cẩm Lệ", "Hòa Vang"]
     };
 
-    // Nếu có tỉnh/thành phố được chọn, thêm các quận tương ứng
     if (selectedCity && districts[selectedCity]) {
         districts[selectedCity].forEach(district => {
             const option = document.createElement("option");
@@ -44,7 +34,6 @@ function updateDistricts() {
     }
 }
 
-// Thêm HTML cho modal thông báo
 function showErrorModal(message) {
     const modalHtml = `
         <div id="errorModal" class="modal">
@@ -57,21 +46,22 @@ function showErrorModal(message) {
                     <p>${message}</p>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn-confirm" onclick="closeErrorModal()">Đóng</button>
+                    <button class="btn-confirm error-close-btn">Đóng</button>
                 </div>
             </div>
         </div>
     `;
-    
-    // Kiểm tra nếu modal đã tồn tại thì xóa đi
     const existingModal = document.getElementById('errorModal');
-    if (existingModal) {
-        existingModal.remove();
-    }
-    
-    // Thêm modal mới vào body
+    if (existingModal) existingModal.remove();
     document.body.insertAdjacentHTML('beforeend', modalHtml);
-    document.getElementById('errorModal').style.display = 'block';
+    const modal = document.getElementById('errorModal');
+    modal.style.display = 'block';
+
+    const closeButton = modal.querySelector('.error-close-btn');
+    closeButton.addEventListener('click', () => {
+        console.log('Closing error modal');
+        closeErrorModal();
+    });
 }
 
 function closeErrorModal() {
@@ -84,25 +74,38 @@ function closeErrorModal() {
 
 function renderOrderDetails() {
     const orderDetailsContainer = document.getElementById("order-details");
-    
     try {
-        // Lấy dữ liệu giỏ hàng từ localStorage với xử lý lỗi
-        const cartData = localStorage.getItem('cartData');
+        let cartData = localStorage.getItem('cartData');
+        console.log('Cart Data Retrieved in Payment:', cartData);
+
         if (!cartData) {
-            throw new Error('Không tìm thấy thông tin giỏ hàng');
-        }
-        
-        const parsedCartData = JSON.parse(cartData);
-        if (!parsedCartData || !parsedCartData.items || parsedCartData.items.length === 0) {
-            throw new Error('Giỏ hàng trống');
+            showErrorModal('Không tìm thấy thông tin giỏ hàng. Vui lòng quay lại giỏ hàng.');
+            orderDetailsContainer.innerHTML = '<p>Không tìm thấy giỏ hàng. <a href="cart.html">Quay lại giỏ hàng</a></p>';
+            return;
         }
 
-        // Tạo HTML cho chi tiết đơn hàng
+        const parsedCartData = JSON.parse(cartData);
+        console.log('Parsed Cart Data:', parsedCartData);
+
+        if (!parsedCartData || !parsedCartData.items || parsedCartData.items.length === 0) {
+            showErrorModal('Giỏ hàng trống. Vui lòng quay lại giỏ hàng để chọn sản phẩm.');
+            orderDetailsContainer.innerHTML = '<p>Giỏ hàng trống. <a href="cart.html">Quay lại giỏ hàng</a></p>';
+            return;
+        }
+
+        // Kiểm tra giá trị total
+        if (typeof parsedCartData.total !== 'number' || parsedCartData.total <= 0) {
+            console.error('Total is invalid:', parsedCartData.total);
+            showErrorModal('Tổng đơn hàng không hợp lệ. Vui lòng kiểm tra lại giỏ hàng.');
+            orderDetailsContainer.innerHTML = '<p>Tổng đơn hàng không hợp lệ. <a href="cart.html">Quay lại giỏ hàng</a></p>';
+            return;
+        }
+
         let html = '';
         parsedCartData.items.forEach(item => {
             html += `
                 <div class="order-item">
-                    <img src="${item.imageUrl || item.image}" alt="${item.bookTitle || item.name}">
+                    <img src="${item.image || item.imageUrl}" alt="${item.bookTitle || item.name}">
                     <div class="info">
                         <p class="title">${item.bookTitle || item.name}</p>
                         <p class="qty">Số lượng: ${item.quantity}</p>
@@ -113,6 +116,7 @@ function renderOrderDetails() {
         });
 
         html += `
+            <hr>
             <div class="summary">
                 <div><span>Tổng cộng</span><span>${parsedCartData.subtotal.toLocaleString('vi-VN')} đ</span></div>
                 <div><span>Vận chuyển</span><span>${parsedCartData.shipping.toLocaleString('vi-VN')} đ</span></div>
@@ -127,36 +131,31 @@ function renderOrderDetails() {
 
         orderDetailsContainer.innerHTML = html;
     } catch (error) {
-        showErrorModal(error.message);
-        setTimeout(() => {
-            window.location.href = 'cart.html';
-        }, 2000);
+        console.error('Error rendering order details:', error);
+        showErrorModal('Có lỗi xảy ra khi hiển thị giỏ hàng: ' + error.message);
     }
 }
 
-function showConfirmationModal() {
+async function showConfirmationModal() {
     const nameInput = document.querySelector('#fullName');
     const phoneInput = document.querySelector('#phone');
     const emailInput = document.querySelector('#email');
     const citySelect = document.getElementById('city');
     const districtSelect = document.getElementById('district');
-    const streetInput = document.querySelector('input[placeholder="Số nhà, tên đường"]');
+    const streetInput = document.querySelector('#street');
 
-    // Validate form với modal thông báo
     if (!nameInput.value) {
         showErrorModal('Vui lòng nhập họ tên!');
         return;
     }
 
-    // Validate số điện thoại
     const phonePattern = /^[0-9]{10}$/;
     if (!phonePattern.test(phoneInput.value)) {
         showErrorModal('Vui lòng nhập số điện thoại hợp lệ (10 số)!');
         return;
     }
 
-    // Validate email
-    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0.9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailPattern.test(emailInput.value)) {
         showErrorModal('Vui lòng nhập email hợp lệ!');
         return;
@@ -167,90 +166,125 @@ function showConfirmationModal() {
         return;
     }
 
-    // Cập nhật modal với dữ liệu form
     document.getElementById('modalName').textContent = nameInput.value;
     document.getElementById('modalPhone').textContent = phoneInput.value;
     document.getElementById('modalAddress').textContent = `${streetInput.value}, ${districtSelect.value}, ${citySelect.value}`;
 
     try {
-        // Lấy dữ liệu giỏ hàng từ localStorage
         const cartData = localStorage.getItem('cartData');
-        if (!cartData) {
-            throw new Error('Không tìm thấy thông tin giỏ hàng');
-        }
-
+        if (!cartData) throw new Error('Không tìm thấy thông tin giỏ hàng');
         const parsedCartData = JSON.parse(cartData);
         if (!parsedCartData || !parsedCartData.items || parsedCartData.items.length === 0) {
             throw new Error('Giỏ hàng trống');
         }
 
+        // Kiểm tra giá trị total
+        if (typeof parsedCartData.total !== 'number' || parsedCartData.total <= 0) {
+            console.error('Total is invalid:', parsedCartData.total);
+            showErrorModal('Tổng đơn hàng không hợp lệ. Vui lòng kiểm tra lại giỏ hàng.');
+            return;
+        }
+
         const modalOrderDetails = document.getElementById('modalOrderDetails');
-        let totalAmount = 0;
-
-        // Xóa nội dung cũ
         modalOrderDetails.innerHTML = '';
-
-        // Thêm từng sản phẩm vào modal
         parsedCartData.items.forEach(item => {
+            const itemTotal = item.price * item.quantity;
             const itemDiv = document.createElement('div');
             itemDiv.style.display = 'flex';
             itemDiv.style.justifyContent = 'space-between';
             itemDiv.style.marginBottom = '10px';
             itemDiv.innerHTML = `
                 <span>${item.bookTitle || item.name} × ${item.quantity} quyển</span>
-                <span>${(item.price * item.quantity).toLocaleString('vi-VN')} đ</span>
+                <span>${itemTotal.toLocaleString('vi-VN')} đ</span>
             `;
             modalOrderDetails.appendChild(itemDiv);
-            totalAmount += item.price * item.quantity;
         });
 
-        // Cập nhật tổng số lượng và tổng tiền
         document.getElementById('modalItemCount').textContent = parsedCartData.items.length;
-        document.getElementById('modalTotalAmount').textContent = totalAmount.toLocaleString('vi-VN') + ' đ';
+        document.getElementById('modalTotalAmount').textContent = parsedCartData.total.toLocaleString('vi-VN') + ' đ';
 
-        // Hiển thị modal
-        document.getElementById('confirmationModal').style.display = 'block';
+        const modal = document.getElementById('confirmationModal');
+        modal.style.display = 'block';
+
+        const cancelButton = modal.querySelector('.btn-cancel');
+        const confirmButton = modal.querySelector('.btn-confirm');
+
+        cancelButton.removeEventListener('click', closeModal);
+        confirmButton.removeEventListener('click', confirmOrder);
+
+        cancelButton.addEventListener('click', () => {
+            console.log('Cancel button clicked');
+            closeModal();
+        });
+        confirmButton.addEventListener('click', () => {
+            console.log('Confirm button clicked');
+            confirmOrder();
+        });
     } catch (error) {
+        console.error('Error in showConfirmationModal:', error);
         showErrorModal(error.message);
     }
 }
 
-function confirmOrder() {
+async function confirmOrder() {
     try {
-        // Lấy dữ liệu giỏ hàng đã thanh toán từ localStorage
-        const cartData = localStorage.getItem('cartData');
-        if (!cartData) {
-            throw new Error('Không tìm thấy thông tin giỏ hàng');
-        }
+        console.log('Confirm Order triggered');
 
+        const cartData = localStorage.getItem('cartData');
+        if (!cartData) throw new Error('Không tìm thấy thông tin giỏ hàng');
         const parsedCartData = JSON.parse(cartData);
         if (!parsedCartData || !parsedCartData.items || parsedCartData.items.length === 0) {
             throw new Error('Giỏ hàng trống');
         }
 
-        // Lấy danh sách giỏ hàng gốc từ localStorage
+        // Kiểm tra giá trị total trước khi gửi lên API
+        if (typeof parsedCartData.total !== 'number' || parsedCartData.total <= 0) {
+            throw new Error('Tổng đơn hàng không hợp lệ');
+        }
+
+        const nameInput = document.querySelector('#fullName');
+        const phoneInput = document.querySelector('#phone');
+        const emailInput = document.querySelector('#email');
+        const citySelect = document.getElementById('city');
+        const districtSelect = document.getElementById('district');
+        const streetInput = document.querySelector('#street');
+
+        const orderData = {
+            userId: 'user123',
+            items: parsedCartData.items.map(item => ({
+                bookId: item.id,
+                quantity: item.quantity,
+                price: item.price
+            })),
+            subtotal: parsedCartData.subtotal,
+            shipping: parsedCartData.shipping,
+            discount: parsedCartData.discount,
+            totalAmount: parsedCartData.total, // Đảm bảo gửi totalAmount
+            orderDate: new Date().toISOString(),
+            paymentMethod: 'online',
+            shippingAddress: `${streetInput.value}, ${districtSelect.value}, ${citySelect.value}`,
+            status: 'completed',
+            currency: 'VND'
+        };
+
+        console.log('Order Data to be sent:', orderData);
+
+        const orderResponse = await orderAPI.createOrder(orderData);
+        console.log('Order Response:', orderResponse);
+
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-        // Lấy danh sách ID của các sản phẩm đã thanh toán
         const paidItemIds = parsedCartData.items.map(item => item.id);
-
-        // Xóa các sản phẩm đã thanh toán khỏi giỏ hàng gốc
         cart = cart.filter(item => !paidItemIds.includes(item.id));
-
-        // Cập nhật giỏ hàng gốc trong localStorage
         localStorage.setItem('cart', JSON.stringify(cart));
-
-        // Xóa dữ liệu giỏ hàng đã thanh toán
         localStorage.removeItem('cartData');
-        
-        // Hiển thị thông báo thành công
+
+        closeModal();
         showSuccessModal('Đặt hàng thành công!');
-        
-        // Chuyển hướng về home.html sau 2 giây
         setTimeout(() => {
             window.location.href = 'home.html';
         }, 2000);
     } catch (error) {
+        console.error('Lỗi thanh toán:', error);
         showErrorModal('Có lỗi xảy ra khi xử lý đơn hàng: ' + error.message);
     }
 }
@@ -269,28 +303,26 @@ function showSuccessModal(message) {
             </div>
         </div>
     `;
-    
     document.body.insertAdjacentHTML('beforeend', modalHtml);
     const modal = document.getElementById('successModal');
     modal.style.display = 'block';
 }
 
 function closeModal() {
-    document.getElementById('confirmationModal').style.display = 'none';
-}
-
-// Close modal when clicking outside
-window.onclick = function(event) {
+    console.log('Closing confirmation modal');
     const modal = document.getElementById('confirmationModal');
-    if (event.target == modal) {
-        closeModal();
+    if (modal) {
+        modal.style.display = 'none';
     }
 }
 
-// Add click event to checkout button
 document.addEventListener('DOMContentLoaded', function() {
     const checkoutBtn = document.querySelector('.checkout-btn');
-    if (checkoutBtn) {
-        checkoutBtn.addEventListener('click', showConfirmationModal);
-    }
+    const citySelect = document.getElementById('city');
+    
+    if (checkoutBtn) checkoutBtn.addEventListener('click', showConfirmationModal);
+    if (citySelect) citySelect.addEventListener('change', updateDistricts);
+
+    updateDistricts();
+    renderOrderDetails();
 });
