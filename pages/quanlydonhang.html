@@ -47,6 +47,25 @@
           padding-left: 15px;
         }
       }
+
+      /* CSS cho nút tạo đơn hàng mới */
+      .create-order-btn {
+        margin-bottom: 20px;
+      }
+
+      /* CSS cho modal tạo đơn hàng */
+      .modal-body .form-group {
+        margin-bottom: 15px;
+      }
+
+      .modal-body label {
+        font-weight: 500;
+      }
+
+      /* CSS cho nút xóa */
+      .delete-btn {
+        margin-left: 5px;
+      }
     </style>
   </head>
   <body>
@@ -59,6 +78,10 @@
         <div class="container">
           <div class="container-fluid">
             <h3 class="mb-4">Quản lý đơn hàng</h3>
+            <!-- Nút tạo đơn hàng mới -->
+            <button class="btn btn-primary create-order-btn" onclick="showCreateOrderModal()">
+              Tạo đơn hàng mới
+            </button>
             <table class="table table-hover align-middle">
               <thead class="table-success">
                 <tr>
@@ -70,7 +93,7 @@
                   <th>Thao tác</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="ordersTableBody">
                 <tr>
                   <td>#DH001</td>
                   <td>
@@ -92,6 +115,12 @@
                       onclick="showOrderDetail('#DH001')"
                     >
                       👁️
+                    </button>
+                    <button
+                      class="btn btn-outline-danger btn-sm delete-btn"
+                      onclick="deleteOrder('#DH001')"
+                    >
+                      🗑️
                     </button>
                   </td>
                 </tr>
@@ -117,6 +146,12 @@
                     >
                       👁️
                     </button>
+                    <button
+                      class="btn btn-outline-danger btn-sm delete-btn"
+                      onclick="deleteOrder('#DH002')"
+                    >
+                      🗑️
+                    </button>
                   </td>
                 </tr>
                 <tr>
@@ -141,6 +176,12 @@
                     >
                       👁️
                     </button>
+                    <button
+                      class="btn btn-outline-danger btn-sm delete-btn"
+                      onclick="deleteOrder('#DH003')"
+                    >
+                      🗑️
+                    </button>
                   </td>
                 </tr>
                 <tr>
@@ -164,6 +205,12 @@
                       onclick="showOrderDetail('#DH004')"
                     >
                       👁️
+                    </button>
+                    <button
+                      class="btn btn-outline-danger btn-sm delete-btn"
+                      onclick="deleteOrder('#DH004')"
+                    >
+                      🗑️
                     </button>
                   </td>
                 </tr>
@@ -266,6 +313,54 @@
             </div>
           </div>
 
+          <!-- Modal tạo đơn hàng mới -->
+          <div class="modal fade" id="createOrderModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Tạo đơn hàng mới</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="form-group">
+                    <label for="createCustomerId">ID Khách hàng</label>
+                    <input type="text" class="form-control" id="createCustomerId" placeholder="Nhập ID khách hàng">
+                  </div>
+                  <div class="form-group">
+                    <label for="createProductId">ID Sản phẩm</label>
+                    <input type="text" class="form-control" id="createProductId" placeholder="Nhập ID sản phẩm">
+                  </div>
+                  <div class="form-group">
+                    <label for="createQuantity">Số lượng</label>
+                    <input type="number" class="form-control" id="createQuantity" placeholder="Nhập số lượng">
+                  </div>
+                  <div class="form-group">
+                    <label for="createPrice">Giá</label>
+                    <input type="number" class="form-control" id="createPrice" placeholder="Nhập giá sản phẩm">
+                  </div>
+                  <div class="form-group">
+                    <label for="createTotalAmount">Tổng tiền</label>
+                    <input type="number" class="form-control" id="createTotalAmount" placeholder="Nhập tổng tiền">
+                  </div>
+                  <div class="form-group">
+                    <label for="createStatus">Trạng thái</label>
+                    <select class="form-select" id="createStatus">
+                      <option value="unresolved">Chưa giải quyết</option>
+                      <option value="pending" selected>Đang xử lý</option>
+                      <option value="shipping">Đang giao</option>
+                      <option value="delivered">Đã giao</option>
+                      <option value="cancelled">Đã hủy</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button class="btn btn-primary" onclick="createOrder()">Tạo</button>
+                  <button class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- Popup thông báo thành công -->
           <div
             class="success-overlay"
@@ -275,13 +370,12 @@
             <div class="success-popup">
               <div class="popup-header">
                 <h3>
-                  <span class="checkmark">✔</span> Cập nhật trạng thái đơn hàng
+                  <span class="checkmark">✔</span> <span id="successTitle"></span>
                 </h3>
               </div>
               <div class="popup-body">
                 <p>
-                  Trạng thái đơn hàng đã được cập nhật thành:
-                  <span id="successStatus"></span>
+                  <span id="successMessage"></span>
                 </p>
               </div>
               <div class="popup-footer">
@@ -425,10 +519,18 @@
             popup.style.display = "none";
           }
         };
+
+        // Hàm hiển thị modal tạo đơn hàng mới
+        window.showCreateOrderModal = function () {
+          const createModal = new bootstrap.Modal(document.getElementById('createOrderModal'));
+          createModal.show();
+        };
       });
     </script>
 
     <!-- Load sidebar script -->
     <script src="../assets/js/sidebar.js"></script>
+    <!-- Load script quản lý đơn hàng -->
+    <script src="quanlydonhang.js"></script>
   </body>
 </html>
