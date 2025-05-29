@@ -151,4 +151,12 @@ document.addEventListener("DOMContentLoaded", function () {
               bookList.innerHTML = '<p>Không thể tải danh sách sản phẩm.</p>';
           });
     });
-  });
+
+    // Add event listener for 'Xem tất cả' button
+    const seeAllButton = document.querySelector('.see-all-btn');
+    if (seeAllButton) {
+        seeAllButton.addEventListener('click', function() {
+            window.location.href = 'shoppage.html'; // Assuming shoppage.html is in the same directory
+        });
+    }
+});

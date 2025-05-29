@@ -4,16 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Thống kê - Tiệm Sách Nhà Em</title>
+
+    <!-- Font & CSS -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="../assets/css/style_common.css" />
     <link rel="stylesheet" href="../assets/css/style_statistics.css" />
     <link rel="stylesheet" href="../assets/css/style_sidebar.css" />
+
+    <!-- Biểu đồ: Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <style>
       .container-all {
         display: flex;
@@ -21,62 +23,42 @@
         overflow: hidden;
         background-color: #f5f5f7;
       }
-
-      body,
-      h1,
-      h2,
-      h3,
-      h4,
-      p,
-      button,
-      input,
-      select,
-      textarea {
+      body, h1, h2, h3, h4, p, button, input, select, textarea {
         font-family: "Montserrat", sans-serif;
       }
-
       .order-stats-row {
         display: flex;
         justify-content: space-between;
         gap: 20px;
         margin-bottom: 32px;
       }
-
       .stat-box {
         flex: 1;
         padding: 20px;
         border-radius: 12px;
         text-align: center;
       }
-
       .chart-summary-layout {
         display: flex;
         gap: 24px;
         margin-top: 32px;
         align-items: stretch;
       }
-
       .chart-box {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
       }
-
-      .chart-summary-layout .wide {
-        flex: 5;
-      }
-
+      .chart-summary-layout .wide,
       .chart-summary-layout .narrow {
         flex: 5;
       }
-
       .box {
         background-color: #fff;
         border-radius: 12px;
         padding: 24px;
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
       }
-
       .box-header {
         display: flex;
         justify-content: space-between;
@@ -85,6 +67,7 @@
       }
     </style>
   </head>
+
   <body>
     <div class="container-all">
       <div id="sidebar-container"></div>
@@ -98,14 +81,11 @@
               <button class="time-btn active">Tháng</button>
               <button class="time-btn">Năm</button>
               <button class="time-btn custom">
-                <img
-                  src="../assets/images/Máy in.png"
-                  width="16"
-                  style="margin-right: 4px"
-                />
-                Tùy chỉnh
+                <img src="../assets/images/Máy in.png" width="16" style="margin-right: 4px" />
+                Tuý chỉnh
               </button>
             </div>
+
             <div id="custom-date-range" style="display: none; margin-top: 10px">
               <label>Từ ngày: <input type="date" id="from-date" /></label>
               <label>Đến ngày: <input type="date" id="to-date" /></label>
@@ -114,288 +94,41 @@
           </div>
 
           <div class="box">
-            <div
-              class="box-header"
-              style="
-                margin-bottom: 12px;
-                display: flex;
-                justify-content: space-between;
-              "
-            >
-              <div style="display: flex; align-items: center; gap: 8px">
-                <img src="../assets/images/Container.png" width="16" />
-                <strong>Thống kê đơn hàng</strong>
-              </div>
-              <div
-                style="
-                  display: flex;
-                  align-items: center;
-                  gap: 6px;
-                  cursor: pointer;
-                "
-              >
-                <img src="../assets/images/Tải xuống.png" width="14" />
-                <span style="font-size: 14px; color: #333">Xuất báo cáo</span>
-              </div>
+            <div class="box-header">
+              <div><img src="../assets/images/Container.png" width="16" /> <strong>Thống kê đơn hàng</strong></div>
+              <div style="cursor: pointer;"><img src="../assets/images/Tải xuống.png" width="14" /> <span>Xuất báo cáo</span></div>
             </div>
-
             <div class="order-stats-row">
-              <div class="stat-box bg-yellow">
-                <h3>...</h3>
-                <p>Đơn hàng mới</p>
-              </div>
-              <div class="stat-box bg-red">
-                <h3>...</h3>
-                <p>Đã hoàn thành</p>
-              </div>
-              <div class="stat-box bg-gray">
-                <h3>...</h3>
-                <p>Đang giao</p>
-              </div>
-              <div class="stat-box bg-gray">
-                <h3>...</h3>
-                <p>Đã hủy</p>
-              </div>
+              <div class="stat-box bg-yellow"><h3>...</h3><p>Đơn hàng mới</p></div>
+              <div class="stat-box bg-red"><h3>...</h3><p>Đã hoàn thành</p></div>
+              <div class="stat-box bg-gray"><h3>...</h3><p>Đang giao</p></div>
+              <div class="stat-box bg-gray"><h3>...</h3><p>Đã huỷ</p></div>
             </div>
           </div>
 
           <div class="chart-summary-layout">
             <div class="box chart-box wide">
               <div class="box-header">
-                <div style="display: flex; align-items: center; gap: 8px">
-                  <img src="../assets/images/Thống kê xanh.png" width="16" />
-                  <strong>Doanh số bán hàng</strong>
-                </div>
-                <div
-                  style="
-                    display: flex;
-                    align-items: center;
-                    gap: 6px;
-                    cursor: pointer;
-                  "
-                >
-                  <img src="../assets/images/Tải xuống.png" width="14" />
-                  <span style="font-size: 14px; color: #333">Xuất báo cáo</span>
-                </div>
+                <div><img src="../assets/images/Thống kê xanh.png" width="16" /> <strong>Doanh số bán hàng</strong></div>
+                <div style="cursor: pointer;"><img src="../assets/images/Tải xuống.png" width="14" /> <span>Xuất báo cáo</span></div>
               </div>
               <canvas id="salesChart" width="400" height="150"></canvas>
-              <p style="text-align: center; margin-top: 1px; font-weight: bold">
-                Tổng doanh thu:
-                <span style="color: #86a788; font-weight: 500">...</span>
-              </p>
+              <p style="text-align: center;"><strong>Tổng doanh thu: <span style="color: #86a788;">...</span></strong></p>
             </div>
 
             <div class="box chart-box narrow">
               <div class="box-header">
-                <div style="display: flex; align-items: center; gap: 8px">
-                  <img src="../assets/images/Quyển sách.png" width="16" />
-                  <strong>Sản phẩm bán chạy nhất</strong>
-                </div>
-                <div
-                  style="
-                    display: flex;
-                    align-items: center;
-                    gap: 6px;
-                    cursor: pointer;
-                  "
-                >
-                  <img src="../assets/images/Tải xuống.png" width="14" />
-                  <span style="font-size: 14px; color: #333">Xuất báo cáo</span>
-                </div>
+                <div><img src="../assets/images/Quyển sách.png" width="16" /> <strong>Sản phẩm bán chạy nhất</strong></div>
+                <div style="cursor: pointer;"><img src="../assets/images/Tải xuống.png" width="14" /> <span>Xuất báo cáo</span></div>
               </div>
-              <!-- Phần sản phẩm bán chạy giữ nguyên -->
+              <!-- Sản phẩm được thêm động -->
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <script>
-      // Load sidebar và xử lý ảnh
-      fetch("../components/sidebar.html")
-        .then((res) => res.text())
-        .then((data) => {
-          document.getElementById("sidebar-container").innerHTML = data;
-
-          // Fix các đường dẫn trong sidebar nếu cần
-          document
-            .querySelectorAll("#sidebar-container a, #sidebar-container img")
-            .forEach((el) => {
-              const src = el.getAttribute("src") || el.getAttribute("href");
-              if (src && !src.startsWith("http") && !src.startsWith("../")) {
-                if (el.tagName === "IMG") {
-                  el.src = "../" + src;
-                } else {
-                  el.href = "../" + src;
-                }
-              }
-            });
-
-          // Điều chỉnh vị trí của sidebar để nằm sát lề trái
-          const sidebarElement = document.querySelector(
-            "#sidebar-container .sidebar"
-          );
-          if (sidebarElement) {
-            sidebarElement.style.position = "fixed";
-            sidebarElement.style.left = "0";
-            sidebarElement.style.top = "0";
-            sidebarElement.style.height = "100vh";
-          }
-
-          // Active menu Thống kê
-          document.getElementById("menu-statistics")?.classList.add("active");
-        });
-
-      const ctx = document.getElementById("salesChart").getContext("2d");
-      const salesChart = new Chart(ctx, {
-        type: "bar",
-        data: {
-          labels: ["T2", "T3", "T4", "T5", "T6", "T7", "CN"],
-          datasets: [
-            {
-              data: [0, 0, 0, 0, 0, 0, 0],
-              backgroundColor: "#86A788",
-              borderRadius: 8,
-              borderSkipped: false,
-              barThickness: 40,
-            },
-          ],
-        },
-        options: {
-          plugins: {
-            legend: { display: false },
-            tooltip: {
-              callbacks: {
-                label: (ctx) => `${ctx.raw.toLocaleString()} VND`,
-              },
-            },
-          },
-          scales: {
-            x: { grid: { display: false } },
-            y: {
-              ticks: {
-                callback: (val) => `${(val / 1_000_000).toFixed(1)}M`,
-                font: { size: 12 },
-              },
-              grid: { color: "#eee" },
-              beginAtZero: true,
-            },
-          },
-        },
-      });
-
-      function filterByDateRange(data, type) {
-        const now = new Date();
-        if (type === "tuần") {
-          const weekAgo = new Date(now);
-          weekAgo.setDate(now.getDate() - 7);
-          return data.filter((o) => new Date(o.orderDate) >= weekAgo);
-        }
-        if (type === "tháng") {
-          const m = now.getMonth();
-          const y = now.getFullYear();
-          return data.filter((o) => {
-            const d = new Date(o.orderDate);
-            return d.getMonth() === m && d.getFullYear() === y;
-          });
-        }
-        if (type === "năm") {
-          const y = now.getFullYear();
-          return data.filter((o) => new Date(o.orderDate).getFullYear() === y);
-        }
-        return data;
-      }
-
-      function updateStatistics(data) {
-        let counts = {
-          pending: 0,
-          delivered: 0,
-          processing: 0,
-          canceled: 0,
-          shipped: 0,
-        };
-        let revenueByDay = { T2: 0, T3: 0, T4: 0, T5: 0, T6: 0, T7: 0, CN: 0 };
-
-        data.forEach((o) => {
-          const s = o.status?.toLowerCase();
-          if (counts[s] !== undefined) counts[s]++;
-          if (s === "delivered") {
-            const d = new Date(o.orderDate);
-            const key = ["CN", "T2", "T3", "T4", "T5", "T6", "T7"][d.getDay()];
-            revenueByDay[key] += o.totalAmount;
-          }
-        });
-
-        document.querySelector(".stat-box.bg-yellow h3").textContent =
-          counts.pending || 0;
-        document.querySelector(".stat-box.bg-red h3").textContent =
-          counts.delivered || 0;
-        document.querySelectorAll(".stat-box.bg-gray h3")[0].textContent =
-          counts.processing + counts.shipped;
-        document.querySelectorAll(".stat-box.bg-gray h3")[1].textContent =
-          counts.canceled || 0;
-
-        salesChart.data.datasets[0].data = [
-          revenueByDay["T2"],
-          revenueByDay["T3"],
-          revenueByDay["T4"],
-          revenueByDay["T5"],
-          revenueByDay["T6"],
-          revenueByDay["T7"],
-          revenueByDay["CN"],
-        ];
-        salesChart.update();
-
-        const total = Object.values(revenueByDay).reduce((a, b) => a + b, 0);
-        document.querySelector(".chart-box.wide p span").textContent =
-          total.toLocaleString("vi-VN") + " VND";
-      }
-
-      function fetchAndUpdate(filterType = "tháng") {
-        fetch("https://tiemsachnhaem-be-mu.vercel.app/api/orders")
-          .then((res) => res.json())
-          .then((data) => {
-            const filtered = filterByDateRange(data, filterType);
-            updateStatistics(filtered);
-          });
-      }
-
-      document.querySelectorAll(".time-btn").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          document
-            .querySelectorAll(".time-btn")
-            .forEach((b) => b.classList.remove("active"));
-          btn.classList.add("active");
-
-          const label = btn.innerText.trim().toLowerCase();
-          if (label === "tùy chỉnh") {
-            document.getElementById("custom-date-range").style.display =
-              "block";
-          } else {
-            document.getElementById("custom-date-range").style.display = "none";
-            fetchAndUpdate(label);
-          }
-        });
-      });
-
-      document.getElementById("apply-filter").addEventListener("click", () => {
-        const from = new Date(document.getElementById("from-date").value);
-        const to = new Date(document.getElementById("to-date").value);
-        if (isNaN(from) || isNaN(to))
-          return alert("Vui lòng chọn đủ cả 2 ngày");
-
-        fetch("https://tiemsachnhaem-be-mu.vercel.app/api/orders")
-          .then((res) => res.json())
-          .then((data) => {
-            const filtered = data.filter((o) => {
-              const d = new Date(o.orderDate);
-              return d >= from && d <= to;
-            });
-            updateStatistics(filtered);
-          });
-      });
-
-      fetchAndUpdate(); // mặc định là tháng
-    </script>
+    <!-- Load logic từ file JS tách rời -->
+    <script src="../assets/js/API_statistics.js"></script>
   </body>
 </html>

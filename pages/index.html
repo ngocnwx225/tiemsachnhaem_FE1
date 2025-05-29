@@ -17,7 +17,6 @@
       overflow: hidden;
       background-color: #F5F5F7;
     }
-    
     body, h1, h2, h3, h4, p, button, input, select, textarea {
       font-family: 'Montserrat', sans-serif;
     }
@@ -25,7 +24,6 @@
 </head>
 <body>
   <div class="container-all">
-    
     <div id="sidebar-container" class="sidebar"></div>
 
     <div class="main">
@@ -93,125 +91,8 @@
     </div>
   </div>
 
-  <script>
-    // Lấy tổng số khách hàng
-    fetch('https://tiemsachnhaem-be-mu.vercel.app/api/customers')
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById("total-customers").textContent = data.length.toLocaleString('vi-VN');
-      });
-
-    function renderOrders(filtered) {
-      let revenue = 0, newOrders = 0;
-      filtered.forEach(o => {
-        if (o.status === 'delivered') revenue += o.totalAmount;
-        if (o.status === 'pending') newOrders++;
-      });
-
-      document.getElementById("total-orders").textContent = filtered.length;
-      document.getElementById("new-orders").textContent = newOrders;
-      document.getElementById("revenue").textContent = revenue.toLocaleString('vi-VN') + " VND";
-
-      const sorted = filtered.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-      const recent = sorted.slice(0, 3);
-      const html = recent.map(order => {
-        const statusMap = {
-          pending: { text: "pending", class: "red" },
-          delivered: { text: "delivered", class: "green" },
-          canceled: { text: "canceled", class: "gray" },
-          shipped: { text: "shipped", class: "blue" },
-          processing: { text: "processing", class: "orange" }
-        };
-        const raw = order.status?.toLowerCase();
-        const status = statusMap[raw] || { text: raw || "unknown", class: "gray" };
-        return `
-          <div class="order-item">
-            <div class="order-left">
-              <img src="../assets/images/Container.png" width="32" height="32" />
-              <div class="order-info">
-                <strong>${order.customerId}</strong>
-                <span>#${order.orderId} • ${order.productQuantity} sản phẩm</span>
-              </div>
-            </div>
-            <div class="order-dates">
-              <span>Dự kiến giao ngày:</span>${new Date(order.orderDate).toLocaleDateString('vi-VN')}
-              <span>Ngày giao:</span>${order.status === 'delivered' ? new Date(order.updatedAt).toLocaleDateString('vi-VN') : "---"}
-            </div>
-            <div class="order-status">
-              <div class="order-price">${order.totalAmount.toLocaleString()} VND</div>
-              <div class="status ${status.class}">${status.text}</div>
-            </div>
-          </div>
-        `;
-      }).join('');
-      document.getElementById("recent-orders").innerHTML = html;
-    }
-
-    function filterOrdersByTime(label, data) {
-      const now = new Date();
-      let filtered = [];
-
-      if (label === "tuần") {
-        const oneWeekAgo = new Date(now);
-        oneWeekAgo.setDate(now.getDate() - 7);
-        filtered = data.filter(o => new Date(o.orderDate) >= oneWeekAgo);
-      } else if (label === "tháng") {
-        const month = now.getMonth();
-        const year = now.getFullYear();
-        filtered = data.filter(o => {
-          const d = new Date(o.orderDate);
-          return d.getMonth() === month && d.getFullYear() === year;
-        });
-      } else if (label === "năm") {
-        const year = now.getFullYear();
-        filtered = data.filter(o => new Date(o.orderDate).getFullYear() === year);
-      } else {
-        filtered = data;
-      }
-
-      return filtered;
-    }
-
-    document.querySelectorAll(".time-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        document.querySelectorAll(".time-btn").forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-        const label = btn.innerText.trim().toLowerCase();
-
-        if (label === "tùy chỉnh") {
-          document.getElementById("custom-date-range").style.display = "block";
-        } else {
-          document.getElementById("custom-date-range").style.display = "none";
-        }
-
-        fetch('https://tiemsachnhaem-be-mu.vercel.app/api/orders')
-          .then(res => res.json())
-          .then(data => renderOrders(filterOrdersByTime(label, data)));
-      });
-    });
-
-    document.getElementById("apply-filter").addEventListener("click", () => {
-      const from = new Date(document.getElementById("from-date").value);
-      const to = new Date(document.getElementById("to-date").value);
-
-      if (isNaN(from) || isNaN(to)) {
-        alert("Vui lòng chọn cả 2 ngày.");
-        return;
-      }
-
-      fetch('https://tiemsachnhaem-be-mu.vercel.app/api/orders')
-        .then(res => res.json())
-        .then(data => {
-          const filtered = data.filter(o => {
-            const d = new Date(o.orderDate);
-            return d >= from && d <= to;
-          });
-          renderOrders(filtered);
-        });
-    });
-
-    document.querySelector(".time-btn.active")?.click();
-  </script>
+  <!-- Load script -->
+  <script src="../assets/js/API_index.js"></script>
   <script src="../assets/js/sidebar.js"></script>
 </body>
-</html> 
+</html>

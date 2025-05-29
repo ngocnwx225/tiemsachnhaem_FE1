@@ -2,219 +2,412 @@
 <header class="header-component">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
+
     .header-component {
-      width: 100%;
-      background: #fff;
-      z-index: 1000;
-    }
-    .header-top {
-      background-color: #1A3229;
-      color: white;
-      width: 100%;
-    }
-    .header-top-inner {
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      padding: 10px 0;
-      font-size: 14px;
-      font-family: 'Montserrat', sans-serif;
-      max-width: 1680px;
-      margin: 0 auto;
-      box-sizing: border-box;
-    }
-    .header-top-inner i {
-      margin-right: 6px;
-    }
-    .logo-section {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 6px;
-      justify-content: center;
-      padding: 16px 0 8px 0;
-      width: 100%;
-      max-width: 1680px;
-      margin: 0 auto;
-    }
-    .logo-section img {
-      height: 60px;
-    }
-    .logo-section h2 {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 24px;
-      color: #1A3229;
-      font-weight: 600;
-      margin: 0;
-    }
-    .main-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 10px 0;
-      flex-wrap: wrap;
-      width: 100%;
-      max-width: 1680px;
-      margin: 0 auto;
-      background: #fff;
-    }
-    .container {
-      width: 100%;
-      max-width: 1680px;
-      margin: 0 auto;
-      padding-left: 120px;
-      padding-right: 120px;
-      box-sizing: border-box;
-    }
-    .nav-links {
-      display: flex;
-      gap: 20px;
-      flex-shrink: 0;
-    }
-    .nav-links a {
-      text-decoration: none;
-      color: #333;
-      font-weight: 500;
-      font-family: 'Montserrat', sans-serif;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover {
-      color: #86A788;
-    }
-    .search-bar {
-      font-family: 'Montserrat', sans-serif;
-      flex-grow: 1;
-      max-width: 400px;
-      margin: 0 16px;
-      position: relative;
-    }
-    .search-bar input {
-      font-family: 'Montserrat', sans-serif;
-      width: 100%;
-      padding: 8px 16px 8px 36px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      font-size: 14px;
-      box-sizing: border-box;
-    }
-    .search-bar .fa-search {
-      position: absolute;
-      left: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #999;
-      cursor: pointer;
-    }
-    .icons {
-      display: flex;
-      gap: 15px;
-      flex-shrink: 0;
-      font-size: 18px;
-      color: #1A3229;
-      position: relative;
-    }
-    .header-divider {
-      color: #eee;
-      margin: 0;
-      border: none;
-      border-top: 1px solid #eee;
-    }
-    .icons .fa-user {
-      cursor: pointer;
-    }
-    .icons .fa-shopping-cart {
-      cursor: pointer;
-    }
-    .dropdown-menu {
-      display: none;
-      position: absolute;
-      top: 100%;
-      right: 0;
-      background-color: #fff;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      z-index: 1000;
-    }
-    .dropdown-menu.show {
-      display: block;
-    }
-    .dropdown-menu a {
-      display: block;
-      padding: 10px 20px;
-      text-decoration: none;
-      color: #333;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 14px;
-      white-space: nowrap;
-    }
-    .dropdown-menu a:hover {
-      background-color: #f5f5f5;
-    }
-    .search-results {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      background-color: #fff;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      z-index: 1000;
-      max-height: 300px;
-      overflow-y: auto;
-    }
-    .search-results.show {
-      display: block;
-    }
-    .search-result-item {
-      display: flex;
-      align-items: center;
-      padding: 10px;
-      border-bottom: 1px solid #eee;
-      text-decoration: none;
-      color: #333;
-      font-family: 'Montserrat', sans-serif;
-    }
-    .search-result-item:last-child {
-      border-bottom: none;
-    }
-    .search-result-item:hover {
-      background-color: #f5f5f5;
-    }
-    .search-result-item img {
-      width: 50px;
-      height: 50px;
-      object-fit: cover;
-      margin-right: 10px;
-    }
-    .search-result-item div {
-      flex: 1;
-    }
-    .search-result-item .product-name {
-      font-size: 14px;
-      font-weight: 500;
-      margin: 0;
-    }
-    .search-result-item .product-price {
-      font-size: 12px;
-      color: #666;
-      margin: 0;
-    }
-    @media (max-width: 1200px) {
-      .container {
-        padding-left: 24px;
-        padding-right: 24px;
-      }
-    }
-    @media (max-width: 600px) {
-      .container {
-        padding-left: 8px;
-        padding-right: 8px;
-      }
-    }
+  width: 100%;
+  background: #fff;
+  z-index: 1000;
+}
+
+.header-top {
+  background-color: #1A3229;
+  color: white;
+  width: 100%;
+}
+
+.header-top-inner {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  padding: 10px 0;
+  font-size: 14px;
+  font-family: 'Montserrat', sans-serif;
+  max-width: 1200px; /* Match homepage container max-width */
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.header-top-inner i {
+  margin-right: 6px;
+}
+
+.logo-section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  justify-content: center;
+  padding: 16px 0 8px 0;
+  width: 100%;
+  max-width: 1200px; /* Match homepage container max-width */
+  margin: 0 auto;
+}
+
+.logo-section img {
+  height: 60px;
+}
+
+.logo-section h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 24px;
+  color: #1A3229;
+  font-weight: 600;
+  margin: 0;
+}
+
+.main-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 0;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 1680px;
+  margin: 0 auto;
+  background: #fff;
+}
+
+.container {
+  width: 100%;
+  max-width: 1680px;
+  margin: 0 auto;
+  padding-left: 120px;
+  padding-right: 120px;
+  box-sizing: border-box;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+  flex-shrink: 0;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  font-family: 'Montserrat', sans-serif;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover {
+  color: #86A788;
+}
+
+.search-bar {
+  font-family: 'Montserrat', sans-serif;
+  flex-grow: 1;
+  max-width: 400px;
+  margin: 0 16px;
+  position: relative;
+}
+
+.search-bar input {
+  font-family: 'Montserrat', sans-serif;
+  width: 100%;
+  padding: 8px 16px 8px 36px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.search-bar .fa-search {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999;
+  cursor: pointer;
+}
+
+.icons {
+  display: flex;
+  gap: 15px;
+  flex-shrink: 0;
+  font-size: 18px;
+  color: #1A3229;
+  position: relative;
+}
+
+.header-divider {
+  color: #eee;
+  margin: 0;
+  border: none;
+  border-top: 1px solid #eee;
+}
+
+.icons .fa-user {
+  cursor: pointer;
+}
+
+.icons .fa-shopping-cart {
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  z-index: 1000;
+}
+
+.dropdown-menu.show {
+  display: block;
+}
+
+.dropdown-menu p {
+  display: block;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: #333;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.dropdown-menu p:hover {
+  background-color: #f5f5f5;
+}
+
+.search-results {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  z-index: 1000;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.search-results.show {
+  display: block;
+}
+
+.search-result-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  text-decoration: none;
+  color: #333;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.search-result-item:last-child {
+  border-bottom: none;
+}
+
+.search-result-item:hover {
+  background-color: #f5f5f5;
+}
+
+.search-result-item img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.search-result-item div {
+  flex: 1;
+}
+
+.search-result-item .product-name {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.search-result-item .product-price {
+  font-size: 12px;
+  color: #666;
+  margin: 0;
+}
+
+@media (max-width: 1200px) {
+  .container {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}
+
+@media (max-width: 768px) {
+  .header-top-inner {
+    flex-direction: row; /* Changed to row for horizontal layout */
+    gap: 20px; /* Reduced gap for better spacing on mobile */
+    padding: 8px 0;
+    font-size: 12px;
+  }
+
+  /* Ensure icons remain visible and spaced properly on mobile */
+  .header-top-inner div {
+    justify-content: center;
+  }
+  /* Hide the text, keep the icons */
+.header-top-inner span {
+  display: none; /* Hides the text inside span elements */
+}
+
+/* Adjust the layout to space icons evenly */
+.header-top-inner div {
+  display: flex;
+  align-items: center;
+}
+
+  .logo-section {
+    padding: 12px 0;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .logo-section h2 {
+    font-size: 20px;
+  }
+
+  .main-header {
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0;
+    gap: 15px;
+  }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .nav-links a {
+    padding: 10px 0;
+    font-size: 16px;
+  }
+
+  .search-bar {
+    max-width: 100%;
+    margin: 0;
+    width: 100%;
+  }
+
+  .search-bar input {
+    padding: 10px 16px 10px 40px;
+    font-size: 12px;
+  }
+
+  .icons {
+    gap: 10px;
+    font-size: 14px;
+  }
+
+  /* Hamburger Menu */
+  .hamburger {
+    display: block;
+    font-size: 24px;
+    background: none;
+    border: none;
+    color: #1A3229;
+    cursor: pointer;
+    padding: 5px;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .main-header {
+    position: relative;
+  }
+
+  .hamburger {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px 0;
+    z-index: 1001;
+  }
+
+  .nav-links a {
+    padding: 12px 20px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .nav-links a:last-child {
+    border-bottom: none;
+  }
+
+  .search-bar {
+    width: 70%;
+    margin: 10px 0;
+  }
+
+  .icons {
+    justify-content: right;
+    margin-top: 10px;
+  }
+}
+
+/* Hamburger Icon Animation */
+.hamburger:focus {
+  outline: none;
+}
+
+.hamburger.active .bar:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger.active .bar:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active .bar:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -7px);
+}
+
+.bar {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background-color: #1A3229;
+  margin: 5px 0;
+  transition: all 0.3s ease;
+}
   </style>
   <div class="header-top">
     <div class="container header-top-inner">
@@ -256,8 +449,8 @@
       <div class="user-menu">
         <i class="fas fa-user"></i>
         <div class="dropdown-menu">
-          <a href="../pages/profilecustomer.html" onclick="window.location.href=this.href; return false;">Thông tin khách hàng</a>
-          <a href="../pages/dangnhap.html" onclick="window.location.href=this.href; return false;">Đăng xuất</a>
+          <p class="profile-btn">Thông tin khách hàng</p>
+          <p class="logout-btn">Đăng xuất</p>
         </div>
       </div>
       <i class="fas fa-shopping-cart" onclick="window.location.href='../pages/cart.html'; return false;"></i>

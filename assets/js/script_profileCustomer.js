@@ -1,8 +1,16 @@
 document.addEventListener('DOMContentLoaded', function () {
     //lấy thông tin user trong localstorage
-    const user = localStorage.getItem("userInfo");
-    const userInfo = JSON.parse(user);
-
+    const userInfo = localStorage.getItem("userInfo");
+    if (userInfo) {
+        const user = JSON.parse(userInfo);
+        // Hiển thị thông tin user
+        document.getElementById('customer-mail').textContent = user.email || '';
+        document.getElementById('customer-name').textContent = user.fullName || '';
+        document.getElementById('customer-fullname').textContent = user.fullName || '';
+        document.getElementById('customer-phone').textContent = user.phone || '';
+        document.getElementById('customer-address').textContent = user.address || '';
+        
+    }
 
     const mobileMenuToggle = document.getElementById('mobileMenuToggle');
     const mobileNav = document.getElementById('mobileNav');
