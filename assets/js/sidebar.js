@@ -63,7 +63,7 @@ function loadSidebar() {
       highlightCurrentPage();
 
       // Thiết lập sự kiện đăng xuất sau khi sidebar được tải
-      setupLogout();
+    //   setupLogout();
     })
     .catch((error) => {
       console.error("Lỗi khi tải sidebar:", error);
