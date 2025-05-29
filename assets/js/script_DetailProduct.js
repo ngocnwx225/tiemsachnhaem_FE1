@@ -49,12 +49,31 @@ document.addEventListener("DOMContentLoaded", async function () {
   });
 });
 
+document.addEventListener("DOMContentLoaded", async function () {
+  const params = new URLSearchParams(window.location.search);
+  const currentId = params.get("id");
+  if (!currentId) return;
+
+  try {
+    // Bước 1: Gọi API lấy thông tin sản phẩm hiện tại
+    const res = await fetch(`https://tiemsachnhaem-be-mu.vercel.app/api/products/${currentId}`);
+    if (!res.ok) throw new Error("Không tìm thấy sản phẩm");
+
+    const currentBook = await res.json();
+    const catalog = currentBook.catalog;
+
+    // Bước 2: Gọi API lấy danh sách sách cùng catalog
+    await loadRelatedBooks(catalog, currentId);
+  } catch (err) {
+    console.error("Lỗi khi tải sách hiện tại hoặc sách liên quan:", err);
+  }
+});
+
 async function loadRelatedBooks(catalog, currentId) {
   try {
     // Sử dụng API /products/catalog/{catalog} thay vì /products/by-catalog/{catalog}
     const res = await fetch(`https://tiemsachnhaem-be-mu.vercel.app/api/products/catalog/${encodeURIComponent(catalog)}?limit=10`);
     const books = await res.json();
-
     const container = document.getElementById("related-books-list");
     container.innerHTML = '';
 
@@ -89,8 +108,8 @@ async function loadRelatedBooks(catalog, currentId) {
           window.location.href = `DetailProduct.html?id=${book._id}`;
         });
 
-        container.appendChild(card);
-      });
+      container.appendChild(card);
+    });
 
   } catch (err) {
     console.error("Lỗi khi load sách cùng thể loại:", err);
