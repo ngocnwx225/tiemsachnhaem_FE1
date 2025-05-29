@@ -46,43 +46,71 @@ document.addEventListener("DOMContentLoaded", async function () {
   });
 });
 
+document.addEventListener("DOMContentLoaded", async function () {
+  const params = new URLSearchParams(window.location.search);
+  const currentId = params.get("id");
+  if (!currentId) return;
+
+  try {
+    // Bước 1: Gọi API lấy thông tin sản phẩm hiện tại
+    const res = await fetch(`https://tiemsachnhaem-be-mu.vercel.app/api/products/${currentId}`);
+    if (!res.ok) throw new Error("Không tìm thấy sản phẩm");
+
+    const currentBook = await res.json();
+    const catalog = currentBook.catalog;
+
+    // Bước 2: Gọi API lấy danh sách sách cùng catalog
+    await loadRelatedBooks(catalog, currentId);
+  } catch (err) {
+    console.error("Lỗi khi tải sách hiện tại hoặc sách liên quan:", err);
+  }
+});
+
 async function loadRelatedBooks(catalog, currentId) {
   try {
-    const res = await fetch(`https://tiemsachnhaem-be-mu.vercel.app/api/products/by-catalog/${encodeURIComponent(catalog)}?page=1&limit=10`);
-    const books = await res.json();
+    const res = await fetch(`https://tiemsachnhaem-be-mu.vercel.app/api/products/by-catalog/${encodeURIComponent(catalog)}?page=1&limit=20`);
+    if (!res.ok) throw new Error("Không thể tải sách cùng thể loại");
 
+    const books = await res.json();
     const container = document.getElementById("related-books-list");
     container.innerHTML = '';
 
-    books
-      .filter(book => book._id !== currentId) // loại trừ chính nó
-      .forEach(book => {
-        const card = document.createElement('div');
-        card.className = 'product-card';
-        card.innerHTML = `
-          <div class="product-image-container">
-            <img class="product-image" src="${book.imageUrl || ''}" alt="${book.bookTitle}" data-id="${book._id}">
-          </div>
-          <div class="product-info">
-            <div class="product-title">${book.bookTitle}</div>
-            <div class="product-price">${book.price?.toLocaleString('vi-VN') || 'N/A'}<span class="product-price-unit">đ</span></div>
-            <div class="product-sold">${book.soldCount || 0} đã bán/tháng</div>
-            <div class="product-actions">
-              <button class="buy-button">Mua hàng</button>
-              <div class="cart-button">
-                <i class="fas fa-shopping-cart"></i>
-              </div>
+    const filteredBooks = books.filter(book => book._id !== currentId).slice(0, 8); // tối đa 8 cuốn
+
+    if (filteredBooks.length === 0) {
+      container.innerHTML = '<p>Không tìm thấy sách liên quan.</p>';
+      return;
+    }
+
+    filteredBooks.forEach(book => {
+      const card = document.createElement('div');
+      card.className = 'product-card';
+      card.innerHTML = `
+        <div class="product-image-container">
+          <img class="product-image" src="${book.imageUrl || 'default-image.jpg'}" alt="${book.bookTitle}" data-id="${book._id}">
+        </div>
+        <div class="product-info">
+          <div class="product-title">${book.bookTitle}</div>
+          <div class="product-price">${book.price?.toLocaleString('vi-VN') || 'N/A'}<span class="product-price-unit">đ</span></div>
+          <div class="product-sold">${book.soldCount || 0} đã bán/tháng</div>
+          <div class="product-actions">
+            <button class="buy-button">Mua hàng</button>
+            <div class="cart-button">
+              <i class="fas fa-shopping-cart"></i>
             </div>
           </div>
-        `;
-        card.querySelector('.product-image').addEventListener('click', () => {
-          window.location.href = `DetailProduct.html?id=${book._id}`;
-        });
+        </div>
+      `;
 
-        container.appendChild(card);
+      card.querySelector('.product-image').addEventListener('click', () => {
+        window.location.href = `DetailProduct.html?id=${book._id}`;
       });
+
+      container.appendChild(card);
+    });
 
   } catch (err) {
     console.error("Lỗi khi load sách cùng thể loại:", err);
+    document.getElementById("related-books-list").innerHTML = '<p>Có lỗi xảy ra.</p>';
   }
 }
