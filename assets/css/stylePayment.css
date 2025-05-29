@@ -5,7 +5,7 @@ body {
     margin: 0;
     padding: 0;
     line-height: 1.6;
-    background-color: white;
+    background-color: #f5f5f5;
     font-size: 14px;
 }
 
@@ -30,8 +30,8 @@ p {
     flex-wrap: wrap;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 1rem;
-    margin-bottom: 80px; /* Thêm khoảng cách với footer */
+    padding: 2rem 2rem;
+    margin-bottom: 2rem; /* Thêm khoảng cách với footer */
 }
 
 .checkout-left {
@@ -114,19 +114,20 @@ p {
 .checkout-right {
     flex: 1;
     min-width: 300px;
-    background-color: #f5f5f7;
-    padding: 25px;
+    background-color: #ffffff;
+    padding: 6px 30px 30px;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
     overflow-y: auto; /* Thêm thanh cuộn nếu nội dung dài */
     height:fit-content;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 .checkout-right h2 {
     font-size: 20px;
     font-weight: 700;
-    margin-bottom: 20px;
+    margin-bottom: 11px;
     color: #333;
     font-family: 'Montserrat', sans-serif;
 }
@@ -331,6 +332,7 @@ hr {
 }
 
 .btn-cancel, .btn-confirm {
+  font-family: 'Montserrat', sans-serif;
   padding: 6px 20px;
   border-radius: 4px;
   border: none;

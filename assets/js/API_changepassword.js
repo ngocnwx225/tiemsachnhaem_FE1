@@ -4,7 +4,8 @@ document.addEventListener('DOMContentLoaded', function () {
     form.addEventListener('submit', async function (e) {
         e.preventDefault();
 
-        const email = localStorage.getItem('userEmail'); // phải được lưu sau khi login
+        const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+        const email = userInfo.email;
         const newPassword = document.getElementById('new-password').value.trim();
         const confirmPassword = document.getElementById('confirm-password').value.trim();
 
@@ -24,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         try {
-            const response = await fetch('https://tiemsachnhaem-be-mu.vercel.app/auth/reset-password', {
+            const response = await fetch('https://tiemsachnhaem-be-mu.vercel.app/api/auth/reset-password', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

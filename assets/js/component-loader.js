@@ -22,6 +22,28 @@ document.addEventListener('DOMContentLoaded', function() {
           }
         });
       }
+      
+      // Profile and Logout buttons functionality
+      const profileBtn = document.querySelector('.profile-btn');
+      const logoutBtn = document.querySelector('.logout-btn');
+      
+      if (profileBtn) {
+        profileBtn.addEventListener('click', function() {
+          window.location.href = '../pages/profilecustomer.html';
+        });
+      }
+      
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', function() {
+          console.log('Đăng xuất');
+          localStorage.removeItem('userInfo');
+          const isLogout = confirm('Bạn có muốn đăng xuất không?');
+          if (isLogout) {
+            alert('Đăng xuất thành công');
+            window.location.href = '../pages/dangnhap1.html';
+          }
+        });
+      }
 
       // Search functionality
       const searchInput = document.getElementById('search-input');
@@ -116,4 +138,4 @@ document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('footer-placeholder').innerHTML = data;
     })
     .catch(error => console.error('Error loading footer:', error));
-}); 
+});

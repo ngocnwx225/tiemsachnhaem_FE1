@@ -8,9 +8,9 @@
     <link rel="stylesheet" href="../assets/css/style_profileCustomer.css">
 </head>
 <body>
+    <div id="header-placeholder"></div>
     <div class="page-wrapper">
         <!-- Header component sẽ được load vào đây -->
-        <div id="header-placeholder"></div>
         <!-- <script>
             fetch('../components/header.html')
             .then(response => response.text())
@@ -58,7 +58,6 @@
 
         <!-- Footer component sẽ được load vào đây -->
         <!-- Include footer -->
-        <div id="footer-placeholder"></div>
         <!-- <script>
             fetch('../components/footer.html')
             .then(response => response.text())
@@ -67,9 +66,11 @@
             });
         </script> -->
     </div>
+    <div id="footer-placeholder"></div>
+
     <script src="../assets/js/script_profileCustomer.js"></script>
     <script src="../assets/js/component-loader.js"></script>
-    <script>
+    <!-- <script>
         
     // Tự động load header/footer component
     function loadComponent(id, url) {
@@ -88,6 +89,6 @@
             window.location.href = '../pages/changepassword.html';
         });
     });
-    </script>
+    </script> -->
 </body>
 </html>

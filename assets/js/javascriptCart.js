@@ -34,7 +34,10 @@ const cartDOM = {
     discountCodeInput: document.getElementById('discountCode'),
     applyDiscountBtn: document.getElementById('applyDiscountBtn'),
     discountMessageModal: document.getElementById('discountMessageModal'),
-    discountMessageText: document.getElementById('discountMessageText')
+    discountMessageText: document.getElementById('discountMessageText'),
+    loginPromptModal: document.getElementById('loginPromptModal'), // Thêm modal
+    cancelLoginPrompt: document.getElementById('cancelLoginPrompt'), // Nút Hủy
+    confirmLoginPrompt: document.getElementById('confirmLoginPrompt') // Nút Đăng nhập
 };
 
 // Hàm định dạng tiền tệ
@@ -165,7 +168,7 @@ function setupCartEvents() {
             showDiscountMessage('Vui lòng chọn ít nhất một sản phẩm để thanh toán');
             return;
         }
-
+    
         // Kiểm tra dữ liệu hợp lệ trước khi lưu cartData
         const invalidItems = selectedItems.filter(item => 
             typeof item.price !== 'number' || item.price <= 0 || 
@@ -175,14 +178,27 @@ function setupCartEvents() {
             showDiscountMessage('Dữ liệu sản phẩm không hợp lệ. Vui lòng kiểm tra lại giỏ hàng.');
             return;
         }
-
-        console.log('Selected Items:', selectedItems); // Kiểm tra sản phẩm được chọn
-
+    
+        // Kiểm tra đăng nhập dựa trên userInfo
+        const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
+        if (!userInfo || !userInfo.id) {
+            cartDOM.loginPromptModal.style.display = 'block';
+            return;
+        }
+    
+        console.log('Selected Items:', selectedItems);
+    
         const subtotal = selectedItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
         const shipping = 0;
         const discount = isDiscountApplied ? subtotal * discountRate : 0;
-        const total = subtotal + shipping - discount;
-
+        const total = Number(subtotal + shipping - discount); // Đảm bảo total là số
+    
+        // Kiểm tra total trước khi lưu
+        if (isNaN(total) || total <= 0) {
+            showDiscountMessage('Tổng đơn hàng không hợp lệ. Vui lòng kiểm tra lại giỏ hàng.');
+            return;
+        }
+    
         const cartData = {
             items: selectedItems.map(item => ({
                 id: item.id,
@@ -194,15 +210,15 @@ function setupCartEvents() {
             subtotal: subtotal,
             shipping: shipping,
             discount: discount,
-            total: total
+            total: total,
+            userId: userInfo.id // Đã thêm trước đó
         };
-
-        console.log('Cart Data to be saved:', cartData); // Kiểm tra trước khi lưu
-
+    
+        console.log('Cart Data to be saved:', cartData);
         localStorage.setItem('cartData', JSON.stringify(cartData));
         const savedCartData = localStorage.getItem('cartData');
-        console.log('Cart Data in LocalStorage:', JSON.parse(savedCartData)); // Kiểm tra sau khi lưu
-
+        console.log('Cart Data in LocalStorage:', JSON.parse(savedCartData));
+    
         window.location.href = 'payment.html';
     });
 
@@ -221,6 +237,24 @@ function setupCartEvents() {
             isDiscountApplied = false;
             renderCart();
             showDiscountMessage('Mã giảm giá không hợp lệ!');
+        }
+    });
+
+    // Sự kiện cho nút "Hủy" trong modal đăng nhập
+    cartDOM.cancelLoginPrompt.addEventListener('click', () => {
+        cartDOM.loginPromptModal.style.display = 'none';
+    });
+
+    // Sự kiện cho nút "Đăng nhập" trong modal đăng nhập
+    cartDOM.confirmLoginPrompt.addEventListener('click', () => {
+        cartDOM.loginPromptModal.style.display = 'none';
+        window.location.href = 'dangnhap1.html';
+    });
+
+    // Đóng modal khi nhấp bên ngoài
+    cartDOM.loginPromptModal.addEventListener('click', (e) => {
+        if (e.target === cartDOM.loginPromptModal) {
+            cartDOM.loginPromptModal.style.display = 'none';
         }
     });
 }
