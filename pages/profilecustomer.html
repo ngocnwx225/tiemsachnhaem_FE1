@@ -70,6 +70,13 @@
 
     <script src="../assets/js/script_profileCustomer.js"></script>
     <script src="../assets/js/component-loader.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('change-password-btn').addEventListener('click', function() {
+                window.location.href = '../pages/changepassword.html';
+            });
+        });
+    </script>
     <!-- <script>
         
     // Tự động load header/footer component
