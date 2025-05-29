@@ -80,7 +80,7 @@ function callLoginAPI(event) {
           console.log("Đã lưu thông tin người dùng:", data.user);
           alert("Đăng nhập thành công!");
           // Chuyển hướng đến trang chủ (hoặc trang admin)
-          window.location.href = "../pages/home.html"; // Bạn có thể đổi sang trang admin nếu có
+          window.location.href = "../pages/index.html"; // Bạn có thể đổi sang trang admin nếu có
         } else {
           // Nếu role không phải admin
           console.warn("Người dùng không có quyền truy cập:", data.user.role);
