@@ -5,20 +5,19 @@
   <title>Payment</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="../assets/css/stylePayment.css">
-  <script src="../assets/js/javascriptPayment.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body onload="renderOrderDetails()">
+<body>
 
     <!-- Include header -->
     <div id="header-placeholder"></div>
-    <!-- <script>
+    <script>
         fetch('../components/header.html')
         .then(response => response.text())
         .then(data => {
             document.getElementById('header-placeholder').innerHTML = data;
         });
-    </script> -->
+    </script>
 
     <main class="checkout-container">
       <!-- Bên trái: Form -->
@@ -31,38 +30,33 @@
     
         <h2>Địa chỉ giao hàng</h2>
         <div class="address-row">
-          <select id="city" onchange="updateDistricts()">
+          <select id="city" name="city" autocomplete="address-level1" required>
             <option value="">Thành phố</option>
             <option value="HaNoi">Hà Nội</option>
             <option value="HoChiMinh">Hồ Chí Minh</option>
             <option value="Hue">Huế</option>
-            <option value="CanTho">Cần Thơ</option>
+            <option value="CanTho">Cần Thơ</option> 
             <option value="DaNang">Đà Nẵng</option>
           </select>
-          <select id="district">
+          <select id="district" name="district" autocomplete="address-level2" required>
             <option value="">Quận/Huyện</option>
           </select>
         </div>
-        <input type="text" placeholder="Số nhà, tên đường">
+        <input type="text" placeholder="Số nhà, tên đường" id="street" name="street" autocomplete="address-line1" required>
         <p class="note">Địa chỉ này sẽ được sử dụng làm địa chỉ thanh toán cho đơn hàng này.</p>
         
         <h2>Phương thức giao hàng</h2>
         <label class="radio-label">
-          <input type="radio" name="shipping" value="standard" checked>
+          <input type="radio" name="shipping" value="0" checked>
           <span>Tiêu chuẩn miễn phí (2-3 ngày)</span>
           <span class="radio-value">Miễn phí</span>
         </label>
         
         <h2>Phương thức thanh toán</h2>
         <label class="radio-label">
-          <input type="radio" name="payment" value="cod" checked>
-          <span>Thanh toán khi nhận hàng (COD)</span>
-        </label>
-        <label class="radio-label">
-          <input type="radio" name="payment" value="online">
+          <input type="radio" name="payment" value="online" checked>
           <span>Thanh toán trực tuyến (Online payment)</span>
         </label>
-        <p class="note">Mọi giao dịch đều an toàn và được mã hóa.</p>
       </div>
         
       <!-- Bên phải: Chi tiết đơn hàng -->
@@ -102,19 +96,26 @@
         <div class="modal-footer">
           <button class="btn-cancel" onclick="closeModal()">Hủy</button>
           <button class="btn-confirm" onclick="confirmOrder()">Xác nhận</button>
-        </div>
+      </div>
       </div>
     </div>
 
     <!-- Include footer -->
     <div id="footer-placeholder"></div>
-    <!-- <script>
+    <script>
         fetch('../components/footer.html')
         .then(response => response.text())
         .then(data => {
             document.getElementById('footer-placeholder').innerHTML = data;
         });
-    </script> -->
-    <script src="../assets/js/component-loader.js"></script>
+    </script>
+
+    <!-- Import api.js và payment.js -->
+    <script type="module">
+        import '../assets/js/API_Payment.js';
+        import '../assets/js/javascriptPayment.js';
+    </script>
+
+    <script src="../assets/js/javascriptPayment.js" defer></script>
 </body>
 </html>
