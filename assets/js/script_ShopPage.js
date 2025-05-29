@@ -200,9 +200,10 @@ document.addEventListener('DOMContentLoaded', function () {
         const product = {
           id: this.getAttribute('data-id'),
           bookTitle: this.getAttribute('data-title'),
-          price: parseInt(this.getAttribute('data-price')),
+          price: parseInt(this.getAttribute('data-price')), // Đã ép kiểu
           imageUrl: this.getAttribute('data-image'),
-          quantity: 1
+          quantity: 1,
+          checked: true
         };
 
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -223,9 +224,10 @@ document.addEventListener('DOMContentLoaded', function () {
         const product = {
           id: this.getAttribute('data-id'),
           bookTitle: this.getAttribute('data-title'),
-          price: parseInt(this.getAttribute('data-price')),
+          price: parseInt(this.getAttribute('data-price')), // Đã ép kiểu
           imageUrl: this.getAttribute('data-image'),
-          quantity: 1
+          quantity: 1,
+          checked: true
         };
 
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -291,7 +293,11 @@ document.addEventListener('DOMContentLoaded', function () {
   fetch('https://tiemsachnhaem-be-mu.vercel.app/api/products?page=1&limit=50')
     .then(res => res.json())
     .then(data => {
-      products = data.products;
+      // Ép kiểu price trong products
+      products = data.products.map(product => ({
+        ...product,
+        price: parseInt(product.price) // Ép kiểu price thành số
+      }));
       filteredProducts = [...products];
       renderProducts(products);
 
