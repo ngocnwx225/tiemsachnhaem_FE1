@@ -8,7 +8,10 @@
     <!-- Font & CSS -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="../assets/css/style_common.css" />
     <link rel="stylesheet" href="../assets/css/style_statistics.css" />
     <link rel="stylesheet" href="../assets/css/style_sidebar.css" />
@@ -23,7 +26,16 @@
         overflow: hidden;
         background-color: #f5f5f7;
       }
-      body, h1, h2, h3, h4, p, button, input, select, textarea {
+      body,
+      h1,
+      h2,
+      h3,
+      h4,
+      p,
+      button,
+      input,
+      select,
+      textarea {
         font-family: "Montserrat", sans-serif;
       }
       .order-stats-row {
@@ -81,7 +93,11 @@
               <button class="time-btn active">Tháng</button>
               <button class="time-btn">Năm</button>
               <button class="time-btn custom">
-                <img src="../assets/images/Máy in.png" width="16" style="margin-right: 4px" />
+                <img
+                  src="../assets/images/Máy in.png"
+                  width="16"
+                  style="margin-right: 4px"
+                />
                 Tuý chỉnh
               </button>
             </div>
@@ -95,31 +111,54 @@
 
           <div class="box">
             <div class="box-header">
-              <div><img src="../assets/images/Container.png" width="16" /> <strong>Thống kê đơn hàng</strong></div>
-              <div style="cursor: pointer;"><img src="../assets/images/Tải xuống.png" width="14" /> <span>Xuất báo cáo</span></div>
+              <div>
+                <img src="../assets/images/Container.png" width="16" />
+                <strong>Thống kê đơn hàng</strong>
+              </div>
             </div>
             <div class="order-stats-row">
-              <div class="stat-box bg-yellow"><h3>...</h3><p>Đơn hàng mới</p></div>
-              <div class="stat-box bg-red"><h3>...</h3><p>Đã hoàn thành</p></div>
-              <div class="stat-box bg-gray"><h3>...</h3><p>Đang giao</p></div>
-              <div class="stat-box bg-gray"><h3>...</h3><p>Đã huỷ</p></div>
+              <div class="stat-box bg-yellow">
+                <h3>...</h3>
+                <p>Đơn hàng mới</p>
+              </div>
+              <div class="stat-box bg-red">
+                <h3>...</h3>
+                <p>Đã hoàn thành</p>
+              </div>
+              <div class="stat-box bg-gray">
+                <h3>...</h3>
+                <p>Đang giao</p>
+              </div>
+              <div class="stat-box bg-gray">
+                <h3>...</h3>
+                <p>Đã huỷ</p>
+              </div>
             </div>
           </div>
 
           <div class="chart-summary-layout">
             <div class="box chart-box wide">
               <div class="box-header">
-                <div><img src="../assets/images/Thống kê xanh.png" width="16" /> <strong>Doanh số bán hàng</strong></div>
-                <div style="cursor: pointer;"><img src="../assets/images/Tải xuống.png" width="14" /> <span>Xuất báo cáo</span></div>
+                <div>
+                  <img src="../assets/images/Thống kê xanh.png" width="16" />
+                  <strong>Doanh số bán hàng</strong>
+                </div>
               </div>
               <canvas id="salesChart" width="400" height="150"></canvas>
-              <p style="text-align: center;"><strong>Tổng doanh thu: <span style="color: #86a788;">...</span></strong></p>
+              <p style="text-align: center">
+                <strong
+                  >Tổng doanh thu:
+                  <span style="color: #86a788">...</span></strong
+                >
+              </p>
             </div>
 
             <div class="box chart-box narrow">
               <div class="box-header">
-                <div><img src="../assets/images/Quyển sách.png" width="16" /> <strong>Sản phẩm bán chạy nhất</strong></div>
-                <div style="cursor: pointer;"><img src="../assets/images/Tải xuống.png" width="14" /> <span>Xuất báo cáo</span></div>
+                <div>
+                  <img src="../assets/images/Quyển sách.png" width="16" />
+                  <strong>Sản phẩm bán chạy nhất</strong>
+                </div>
               </div>
               <!-- Sản phẩm được thêm động -->
             </div>
