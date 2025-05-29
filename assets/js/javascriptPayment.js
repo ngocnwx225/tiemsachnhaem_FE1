@@ -155,7 +155,7 @@ async function showConfirmationModal() {
         return;
     }
 
-    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0.9.-]+\.[a-zA-Z]{2,}$/;
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailPattern.test(emailInput.value)) {
         showErrorModal('Vui lòng nhập email hợp lệ!');
         return;
@@ -237,6 +237,12 @@ async function confirmOrder() {
             throw new Error('Giỏ hàng trống');
         }
 
+        // Kiểm tra userId từ cartData
+        const userId = parsedCartData.userId;
+        if (!userId) {
+            throw new Error('Không tìm thấy thông tin người dùng. Vui lòng đăng nhập lại.');
+        }
+
         // Kiểm tra giá trị total trước khi gửi lên API
         if (typeof parsedCartData.total !== 'number' || parsedCartData.total <= 0) {
             throw new Error('Tổng đơn hàng không hợp lệ');
@@ -250,7 +256,7 @@ async function confirmOrder() {
         const streetInput = document.querySelector('#street');
 
         const orderData = {
-            userId: 'user123',
+            userId: userId, // Sử dụng userId từ cartData
             items: parsedCartData.items.map(item => ({
                 bookId: item.id,
                 quantity: item.quantity,
@@ -259,7 +265,7 @@ async function confirmOrder() {
             subtotal: parsedCartData.subtotal,
             shipping: parsedCartData.shipping,
             discount: parsedCartData.discount,
-            totalAmount: parsedCartData.total, // Đảm bảo gửi totalAmount
+            totalAmount: parsedCartData.total,
             orderDate: new Date().toISOString(),
             paymentMethod: 'online',
             shippingAddress: `${streetInput.value}, ${districtSelect.value}, ${citySelect.value}`,
@@ -317,6 +323,19 @@ function closeModal() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Kiểm tra đăng nhập ngay khi trang tải
+    const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
+    const cartData = JSON.parse(localStorage.getItem('cartData') || '{}');
+    const userId = cartData.userId;
+
+    if (!userInfo || !userInfo.id || !userId) {
+        showErrorModal('Bạn cần đăng nhập để tiếp tục thanh toán. Vui lòng quay lại giỏ hàng.');
+        setTimeout(() => {
+            window.location.href = 'cart.html';
+        }, 2000);
+        return;
+    }
+
     const checkoutBtn = document.querySelector('.checkout-btn');
     const citySelect = document.getElementById('city');
     
