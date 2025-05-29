@@ -3,6 +3,13 @@
 // Lấy dữ liệu giỏ hàng từ localStorage, nếu không có thì tạo mảng rỗng
 let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
 
+// Đảm bảo tất cả sản phẩm trong cartItems có thuộc tính checked
+cartItems = cartItems.map(item => ({
+    ...item,
+    checked: item.checked !== undefined ? item.checked : true // Mặc định checked: true nếu không có
+}));
+localStorage.setItem('cart', JSON.stringify(cartItems)); // Cập nhật lại localStorage
+
 // Biến lưu trạng thái giảm giá
 let appliedDiscount = 0; // Số tiền giảm giá (ban đầu là 0)
 const validDiscountCode = "DISCOUNT20"; // Mã giảm giá hợp lệ
@@ -26,8 +33,8 @@ const cartDOM = {
     confirmDelete: document.getElementById('confirmDelete'),
     discountCodeInput: document.getElementById('discountCode'),
     applyDiscountBtn: document.getElementById('applyDiscountBtn'),
-    discountMessageModal: document.getElementById('discountMessageModal'), // Thêm modal thông báo
-    discountMessageText: document.getElementById('discountMessageText') // Thêm text trong modal
+    discountMessageModal: document.getElementById('discountMessageModal'),
+    discountMessageText: document.getElementById('discountMessageText')
 };
 
 // Hàm định dạng tiền tệ
@@ -39,7 +46,7 @@ function showDiscountMessage(message) {
     cartDOM.discountMessageModal.style.display = 'block';
     setTimeout(() => {
         cartDOM.discountMessageModal.style.display = 'none';
-    }, 2000); // Tự động đóng sau 2 giây
+    }, 2000);
 }
 
 // Render giỏ hàng
@@ -49,6 +56,19 @@ function renderCart() {
     if (!cartItems.length) {
         cartDOM.checkoutSection.style.display = 'none';
         cartDOM.emptyCart.style.display = 'block';
+        return;
+    }
+
+    // Kiểm tra dữ liệu hợp lệ trước khi render
+    const invalidItems = cartItems.filter(item => 
+        typeof item.price !== 'number' || item.price <= 0 || 
+        typeof item.quantity !== 'number' || item.quantity <= 0
+    );
+    if (invalidItems.length > 0) {
+        console.error('Invalid cart items:', invalidItems);
+        cartDOM.checkoutSection.style.display = 'none';
+        cartDOM.emptyCart.style.display = 'block';
+        cartDOM.emptyCart.innerHTML = '<p>Có lỗi trong dữ liệu giỏ hàng. Vui lòng xóa và thêm lại sản phẩm.</p>';
         return;
     }
 
@@ -85,7 +105,6 @@ function renderCart() {
     const subtotal = checkedItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
     const shipping = 0;
 
-    // Tính lại appliedDiscount nếu mã đã được áp dụng
     if (isDiscountApplied && subtotal !== 0) {
         appliedDiscount = subtotal * discountRate;
         showDiscountMessage(`Giảm giá đã được cập nhật: ${formatPrice(appliedDiscount)}`);
@@ -121,7 +140,7 @@ function setupCartEvents() {
         } else if (e.target.classList.contains('item-checkbox')) {
             item.checked = e.target.checked;
         }
-        localStorage.setItem('cart', JSON.stringify(cartItems)); // Cập nhật localStorage sau khi thay đổi
+        localStorage.setItem('cart', JSON.stringify(cartItems));
         renderCart();
     });
 
@@ -132,43 +151,67 @@ function setupCartEvents() {
         const id = cartDOM.confirmDelete.dataset.id;
         cartItems = cartItems.filter(item => item.id !== id);
         cartDOM.deleteModal.style.display = 'none';
-        localStorage.setItem('cart', JSON.stringify(cartItems)); // Cập nhật localStorage sau khi xóa
+        localStorage.setItem('cart', JSON.stringify(cartItems));
         renderCart();
     });
 
     cartDOM.continueShopping.addEventListener('click', () => {
-        window.location.href = 'ShopPage.html'; // Quay lại shop page
+        window.location.href = 'ShopPage.html';
     });
 
     cartDOM.checkoutBtn.addEventListener('click', () => {
-        // Check if any items are selected
         const selectedItems = cartItems.filter(item => item.checked);
         if (selectedItems.length === 0) {
             showDiscountMessage('Vui lòng chọn ít nhất một sản phẩm để thanh toán');
             return;
         }
 
-        // Save cart data to localStorage
+        // Kiểm tra dữ liệu hợp lệ trước khi lưu cartData
+        const invalidItems = selectedItems.filter(item => 
+            typeof item.price !== 'number' || item.price <= 0 || 
+            typeof item.quantity !== 'number' || item.quantity <= 0
+        );
+        if (invalidItems.length > 0) {
+            showDiscountMessage('Dữ liệu sản phẩm không hợp lệ. Vui lòng kiểm tra lại giỏ hàng.');
+            return;
+        }
+
+        console.log('Selected Items:', selectedItems); // Kiểm tra sản phẩm được chọn
+
+        const subtotal = selectedItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+        const shipping = 0;
+        const discount = isDiscountApplied ? subtotal * discountRate : 0;
+        const total = subtotal + shipping - discount;
+
         const cartData = {
-            items: selectedItems,
-            subtotal: selectedItems.reduce((sum, item) => sum + item.price * item.quantity, 0),
-            shipping: 0,
-            discount: appliedDiscount,
-            total: selectedItems.reduce((sum, item) => sum + item.price * item.quantity, 0) - appliedDiscount
+            items: selectedItems.map(item => ({
+                id: item.id,
+                bookTitle: item.bookTitle || item.name,
+                price: item.price,
+                quantity: item.quantity,
+                image: item.imageUrl || item.image
+            })),
+            subtotal: subtotal,
+            shipping: shipping,
+            discount: discount,
+            total: total
         };
+
+        console.log('Cart Data to be saved:', cartData); // Kiểm tra trước khi lưu
+
         localStorage.setItem('cartData', JSON.stringify(cartData));
-        
-        // Redirect to payment page
+        const savedCartData = localStorage.getItem('cartData');
+        console.log('Cart Data in LocalStorage:', JSON.parse(savedCartData)); // Kiểm tra sau khi lưu
+
         window.location.href = 'payment.html';
     });
 
-    // Xử lý sự kiện áp dụng mã giảm giá
     cartDOM.applyDiscountBtn.addEventListener('click', () => {
         const code = cartDOM.discountCodeInput.value.trim();
         const subtotal = cartItems.reduce((sum, item) => sum + (item.checked ? item.price * item.quantity : 0), 0);
         if (code === validDiscountCode && !isDiscountApplied) {
             isDiscountApplied = true;
-            appliedDiscount = subtotal * discountRate; // Áp dụng giảm giá 20%
+            appliedDiscount = subtotal * discountRate;
             renderCart();
             showDiscountMessage('Áp dụng mã giảm giá thành công! Bạn được giảm 20%.');
         } else if (isDiscountApplied) {
