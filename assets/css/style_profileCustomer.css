@@ -370,6 +370,17 @@ ul {
   text-align: right;
 }
 
+.edit-info-btn{
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  line-height: 20px;
+  text-align: center;
+  white-space: nowrap; /* Prevent button text from wrapping */
+}
+.edit-info-btn:hover{
+  background-color: #d4d3d3;
+  color: #86A788;
+}
 /* Footer Styles */
 .footer {
   background: #1A3229;

@@ -113,3 +113,51 @@ html, body {
   font-size: 15px;
   margin: 0;
 }
+
+@media (max-width: 480px) {
+  .split-section {
+    flex-wrap: wrap; /* Thêm thuộc tính này để cho phép xuống hàng */
+  }
+  
+  /* (Nếu các phần tử con là flex item, bạn có thể thêm một class cho chúng, ví dụ: */
+  .split-section > * {
+    flex-basis: 100%; /* (hoặc width: 100%;) để mỗi phần tử con xuống hàng */
+  }
+
+  .left-image {
+    max-width: 100%;
+  }
+
+  .right-frames {
+    flex-direction: row;
+    align-items: stretch;
+  }
+  
+  .info-frame {
+    padding: 6px;
+    background-color: #f8f9fa;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .info-frame img {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
+    opacity: 0.8;
+  }
+  
+  .info-frame h3 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #333;
+    font-weight: 600;
+  }
+  
+  .info-frame p {
+    color: #666;
+    line-height: 1.6;
+    font-size: 15px;
+  }
+}
