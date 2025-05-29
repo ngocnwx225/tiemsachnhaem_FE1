@@ -3,52 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đổi mật khẩu - Tiệm Sách Nhà Em</title>
+    <title>Thông tin tài khoản - Tiệm Sách Nhà Em</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Open+Sans:wght@600&family=Lato:wght@400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../asset/css/styleprofilecustomer.css">
-    <link rel="stylesheet" href="../asset/css/header.css">
-    <link rel="stylesheet" href="../asset/css/footer.css">
-    <link rel="stylesheet" href="../asset/css/changepassword.css">
+    <link rel="stylesheet" href="../assets/css/style_profileCustomer.css">
 </head>
 <body>
     <div class="page-wrapper">
         <!-- Header component sẽ được load vào đây -->
         <div id="header-placeholder"></div>
+        <script>
+            fetch('../components/header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+            });
+        </script>
 
         <main class="main-content">
             <div class="container">
                 <h1 class="page-title">Thông tin tài khoản</h1>
-                <div class="changepw-card">
-                    <aside class="changepw-sidebar">
-                        <button class="sidebar-btn">Thông tin tài khoản</button>
-                        <button class="sidebar-btn active">Đổi mật khẩu</button>
+                <div class="account-card">
+                    <aside class="account-sidebar">
+                        <button class="sidebar-btn active">Thông tin tài khoản</button>
+                        <button class="sidebar-btn" id="change-password-btn">Đổi mật khẩu</button>
                     </aside>
-                    <div class="changepw-form-col">
-                        <form class="changepw-form">
-                            <div>
-                                <label for="old-password">Mật khẩu cũ</label>
-                                <input type="password" id="old-password" placeholder="Nhập mật khẩu cũ" required />
+                    <section class="account-details">
+                        <div class="user-profile-header">
+                            <img src="https://i.pinimg.com/736x/8f/1c/a2/8f1ca2029e2efceebd22fa05cca423d7.jpg" alt="User Avatar" style="width: 60px; height: 60px; border-radius: 50%;">
+                            <h2 class="user-name">Nguyễn Văn A</h2>
+                            <button class="edit-info-btn">Chỉnh sửa thông tin</button>
+                        </div>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <span class="info-label">Email:</span>
+                                <span class="info-value">user@gmail.com</span>
                             </div>
-                            <div>
-                                <label for="new-password">Mật khẩu mới</label>
-                                <input type="password" id="new-password" placeholder="Nhập mật khẩu mới" required />
+                            <div class="info-item">
+                                <span class="info-label">Số điện thoại:</span>
+                                <span class="info-value">0123456789</span>
                             </div>
-                            <div>
-                                <label for="confirm-password">Xác nhận mật khẩu</label>
-                                <input type="password" id="confirm-password" placeholder="Xác nhận mật khẩu mới" required />
+                            <div class="info-item">
+                                <span class="info-label">Tên tài khoản:</span>
+                                <span class="info-value">user123</span>
                             </div>
-                            <button type="submit">Lưu thông tin</button>
-                        </form>
-                    </div>
+                            <div class="info-item">
+                                <span class="info-label">Họ và tên:</span>
+                                <span class="info-value">Phan Thúy Ngân</span>
+                            </div>
+                        </div>
+                    </section>
                 </div>
             </div>
         </main>
 
         <!-- Footer component sẽ được load vào đây -->
+        <!-- Include footer -->
         <div id="footer-placeholder"></div>
+        <script>
+            fetch('../components/footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
+        </script>
     </div>
     <script src="../assets/js/script_profileCustomer.js"></script>
     <script>
+        
     // Tự động load header/footer component
     function loadComponent(id, url) {
         fetch(url)
@@ -60,6 +81,11 @@
     document.addEventListener('DOMContentLoaded', function() {
         loadComponent('header-placeholder', '../components/header.html');
         loadComponent('footer-placeholder', '../components/footer.html');
+
+        // Chuyển trang khi nhấn nút "Đổi mật khẩu"
+        document.getElementById('change-password-btn').addEventListener('click', function() {
+            window.location.href = '../pages/changepassword.html';
+        });
     });
     </script>
 </body>
