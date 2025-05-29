@@ -1,33 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Payment</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link rel="stylesheet" href="../assets/css/stylePayment.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
-
+  <head>
+    <meta charset="UTF-8" />
+    <title>Payment</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../assets/css/stylePayment.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
     <!-- Include header -->
     <div id="header-placeholder"></div>
-    <script>
+    <!-- <script>
         fetch('../components/header.html')
         .then(response => response.text())
         .then(data => {
             document.getElementById('header-placeholder').innerHTML = data;
         });
-    </script>
+    </script> -->
 
     <main class="checkout-container">
       <!-- Bên trái: Form -->
       <div class="checkout-left">
         <h2>Thông tin liên hệ</h2>
-        <input type="text" placeholder="Họ tên" id="fullName" required>
-        <input type="tel" placeholder="Số điện thoại" id="phone" pattern="[0-9]{10}" title="Vui lòng nhập số điện thoại 10 số" required>
-        <input type="email" placeholder="Email" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Vui lòng nhập email hợp lệ" required>
-        <p class="note">Chúng tôi sẽ không hiển thị trang thương hiệu. Hãy đảm bảo bạn sử dụng số điện thoại & email đúng của bạn.</p>
-    
+        <input type="text" placeholder="Họ tên" id="fullName" required />
+        <input
+          type="tel"
+          placeholder="Số điện thoại"
+          id="phone"
+          pattern="[0-9]{10}"
+          title="Vui lòng nhập số điện thoại 10 số"
+          required
+        />
+        <input
+          type="email"
+          placeholder="Email"
+          id="email"
+          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+          title="Vui lòng nhập email hợp lệ"
+          required
+        />
+        <p class="note">
+          Chúng tôi sẽ không hiển thị trang thương hiệu. Hãy đảm bảo bạn sử dụng
+          số điện thoại & email đúng của bạn.
+        </p>
+
         <h2>Địa chỉ giao hàng</h2>
         <div class="address-row">
           <select id="city" name="city" autocomplete="address-level1" required>
@@ -35,30 +54,44 @@
             <option value="HaNoi">Hà Nội</option>
             <option value="HoChiMinh">Hồ Chí Minh</option>
             <option value="Hue">Huế</option>
-            <option value="CanTho">Cần Thơ</option> 
+            <option value="CanTho">Cần Thơ</option>
             <option value="DaNang">Đà Nẵng</option>
           </select>
-          <select id="district" name="district" autocomplete="address-level2" required>
+          <select
+            id="district"
+            name="district"
+            autocomplete="address-level2"
+            required
+          >
             <option value="">Quận/Huyện</option>
           </select>
         </div>
-        <input type="text" placeholder="Số nhà, tên đường" id="street" name="street" autocomplete="address-line1" required>
-        <p class="note">Địa chỉ này sẽ được sử dụng làm địa chỉ thanh toán cho đơn hàng này.</p>
-        
+        <input
+          type="text"
+          placeholder="Số nhà, tên đường"
+          id="street"
+          name="street"
+          autocomplete="address-line1"
+          required
+        />
+        <p class="note">
+          Địa chỉ này sẽ được sử dụng làm địa chỉ thanh toán cho đơn hàng này.
+        </p>
+
         <h2>Phương thức giao hàng</h2>
         <label class="radio-label">
-          <input type="radio" name="shipping" value="0" checked>
+          <input type="radio" name="shipping" value="0" checked />
           <span>Tiêu chuẩn miễn phí (2-3 ngày)</span>
           <span class="radio-value">Miễn phí</span>
         </label>
-        
+
         <h2>Phương thức thanh toán</h2>
         <label class="radio-label">
-          <input type="radio" name="payment" value="online" checked>
+          <input type="radio" name="payment" value="online" checked />
           <span>Thanh toán trực tuyến (Online payment)</span>
         </label>
       </div>
-        
+
       <!-- Bên phải: Chi tiết đơn hàng -->
       <div class="checkout-right">
         <h2>Chi tiết đơn hàng</h2>
@@ -80,7 +113,9 @@
             <h3>Người nhận:</h3>
             <div class="info-group">
               <p><strong>Họ & Tên:</strong> <span id="modalName"></span></p>
-              <p><strong>Số điện thoại:</strong> <span id="modalPhone"></span></p>
+              <p>
+                <strong>Số điện thoại:</strong> <span id="modalPhone"></span>
+              </p>
               <p><strong>Địa chỉ:</strong> <span id="modalAddress"></span></p>
             </div>
           </div>
@@ -88,7 +123,9 @@
             <h3>Sản phẩm:</h3>
             <div id="modalOrderDetails"></div>
             <div class="total-amount">
-              <h3>Tổng đơn hàng (<span id="modalItemCount"></span> sản phẩm)</h3>
+              <h3>
+                Tổng đơn hàng (<span id="modalItemCount"></span> sản phẩm)
+              </h3>
               <span id="modalTotalAmount"></span>
             </div>
           </div>
@@ -96,26 +133,20 @@
         <div class="modal-footer">
           <button class="btn-cancel" onclick="closeModal()">Hủy</button>
           <button class="btn-confirm" onclick="confirmOrder()">Xác nhận</button>
-      </div>
+        </div>
       </div>
     </div>
 
     <!-- Include footer -->
     <div id="footer-placeholder"></div>
-    <script>
-        fetch('../components/footer.html')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById('footer-placeholder').innerHTML = data;
-        });
-    </script>
 
     <!-- Import api.js và payment.js -->
     <script type="module">
-        import '../assets/js/API_Payment.js';
-        import '../assets/js/javascriptPayment.js';
+      import "../assets/js/API_Payment.js";
+      import "../assets/js/javascriptPayment.js";
     </script>
 
+    <script src="../assets/js/component-loader.js"></script>
     <script src="../assets/js/javascriptPayment.js" defer></script>
-</body>
+  </body>
 </html>
