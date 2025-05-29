@@ -1,8 +1,6 @@
-<!-- =========================== CẤU TRÚC HTML CƠ BẢN =========================== -->
 <!DOCTYPE html>
 <html lang="vi">
   <head>
-    <!-- Cấu hình cơ bản -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Thống kê - Tiệm Sách Nhà Em</title>
@@ -18,62 +16,49 @@
     <!-- Biểu đồ: Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <!-- Style bổ sung -->
     <style>
-      /* Giao diện tổng thể */
       .container-all {
         display: flex;
         margin: 0 auto;
         overflow: hidden;
         background-color: #f5f5f7;
       }
-
-      /* Font chung */
       body, h1, h2, h3, h4, p, button, input, select, textarea {
         font-family: "Montserrat", sans-serif;
       }
-
-      /* Box thống kê đơn hàng */
       .order-stats-row {
         display: flex;
         justify-content: space-between;
         gap: 20px;
         margin-bottom: 32px;
       }
-
       .stat-box {
         flex: 1;
         padding: 20px;
         border-radius: 12px;
         text-align: center;
       }
-
-      /* Biểu đồ và sản phẩm bán chạy */
       .chart-summary-layout {
         display: flex;
         gap: 24px;
         margin-top: 32px;
         align-items: stretch;
       }
-
       .chart-box {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
       }
-
       .chart-summary-layout .wide,
       .chart-summary-layout .narrow {
         flex: 5;
       }
-
       .box {
         background-color: #fff;
         border-radius: 12px;
         padding: 24px;
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
       }
-
       .box-header {
         display: flex;
         justify-content: space-between;
@@ -85,14 +70,10 @@
 
   <body>
     <div class="container-all">
-      <!-- Sidebar -->
       <div id="sidebar-container"></div>
 
-      <!-- Nội dung chính -->
       <div class="main">
         <div class="container">
-
-          <!-- =========================== TIÊU ĐỀ VÀ BỘ LỌC THỜI GIAN =========================== -->
           <div class="header">
             <h2>Thống kê</h2>
             <div class="time-filter">
@@ -101,11 +82,10 @@
               <button class="time-btn">Năm</button>
               <button class="time-btn custom">
                 <img src="../assets/images/Máy in.png" width="16" style="margin-right: 4px" />
-                Tùy chỉnh
+                Tuý chỉnh
               </button>
             </div>
 
-            <!-- Bộ lọc ngày tuỳ chỉnh -->
             <div id="custom-date-range" style="display: none; margin-top: 10px">
               <label>Từ ngày: <input type="date" id="from-date" /></label>
               <label>Đến ngày: <input type="date" id="to-date" /></label>
@@ -113,7 +93,6 @@
             </div>
           </div>
 
-          <!-- =========================== BOX THỐNG KÊ ĐƠN HÀNG =========================== -->
           <div class="box">
             <div class="box-header">
               <div><img src="../assets/images/Container.png" width="16" /> <strong>Thống kê đơn hàng</strong></div>
@@ -123,13 +102,11 @@
               <div class="stat-box bg-yellow"><h3>...</h3><p>Đơn hàng mới</p></div>
               <div class="stat-box bg-red"><h3>...</h3><p>Đã hoàn thành</p></div>
               <div class="stat-box bg-gray"><h3>...</h3><p>Đang giao</p></div>
-              <div class="stat-box bg-gray"><h3>...</h3><p>Đã hủy</p></div>
+              <div class="stat-box bg-gray"><h3>...</h3><p>Đã huỷ</p></div>
             </div>
           </div>
 
-          <!-- =========================== BIỂU ĐỒ DOANH THU & SẢN PHẨM BÁN CHẠY =========================== -->
           <div class="chart-summary-layout">
-            <!-- Doanh số bán hàng -->
             <div class="box chart-box wide">
               <div class="box-header">
                 <div><img src="../assets/images/Thống kê xanh.png" width="16" /> <strong>Doanh số bán hàng</strong></div>
@@ -139,218 +116,19 @@
               <p style="text-align: center;"><strong>Tổng doanh thu: <span style="color: #86a788;">...</span></strong></p>
             </div>
 
-            <!-- Sản phẩm bán chạy nhất -->
             <div class="box chart-box narrow">
               <div class="box-header">
                 <div><img src="../assets/images/Quyển sách.png" width="16" /> <strong>Sản phẩm bán chạy nhất</strong></div>
                 <div style="cursor: pointer;"><img src="../assets/images/Tải xuống.png" width="14" /> <span>Xuất báo cáo</span></div>
               </div>
-              <!-- Sản phẩm sẽ được thêm động bằng JS -->
+              <!-- Sản phẩm được thêm động -->
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- =========================== SCRIPT XỬ LÝ DỮ LIỆU =========================== -->
-    <script>
-      // ---------- 1. Load sidebar từ file HTML ----------
-      fetch("../components/sidebar.html")
-        .then((res) => res.text())
-        .then((data) => {
-          document.getElementById("sidebar-container").innerHTML = data;
-
-          // Cập nhật lại các đường dẫn tương đối
-          document.querySelectorAll("#sidebar-container a, #sidebar-container img").forEach((el) => {
-            const src = el.getAttribute("src") || el.getAttribute("href");
-            if (src && !src.startsWith("http") && !src.startsWith("../")) {
-              if (el.tagName === "IMG") el.src = "../" + src;
-              else el.href = "../" + src;
-            }
-          });
-
-          // Giữ sidebar cố định
-          const sidebarElement = document.querySelector("#sidebar-container .sidebar");
-          if (sidebarElement) {
-            sidebarElement.style.position = "fixed";
-            sidebarElement.style.left = "0";
-            sidebarElement.style.top = "0";
-            sidebarElement.style.height = "100vh";
-          }
-
-          // Đánh dấu mục "Thống kê" là đang active
-          document.getElementById("menu-statistics")?.classList.add("active");
-        });
-
-      // ---------- 2. Biểu đồ doanh thu ----------
-      const ctx = document.getElementById("salesChart").getContext("2d");
-      const salesChart = new Chart(ctx, {
-        type: "bar",
-        data: {
-          labels: ["T2", "T3", "T4", "T5", "T6", "T7", "CN"],
-          datasets: [{
-            data: [0, 0, 0, 0, 0, 0, 0],
-            backgroundColor: "#86A788",
-            borderRadius: 8,
-            borderSkipped: false,
-            barThickness: 40,
-          }],
-        },
-        options: {
-          plugins: {
-            legend: { display: false },
-            tooltip: {
-              callbacks: {
-                label: (ctx) => `${ctx.raw.toLocaleString()} VND`,
-              },
-            },
-          },
-          scales: {
-            x: { grid: { display: false } },
-            y: {
-              ticks: {
-                callback: (val) => `${(val / 1_000_000).toFixed(1)}M`,
-                font: { size: 12 },
-              },
-              grid: { color: "#eee" },
-              beginAtZero: true,
-            },
-          },
-        },
-      });
-
-      // ---------- 3. Hàm lọc đơn hàng theo thời gian ----------
-      function filterByDateRange(data, type) {
-        const now = new Date();
-        if (type === "tuần") {
-          const weekAgo = new Date(now);
-          weekAgo.setDate(now.getDate() - 7);
-          return data.filter((o) => new Date(o.orderDate) >= weekAgo);
-        }
-        if (type === "tháng") {
-          const m = now.getMonth();
-          const y = now.getFullYear();
-          return data.filter((o) => {
-            const d = new Date(o.orderDate);
-            return d.getMonth() === m && d.getFullYear() === y;
-          });
-        }
-        if (type === "năm") {
-          const y = now.getFullYear();
-          return data.filter((o) => new Date(o.orderDate).getFullYear() === y);
-        }
-        return data;
-      }
-
-      // ---------- 4. Cập nhật dữ liệu thống kê ----------
-      function updateStatistics(data) {
-        let counts = { pending: 0, delivered: 0, processing: 0, canceled: 0, shipped: 0 };
-        let revenueByDay = { T2: 0, T3: 0, T4: 0, T5: 0, T6: 0, T7: 0, CN: 0 };
-
-        data.forEach((o) => {
-          const s = o.status?.toLowerCase();
-          if (counts[s] !== undefined) counts[s]++;
-          if (s === "delivered") {
-            const d = new Date(o.orderDate);
-            const key = ["CN", "T2", "T3", "T4", "T5", "T6", "T7"][d.getDay()];
-            revenueByDay[key] += o.totalAmount;
-          }
-        });
-
-        // Cập nhật thống kê đơn hàng
-        document.querySelector(".stat-box.bg-yellow h3").textContent = counts.pending || 0;
-        document.querySelector(".stat-box.bg-red h3").textContent = counts.delivered || 0;
-        document.querySelectorAll(".stat-box.bg-gray h3")[0].textContent = counts.processing + counts.shipped;
-        document.querySelectorAll(".stat-box.bg-gray h3")[1].textContent = counts.canceled || 0;
-
-        // Cập nhật biểu đồ
-        salesChart.data.datasets[0].data = [
-          revenueByDay["T2"], revenueByDay["T3"], revenueByDay["T4"],
-          revenueByDay["T5"], revenueByDay["T6"], revenueByDay["T7"], revenueByDay["CN"],
-        ];
-        salesChart.update();
-
-        // Tổng doanh thu
-        const total = Object.values(revenueByDay).reduce((a, b) => a + b, 0);
-        document.querySelector(".chart-box.wide p span").textContent = total.toLocaleString("vi-VN") + " VND";
-      }
-
-      // ---------- 5. Gọi API lấy đơn hàng và cập nhật ----------
-      function fetchAndUpdate(filterType = "tháng") {
-        fetch("https://tiemsachnhaem-be-mu.vercel.app/api/orders")
-          .then((res) => res.json())
-          .then((data) => {
-            const filtered = filterByDateRange(data, filterType);
-            updateStatistics(filtered);
-          });
-      }
-
-      // ---------- 6. Sự kiện chọn khoảng thời gian ----------
-      document.querySelectorAll(".time-btn").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          document.querySelectorAll(".time-btn").forEach((b) => b.classList.remove("active"));
-          btn.classList.add("active");
-          const label = btn.innerText.trim().toLowerCase();
-          if (label === "tùy chỉnh") {
-            document.getElementById("custom-date-range").style.display = "block";
-          } else {
-            document.getElementById("custom-date-range").style.display = "none";
-            fetchAndUpdate(label);
-          }
-        });
-      });
-
-      // ---------- 7. Lọc theo ngày tùy chỉnh ----------
-      document.getElementById("apply-filter").addEventListener("click", () => {
-        const from = new Date(document.getElementById("from-date").value);
-        const to = new Date(document.getElementById("to-date").value);
-        if (isNaN(from) || isNaN(to)) return alert("Vui lòng chọn đủ cả 2 ngày");
-        fetch("https://tiemsachnhaem-be-mu.vercel.app/api/orders")
-          .then((res) => res.json())
-          .then((data) => {
-            const filtered = data.filter((o) => {
-              const d = new Date(o.orderDate);
-              return d >= from && d <= to;
-            });
-            updateStatistics(filtered);
-          });
-      });
-
-      // ---------- 8. Gọi API sản phẩm bán chạy nhất ----------
-      fetch("https://tiemsachnhaem-be-mu.vercel.app/api/products/top-selling?limit=5")
-        .then((res) => res.json())
-        .then((data) => {
-          const container = document.querySelector(".chart-box.narrow");
-          const list = document.createElement("ul");
-          list.style.listStyle = "none";
-          list.style.padding = "0";
-          list.style.marginTop = "12px";
-
-          if (!data.length) {
-            const empty = document.createElement("p");
-            empty.textContent = "Không có dữ liệu.";
-            empty.style.color = "#999";
-            container.appendChild(empty);
-            return;
-          }
-
-          data.forEach((product, i) => {
-            const li = document.createElement("li");
-            li.innerHTML = `
-              <strong>${i + 1}. ${product.name}</strong><br>
-              Giá: ${product.price.toLocaleString()} VND<br>
-              Tồn kho: ${product.stock}
-            `;
-            li.style.marginBottom = "10px";
-            list.appendChild(li);
-          });
-
-          container.appendChild(list);
-        })
-        .catch((err) => console.error("Lỗi khi lấy sản phẩm bán chạy:", err));
-
-      // ---------- 9. Gọi mặc định khi load trang ----------
-      fetchAndUpdate();
-    </script>
+    <!-- Load logic từ file JS tách rời -->
+    <script src="../assets/js/API_statistics.js"></script>
   </body>
 </html>
