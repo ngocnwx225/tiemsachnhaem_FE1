@@ -1,98 +1,112 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Trang quản lý - Tiệm Sách Nhà Em</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/style_sidebar.css" />
-  <link rel="stylesheet" href="../assets/css/style_common.css" />
-  <link rel="stylesheet" href="../assets/css/style_index.css" />
-  <style>
-    .container-all {
-      display: flex;
-      margin: 0 auto;
-      overflow: hidden;
-      background-color: #F5F5F7;
-    }
-    body, h1, h2, h3, h4, p, button, input, select, textarea {
-      font-family: 'Montserrat', sans-serif;
-    }
-  </style>
-</head>
-<body>
-  <div class="container-all">
-    <div id="sidebar-container" class="sidebar"></div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trang quản lý - Tiệm Sách Nhà Em</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/style_sidebar.css" />
+    <link rel="stylesheet" href="../assets/css/style_common.css" />
+    <link rel="stylesheet" href="../assets/css/style_index.css" />
+    <style>
+      .container-all {
+        display: flex;
+        margin: 0 auto;
+        overflow: hidden;
+        background-color: #f5f5f7;
+      }
+      body,
+      h1,
+      h2,
+      h3,
+      h4,
+      p,
+      button,
+      input,
+      select,
+      textarea {
+        font-family: "Montserrat", sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-all">
+      <div id="sidebar-container" class="sidebar"></div>
 
-    <div class="main">
-      <div class="container">
-        <h2>Xin chào!</h2>
-        <div class="overview-header">
-          <p>Đây là tổng quan hoạt động của ngày hôm nay.</p>
-          <div class="time-filter">
-            <button class="time-btn">Tuần</button>
-            <button class="time-btn active">Tháng</button>
-            <button class="time-btn">Năm</button>
-            <button class="time-btn custom">
-              <img src="../assets/images/Máy in.png" width="16" style="margin-right: 4px;" />
-              Tùy chỉnh
-            </button>
-          </div>
-          <div id="custom-date-range" style="display: none; margin-top: 10px;">
-            <label>Từ ngày: <input type="date" id="from-date"></label>
-            <label>Đến ngày: <input type="date" id="to-date"></label>
-            <button id="apply-filter">Lọc</button>
-          </div>
-        </div>
-
-        <div class="overview">
-          <div class="card blue">
-            <div class="icon">📦</div>
-            <h3>Tổng đơn hàng</h3>
-            <div class="value" id="total-orders">...</div>
-          </div>
-          <div class="card green">
-            <div class="icon">🛒</div>
-            <h3>Đơn hàng mới</h3>
-            <div class="value" id="new-orders">...</div>
-          </div>
-          <div class="card purple">
-            <div class="icon">👥</div>
-            <h3>Khách hàng</h3>
-            <div class="value" id="total-customers">...</div>
-          </div>
-          <div class="card yellow">
-            <div class="icon">💰</div>
-            <h3>Doanh thu</h3>
-            <div class="value" id="revenue">...</div>
-          </div>
-        </div>
-
-        <div class="section">
-          <div class="box">
-            <div class="box-header">
-              <h4>Sách bán chạy</h4>
-              <a href="#">Xem tất cả</a>
+      <div class="main">
+        <div class="container">
+          <h2>Xin chào!</h2>
+          <div class="overview-header">
+            <p>Đây là tổng quan hoạt động của ngày hôm nay.</p>
+            <div class="time-filter">
+              <button class="time-btn">Tuần</button>
+              <button class="time-btn active">Tháng</button>
+              <button class="time-btn">Năm</button>
+              <button class="time-btn custom">
+                <img
+                  src="../assets/images/Máy in.png"
+                  width="16"
+                  style="margin-right: 4px"
+                />
+                Tùy chỉnh
+              </button>
             </div>
-            <div id="product-list">Đang tải...</div>
+            <div id="custom-date-range" style="display: none; margin-top: 10px">
+              <label>Từ ngày: <input type="date" id="from-date" /></label>
+              <label>Đến ngày: <input type="date" id="to-date" /></label>
+              <button id="apply-filter">Lọc</button>
+            </div>
           </div>
 
-          <div class="box">
-            <div class="box-header">
-              <h4>Đơn hàng gần đây</h4>
-              <a href="#">Xem tất cả</a>
+          <div class="overview">
+            <div class="card blue">
+              <div class="icon">📦</div>
+              <h3>Tổng đơn hàng</h3>
+              <div class="value" id="total-orders">...</div>
             </div>
-            <div id="recent-orders">Đang tải đơn hàng gần đây...</div>
+            <div class="card green">
+              <div class="icon">🛒</div>
+              <h3>Đơn hàng mới</h3>
+              <div class="value" id="new-orders">...</div>
+            </div>
+            <div class="card purple">
+              <div class="icon">👥</div>
+              <h3>Khách hàng</h3>
+              <div class="value" id="total-customers">...</div>
+            </div>
+            <div class="card yellow">
+              <div class="icon">💰</div>
+              <h3>Doanh thu</h3>
+              <div class="value" id="revenue">...</div>
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="box">
+              <div class="box-header">
+                <h4>Sách bán chạy</h4>
+              </div>
+              <div id="product-list">Đang tải...</div>
+            </div>
+
+            <div class="box">
+              <div class="box-header">
+                <h4>Đơn hàng gần đây</h4>
+              </div>
+              <div id="recent-orders">Đang tải đơn hàng gần đây...</div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Load script -->
-  <script src="../assets/js/API_index.js"></script>
-  <script src="../assets/js/sidebar.js"></script>
-</body>
+    <!-- Load script -->
+    <script src="../assets/js/API_index.js"></script>
+    <script src="../assets/js/sidebar.js"></script>
+  </body>
 </html>
