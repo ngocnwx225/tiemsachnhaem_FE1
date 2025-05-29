@@ -94,126 +94,7 @@
                 </tr>
               </thead>
               <tbody id="ordersTableBody">
-                <tr>
-                  <td>#DH001</td>
-                  <td>
-                    <strong>Nguyễn Văn A</strong><br />
-                    <small class="text-muted">nguyenvana@example.com</small>
-                  </td>
-                  <td>20/05/2025</td>
-                  <td>850,000₫</td>
-                  <td>
-                    <span
-                      class="badge rounded-pill status-pending"
-                      id="statusDH001"
-                      >Đang xử lý</span
-                    >
-                  </td>
-                  <td>
-                    <button
-                      class="btn btn-outline-primary btn-sm"
-                      onclick="showOrderDetail('#DH001')"
-                    >
-                      👁️
-                    </button>
-                    <button
-                      class="btn btn-outline-danger btn-sm delete-btn"
-                      onclick="deleteOrder('#DH001')"
-                    >
-                      🗑️
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>#DH002</td>
-                  <td>
-                    <strong>Trần Thị B</strong><br />
-                    <small class="text-muted">tranthib@example.com</small>
-                  </td>
-                  <td>18/05/2025</td>
-                  <td>1,200,000₫</td>
-                  <td>
-                    <span
-                      class="badge rounded-pill status-delivered"
-                      id="statusDH002"
-                      >Đã giao</span
-                    >
-                  </td>
-                  <td>
-                    <button
-                      class="btn btn-outline-primary btn-sm"
-                      onclick="showOrderDetail('#DH002')"
-                    >
-                      👁️
-                    </button>
-                    <button
-                      class="btn btn-outline-danger btn-sm delete-btn"
-                      onclick="deleteOrder('#DH002')"
-                    >
-                      🗑️
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>#DH003</td>
-                  <td>
-                    <strong>Lê Văn C</strong><br />
-                    <small class="text-muted">levanc@example.com</small>
-                  </td>
-                  <td>17/05/2025</td>
-                  <td>720,000₫</td>
-                  <td>
-                    <span
-                      class="badge rounded-pill status-shipping"
-                      id="statusDH003"
-                      >Đang giao</span
-                    >
-                  </td>
-                  <td>
-                    <button
-                      class="btn btn-outline-primary btn-sm"
-                      onclick="showOrderDetail('#DH003')"
-                    >
-                      👁️
-                    </button>
-                    <button
-                      class="btn btn-outline-danger btn-sm delete-btn"
-                      onclick="deleteOrder('#DH003')"
-                    >
-                      🗑️
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>#DH004</td>
-                  <td>
-                    <strong>Phạm Thị D</strong><br />
-                    <small class="text-muted">phamthid@example.com</small>
-                  </td>
-                  <td>16/05/2025</td>
-                  <td>450,000₫</td>
-                  <td>
-                    <span
-                      class="badge rounded-pill status-cancelled"
-                      id="statusDH004"
-                      >Đã hủy</span
-                    >
-                  </td>
-                  <td>
-                    <button
-                      class="btn btn-outline-primary btn-sm"
-                      onclick="showOrderDetail('#DH004')"
-                    >
-                      👁️
-                    </button>
-                    <button
-                      class="btn btn-outline-danger btn-sm delete-btn"
-                      onclick="deleteOrder('#DH004')"
-                    >
-                      🗑️
-                    </button>
-                  </td>
-                </tr>
+                <!-- Dữ liệu sẽ được điền từ JavaScript -->
               </tbody>
             </table>
           </div>
@@ -323,8 +204,8 @@
                 </div>
                 <div class="modal-body">
                   <div class="form-group">
-                    <label for="createCustomerId">ID Khách hàng</label>
-                    <input type="text" class="form-control" id="createCustomerId" placeholder="Nhập ID khách hàng">
+                    <label for="createCustomerId">Tên khách hàng</label>
+                    <input type="text" class="form-control" id="createCustomerId" placeholder="Nhập tên khách hàng">
                   </div>
                   <div class="form-group">
                     <label for="createProductId">ID Sản phẩm</label>
@@ -377,6 +258,7 @@
                 <p>
                   <span id="successMessage"></span>
                 </p>
+                <span id="successStatus" style="display: none;"></span>
               </div>
               <div class="popup-footer">
                 <button class="btn btn-success" onclick="closeSuccessPopup()">
@@ -396,141 +278,36 @@
         const popup = document.getElementById("successOverlay");
         popup.style.display = "none";
 
-        window.showOrderDetail = function (orderCode) {
-          const orders = {
-            "#DH001": {
-              customer: "Nguyễn Văn A",
-              email: "nguyenvana@example.com",
-              phone: "0901234567",
-              address: "123 Nguyễn Văn Linh, Quận 7, TP.HCM",
-              date: "20/05/2025",
-              total: "850,000₫",
-            },
-            "#DH002": {
-              customer: "Trần Thị B",
-              email: "tranthib@example.com",
-              phone: "0912345678",
-              address: "456 Lê Lợi, Quận 1, TP.HCM",
-              date: "18/05/2025",
-              total: "1,200,000₫",
-            },
-            "#DH003": {
-              customer: "Lê Văn C",
-              email: "levanc@example.com",
-              phone: "0923456789",
-              address: "789 Hai Bà Trưng, Quận 3, TP.HCM",
-              date: "17/05/2025",
-              total: "720,000₫",
-            },
-            "#DH004": {
-              customer: "Phạm Thị D",
-              email: "phamthid@example.com",
-              phone: "0934567890",
-              address: "101 Nguyễn Huệ, Quận 5, TP.HCM",
-              date: "16/05/2025",
-              total: "450,000₫",
-            },
-          };
-          const products = {
-            "#DH001": [
-              { name: "Dust", qty: 1, price: "365,000₫" },
-              {
-                name: "Cloud Atlas: 20th Anniversary Edition",
-                qty: 1,
-                price: "69,000₫",
-              },
-            ],
-            "#DH002": [{ name: "Book A", qty: 2, price: "600,000₫" }],
-            "#DH003": [{ name: "Book B", qty: 1, price: "720,000₫" }],
-            "#DH004": [{ name: "Book C", qty: 1, price: "450,000₫" }],
-          };
-          const order = orders[orderCode];
-          document.getElementById("orderCode").textContent = orderCode;
-          document.getElementById("orderCustomer").textContent = order.customer;
-          document.getElementById("orderEmail").textContent = order.email;
-          document.getElementById("orderPhone").textContent = order.phone;
-          document.getElementById("orderAddress").textContent = order.address;
-          document.getElementById("orderDate").textContent = order.date;
-          document.getElementById("orderTotal").textContent = order.total;
-          document.getElementById("orderProducts").innerHTML = products[
-            orderCode
-          ]
-            .map(
-              (item) => `
-          <tr><td>${item.name}</td><td>${item.qty}</td><td>${item.price}</td></tr>
-        `
-            )
-            .join("");
-
-          // Đặt trạng thái hiện tại của đơn hàng trong dropdown
-          const statusElement = document.getElementById(
-            `status${orderCode.slice(1)}`
-          ); // Sử dụng ID
-          const currentStatus = statusElement.classList[2].split("-")[1];
-          document.getElementById("orderStatusSelect").value = currentStatus;
-          document.getElementById("orderStatus").textContent =
-            statusElement.textContent;
-
-          const myModal = new bootstrap.Modal(
-            document.getElementById("orderModal")
-          );
-          myModal.show();
-        };
-
-        window.updateOrderStatus = function () {
-          const orderCode = document.getElementById("orderCode").textContent;
-          const status = document.getElementById("orderStatusSelect").value;
-          const statusText = {
-            unresolved: "Chưa giải quyết",
-            pending: "Đang xử lý",
-            shipping: "Đang giao",
-            delivered: "Đã giao",
-            cancelled: "Đã hủy",
-          }[status];
-
-          // Cập nhật trạng thái trên bảng chính
-          const statusElement = document.getElementById(
-            `status${orderCode.slice(1)}`
-          ); // Sử dụng ID
-          if (statusElement) {
-            statusElement.textContent = statusText;
-            statusElement.className = `badge rounded-pill status-${status}`; // Cập nhật cả nội dung và lớp CSS
-          }
-
-          // Cập nhật trạng thái trong modal
-          document.getElementById("orderStatus").textContent = statusText;
-
-          // Hiển thị popup thành công
-          document.getElementById("successStatus").textContent = statusText;
-          const popup = document.getElementById("successOverlay");
-          popup.style.display = "flex";
-
-          // Đóng modal chi tiết đơn hàng
-          const modalElement = document.getElementById("orderModal");
-          const modalInstance = bootstrap.Modal.getInstance(modalElement);
-          modalInstance.hide();
-        };
-
-        window.closeSuccessPopup = function (event) {
-          const popup = document.getElementById("successOverlay");
-          if (event && !event.target.closest(".success-popup")) {
-            popup.style.display = "none";
-          } else if (!event) {
-            popup.style.display = "none";
-          }
-        };
-
         // Hàm hiển thị modal tạo đơn hàng mới
         window.showCreateOrderModal = function () {
           const createModal = new bootstrap.Modal(document.getElementById('createOrderModal'));
           createModal.show();
         };
+        
+        // Tải dữ liệu đơn hàng khi trang vừa tải
+        fetchOrders();
+        
+        // Thêm sự kiện cho nút Esc để đóng modal
+        document.addEventListener('keydown', function(event) {
+          if (event.key === 'Escape') {
+            const modal = bootstrap.Modal.getInstance(document.getElementById('orderModal'));
+            if (modal) modal.hide();
+            
+            const createModal = bootstrap.Modal.getInstance(document.getElementById('createOrderModal'));
+            if (createModal) createModal.hide();
+            
+            const popup = document.getElementById("successOverlay");
+            if (popup.style.display === "flex") {
+              closeSuccessPopup();
+            }
+          }
+        });
       });
     </script>
 
     <!-- Load sidebar script -->
     <script src="../assets/js/sidebar.js"></script>
     <!-- Load script quản lý đơn hàng -->
-    <script src="quanlydonhang.js"></script>
+    <script src="../assets/js/quanLyDonHang.js"></script>
   </body>
 </html>
