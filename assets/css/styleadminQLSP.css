@@ -9,7 +9,6 @@
     box-sizing: border-box;
 }
 
-
 /* Điều chỉnh container khi hiển thị trong iframe */
 .container.in-iframe {
     margin: 0;
@@ -154,19 +153,21 @@ tr {
     transition: background-color 0.2s;
 }
 
-/* Điều chỉnh độ rộng cột để chữ "THAO TÁC" hiển thị đầy đủ */
+/* Điều chỉnh độ rộng cột và căn giữa giá trị */
 th:nth-child(1),
-td:nth-child(1) { width: 28%; padding-left: 10px; padding-right: 5px; } /* TÊN SÁCH */
+td:nth-child(1) { width: 25%; padding-left: 10px; padding-right: 5px; } /* SẢN PHẨM */
 th:nth-child(2),
-td:nth-child(2) { width: 15%; padding-left: 5px; padding-right: 5px; } /* TÁC GIẢ */
+td:nth-child(2) { width: 12%; padding-left: 5px; padding-right: 5px; } /* TÁC GIẢ */
 th:nth-child(3),
-td:nth-child(3) { width: 20%; padding-left: 5px; padding-right: 5px; } /* NHÀ XUẤT BẢN */
+td:nth-child(3) { width: 18%; padding-left: 5px; padding-right: 5px; } /* NHÀ XUẤT BẢN */
 th:nth-child(4),
-td:nth-child(4) { width: 15%; padding-left: 5px; padding-right: 5px; } /* GIÁ */
+td:nth-child(4) { width: 10%; padding-left: 5px; padding-right: 5px; text-align: center; } /* GIÁ */
 th:nth-child(5),
-td:nth-child(5) { width: 12%; padding-left: 5px; padding-right: 5px; } /* THỂ LOẠI */
+td:nth-child(5) { width: 6%; padding-left: 5px; padding-right: 5px; text-align: center; } /* SỐ LƯỢNG */
 th:nth-child(6),
-td:nth-child(6) { width: 10%; padding-left: 5px; padding-right: 15px; } /* THAO TÁC */
+td:nth-child(6) { width: 15%; padding-left: 5px; padding-right: 5px; } /* THỂ LOẠI */
+th:nth-child(7),
+td:nth-child(7) { width: 10%; padding-left: 5px; padding-right: 15px; } /* THAO TÁC */
 
 /* Xử lý text trong cột */
 td:nth-child(1) { /* SẢN PHẨM */
@@ -184,15 +185,21 @@ td:nth-child(3) { /* TÁC GIẢ và NHÀ XUẤT BẢN */
 
 td:nth-child(4) { /* GIÁ */
     white-space: nowrap;
+    text-align: center;
 }
 
-td:nth-child(5) { /* THỂ LOẠI */
+td:nth-child(5) { /* SỐ LƯỢNG */
+    white-space: nowrap;
+    text-align: center;
+}
+
+td:nth-child(6) { /* THỂ LOẠI */
     white-space: normal;
     word-wrap: break-word;
     padding: 15px 10px;
 }
 
-td:nth-child(6) { /* THAO TÁC */
+td:nth-child(7) { /* THAO TÁC */
     text-align: center;
     white-space: nowrap;
 }
@@ -292,35 +299,16 @@ td span br {
     flex-direction: column;
     gap: 10px;
     width: 30%;
-    max-width: 300px;
+    max-width: 250px;
+    max-height: 450px;
     margin: 0;
-}
-
-/* Responsive Design - Mobile (dưới 768px) */
-@media (max-width: 768px) {
-    /* Form Container - Mobile */
-    .form-container {
-        flex-direction: column; /* Chuyển sang cột để .form-image xuống dưới */
-    }
-
-    /* Form Image - Mobile */
-    .form-image {
-        width: 100%; /* Chiếm toàn bộ chiều rộng */
-        max-width: 100%; /* Đảm bảo không bị giới hạn */
-        margin: 0 auto; /* Căn giữa */
-    }
-
-    /* Image Preview - Mobile */
-    .image-preview {
-        height: 200px; /* Giảm chiều cao trên mobile cho phù hợp */
-    }
 }
 
 /* Form Info */
 .form-info {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
     flex: 1;
 }
 
@@ -336,7 +324,7 @@ td span br {
 
 .form-group {
     flex: 1;
-    min-width: 200px;
+    min-width: 150px; /* Đặt độ rộng tối thiểu để cân bằng */
 }
 
 .form-group label {
@@ -557,10 +545,6 @@ td span br {
 
 /* Responsive Design - Chỉ tối ưu cho iPhone 14 (dưới 390px) */
 @media (max-width: 390px) {
-    /* body {
-        margin: 5px auto;
-        padding: 5px;
-    } */
     .container {
         margin: 5px auto;
         padding: 10px;
@@ -624,14 +608,16 @@ td span br {
     }
     
     th:nth-child(2),
-    td:nth-child(2),
+    td:nth-child(2), /* Ẩn TÁC GIẢ */
     th:nth-child(3),
-    td:nth-child(3) {
+    td:nth-child(3), /* Ẩn NHÀ XUẤT BẢN */
+    th:nth-child(5),
+    td:nth-child(5) { /* Ẩn SỐ LƯỢNG */
         display: none;
     }
 
-    th:nth-child(6),
-    td:nth-child(6) {
+    th:nth-child(7),
+    td:nth-child(7) {
         width: 15% !important;
         padding-right: 20px;
     }
@@ -721,8 +707,13 @@ td span br {
         white-space: nowrap;
     }
 
-    th:nth-child(6),
-    td:nth-child(6) {
+    th:nth-child(5),
+    td:nth-child(5) { /* Ẩn SỐ LƯỢNG trên mobile */
+        display: none;
+    }
+
+    th:nth-child(7),
+    td:nth-child(7) {
         width: 12% !important;
         padding-right: 15px;
     }

@@ -18,7 +18,6 @@
         background-color: #F5F5F7;
       }
       
-
       body, h1, h2, h3, h4, p, button, input, select, textarea {
         font-family: 'Montserrat', sans-serif;
       }
@@ -64,6 +63,7 @@
                             <th>Tác giả</th>
                             <th>Nhà xuất bản</th>
                             <th>Giá</th>
+                            <th>Số lượng</th>
                             <th>Thể loại</th>
                             <th style="white-space: nowrap;">Thao tác</th>
                         </tr>
@@ -85,31 +85,31 @@
                     <div class="form-info">
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="add-isbn">ISBN:</label>
+                                <label for="add-isbn">ISBN <span style="color: red;">*</span></label>
                                 <input type="text" id="add-isbn" name="isbn" required>
                             </div>
                             <div class="form-group">
-                                <label for="add-product-name">Tên sách:</label>
+                                <label for="add-product-name">Tên sách <span style="color: red;">*</span></label>
                                 <input type="text" id="add-product-name" name="product-name" required>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="add-author">Tác giả:</label>
+                                <label for="add-author">Tác giả <span style="color: red;">*</span></label>
                                 <input type="text" id="add-author" name="author" required>
                             </div>
                             <div class="form-group">
-                                <label for="add-publisher">Nhà xuất bản:</label>
+                                <label for="add-publisher">Nhà xuất bản <span style="color: red;">*</span></label>
                                 <input type="text" id="add-publisher" name="publisher" required>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="add-price">Giá:</label>
+                                <label for="add-price">Giá <span style="color: red;">*</span></label>
                                 <input type="number" id="add-price" name="price" required min="0">
                             </div>
                             <div class="form-group">
-                                <label for="add-category">Thể loại:</label>
+                                <label for="add-category">Thể loại <span style="color: red;">*</span></label>
                                 <select id="add-category" name="category" required>
                                     <option value="">Chọn thể loại</option>
                                     <option value="Khoa học tự nhiên">Khoa học tự nhiên</option>
@@ -124,23 +124,27 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="add-pageCount">Số trang:</label>
-                                <input type="number" id="add-pageCount" name="pageCount" required min="1">
+                                <label for="add-pageCount">Số trang <span style="color: red;">*</span></label>
+                                <input type="number" id="add-pageCount" name="pageCount" min="0" required>
                             </div>
                             <div class="form-group">
-                                <label for="add-bookWeight">Trọng lượng:</label>
-                                <input type="text" id="add-bookWeight" name="bookWeight" required placeholder="Ví dụ: 0.5kg">
+                                <label for="add-bookWeight">Trọng lượng <span style="color: red;">*</span></label>
+                                <input type="text" id="add-bookWeight" name="bookWeight" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="add-stock">Số lượng tồn kho <span style="color: red;">*</span></label>
+                                <input type="number" id="add-stock" name="stock" min="0" required>
                             </div>
                         </div>
                         <div class="form-row full-width">
                             <div class="form-group">
-                                <label for="add-notes">Ghi chú:</label>
+                                <label for="add-notes">Mô tả <span style="color: red;">*</span></label>
                                 <textarea id="add-notes" name="notes"></textarea>
                             </div>
                         </div>
                     </div>
                     <div class="form-image">
-                        <label>URL ảnh bìa:</label>
+                        <label>URL ảnh bìa <span style="color: red;">*</span></label>
                         <div class="custom-url-input">
                             <input type="text" id="add-imageURL" name="imageUrl" placeholder="Nhập URL ảnh từ Cloudinary">
                         </div>
@@ -165,31 +169,31 @@
                     <div class="form-info">
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="edit-isbn">ISBN:</label>
+                                <label for="edit-isbn">ISBN <span style="color: red;">*</span></label>
                                 <input type="text" id="edit-isbn" name="isbn" required>
                             </div>
                             <div class="form-group">
-                                <label for="edit-product-name">Tên sách:</label>
+                                <label for="edit-product-name">Tên sách <span style="color: red;">*</span></label>
                                 <input type="text" id="edit-product-name" name="product-name" required>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="edit-author">Tác giả:</label>
+                                <label for="edit-author">Tác giả <span style="color: red;">*</span></label>
                                 <input type="text" id="edit-author" name="author" required>
                             </div>
                             <div class="form-group">
-                                <label for="edit-publisher">Nhà xuất bản:</label>
+                                <label for="edit-publisher">Nhà xuất bản <span style="color: red;">*</span></label>
                                 <input type="text" id="edit-publisher" name="publisher" required>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="edit-price">Giá:</label>
+                                <label for="edit-price">Giá <span style="color: red;">*</span></label>
                                 <input type="number" id="edit-price" name="price" required min="0">
                             </div>
                             <div class="form-group">
-                                <label for="edit-category">Thể loại:</label>
+                                <label for="edit-category">Thể loại <span style="color: red;">*</span></label>
                                 <select id="edit-category" name="category" required>
                                     <option value="">Chọn thể loại</option>
                                     <option value="Khoa học tự nhiên">Khoa học tự nhiên</option>
@@ -204,17 +208,21 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="edit-pageCount">Số trang:</label>
-                                <input type="number" id="edit-pageCount" name="pageCount" required min="1">
+                                <label for="edit-pageCount">Số trang <span style="color: red;">*</span></label>
+                                <input type="number" id="edit-pageCount" name="pageCount" min="0" required>
                             </div>
                             <div class="form-group">
-                                <label for="edit-bookWeight">Trọng lượng:</label>
-                                <input type="text" id="edit-bookWeight" name="bookWeight" required placeholder="Ví dụ: 0.5kg">
+                                <label for="edit-bookWeight">Trọng lượng <span style="color: red;">*</span></label>
+                                <input type="text" id="edit-bookWeight" name="bookWeight" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-stock">Số lượng tồn kho <span style="color: red;">*</span></label>
+                                <input type="number" id="edit-stock" name="stock" min="0" required>
                             </div>
                         </div>
                         <div class="form-row full-width">
                             <div class="form-group">
-                                <label for="edit-notes">Ghi chú:</label>
+                                <label for="edit-notes">Mô tả <span style="color: red;">*</span></label>
                                 <textarea id="edit-notes" name="notes"></textarea>
                             </div>
                         </div>

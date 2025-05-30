@@ -69,6 +69,12 @@ function showError(message, duration = 5000) {
     }, duration);
 }
 
+// Hàm tìm tên thể loại dựa trên ID
+function getCatalogName(catalogId) {
+    const catalog = catalogs.find(cat => cat._id === catalogId);
+    return catalog ? (catalog.genre2nd || catalog.genreID) : 'Chưa phân loại';
+}
+
 // ========== QUẢN LÝ HIỂN THỊ ==========
 // Load dữ liệu thể loại
 async function loadCatalogs() {
@@ -77,6 +83,7 @@ async function loadCatalogs() {
         updateCategoryDropdowns();
     } catch (error) {
         console.error('Error loading catalogs:', error);
+        showError('Không thể tải danh sách thể loại. Vui lòng thử lại.');
     }
 }
 
@@ -103,7 +110,7 @@ async function loadProducts() {
         isLoading = true;
         productTableBody.innerHTML = `
             <tr>
-                <td colspan="6" class="text-center">
+                <td colspan="7" class="text-center">
                     <div class="py-3">
                         <div class="spinner-border text-success" role="status">
                             <span class="visually-hidden">Loading...</span>
@@ -113,6 +120,9 @@ async function loadProducts() {
                 </td>
             </tr>
         `;
+
+        // Tải danh sách thể loại trước
+        await loadCatalogs();
 
         let productsData = await productAPI.getAllProducts(1, displayLimit);
         console.log('Dữ liệu trả về từ API:', productsData);
@@ -137,14 +147,11 @@ async function loadProducts() {
         products = dataToRender.slice(0, displayLimit); // Đảm bảo chỉ lấy tối đa 20 sản phẩm
         renderTable(products);
 
-        // Tải thể loại song song
-        loadCatalogs();
-
     } catch (error) {
         console.error('Error:', error);
         productTableBody.innerHTML = `
             <tr>
-                <td colspan="6" class="text-center">
+                <td colspan="7" class="text-center">
                     <div class="py-3 text-danger">
                         <p class="mb-2">${error.message}</p>
                         <button onclick="retryLoading()" class="btn btn-outline-danger btn-sm">
@@ -165,7 +172,7 @@ function renderTable(data) {
         console.error('Dữ liệu không phải là mảng:', data);
         productTableBody.innerHTML = `
             <tr>
-                <td colspan="6" class="text-center">
+                <td colspan="7" class="text-center">
                     <div class="py-3 text-danger">
                         <p class="mb-2">Dữ liệu không đúng định dạng</p>
                         <button onclick="retryLoading()" class="btn btn-outline-danger btn-sm">
@@ -181,7 +188,7 @@ function renderTable(data) {
     if (data.length === 0) {
         productTableBody.innerHTML = `
             <tr>
-                <td colspan="6" class="text-center">
+                <td colspan="7" class="text-center">
                     <div class="py-3">
                         <p class="mb-0">Không có sản phẩm nào</p>
                     </div>
@@ -253,11 +260,16 @@ function renderTable(data) {
         priceCell.style.width = '100px';
         priceCell.textContent = `${product.price.toLocaleString('vi-VN')}đ`;
 
+        // Cột tồn kho (stock)
+        const stockCell = document.createElement('td');
+        stockCell.style.width = '100px';
+        stockCell.textContent = product.stock !== undefined ? product.stock : 'N/A';
+
         // Cột thể loại
         const catalogCell = document.createElement('td');
         catalogCell.style.width = '200px';
         catalogCell.style.whiteSpace = 'normal';
-        catalogCell.textContent = product.catalog || 'Chưa phân loại';
+        catalogCell.textContent = getCatalogName(product.catalog);
 
         // Cột thao tác
         const actionCell = document.createElement('td');
@@ -289,6 +301,7 @@ function renderTable(data) {
         row.appendChild(authorCell);
         row.appendChild(publisherCell);
         row.appendChild(priceCell);
+        row.appendChild(stockCell);
         row.appendChild(catalogCell);
         row.appendChild(actionCell);
 
@@ -437,9 +450,14 @@ addForm.addEventListener('submit', async (event) => {
         const isbn = document.getElementById('add-isbn').value.trim();
         const categorySelect = document.getElementById('add-category');
         const selectedCatalog = categorySelect.value;
+        const stock = Number(document.getElementById('edit-stock').value); // Sửa ID từ add-stock thành edit-stock
 
         if (!selectedCatalog) {
             throw new Error('Vui lòng chọn thể loại sách');
+        }
+
+        if (isNaN(stock) || stock < 0) {
+            throw new Error('Số lượng tồn kho phải là số không âm');
         }
 
         const formData = {
@@ -448,16 +466,17 @@ addForm.addEventListener('submit', async (event) => {
             author: document.getElementById('add-author').value.trim(),
             publisher: document.getElementById('add-publisher').value.trim(),
             price: Number(document.getElementById('add-price').value),
+            stock: stock,
             catalog: selectedCatalog,
             description: document.getElementById('add-notes').value.trim(),
             imageUrl: addImageURL.value.trim(),
-            pageCount: Number(document.getElementById('add-pageCount').value),
-            bookWeight: document.getElementById('add-bookWeight').value.trim()
+            pageCount: Number(document.getElementById('edit-pageCount').value),
+            bookWeight: document.getElementById('edit-bookWeight').value.trim()
         };
 
         if (!formData.ISBN || !formData.bookTitle || !formData.author || 
-            !formData.publisher || isNaN(formData.price) || !formData.catalog || 
-            isNaN(formData.pageCount) || !formData.bookWeight) {
+            !formData.publisher || isNaN(formData.price) || isNaN(formData.stock) || 
+            !formData.catalog || isNaN(formData.pageCount) || !formData.bookWeight) {
             throw new Error('Vui lòng điền đầy đủ thông tin bắt buộc');
         }
 
@@ -508,6 +527,11 @@ productTableBody.addEventListener('click', async (event) => {
             <span> Đang tải thông tin sản phẩm...</span>
         `;
 
+        // Đảm bảo danh sách thể loại đã được tải
+        if (!catalogs.length) {
+            await loadCatalogs();
+        }
+
         // Đo thời gian gọi API
         const startTime = performance.now();
         const product = await productAPI.getProductById(productId);
@@ -520,7 +544,14 @@ productTableBody.addEventListener('click', async (event) => {
         document.getElementById('edit-author').value = product.author || '';
         document.getElementById('edit-publisher').value = product.publisher || '';
         document.getElementById('edit-price').value = product.price || '';
-        document.getElementById('edit-category').value = product.catalog || '';
+        document.getElementById('edit-stock').value = product.stock !== undefined ? product.stock : 0;
+        // Gán giá trị catalog (dùng ID)
+        const editCategorySelect = document.getElementById('edit-category');
+        editCategorySelect.value = product.catalog || '';
+        // Nếu không tìm thấy catalog, chọn giá trị mặc định
+        if (!editCategorySelect.value && editCategorySelect.options.length > 0) {
+            editCategorySelect.value = '';
+        }
         document.getElementById('edit-notes').value = product.description || '';
         document.getElementById('edit-pageCount').value = product.pageCount || 0;
         document.getElementById('edit-bookWeight').value = product.bookWeight || '';
@@ -570,6 +601,11 @@ async function retryEdit(productId) {
             <span> Đang thử lại...</span>
         `;
 
+        // Đảm bảo danh sách thể loại đã được tải
+        if (!catalogs.length) {
+            await loadCatalogs();
+        }
+
         const startTime = performance.now();
         const product = await productAPI.getProductById(productId);
         const endTime = performance.now();
@@ -580,7 +616,14 @@ async function retryEdit(productId) {
         document.getElementById('edit-author').value = product.author || '';
         document.getElementById('edit-publisher').value = product.publisher || '';
         document.getElementById('edit-price').value = product.price || '';
-        document.getElementById('edit-category').value = product.catalog || '';
+        document.getElementById('edit-stock').value = product.stock !== undefined ? product.stock : 0;
+        // Gán giá trị catalog (dùng ID)
+        const editCategorySelect = document.getElementById('edit-category');
+        editCategorySelect.value = product.catalog || '';
+        // Nếu không tìm thấy catalog, chọn giá trị mặc định
+        if (!editCategorySelect.value && editCategorySelect.options.length > 0) {
+            editCategorySelect.value = '';
+        }
         document.getElementById('edit-notes').value = product.description || '';
         document.getElementById('edit-pageCount').value = product.pageCount || 0;
         document.getElementById('edit-bookWeight').value = product.bookWeight || '';
@@ -628,6 +671,7 @@ editForm.addEventListener('submit', async (event) => {
         author: document.getElementById('edit-author').value.trim(),
         publisher: document.getElementById('edit-publisher').value.trim(),
         price: parseFloat(document.getElementById('edit-price').value),
+        stock: Number(document.getElementById('edit-stock').value),
         catalog: document.getElementById('edit-category').value,
         description: document.getElementById('edit-notes').value.trim(),
         imageUrl: editImageURL.value.trim(),
@@ -636,9 +680,14 @@ editForm.addEventListener('submit', async (event) => {
     };
 
     if (!formData.ISBN || !formData.bookTitle || !formData.author || 
-        !formData.publisher || isNaN(formData.price) || !formData.catalog || 
-        isNaN(formData.pageCount) || !formData.bookWeight) {
+        !formData.publisher || isNaN(formData.price) || isNaN(formData.stock) || 
+        !formData.catalog || isNaN(formData.pageCount) || !formData.bookWeight) {
         editErrorMessage.textContent = '* Vui lòng điền đầy đủ thông tin bắt buộc';
+        return;
+    }
+
+    if (formData.stock < 0) {
+        editErrorMessage.textContent = '* Số lượng tồn kho phải là số không âm';
         return;
     }
 
