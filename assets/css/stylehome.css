@@ -428,6 +428,22 @@
     position: relative;
   }
 
+  .see-all-btn {
+    background-color: #88a58a;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-family: 'Montserrat', sans-serif;
+  }
+  
+  .see-all-btn:hover {
+    background-color: #729775;
+  }
+
 /* Footer */
 footer {
     margin: 0;
@@ -530,7 +546,9 @@ footer {
     color: #bbb;
 }
 
-  /* Responsive styles */
+
+
+  /* Responsive styles 
   @media screen and (max-width: 768px) {
     .book-detail {
       flex-direction: column;
@@ -552,7 +570,6 @@ footer {
     }
   }
 
-  /* TIÊU ĐỀ RIÊNG 1 DÒNG */
     .section-title {
       font-size: 24px;
       font-weight: bold;
@@ -560,7 +577,7 @@ footer {
       background-color: #729775;
     }
 
-    /* HÀNG NÚT ĐIỀU KHIỂN + XEM TẤT CẢ */
+    /* HÀNG NÚT ĐIỀU KHIỂN + XEM TẤT CẢ 
     .control-row {
       display: flex;
       justify-content: space-between;
@@ -595,8 +612,7 @@ footer {
     .see-all-btn:hover {
       background-color: #ccc;
     }
-
-    /* 2 HÀNG SÁCH CUỘN NGANG */
+    /* 2 HÀNG SÁCH CUỘN NGANG 
     .carousel-container {
       display: flex;
       align-items: center;
@@ -658,10 +674,280 @@ footer {
   background-color: #dbe6db;
 }
 
-/* Style for the header of popular books section */
+/* Style for the header of popular books section 
 .popular-books-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px; /* Add some space below the header */
+  margin-bottom: 16px; /* Add some space below the header 
+}*/
+/* Existing styles remain, adding responsive adjustments */
+
+/* Existing styles remain, adding horizontal scroll for mobile */
+
+section.book-banners, section.book-banners2 {
+  width: 100%;
+  margin: 20px 0;
+}
+
+/* Mobile (up to 768px) */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 10px;
+  }
+
+  .banner-container .banner-image {
+    height: 200px;
+    object-fit: cover;
+  }
+
+  /* Horizontal scrolling for book-banners */
+  .book-banners {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 15px;
+    scroll-behavior: smooth;
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+    -ms-overflow-style: none; /* Hide scrollbar for IE/Edge */
+    scroll-snap-type: x mandatory;
+    -webkit-scroll-snap-type: x mandatory;
+  }
+
+  .book-banners::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Chrome/Safari */
+  }
+
+  .banner-item {
+    flex-shrink: 0;
+    width: 70%; /* Adjust width for mobile */
+    scroll-snap-align: start;
+  }
+
+  /* Hover effect for book-banners and book-banners2 images across all screen sizes */
+  .banner-item img, .banner-item2 img {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .banner-item img:hover, .banner-item2 img:hover {
+    transform: translateY(-5px) scale(1.05); /* Slightly lift and scale the image */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Add a shadow for depth */
+  }
+  
+  /* Horizontal scrolling for book-banners2 */
+  .book-banners2 {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 15px;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-snap-type: x mandatory;
+    -webkit-scroll-snap-type: x mandatory;
+  }
+
+  .book-banners2::-webkit-scrollbar {
+    display: none;
+  }
+
+
+  .carousel-wrapper {
+    padding: 0 10px;
+  }
+
+  .book-list {
+    gap: 10px;
+  }
+
+  .product-card {
+    width: 150px;
+    min-height: 250px;
+  }
+
+  .product-image {
+    width: 80px;
+    height: 120px;
+  }
+
+  .service-features {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px 10px;
+  }
+
+  .feature-item {
+    margin-bottom: 20px;
+  }
+
+  .control-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .right-controls {
+    margin-top: 10px;
+  }
+  .see-all-btn {
+  background-color: #88a58a;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.see-all-btn:hover {
+  background-color: #729775;
+}
+}
+
+/* Tablet (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .container {
+    padding: 0 15px;
+  }
+
+  .book-banners {
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .banner-item img {
+    max-width: 48%;
+  }
+
+  .book-banners2 {
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .banner-item2 img {
+    width: 45%;
+    height: auto;
+  }
+  .banner-item2 img:hover {
+    transform: scale(1.05);
+  }
+
+  .service-features {
+    flex-wrap: wrap;
+    padding: 20px;
+  }
+
+  .feature-item {
+    flex: 1 1 40%;
+    margin-bottom: 20px;
+  }
+  .see-all-btn {
+    background-color: #88a58a;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-family: 'Montserrat', sans-serif;
+  }
+  
+  .see-all-btn:hover {
+    background-color: #729775;
+  }
+}
+
+/* Desktop (1025px and above) - Enhance "wow" factor */
+@media (min-width: 1025px) {
+  .book-banners {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .banner-item img {
+    width: 100%;
+    max-width: 524px;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    transition: transform 0.5s ease, box-shadow 0.3s ease;
+  }
+
+  .book-banners2 {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .banner-item2 img {
+    width: 300px;
+    height: 400px;
+    object-fit: cover;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    transition: transform 0.5s ease, box-shadow 0.3s ease;
+  }
+
+  .banner-container .banner-image {
+    transition: transform 0.5s ease;
+  }
+
+  .banner-container:hover .banner-image {
+    transform: scale(1.1);
+  }
+
+  .book-banners .banner-item img:hover,
+  .book-banners2 .banner-item2 img:hover {
+    transform: scale(1.1);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  }
+
+  .product-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+  }
+
+  .carousel-btn {
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+  }
+
+  .carousel-wrapper:hover .carousel-btn {
+    opacity: 1;
+  }
+}
+
+/* General Enhancements */
+.book-banners, .book-banners2 {
+  margin: 20px 0;
+}
+
+.product-card {
+  transition: all 0.4s ease;
+}
+
+.buy-button, .add-button {
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.buy-button:hover, .add-button:hover {
+  transform: scale(1.05);
+}
+.see-all-btn {
+  background-color: #88a58a;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.see-all-btn:hover {
+  background-color: #729775;
 }
