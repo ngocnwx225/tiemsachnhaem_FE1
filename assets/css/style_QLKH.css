@@ -198,9 +198,9 @@ td strong {
   margin-bottom: 25px;
 }
 
-.popup-left, .popup-right {
+/* .popup-left, .popup-right {
   width: 50%;
-}
+} */
 
 .popup-left h3, .popup-right h3 {
   font-size: 16px;
