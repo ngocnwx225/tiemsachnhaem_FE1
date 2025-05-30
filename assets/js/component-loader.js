@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
       
       if (profileBtn) {
         profileBtn.addEventListener('click', function() {
-          window.location.href = `${basePath}/pages/profilecustomer.html`;
+          window.location.href = `${basePath}/pages/profile.html`;
         });
       }
       

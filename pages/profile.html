@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông tin tài khoản - Tiệm Sách Nhà Em</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Open+Sans:wght@600&family=Lato:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style_profileCustomer.css">
+    <link rel="stylesheet" href="../assets/css/changepassword.css">
+    <style>
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    <div class="page-wrapper">
+        <main class="main-content">
+            <div class="container">
+                <h1 class="page-title">Thông tin tài khoản</h1>
+                <div class="account-card">
+                    <aside class="account-sidebar">
+                        <button class="sidebar-btn active" id="profile-tab-btn">Thông tin tài khoản</button>
+                        <button class="sidebar-btn" id="change-password-tab-btn">Đổi mật khẩu</button>
+                    </aside>
+                    
+                    <!-- Tab content for Profile -->
+                    <section class="account-details tab-content active" id="profile-tab">
+                        <div class="user-profile-header">
+                            <img src="https://i.pinimg.com/736x/8f/1c/a2/8f1ca2029e2efceebd22fa05cca423d7.jpg" alt="User Avatar" style="width: 60px; height: 60px; border-radius: 50%;">
+                            <h2 class="user-name" id="customer-name">Loading...</h2>
+                            <button class="edit-info-btn">Chỉnh sửa thông tin</button>
+                        </div>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <span class="info-label">Email:</span>
+                                <span class="info-value"><span id="customer-mail">Loading...</span></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Họ tên:</span>
+                                <span class="info-value"><span id="customer-fullname">Loading...</span></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Số điện thoại:</span>
+                                <span class="info-value"><span id="customer-phone">Loading...</span></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Địa chỉ:</span>
+                                <span class="info-value"><span id="customer-address">Loading...</span></span>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <!-- Tab content for Change Password -->
+                    <section class="changepw-form-col tab-content" id="change-password-tab">
+                        <form class="changepw-form">
+                            <div>
+                                <label for="old-password">Mật khẩu cũ</label>
+                                <input type="password" id="old-password" placeholder="Nhập mật khẩu cũ" required />
+                            </div>
+                            <div>
+                                <label for="new-password">Mật khẩu mới</label>
+                                <input type="password" id="new-password" placeholder="Nhập mật khẩu mới" required />
+                            </div>
+                            <div>
+                                <label for="confirm-password">Xác nhận mật khẩu</label>
+                                <input type="password" id="confirm-password" placeholder="Xác nhận mật khẩu mới" required />
+                            </div>
+                            <button type="submit">Lưu thông tin</button>
+                        </form>
+                    </section>
+                </div>
+            </div>
+        </main>
+        <div id="footer-placeholder"></div>
+    </div>
+
+    <script src="../assets/js/script_profileCustomer.js"></script>
+    <script src="../assets/js/API_changepassword.js"></script>
+    <script src="../assets/js/component-loader.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tab switching functionality
+            const profileTabBtn = document.getElementById('profile-tab-btn');
+            const changePasswordTabBtn = document.getElementById('change-password-tab-btn');
+            const profileTab = document.getElementById('profile-tab');
+            const changePasswordTab = document.getElementById('change-password-tab');
+            
+            profileTabBtn.addEventListener('click', function() {
+                // Update active button
+                profileTabBtn.classList.add('active');
+                changePasswordTabBtn.classList.remove('active');
+                
+                // Show profile tab, hide change password tab
+                profileTab.classList.add('active');
+                changePasswordTab.classList.remove('active');
+            });
+            
+            changePasswordTabBtn.addEventListener('click', function() {
+                // Update active button
+                changePasswordTabBtn.classList.add('active');
+                profileTabBtn.classList.remove('active');
+                
+                // Show change password tab, hide profile tab
+                changePasswordTab.classList.add('active');
+                profileTab.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html> 

@@ -6,6 +6,7 @@
   font-family: 'Montserrat', sans-serif;
   overflow: visible;
   /* position: relative !important; */
+  height: 100vh !important;
 }
 
 .sidebar .logo {

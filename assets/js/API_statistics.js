@@ -13,15 +13,6 @@ fetch("../components/sidebar.html")
       }
     });
 
-    // Cố định sidebar
-    const sidebarElement = document.querySelector("#sidebar-container .sidebar");
-    if (sidebarElement) {
-      sidebarElement.style.position = "fixed";
-      sidebarElement.style.left = "0";
-      sidebarElement.style.top = "0";
-      sidebarElement.style.height = "100vh";
-    }
-
     // Đánh dấu menu đang active
     document.getElementById("menu-statistics")?.classList.add("active");
   });
@@ -250,4 +241,42 @@ document.addEventListener('DOMContentLoaded', () => {
   loadTopSellingProducts(); // 👉 gọi thêm dòng này
 });
 
-// Xuât
+// Gọi API order, lọc ra các đơn hàng Hoàn thành, đã giao, chưa giao, đã huỷ
+async function loadOrderStatusStatistics() {
+  try {
+    const response = await fetch('https://tiemsachnhaem-be-mu.vercel.app/api/orders');
+    if (!response.ok) throw new Error('Lỗi khi gọi API thống kê trạng thái');
+
+    const data = await response.json();
+
+    const orders = data;
+
+    const statusCount = {
+      pending: 0,
+      delivered: 0,
+      shipping: 0,
+      canceled: 0
+    };
+
+    orders.forEach(order => {
+      const status = order.status;
+      if (statusCount.hasOwnProperty(status)) {
+        statusCount[status]++;
+      } else if (status === 'processing') {
+        // Gộp "processing" vào "shipping"
+        statusCount.shipping++;
+      }
+    });
+
+    console.log(statusCount)
+
+    document.querySelector('.bg-yellow h3').textContent = statusCount.pending;
+    document.querySelector('.bg-red h3').textContent = statusCount.delivered;
+    document.querySelectorAll('.bg-gray h3')[0].textContent = statusCount.shipping;
+    document.querySelectorAll('.bg-gray h3')[1].textContent = statusCount.canceled;
+
+  } catch (error) {
+    console.error('❌ Lỗi thống kê trạng thái đơn hàng:', error);
+  }
+}
+

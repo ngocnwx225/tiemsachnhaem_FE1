@@ -54,7 +54,6 @@ body {
   flex-direction: column;
   justify-content: space-between;
   height: 100vh;
-  padding: 24px 0;
 }
 
 .sidebar .logo {

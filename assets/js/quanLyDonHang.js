@@ -92,7 +92,7 @@ function renderOrdersTable() {
       </td>
       <td>${new Date(createdAt).toLocaleDateString("vi-VN")}</td>
       <td>${totalAmount.toLocaleString("vi-VN")}₫</td>
-      <td><span class="badge rounded-pill status-${status}" id="status${order.id.slice(
+      <td><span class="badge rounded-pill status-${status} text-black" id="status${order.id.slice(
         -5
       )}">${statusText[status] || "N/A"}</span></td>
       <td>
