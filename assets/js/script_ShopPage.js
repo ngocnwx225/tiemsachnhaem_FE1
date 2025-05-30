@@ -29,6 +29,33 @@ document.addEventListener("DOMContentLoaded", function () {
   let priceTag = null;
   let products = [];
   let filteredProducts = [];
+  let searchKeyword = '';
+  
+  // Kiểm tra xem có tham số tìm kiếm trong URL không
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.has('search')) {
+    searchKeyword = urlParams.get('search');
+    
+    // Hiển thị keyword tìm kiếm như một tag
+    if (searchKeyword) {
+      const searchTag = document.createElement("span");
+      searchTag.className = "filter-tag search-tag";
+      searchTag.setAttribute("data-type", "search");
+      searchTag.innerHTML = `Tìm kiếm: "${searchKeyword}" <span class="remove">×</span>`;
+
+      searchTag.querySelector(".remove").addEventListener("click", () => {
+        searchTag.remove();
+        searchKeyword = '';
+        // Xóa tham số search từ URL mà không reload trang
+        const url = new URL(window.location);
+        url.searchParams.delete('search');
+        window.history.pushState({}, '', url);
+        applyFilters();
+      });
+
+      tagsContainer.appendChild(searchTag);
+    }
+  }
 
   // Thêm HTML cho modal thông báo và thông báo text
   const notificationHtml = `
@@ -160,6 +187,13 @@ document.addEventListener("DOMContentLoaded", function () {
       priceTag.remove();
       priceTag = null;
     }
+    
+    // Xóa cả tham số tìm kiếm nếu có
+    searchKeyword = '';
+    const url = new URL(window.location);
+    url.searchParams.delete('search');
+    window.history.pushState({}, '', url);
+    
     applyFilters();
   });
 
@@ -176,6 +210,15 @@ document.addEventListener("DOMContentLoaded", function () {
     list.forEach((p) => {
       const card = document.createElement("div");
       card.className = "product-card";
+      
+      // Hiển thị tên sản phẩm với highlight từ khóa tìm kiếm nếu có
+      let bookTitle = p.bookTitle;
+      if (searchKeyword && bookTitle.toLowerCase().includes(searchKeyword.toLowerCase())) {
+        // Tạo regex với từ khóa tìm kiếm để thay thế không phân biệt hoa thường
+        const regex = new RegExp(`(${searchKeyword})`, 'gi');
+        bookTitle = bookTitle.replace(regex, '<span class="search-highlight">$1</span>');
+      }
+      
       card.innerHTML = `
         <div class="product-image-container">
           <img class="product-image" src="${
@@ -183,7 +226,7 @@ document.addEventListener("DOMContentLoaded", function () {
           }" alt="${p.bookTitle}" data-id="${p._id}">
         </div>
         <div class="product-info">
-          <div class="product-title">${p.bookTitle}</div>
+          <div class="product-title">${bookTitle}</div>
           <div class="product-price">${
             p.price?.toLocaleString("vi-VN") || "N/A"
           }<span class="product-price-unit">đ</span></div>
@@ -280,11 +323,17 @@ document.addEventListener("DOMContentLoaded", function () {
       const genre = p.catalog || "";
       const price = p.price || 0;
 
+      // Tìm kiếm theo từ khóa (nếu có)
+      const matchSearch = !searchKeyword || 
+        p.bookTitle.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+        (p.description && p.description.toLowerCase().includes(searchKeyword.toLowerCase())) ||
+        (p.author && p.author.toLowerCase().includes(searchKeyword.toLowerCase()));
+      
       const matchGenre =
         genreFilters.length === 0 || genreFilters.includes(genre);
       const matchPrice = price <= maxSelectedPrice;
 
-      return matchGenre && matchPrice;
+      return matchSearch && matchGenre && matchPrice;
     });
 
     applySort();
@@ -317,14 +366,34 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Gọi API khi load trang
-  fetch("https://tiemsachnhaem-be-mu.vercel.app/api/products?page=1&limit=50")
+  let apiUrl = "https://tiemsachnhaem-be-mu.vercel.app/api/products?page=1&limit=50";
+  
+  // Tải tất cả sản phẩm và sau đó lọc theo từ khóa nếu có
+  fetch(apiUrl)
     .then((res) => res.json())
     .then((data) => {
+      // Nếu endpoint search trả về mảng trực tiếp (không có thuộc tính products)
+      const productsData = Array.isArray(data) ? data : (data.products || []);
+      
       // Ép kiểu price trong products
-      products = data.products.map((product) => ({
+      products = productsData.map((product) => ({
         ...product,
         price: parseInt(product.price), // Ép kiểu price thành số
       }));
+      
+      // Nếu có từ khóa tìm kiếm, lọc sản phẩm theo từ khóa
+      if (searchKeyword) {
+        const keyword = searchKeyword.toLowerCase();
+        products = products.filter(product => {
+          return (
+            product.bookTitle && product.bookTitle.toLowerCase().includes(keyword) ||
+            product.author && product.author.toLowerCase().includes(keyword) ||
+            product.description && product.description.toLowerCase().includes(keyword) ||
+            product.catalog && product.catalog.toLowerCase().includes(keyword)
+          );
+        });
+      }
+      
       filteredProducts = [...products];
       renderProducts(products);
 
@@ -334,6 +403,14 @@ document.addEventListener("DOMContentLoaded", function () {
       document
         .getElementById("sort-select")
         .addEventListener("change", applySort);
+        
+      // Hiển thị số lượng kết quả tìm kiếm nếu có từ khóa
+      if (searchKeyword && products.length > 0) {
+        const countSpan = document.createElement('span');
+        countSpan.className = 'search-count';
+        countSpan.textContent = `Tìm thấy ${products.length} sản phẩm cho "${searchKeyword}"`;
+        document.querySelector('.sort-wrapper').insertAdjacentElement('beforebegin', countSpan);
+      }
     })
     .catch((err) => {
       console.error("Lỗi gọi API:", err);

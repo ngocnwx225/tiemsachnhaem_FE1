@@ -11,13 +11,7 @@
 <body>
   <!-- Include header -->
   <div id="header-placeholder"></div>
-  <script>
-    fetch('../components/header.html')
-      .then(response => response.text())
-      .then(data => {
-        document.getElementById('header-placeholder').innerHTML = data;
-      });
-  </script>
+  <!-- Xóa script cũ và sử dụng component-loader.js -->
 
   <div class="container">
     <img src="../assets/images/banner.png" alt="banner" width="100%" height="auto" style="margin-bottom: 30px; margin-top: 30px;">
@@ -97,14 +91,9 @@
 
   <!-- Include footer -->
   <div id="footer-placeholder"></div>
-  <script>
-    fetch('../components/footer.html')
-      .then(response => response.text())
-      .then(data => {
-        document.getElementById('footer-placeholder').innerHTML = data;
-      });
-  </script>
+  <!-- Xóa script cũ và thêm component-loader.js -->
 
+  <script src="../assets/js/component-loader.js"></script>
   <script src="../assets/js/script_ShopPage.js"></script>
 </body>
 </html>
