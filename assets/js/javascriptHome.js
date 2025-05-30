@@ -1,44 +1,44 @@
 document.addEventListener("DOMContentLoaded", function () {
-    console.log("DOM fully loaded and parsed. Running javascriptHome.js");
+    console.log("DOM đã được tải và phân tích hoàn tất. Đang chạy javascriptHome.js");
     const carousels = document.querySelectorAll(".carousel-wrapper");
-    console.log(`Found ${carousels.length} carousel wrappers.`);
+    console.log(`Đã tìm thấy ${carousels.length} carousel wrapper.`);
   
     carousels.forEach(wrapper => {
       const bookList = wrapper.querySelector(".book-list");
       const prevBtn = wrapper.querySelector(".prev");
       const nextBtn = wrapper.querySelector(".next");
   
-      console.log("Processing a carousel wrapper:");
-      console.log("  bookList found:", !!bookList);
-      console.log("  prevBtn found:", !!prevBtn);
-      console.log("  nextBtn found:", !!nextBtn);
+      console.log("Đang xử lý một carousel wrapper:");
+      console.log("  Đã tìm thấy bookList:", !!bookList);
+      console.log("  Đã tìm thấy prevBtn:", !!prevBtn);
+      console.log("  Đã tìm thấy nextBtn:", !!nextBtn);
   
-      // Calculate scroll amount for one card + one gap
+      // Tính toán khoảng cách cuộn cho một thẻ + một khoảng trống
       const cardWidth = 281.25;
       const gapWidth = 16; // 1rem
       const scrollAmount = cardWidth + gapWidth;
   
-      // Ensure buttons exist before adding listeners
+      // Đảm bảo các nút tồn tại trước khi thêm trình xử lý sự kiện
       if (prevBtn) {
-          console.log("Adding click listener to prevBtn.");
+          console.log("Đang thêm trình xử lý sự kiện click cho prevBtn.");
           prevBtn.addEventListener("click", () => {
-              console.log("Prev button clicked.");
+              console.log("Đã nhấn nút Prev.");
               bookList.scrollBy({ left: -scrollAmount, behavior: "smooth" });
           });
       }
   
       if (nextBtn) {
-          console.log("Adding click listener to nextBtn.");
+          console.log("Đang thêm trình xử lý sự kiện click cho nextBtn.");
           nextBtn.addEventListener("click", () => {
-              console.log("Next button clicked.");
+              console.log("Đã nhấn nút Next.");
               bookList.scrollBy({ left: scrollAmount, behavior: "smooth" });
           });
       }
 
-      // Function to render product cards
+      // Hàm để hiển thị thẻ sản phẩm
       function renderProducts(productsToRender) {
-          console.log(`Rendering ${productsToRender.length} products.`);
-          bookList.innerHTML = ''; // Clear existing products
+          console.log(`Đang hiển thị ${productsToRender.length} sản phẩm.`);
+          bookList.innerHTML = ''; // Xóa các sản phẩm hiện có
 
           if (productsToRender.length === 0) {
               bookList.innerHTML = '<p>Không tìm thấy sản phẩm nào.</p>';
@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
           productsToRender.forEach(p => {
               const card = document.createElement('div');
               card.className = 'product-card';
-              // Using the structure from product-card.html but adapted for home page
+              // Sử dụng cấu trúc từ product-card.html nhưng điều chỉnh cho trang chủ
               card.innerHTML = `
                   <div class="product-image-container">
                       <img class="product-image" src="${p.imageUrl || 'https://placehold.co/150x220'}" alt="${p.bookTitle}" data-id="${p._id}">
@@ -73,11 +73,11 @@ document.addEventListener("DOMContentLoaded", function () {
               bookList.appendChild(card);
           });
 
-          // Add event listeners after rendering
+          // Thêm trình xử lý sự kiện sau khi hiển thị
           addEventListenersToProducts();
       }
 
-      // Function to add event listeners to newly rendered products
+      // Hàm để thêm trình xử lý sự kiện cho các sản phẩm mới được hiển thị
       function addEventListenersToProducts() {
           // Thêm sự kiện cho hình ảnh sản phẩm (chuyển đến DetailProduct.html)
           bookList.querySelectorAll('.product-image').forEach(image => {
@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", function () {
                       cart.push(product);
                   }
                   localStorage.setItem('cart', JSON.stringify(cart));
-                  window.location.href = 'cart.html'; // Redirect to cart page after buying
+                  window.location.href = 'cart.html'; // Chuyển hướng đến trang giỏ hàng sau khi mua
               });
           });
 
@@ -129,7 +129,7 @@ document.addEventListener("DOMContentLoaded", function () {
                       cart.push(product);
                   }
                   localStorage.setItem('cart', JSON.stringify(cart));
-                  // Optional: Show a notification that item was added to cart
+                  // Tùy chọn: Hiển thị thông báo khi sản phẩm được thêm vào giỏ hàng
                   console.log(`${product.bookTitle} added to cart`);
 
                   // Hiển thị modal thông báo
@@ -172,14 +172,14 @@ document.addEventListener("DOMContentLoaded", function () {
           });
       }
 
-      // Fetch products, sort by soldCount, and render top 10
-      fetch('https://tiemsachnhaem-be-mu.vercel.app/api/products?page=1&limit=50') // Fetch more than 10 to be safe
+      // Lấy sản phẩm, sắp xếp theo soldCount, và hiển thị top 10
+      fetch('https://tiemsachnhaem-be-mu.vercel.app/api/products?page=1&limit=50') // Lấy nhiều hơn 10 để đảm bảo
           .then(res => res.json())
           .then(data => {
               const products = data.products || [];
-              // Sort by soldCount descending
+              // Sắp xếp theo soldCount giảm dần
               products.sort((a, b) => (b.soldCount || 0) - (a.soldCount || 0));
-              // Get top 10
+              // Lấy top 10
               const top10Products = products.slice(0, 10);
               renderProducts(top10Products);
           })
@@ -189,11 +189,11 @@ document.addEventListener("DOMContentLoaded", function () {
           });
     });
 
-    // Add event listener for 'Xem tất cả' button
+    // Thêm trình xử lý sự kiện cho nút 'Xem tất cả'
     const seeAllButton = document.querySelector('.see-all-btn');
     if (seeAllButton) {
         seeAllButton.addEventListener('click', function() {
-            window.location.href = 'shoppage.html'; // Assuming shoppage.html is in the same directory
+            window.location.href = 'shoppage.html'; // Giả sử shoppage.html nằm trong cùng thư mục
         });
     }
 });
