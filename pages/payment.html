@@ -140,13 +140,9 @@
     <!-- Include footer -->
     <div id="footer-placeholder"></div>
 
-    <!-- Import api.js và payment.js -->
-    <script type="module">
-      import "../assets/js/API_Payment.js";
-      import "../assets/js/javascriptPayment.js";
-    </script>
-
+    <!-- Load component-loader.js trước, sau đó mới load các script khác -->
     <script src="../assets/js/component-loader.js"></script>
-    <script src="../assets/js/javascriptPayment.js" defer></script>
+    <script src="../assets/js/API_Payment.js"></script>
+    <script src="../assets/js/javascriptPayment.js"></script>
   </body>
 </html>
