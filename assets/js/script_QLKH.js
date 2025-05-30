@@ -100,7 +100,6 @@ async function showPopup(row) {
     document.getElementById('popupEmail').textContent = customer.email || '';
     document.getElementById('popupPhone').textContent = customer.phoneNumber || '';
     document.getElementById('popupAddress').textContent = customer.address || 'Chưa có địa chỉ';
-    document.getElementById('popupRegDate').textContent = ''; // Không có trong API
     document.getElementById('popupStatus').textContent = status;
     document.getElementById('popupOrderCount').textContent = customer.totalOrders || 0;
     document.getElementById('popupTotalSpent').textContent = (customer.totalSpent || 0).toLocaleString('vi-VN') + 'đ';
@@ -226,8 +225,6 @@ async function confirmUnlockAction() {
     }
   });
 });
-
-
 
 // Gọi API khi trang tải
 document.addEventListener('DOMContentLoaded', fetchCustomers);

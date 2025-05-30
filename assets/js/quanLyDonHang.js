@@ -28,7 +28,14 @@ async function fetchOrders() {
 
     const data = await response.json();
     console.log("Dữ liệu orders từ API:", data);
-    ordersData = data; // Lưu dữ liệu từ API
+    
+    // Sắp xếp đơn hàng từ mới đến cũ
+    ordersData = data.sort((a, b) => {
+      const dateA = new Date(a.orderInfo?.orderDate || a.orderInfo?.createdAt || a.createdAt);
+      const dateB = new Date(b.orderInfo?.orderDate || b.orderInfo?.createdAt || b.createdAt);
+      return dateB - dateA; // Sắp xếp giảm dần (mới nhất lên đầu)
+    });
+    
     renderOrdersTable(); // Cập nhật bảng với dữ liệu API
   } catch (error) {
     console.error("Lỗi khi lấy dữ liệu từ API:", error);
@@ -53,6 +60,14 @@ async function fetchOrders() {
         },
       },
     ];
+    
+    // Sắp xếp dữ liệu mẫu từ mới đến cũ
+    ordersData = ordersData.sort((a, b) => {
+      const dateA = new Date(a.orderInfo?.orderDate || a.orderInfo?.createdAt || a.createdAt);
+      const dateB = new Date(b.orderInfo?.orderDate || b.orderInfo?.createdAt || b.createdAt);
+      return dateB - dateA; // Sắp xếp giảm dần (mới nhất lên đầu)
+    });
+    
     renderOrdersTable(); // Sử dụng dữ liệu mẫu
   }
 }
@@ -496,68 +511,90 @@ function closeSuccessPopup(event) {
 // Gán hàm cho window để có thể gọi từ HTML
 window.closeSuccessPopup = closeSuccessPopup;
 
-// Hàm tạo đơn hàng mới (POST /orders)
-window.createOrder = async function () {
+// Hàm tạo đơn hàng mới
+window.createOrder = async function() {
   try {
-    const customerName = document.getElementById("createCustomerId").value;
-    const productId = document.getElementById("createProductId").value;
-    const quantity = parseInt(document.getElementById("createQuantity").value);
-    const price = parseInt(document.getElementById("createPrice").value);
-    const totalAmount = parseInt(
-      document.getElementById("createTotalAmount").value
-    );
-    const status = document.getElementById("createStatus").value;
+    // Lấy dữ liệu từ form
+    const customerId = document.getElementById('createCustomerId').value;
+    const productId = document.getElementById('createProductId').value;
+    const quantity = document.getElementById('createQuantity').value;
+    const price = document.getElementById('createPrice').value;
+    const totalAmount = document.getElementById('createTotalAmount').value;
+    const status = document.getElementById('createStatus').value;
 
-    if (!customerName || !productId || !quantity || !price || !totalAmount) {
-      alert("Vui lòng điền đầy đủ thông tin!");
+    if (!customerId || !productId || !quantity || !price || !totalAmount) {
+      alert('Vui lòng điền đầy đủ thông tin đơn hàng');
       return;
     }
 
-    const newOrder = {
-      customerName: customerName,
-      customerEmail: customerName + "@example.com", // Tạm thời gán email dựa trên tên
-      products: [{ productId, quantity, price }],
-      totalAmount,
-      status,
-      createdAt: new Date().toISOString(),
+    // Tạo dữ liệu đơn hàng
+    const orderData = {
+      customerInfo: { name: customerId },
+      orderInfo: {
+        orderDate: new Date().toISOString(),
+        totalAmount: Number(totalAmount),
+        status: status
+      },
+      items: [
+        {
+          productId: productId,
+          quantity: Number(quantity),
+          price: Number(price)
+        }
+      ]
     };
 
+    // Gọi API tạo đơn hàng mới
     const response = await fetch(
       "https://tiemsachnhaem-be-mu.vercel.app/api/orders",
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          // Thêm token nếu cần
-          // 'Authorization': 'Bearer your-token-here'
         },
-        body: JSON.stringify(newOrder),
+        body: JSON.stringify(orderData)
       }
     );
 
     if (!response.ok) {
-      throw new Error(
-        `Lỗi khi tạo đơn hàng: ${response.status} - ${response.statusText}`
-      );
+      throw new Error(`Lỗi khi tạo đơn hàng: ${response.status} - ${response.statusText}`);
     }
 
-    alert("Tạo đơn hàng thành công!");
-    const createModal = bootstrap.Modal.getInstance(
-      document.getElementById("createOrderModal")
-    );
-    createModal.hide();
+    const result = await response.json();
+    console.log("Đơn hàng mới được tạo:", result);
 
-    // Làm mới danh sách đơn hàng
-    await fetchOrders();
+    // Thêm đơn hàng mới vào danh sách
+    if (result && result.id) {
+      ordersData.unshift({
+        id: result.id,
+        customerInfo: { name: customerId, email: "" },
+        orderInfo: {
+          orderDate: new Date().toISOString(),
+          totalAmount: Number(totalAmount),
+          status: status
+        }
+      });
+      
+      // Sắp xếp lại danh sách đơn hàng
+      ordersData = ordersData.sort((a, b) => {
+        const dateA = new Date(a.orderInfo?.orderDate || a.orderInfo?.createdAt || a.createdAt);
+        const dateB = new Date(b.orderInfo?.orderDate || b.orderInfo?.createdAt || b.createdAt);
+        return dateB - dateA; // Sắp xếp giảm dần (mới nhất lên đầu)
+      });
+      
+      renderOrdersTable();
+    }
+
+    // Đóng modal
+    const createModal = bootstrap.Modal.getInstance(document.getElementById('createOrderModal'));
+    if (createModal) createModal.hide();
+
+    // Hiển thị thông báo thành công
+    showSuccessPopup("Thành công", "Đã tạo đơn hàng mới!");
+    
   } catch (error) {
     console.error("Lỗi khi tạo đơn hàng:", error);
-    if (error.message.includes("400")) {
-      alert("Dữ liệu không hợp lệ! Vui lòng kiểm tra lại.");
-    } else if (error.message.includes("401")) {
-      alert("Unauthorized! Vui lòng đăng nhập lại.");
-    } else {
-      alert("Không thể tạo đơn hàng. Vui lòng thử lại sau!");
-    }
+    alert(`Lỗi: ${error.message}`);
   }
 };
 
