@@ -6,25 +6,17 @@
   <link rel="stylesheet" href="../assets/css/stylehome.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="../assets/css/style_DetailProduct.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
   <div id="header-placeholder"></div>
-    <!-- <script>
-        fetch('../components/header.html')
-          .then(response => response.text())
-          .then(data => {
-            document.getElementById('header-placeholder').innerHTML = data;
-          });
-    </script> -->
 
     <main class="container">
         <!-- Include header -->
-        <div class="banner-wrapper">
           <div class="banner-container">
             <img src="../assets/Hình/Welcome.png" alt="Tiệm sách nhà em" class="banner-image">
           </div>
-        </div>
 
         
         <section class="book-banners" aria-label="Các banner sách nổi bật">
@@ -99,16 +91,24 @@
   </div>
 <!-- Include footer -->
   <div id="footer-placeholder"></div>
-  <!-- <script>
-      fetch('../components/footer.html')
-        .then(response => response.text())
-        .then(data => {
-          document.getElementById('footer-placeholder').innerHTML = data;
-        });
-  </script> -->
 
-  <!-- Load component-loader.js trước, sau đó mới load javascriptHome.js -->
   <script src="../assets/js/component-loader.js"></script>
   <script src="../assets/js/javascriptHome.js"></script>
+
+  <div id="cartNotificationModal" class="modal" style="display: none;">
+    <div class="modal-content success-content">
+      <div class="modal-header">
+        <i class="fas fa-check-circle" style="color: #52c41a;"></i>
+        <h2>Thành công</h2>
+      </div>
+      <div class="modal-body">
+        <p id="notificationMessage"></p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-confirm" id="closeModalBtn">Đóng</button>
+      </div>
+    </div>
+  </div>
+  <div id="cartNotificationText" style="display: none;"></div>
 </body>
 </html>
