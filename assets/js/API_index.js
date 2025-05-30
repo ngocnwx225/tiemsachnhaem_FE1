@@ -1,16 +1,31 @@
 document.addEventListener("DOMContentLoaded", () => {
-  loadStatisticsAndOrders({});
-  loadTopSellingProducts(); // ✅ Sửa đúng tên hàm
-  loadRecentOrders({}); // mặc định lọc theo tháng
+  // Khi trang load lần đầu, gọi API với filter=1 (tuần)
+  loadStatisticsAndOrders({filter: '1'});
+  loadTopSellingProducts();
+  loadRecentOrders({filter: '1'}); // Mặc định lọc theo tuần
 });
 
 // ==========================
 // 1. Gọi API thống kê chính
 // ==========================
 function loadStatisticsAndOrders(data) {
-  fetch(
-    `https://tiemsachnhaem-be-mu.vercel.app/api/orders/statistics?filter=${data.filter}&fromDate=${data.fromDate}&toDate=${data.toDate}`
-  )
+  // Tạo URL với các tham số filter
+  let url = `https://tiemsachnhaem-be-mu.vercel.app/api/orders/statistics`;
+  
+  // Thêm các tham số query nếu có
+  const params = new URLSearchParams();
+  if (data.filter) params.append('filter', data.filter);
+  if (data.fromDate) params.append('fromDate', data.fromDate);
+  if (data.toDate) params.append('toDate', data.toDate);
+  
+  // Thêm params vào URL nếu có
+  if (params.toString()) {
+    url += `?${params.toString()}`;
+  }
+  
+  console.log("Gọi API với URL:", url);
+  
+  fetch(url)
     .then((res) => res.json())
     .then((data) => {
       document.getElementById("total-orders").textContent =
@@ -141,32 +156,32 @@ function loadRecentOrders(data) {
 // ==========================
 document.querySelectorAll(".time-btn").forEach((btn) => {
   btn.addEventListener("click", () => {
-    document
-      .querySelectorAll(".time-btn")
-      .forEach((b) => b.classList.remove("active"));
+    console.log("Đã click vào nút:", btn.innerText.trim());
+    
+    // Xóa active class khỏi tất cả các nút và thêm vào nút hiện tại
+    document.querySelectorAll(".time-btn").forEach((b) => b.classList.remove("active"));
     btn.classList.add("active");
-    const label = document.querySelector('.time-btn.active').innerText.trim().toLowerCase();
-    const from = document.getElementById("from-date").value;
-    const to = document.getElementById("to-date").value;
-
+    
+    const label = btn.innerText.trim().toLowerCase();
+    console.log("Label được chọn:", label);
+    
+    let filter;
+    if (label === "tuần") {
+      filter = "1";
+    } else if (label === "tháng") {
+      filter = "2";
+    } else if (label === "năm") {
+      filter = "3";
+    }
+    
+    // Xử lý tùy chỉnh riêng
     if (label === "tùy chỉnh") {
       document.getElementById("custom-date-range").style.display = "block";
-
-      loadRecentOrders({
-        filter: undefined,
-        fromDate: from,
-        toDate: to,
-      });
+      return; // Không gọi API ngay, chờ người dùng chọn ngày và bấm lọc
     } else {
       document.getElementById("custom-date-range").style.display = "none";
-      let filter;
-      if (label === "tuần") {
-        filter = "1";
-      } else if (label === "tháng") {
-        filter = "2";
-      } else if (label === "năm") {
-        filter = "3";
-      }
+      
+      console.log("Gọi API với filter:", filter);
       loadRecentOrders({
         filter,
         fromDate: undefined,

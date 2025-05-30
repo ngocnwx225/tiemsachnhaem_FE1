@@ -248,32 +248,30 @@ body {
 /* Time filter */
 .time-filter {
   display: flex;
-  align-items: center;
   gap: 8px;
 }
 
 .time-btn {
-  padding: 6px 12px;
+  padding: 8px 16px;
+  border: none;
+  background-color: #F3F3F5;
+  border-radius: 8px;
   font-size: 14px;
-  border: 1px solid #ccc;
-  background-color: white;
-  color: #333;
-  border-radius: 6px;
   cursor: pointer;
-  transition: 0.2s;
+  font-weight: 500;
+  color: #333;
   display: flex;
   align-items: center;
+  transition: all 0.2s;
 }
 
 .time-btn:hover {
-  background-color: #eee;
+  background-color: #E5E5EA;
 }
 
 .time-btn.active {
   background-color: #86A788;
   color: white;
-  font-weight: 500;
-  border: none;
 }
 
 .container-all {
