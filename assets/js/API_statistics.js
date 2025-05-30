@@ -26,169 +26,190 @@ fetch("../components/sidebar.html")
     document.getElementById("menu-statistics")?.classList.add("active");
   });
 
-// 2. Biểu đồ doanh thu
-const ctx = document.getElementById("salesChart").getContext("2d");
-const salesChart = new Chart(ctx, {
-  type: "bar",
-  data: {
-    labels: ["T2", "T3", "T4", "T5", "T6", "T7", "CN"],
-    datasets: [{
-      data: [0, 0, 0, 0, 0, 0, 0],
-      backgroundColor: "#86A788",
-      borderRadius: 8,
-      borderSkipped: false,
-      barThickness: 40,
-    }],
-  },
-  options: {
-    plugins: {
-      legend: { display: false },
-      tooltip: {
-        callbacks: {
-          label: (ctx) => `${ctx.raw.toLocaleString()} VND`,
-        },
-      },
-    },
-    scales: {
-      x: { grid: { display: false } },
-      y: {
-        ticks: {
-          callback: (val) => `${(val / 1_000_000).toFixed(1)}M`,
-          font: { size: 12 },
-        },
-        grid: { color: "#eee" },
-        beginAtZero: true,
-      },
-    },
-  },
-});
+// ======================================
+// 1. Load thống kê số đơn hàng theo trạng thái
+// ======================================
+async function loadOrderStatusStatistics() {
+  try {
+    const response = await fetch('https://tiemsachnhaem-be-mu.vercel.app/api/orders/statistics');
+    if (!response.ok) throw new Error('Lỗi khi gọi API thống kê trạng thái');
 
-// 3. Lọc dữ liệu theo thời gian
-function filterByDateRange(data, type) {
-  const now = new Date();
-  if (type === "tuần") {
-    const weekAgo = new Date(now);
-    weekAgo.setDate(now.getDate() - 7);
-    return data.filter((o) => new Date(o.orderDate) >= weekAgo);
-  }
-  if (type === "tháng") {
-    const m = now.getMonth();
-    const y = now.getFullYear();
-    return data.filter((o) => {
-      const d = new Date(o.orderDate);
-      return d.getMonth() === m && d.getFullYear() === y;
+    const data = await response.json();
+    const orders = data.recentOrders;
+
+    const statusCount = {
+      pending: 0,
+      delivered: 0,
+      shipping: 0,
+      cancelled: 0
+    };
+
+    orders.forEach(order => {
+      const status = order.status;
+      if (statusCount.hasOwnProperty(status)) {
+        statusCount[status]++;
+      } else if (status === 'processing') {
+        // Gộp "processing" vào "shipping"
+        statusCount.shipping++;
+      }
     });
+
+    document.querySelector('.bg-yellow h3').textContent = statusCount.pending;
+    document.querySelector('.bg-red h3').textContent = statusCount.delivered;
+    document.querySelectorAll('.bg-gray h3')[0].textContent = statusCount.shipping;
+    document.querySelectorAll('.bg-gray h3')[1].textContent = statusCount.cancelled;
+
+  } catch (error) {
+    console.error('❌ Lỗi thống kê trạng thái đơn hàng:', error);
   }
-  if (type === "năm") {
-    const y = now.getFullYear();
-    return data.filter((o) => new Date(o.orderDate).getFullYear() === y);
-  }
-  return data;
 }
 
-// 4. Cập nhật thống kê
-function updateStatistics(data) {
-  let counts = { pending: 0, delivered: 0, processing: 0, canceled: 0, shipped: 0 };
-  let revenueByDay = { T2: 0, T3: 0, T4: 0, T5: 0, T6: 0, T7: 0, CN: 0 };
+// ======================================
+// 2. Load doanh thu và vẽ biểu đồ theo tháng
+// ======================================
+async function loadOrderRevenueChart() {
+  try {
+    const response = await fetch('https://tiemsachnhaem-be-mu.vercel.app/api/orders/statistics');
+    if (!response.ok) throw new Error('Lỗi khi gọi API thống kê doanh thu');
 
-  data.forEach((o) => {
-    const s = o.status?.toLowerCase();
-    if (counts[s] !== undefined) counts[s]++;
-    if (s === "delivered") {
-      const d = new Date(o.orderDate);
-      const key = ["CN", "T2", "T3", "T4", "T5", "T6", "T7"][d.getDay()];
-      revenueByDay[key] += o.totalAmount;
+    const data = await response.json();
+    const orders = data.recentOrders;
+
+    // Hiển thị tổng doanh thu
+    const totalRevenue = parseInt(data.totalRevenue) || 0;
+    const revenueDisplay = document.querySelector('span[style*="color: #86a788"]');
+    if (revenueDisplay) {
+      revenueDisplay.textContent = totalRevenue.toLocaleString('vi-VN') + ' ₫';
+    }
+
+    // Vẽ biểu đồ
+    renderSalesChart(orders);
+
+  } catch (error) {
+    console.error('❌ Lỗi thống kê doanh thu:', error);
+  }
+}
+
+function renderSalesChart(orders) {
+  const currentYear = new Date().getFullYear();
+  const revenueByMonth = {};
+
+  for (let m = 1; m <= 12; m++) {
+    const key = `${currentYear}-${m.toString().padStart(2, '0')}`;
+    revenueByMonth[key] = 0;
+  }
+
+  orders.forEach(order => {
+    if (['completed', 'delivered'].includes(order.status)) {
+      const date = new Date(order.orderDate);
+      const year = date.getFullYear();
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const key = `${year}-${month}`;
+
+      if (year === currentYear && revenueByMonth.hasOwnProperty(key)) {
+        revenueByMonth[key] += parseInt(order.totalAmount) || 0;
+      }
     }
   });
 
-  document.querySelector(".stat-box.bg-yellow h3").textContent = counts.pending || 0;
-  document.querySelector(".stat-box.bg-red h3").textContent = counts.delivered || 0;
-  document.querySelectorAll(".stat-box.bg-gray h3")[0].textContent = counts.processing + counts.shipped;
-  document.querySelectorAll(".stat-box.bg-gray h3")[1].textContent = counts.canceled || 0;
+  const labels = Object.keys(revenueByMonth).map((_, i) => `Tháng ${i + 1}`);
+  const values = Object.values(revenueByMonth);
+  const ctx = document.getElementById('salesChart').getContext('2d');
 
-  salesChart.data.datasets[0].data = [
-    revenueByDay["T2"], revenueByDay["T3"], revenueByDay["T4"],
-    revenueByDay["T5"], revenueByDay["T6"], revenueByDay["T7"], revenueByDay["CN"]
-  ];
-  salesChart.update();
+  if (window.salesChartInstance) {
+    window.salesChartInstance.destroy();
+  }
 
-  const total = Object.values(revenueByDay).reduce((a, b) => a + b, 0);
-  document.querySelector(".chart-box.wide p span").textContent = total.toLocaleString("vi-VN") + " VND";
-}
-
-// 5. Gọi API đơn hàng và cập nhật
-function fetchAndUpdate(filterType = "tháng") {
-  fetch("https://tiemsachnhaem-be-mu.vercel.app/api/orders")
-    .then((res) => res.json())
-    .then((data) => {
-      const filtered = filterByDateRange(data, filterType);
-      updateStatistics(filtered);
-    });
-}
-
-// 6. Sự kiện chọn thời gian
-document.querySelectorAll(".time-btn").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    document.querySelectorAll(".time-btn").forEach((b) => b.classList.remove("active"));
-    btn.classList.add("active");
-    const label = btn.innerText.trim().toLowerCase();
-    if (label === "tùy chỉnh") {
-      document.getElementById("custom-date-range").style.display = "block";
-    } else {
-      document.getElementById("custom-date-range").style.display = "none";
-      fetchAndUpdate(label);
+  window.salesChartInstance = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Doanh thu (VNĐ)',
+        data: values,
+        backgroundColor: '#86a788',
+        borderRadius: 8
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            callback: value => value.toLocaleString('vi-VN') + ' ₫'
+          }
+        }
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: context => 'Doanh thu (VNĐ): ' + context.raw.toLocaleString('vi-VN')
+          }
+        }
+      }
     }
   });
-});
+}
 
-// 7. Lọc theo ngày tùy chỉnh
-document.getElementById("apply-filter").addEventListener("click", () => {
-  const from = new Date(document.getElementById("from-date").value);
-  const to = new Date(document.getElementById("to-date").value);
-  if (isNaN(from) || isNaN(to)) return alert("Vui lòng chọn đủ cả 2 ngày");
-  fetch("https://tiemsachnhaem-be-mu.vercel.app/api/orders")
-    .then((res) => res.json())
-    .then((data) => {
-      const filtered = data.filter((o) => {
-        const d = new Date(o.orderDate);
-        return d >= from && d <= to;
-      });
-      updateStatistics(filtered);
-    });
-});
+// Gọi các sản phẩm bán chạy
+async function loadTopSellingProducts() {
+  console.log("🚀 Gọi loadTopSellingProducts()");
 
-// 8. Gọi API sản phẩm bán chạy
-fetch("https://tiemsachnhaem-be-mu.vercel.app/api/products/top-selling?limit=5")
-  .then((res) => res.json())
-  .then((data) => {
-    const container = document.querySelector(".chart-box.narrow");
-    const list = document.createElement("ul");
-    list.style.listStyle = "none";
-    list.style.padding = "0";
-    list.style.marginTop = "12px";
+  try {
+    const response = await fetch('https://tiemsachnhaem-be-mu.vercel.app/api/products/top-selling?limit=4');
+    if (!response.ok) throw new Error('Lỗi khi lấy sản phẩm bán chạy');
 
-    if (!data.length) {
-      const empty = document.createElement("p");
-      empty.textContent = "Không có dữ liệu.";
-      empty.style.color = "#999";
-      container.appendChild(empty);
+    const data = await response.json();
+
+    console.log("✅ Dữ liệu thô trả về:", data);
+    const products = Array.isArray(data) ? data : (data.data || []);
+    console.log("📦 Danh sách sản phẩm:", products);
+
+    const container = document.getElementById('top-products-list');
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    if (products.length === 0) {
+      container.innerHTML = '<p>Không có dữ liệu.</p>';
       return;
     }
 
-    data.forEach((product, i) => {
-      const li = document.createElement("li");
-      li.innerHTML = `
-        <strong>${i + 1}. ${product.name}</strong><br>
-        Giá: ${product.price.toLocaleString()} VND<br>
-        Tồn kho: ${product.stock}
-      `;
-      li.style.marginBottom = "10px";
-      list.appendChild(li);
-    });
+   products.forEach(product => {
+  const productHTML = `
+    <div style="display: flex; align-items: flex-start; margin-bottom: 16px; gap: 12px;">
+      <img src="${product.imageUrl}" alt="${product.bookTitle}" width="40" height="60" style="object-fit: cover; border-radius: 4px;" />
+      <div style="flex: 1;">
+        <div style="display: flex; justify-content: space-between;">
+          <div>
+            <div style="font-weight: 500;">${product.bookTitle}</div>
+            <div style="font-size: 13px; color: #86a788; margin-top: 2px;">
+              ${product.price.toLocaleString('vi-VN')} ₫
+            </div>
+          </div>
+          <div style="font-size: 13px; color: #666; white-space: nowrap;">
+            Đã bán: ${product.soldCount.toLocaleString('vi-VN')}
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  container.innerHTML += productHTML;
+});
 
-    container.appendChild(list);
-  })
-  .catch((err) => console.error("Lỗi khi lấy sản phẩm bán chạy:", err));
+  } catch (error) {
+    console.error('❌ Lỗi khi load top-selling products:', error);
+  }
+}
+// ======================================
+// 3. Gọi cả hai hàm khi trang tải
+// ======================================
+document.addEventListener('DOMContentLoaded', () => {
+  loadOrderStatusStatistics();
+  loadOrderRevenueChart();
+  loadTopSellingProducts(); // 👉 gọi thêm dòng này
+});
 
-// 9. Load mặc định khi vào trang
-fetchAndUpdate();
+// Xuât
