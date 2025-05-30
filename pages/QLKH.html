@@ -32,6 +32,31 @@
       textarea {
         font-family: "Montserrat", sans-serif;
       }
+      /* Thêm style cho bảng lịch sử đơn hàng trong popup */
+      #popupOrderHistory table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+        color: #333;
+        margin-top: 10px;
+      }
+      #popupOrderHistory th,
+      #popupOrderHistory td {
+        padding: 8px 12px;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+      }
+      #popupOrderHistory th {
+        background-color: #f5f5f5;
+        color: #666;
+        font-weight: 500;
+      }
+      #popupOrderHistory tr:last-child td {
+        border-bottom: none;
+      }
+      #popupOrderHistory td.status-column {
+        text-align: center;
+      }
     </style>
   </head>
   <body>
@@ -92,21 +117,15 @@
             <p><strong>Email:</strong> <span id="popupEmail"></span></p>
             <p><strong>Số điện thoại:</strong> <span id="popupPhone"></span></p>
             <p><strong>Địa chỉ:</strong> <span id="popupAddress"></span></p>
+            <p><strong>Ngày đăng ký:</strong> <span id="popupRegDate"></span></p>
             <p><strong>Trạng thái:</strong> <span id="popupStatus"></span></p>
           </div>
           <div class="popup-right">
             <h3>Thông kê mua hàng</h3>
-            <p>
-              <strong>Tổng số đơn hàng:</strong>
-              <span id="popupOrderCount"></span>
-            </p>
-            <p>
-              <strong>Tổng chi tiêu:</strong> <span id="popupTotalSpent"></span>
-            </p>
-            <p>
-              <strong>Đơn hàng gần nhất:</strong>
-              <span id="popupLastOrder"></span>
-            </p>
+            <p><strong>Tổng số đơn hàng:</strong> <span id="popupOrderCount"></span></p>
+            <p><strong>Tổng chi tiêu:</strong> <span id="popupTotalSpent"></span></p>
+            <p><strong>Đơn hàng gần nhất:</strong> <span id="popupLastOrder"></span></p>
+            <p><strong>Đơn hàng gần đây nhất:</strong> <span id="popupEarliestOrder"></span></p>
             <h3>Lịch sử đơn hàng</h3>
             <table>
               <thead>

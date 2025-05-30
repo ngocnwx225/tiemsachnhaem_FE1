@@ -1,13 +1,6 @@
-const searchInput = document.getElementById('searchInput');
-const customerList = document.getElementById('customerList');
-const filterOptions = document.getElementById('statusFilter');
-const popupOverlay = document.getElementById('popupOverlay');
-const confirmOverlay = document.getElementById('confirmOverlay');
-const unlockOverlay = document.getElementById('unlockOverlay');
-const successOverlay = document.getElementById('successOverlay');
+// Biến toàn cục
+let customers = [];
 let currentRow = null;
-let isUnlock = false;
-let customers = []; // Lưu trữ danh sách khách hàng từ API
 
 // Gọi API để lấy danh sách khách hàng khi trang tải
 async function fetchCustomers() {
@@ -18,7 +11,7 @@ async function fetchCustomers() {
     renderTable();
   } catch (error) {
     console.error('Lỗi:', error);
-    customerList.innerHTML = '<tr><td colspan="5">Không thể tải dữ liệu khách hàng.</td></tr>';
+    document.getElementById('customerList').innerHTML = '<tr><td colspan="5">Không thể tải dữ liệu khách hàng.</td></tr>';
   }
 }
 
@@ -27,14 +20,11 @@ async function updateUserStatus(id, status) {
   try {
     const response = await fetch(`https://tiemsachnhaem-be-mu.vercel.app/api/users/${id}`, {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ status }),
     });
     if (!response.ok) throw new Error('Lỗi khi cập nhật trạng thái');
-    const updatedCustomer = await response.json();
-    return updatedCustomer;
+    return await response.json();
   } catch (error) {
     console.error('Lỗi:', error);
     alert('Không thể cập nhật trạng thái tài khoản.');
@@ -42,8 +32,9 @@ async function updateUserStatus(id, status) {
   }
 }
 
-// Hiển thị dữ liệu trong bảng từ API /users
+// Hiển thị dữ liệu trong bảng
 function renderTable() {
+  const customerList = document.getElementById('customerList');
   customerList.innerHTML = '';
   customers.forEach(customer => {
     const status = customer.status.toLowerCase() === 'bị khóa' ? 'lock' : 'active';
@@ -58,7 +49,7 @@ function renderTable() {
       </td>
       <td>${customer.totalOrders || 0}</td>
       <td>${(customer.totalSpent || 0).toLocaleString('vi-VN')}đ</td>
-      <td><span class="status ${status}">${status}</span></td>
+      <td><span class="status ${status}">${status === 'lock' ? 'Bị khóa' : 'Hoạt động'}</span></td>
       <td class="actions">
         <img src="https://img.icons8.com/material-outlined/24/000000/visible.png" alt="view" onclick="showPopup(this.parentNode.parentNode)">
         <img src="https://img.icons8.com/material-outlined/24/${status === 'lock' ? '00ff00' : 'ff0000'}/${status === 'lock' ? 'unlock' : 'lock'}.png" alt="${status === 'lock' ? 'unblock' : 'block'}" onclick="showConfirmPopup('${customer.fullName}', this.parentNode.parentNode, ${status === 'lock'})">
@@ -69,9 +60,9 @@ function renderTable() {
 }
 
 // Tìm kiếm
-searchInput.addEventListener('input', function () {
+document.getElementById('searchInput').addEventListener('input', function () {
   const searchText = this.value.toLowerCase();
-  const rows = customerList.getElementsByTagName('tr');
+  const rows = document.getElementById('customerList').getElementsByTagName('tr');
   for (let row of rows) {
     const customerInfo = row.cells[0].textContent.toLowerCase();
     row.style.display = customerInfo.includes(searchText) ? '' : 'none';
@@ -80,14 +71,14 @@ searchInput.addEventListener('input', function () {
 
 // Lọc theo trạng thái
 function filterStatus(status) {
-  const rows = customerList.getElementsByTagName('tr');
+  const rows = document.getElementById('customerList').getElementsByTagName('tr');
   for (let row of rows) {
     const rowStatus = row.getAttribute('data-status');
     row.style.display = (status === 'all' || rowStatus === status) ? '' : 'none';
   }
 }
 
-// Hiển thị popup thông tin khách hàng bằng cách gọi API /users/{id}
+// Hiển thị popup thông tin khách hàng
 async function showPopup(row) {
   const customerId = row.getAttribute('data-id');
   try {
@@ -100,56 +91,79 @@ async function showPopup(row) {
     document.getElementById('popupEmail').textContent = customer.email || '';
     document.getElementById('popupPhone').textContent = customer.phoneNumber || '';
     document.getElementById('popupAddress').textContent = customer.address || 'Chưa có địa chỉ';
-    document.getElementById('popupStatus').textContent = status;
+
+    // Ngày đăng ký (dựa trên đơn hàng đầu tiên)
+    const regDate = customer.orders && customer.orders.length > 0 ? new Date(customer.orders[customer.orders.length - 1].createdAt).toLocaleDateString('vi-VN') : '';
+    document.getElementById('popupRegDate').textContent = regDate;
+
+    document.getElementById('popupStatus').textContent = status === 'lock' ? 'Bị khóa' : 'Hoạt động';
     document.getElementById('popupOrderCount').textContent = customer.totalOrders || 0;
     document.getElementById('popupTotalSpent').textContent = (customer.totalSpent || 0).toLocaleString('vi-VN') + 'đ';
-    document.getElementById('popupLastOrder').textContent = ''; // Không có trong API
-    document.getElementById('popupOrderHistory').innerHTML = ''; // Xóa dữ liệu mẫu
+
+    // Đơn hàng gần nhất và gần đây nhất
+    const sortedOrders = customer.orders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    const latestOrderDate = sortedOrders.length > 0 ? new Date(sortedOrders[0].createdAt).toLocaleDateString('vi-VN') : '';
+    const earliestOrderDate = sortedOrders.length > 0 ? new Date(sortedOrders[sortedOrders.length - 1].createdAt).toLocaleDateString('vi-VN') : '';
+    document.getElementById('popupLastOrder').textContent = latestOrderDate;
+    document.getElementById('popupEarliestOrder').textContent = earliestOrderDate;
+
+    // Lịch sử đơn hàng
+    const orderHistory = document.getElementById('popupOrderHistory');
+    orderHistory.innerHTML = '';
+    if (customer.orders && customer.orders.length > 0) {
+      customer.orders.forEach(order => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>#${order.id}</td>
+          <td>${new Date(order.createdAt).toLocaleDateString('vi-VN')}</td>
+          <td>${order.totalAmount.toLocaleString('vi-VN')}đ</td>
+          <td class="status-column"><span class="status ${order.status === 'completed' ? 'active' : 'lock'}">${order.status === 'completed' ? 'Đã giao' : 'Chờ xử lý'}</span></td>
+        `;
+        orderHistory.appendChild(row);
+      });
+    }
 
     currentRow = row;
-    popupOverlay.style.display = 'flex';
+    document.getElementById('popupOverlay').style.display = 'flex';
   } catch (error) {
     console.error('Lỗi:', error);
     alert('Không thể tải thông tin chi tiết khách hàng.');
   }
 }
 
-// Đóng popup thông tin khách hàng
+// Đóng popup
 function closePopup() {
-  popupOverlay.style.display = 'none';
+  document.getElementById('popupOverlay').style.display = 'none';
 }
 
-// Hiển thị popup xác nhận khóa từ biểu tượng ổ khóa
+// Hiển thị popup xác nhận khóa
 function showConfirmPopup(name, row, isUnlockAction = false) {
   if (isUnlockAction || isAccountLocked(row)) {
     showUnlockPopup(name, row);
     return;
   }
   currentRow = row;
-  isUnlock = isUnlockAction;
-  confirmOverlay.style.display = 'flex';
+  document.getElementById('confirmOverlay').style.display = 'flex';
 }
 
-// Hiển thị popup xác nhận khóa từ popup thông tin khách hàng
-function showConfirmPopupFromPopup(name, isUnlockAction = false) {
-  if (isUnlockAction || isAccountLocked(currentRow)) {
+// Hiển thị popup xác nhận khóa từ popup thông tin
+function showConfirmPopupFromPopup(name, isLocked) {
+  if (!isLocked) {
     showUnlockPopup(name, currentRow);
     return;
   }
-  isUnlock = isUnlockAction;
-  confirmOverlay.style.display = 'flex';
+  document.getElementById('confirmOverlay').style.display = 'flex';
 }
 
-// Kiểm tra trạng thái tài khoản có bị khóa không
+// Kiểm tra trạng thái khóa
 function isAccountLocked(row) {
   const statusCell = row.querySelector('.status');
-  const actionCell = row.querySelector('.actions img:last-child');
-  return statusCell && statusCell.textContent === 'lock' && actionCell && actionCell.src.includes('unlock.png');
+  return statusCell && statusCell.textContent === 'lock';
 }
 
 // Đóng popup xác nhận khóa
 function closeConfirmPopup() {
-  confirmOverlay.style.display = 'none';
+  document.getElementById('confirmOverlay').style.display = 'none';
 }
 
 // Xác nhận khóa tài khoản
@@ -160,13 +174,11 @@ async function confirmBlockAction() {
     if (updatedCustomer) {
       const statusCell = currentRow.querySelector('.status');
       const actionCell = currentRow.querySelector('.actions img:last-child');
-
-      statusCell.textContent = 'lock';
+      statusCell.textContent = 'Bị khóa';
       statusCell.className = 'status lock';
       actionCell.src = 'https://img.icons8.com/material-outlined/24/00ff00/unlock.png';
       actionCell.alt = 'unblock';
       currentRow.setAttribute('data-status', 'lock');
-
       closeConfirmPopup();
       closePopup();
       showSuccessPopup();
@@ -174,26 +186,26 @@ async function confirmBlockAction() {
   }
 }
 
-// Hiển thị popup khóa thành công
+// Hiển thị popup thành công
 function showSuccessPopup() {
-  successOverlay.style.display = 'flex';
+  document.getElementById('successOverlay').style.display = 'flex';
   setTimeout(closeSuccessPopup, 2000);
 }
 
-// Đóng popup khóa thành công
+// Đóng popup thành công
 function closeSuccessPopup() {
-  successOverlay.style.display = 'none';
+  document.getElementById('successOverlay').style.display = 'none';
 }
 
-// Hiển thị popup xác nhận mở khóa
+// Hiển thị popup mở khóa
 function showUnlockPopup(name, row) {
   currentRow = row;
-  unlockOverlay.style.display = 'flex';
+  document.getElementById('unlockOverlay').style.display = 'flex';
 }
 
-// Đóng popup xác nhận mở khóa
+// Đóng popup mở khóa
 function closeUnlockPopup() {
-  unlockOverlay.style.display = 'none';
+  document.getElementById('unlockOverlay').style.display = 'none';
 }
 
 // Xác nhận mở khóa tài khoản
@@ -204,18 +216,17 @@ async function confirmUnlockAction() {
     if (updatedCustomer) {
       const statusCell = currentRow.querySelector('.status');
       const actionCell = currentRow.querySelector('.actions img:last-child');
-
-      statusCell.textContent = 'active';
+      statusCell.textContent = 'Hoạt động';
       statusCell.className = 'status active';
       actionCell.src = 'https://img.icons8.com/material-outlined/24/ff0000/lock.png';
       actionCell.alt = 'block';
       currentRow.setAttribute('data-status', 'active');
-
       closeUnlockPopup();
-      if (popupOverlay.style.display === 'flex') closePopup();
+      if (document.getElementById('popupOverlay').style.display === 'flex') closePopup();
     }
   }
 }
+
 
 // Đóng popup khi nhấp ra ngoài
 [popupOverlay, confirmOverlay, unlockOverlay, successOverlay].forEach(overlay => {
