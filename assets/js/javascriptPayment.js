@@ -1,4 +1,3 @@
-// frontend/assets/js/javascriptPayment.js
 import { orderAPI } from './API_Payment.js';
 
 function updateDistricts() {
@@ -93,13 +92,16 @@ function renderOrderDetails() {
             return;
         }
 
-        // Kiểm tra giá trị total
+        // Kiểm tra giá trị total từ cartData
         if (typeof parsedCartData.total !== 'number' || parsedCartData.total <= 0) {
             console.error('Total is invalid:', parsedCartData.total);
             showErrorModal('Tổng đơn hàng không hợp lệ. Vui lòng kiểm tra lại giỏ hàng.');
             orderDetailsContainer.innerHTML = '<p>Tổng đơn hàng không hợp lệ. <a href="cart.html">Quay lại giỏ hàng</a></p>';
             return;
         }
+
+        // Log để kiểm tra isDiscountApplied
+        console.log('isDiscountApplied in renderOrderDetails:', JSON.parse(localStorage.getItem('isDiscountApplied')));
 
         let html = '';
         parsedCartData.items.forEach(item => {
@@ -166,10 +168,6 @@ async function showConfirmationModal() {
         return;
     }
 
-    document.getElementById('modalName').textContent = nameInput.value;
-    document.getElementById('modalPhone').textContent = phoneInput.value;
-    document.getElementById('modalAddress').textContent = `${streetInput.value}, ${districtSelect.value}, ${citySelect.value}`;
-
     try {
         const cartData = localStorage.getItem('cartData');
         if (!cartData) throw new Error('Không tìm thấy thông tin giỏ hàng');
@@ -178,12 +176,19 @@ async function showConfirmationModal() {
             throw new Error('Giỏ hàng trống');
         }
 
-        // Kiểm tra giá trị total
+        // Kiểm tra giá trị total từ cartData
         if (typeof parsedCartData.total !== 'number' || parsedCartData.total <= 0) {
             console.error('Total is invalid:', parsedCartData.total);
             showErrorModal('Tổng đơn hàng không hợp lệ. Vui lòng kiểm tra lại giỏ hàng.');
             return;
         }
+
+        // Log để kiểm tra isDiscountApplied
+        console.log('isDiscountApplied in showConfirmationModal:', JSON.parse(localStorage.getItem('isDiscountApplied')));
+
+        document.getElementById('modalName').textContent = nameInput.value;
+        document.getElementById('modalPhone').textContent = phoneInput.value;
+        document.getElementById('modalAddress').textContent = `${streetInput.value}, ${districtSelect.value}, ${citySelect.value}`;
 
         const modalOrderDetails = document.getElementById('modalOrderDetails');
         modalOrderDetails.innerHTML = '';
@@ -243,10 +248,14 @@ async function confirmOrder() {
             throw new Error('Không tìm thấy thông tin người dùng. Vui lòng đăng nhập lại.');
         }
 
-        // Kiểm tra giá trị total trước khi gửi lên API
+        // Kiểm tra giá trị total từ cartData
         if (typeof parsedCartData.total !== 'number' || parsedCartData.total <= 0) {
             throw new Error('Tổng đơn hàng không hợp lệ');
         }
+
+        // Log để kiểm tra isDiscountApplied và cartData
+        console.log('isDiscountApplied in confirmOrder:', JSON.parse(localStorage.getItem('isDiscountApplied')));
+        console.log('Order Data from cartData:', parsedCartData);
 
         const nameInput = document.querySelector('#fullName');
         const phoneInput = document.querySelector('#phone');
@@ -256,7 +265,7 @@ async function confirmOrder() {
         const streetInput = document.querySelector('#street');
 
         const orderData = {
-            userId: userId, // Sử dụng userId từ cartData
+            userId: userId,
             items: parsedCartData.items.map(item => ({
                 bookId: item.id,
                 quantity: item.quantity,
@@ -265,11 +274,11 @@ async function confirmOrder() {
             subtotal: parsedCartData.subtotal,
             shipping: parsedCartData.shipping,
             discount: parsedCartData.discount,
-            totalAmount: parsedCartData.total,
+            total: parsedCartData.total,
             orderDate: new Date().toISOString(),
             paymentMethod: 'online',
             shippingAddress: `${streetInput.value}, ${districtSelect.value}, ${citySelect.value}`,
-            status: 'completed',
+            status: 'pending',
             currency: 'VND'
         };
 
@@ -283,6 +292,7 @@ async function confirmOrder() {
         cart = cart.filter(item => !paidItemIds.includes(item.id));
         localStorage.setItem('cart', JSON.stringify(cart));
         localStorage.removeItem('cartData');
+        localStorage.setItem('isDiscountApplied', JSON.stringify(false));
 
         closeModal();
         showSuccessModal('Đặt hàng thành công!');
@@ -323,7 +333,6 @@ function closeModal() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Kiểm tra đăng nhập ngay khi trang tải
     const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
     const cartData = JSON.parse(localStorage.getItem('cartData') || '{}');
     const userId = cartData.userId;

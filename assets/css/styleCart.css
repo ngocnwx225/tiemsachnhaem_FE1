@@ -411,6 +411,7 @@ hr {
         padding: 10px 0; /* Giảm padding */
         gap: 10px;
     }
+    
 
     .cart-item img {
         width: 50px;
@@ -484,10 +485,25 @@ hr {
 }
 
 @media (max-width: 435px) {
+    
     .cart-page {
         flex-direction: column;
-        padding: 0 5px; /* Giảm padding hơn nữa cho màn hình nhỏ */
-        margin: 10px auto;
+        margin: 25px 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .discount-code button {
+        font-family: 'Montserrat', sans-serif;
+        padding: 10px 20px;
+        background-color: #86A788;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.2s ease, transform 0.1s ease;
     }
 
     .cart-section {
@@ -496,6 +512,7 @@ hr {
 
     .cart-section h2 {
         font-size: 18px;
+        text-align: center;
     }
 
     .cart-item {
@@ -511,6 +528,17 @@ hr {
         font-size: 12px;
     }
 
+    .modal-content {
+        background-color: #fff;
+        width: 54%;
+        max-width: 400px;
+        margin: 20% auto;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        align-content: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Thêm bóng cho modal */
+    }
     .item-price {
         font-size: 11px;
     }
