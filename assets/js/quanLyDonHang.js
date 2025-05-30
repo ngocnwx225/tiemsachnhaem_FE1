@@ -113,10 +113,7 @@ function renderOrdersTable() {
       <td>
         <button class="btn btn-outline-primary btn-sm" onclick="showOrderDetail('${
           order.id
-        }')">👁️</button>
-        <button class="btn btn-outline-danger btn-sm delete-btn" onclick="deleteOrder('${
-          order.id
-        }')">🗑️</button>
+        }')">👁️ Chi tiết</button>
       </td>
     </tr>
   `;
@@ -461,45 +458,6 @@ async function updateOrderStatus() {
 // Gán hàm cho window để có thể gọi từ HTML
 window.updateOrderStatus = updateOrderStatus;
 
-// Hàm xóa đơn hàng (DELETE /orders/{id})
-async function deleteOrder(orderId) {
-  if (confirm(`Bạn có chắc chắn muốn xóa đơn hàng #${orderId.slice(-5)}?`)) {
-    try {
-      const response = await fetch(
-        `https://tiemsachnhaem-be-mu.vercel.app/api/orders/${orderId}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error(
-          `Lỗi khi xóa đơn hàng: ${response.status} - ${response.statusText}`
-        );
-      }
-
-      // Hiển thị popup thành công
-      document.getElementById("successTitle").textContent = "Xóa đơn hàng";
-      document.getElementById(
-        "successMessage"
-      ).textContent = `Đơn hàng #${orderId.slice(-5)} đã được xóa thành công!`;
-      const popup = document.getElementById("successOverlay");
-      popup.style.display = "flex";
-
-      // Làm mới danh sách đơn hàng
-      await fetchOrders();
-    } catch (error) {
-      console.error("Lỗi khi xóa đơn hàng:", error);
-      alert("Không thể xóa đơn hàng. Lỗi: " + error.message);
-    }
-  }
-}
-// Gán hàm cho window để có thể gọi từ HTML
-window.deleteOrder = deleteOrder;
-
 function closeSuccessPopup(event) {
   const popup = document.getElementById("successOverlay");
   if (event && !event.target.closest(".success-popup")) {
@@ -510,93 +468,6 @@ function closeSuccessPopup(event) {
 }
 // Gán hàm cho window để có thể gọi từ HTML
 window.closeSuccessPopup = closeSuccessPopup;
-
-// Hàm tạo đơn hàng mới
-window.createOrder = async function() {
-  try {
-    // Lấy dữ liệu từ form
-    const customerId = document.getElementById('createCustomerId').value;
-    const productId = document.getElementById('createProductId').value;
-    const quantity = document.getElementById('createQuantity').value;
-    const price = document.getElementById('createPrice').value;
-    const totalAmount = document.getElementById('createTotalAmount').value;
-    const status = document.getElementById('createStatus').value;
-
-    if (!customerId || !productId || !quantity || !price || !totalAmount) {
-      alert('Vui lòng điền đầy đủ thông tin đơn hàng');
-      return;
-    }
-
-    // Tạo dữ liệu đơn hàng
-    const orderData = {
-      customerInfo: { name: customerId },
-      orderInfo: {
-        orderDate: new Date().toISOString(),
-        totalAmount: Number(totalAmount),
-        status: status
-      },
-      items: [
-        {
-          productId: productId,
-          quantity: Number(quantity),
-          price: Number(price)
-        }
-      ]
-    };
-
-    // Gọi API tạo đơn hàng mới
-    const response = await fetch(
-      "https://tiemsachnhaem-be-mu.vercel.app/api/orders",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(orderData)
-      }
-    );
-
-    if (!response.ok) {
-      throw new Error(`Lỗi khi tạo đơn hàng: ${response.status} - ${response.statusText}`);
-    }
-
-    const result = await response.json();
-    console.log("Đơn hàng mới được tạo:", result);
-
-    // Thêm đơn hàng mới vào danh sách
-    if (result && result.id) {
-      ordersData.unshift({
-        id: result.id,
-        customerInfo: { name: customerId, email: "" },
-        orderInfo: {
-          orderDate: new Date().toISOString(),
-          totalAmount: Number(totalAmount),
-          status: status
-        }
-      });
-      
-      // Sắp xếp lại danh sách đơn hàng
-      ordersData = ordersData.sort((a, b) => {
-        const dateA = new Date(a.orderInfo?.orderDate || a.orderInfo?.createdAt || a.createdAt);
-        const dateB = new Date(b.orderInfo?.orderDate || b.orderInfo?.createdAt || b.createdAt);
-        return dateB - dateA; // Sắp xếp giảm dần (mới nhất lên đầu)
-      });
-      
-      renderOrdersTable();
-    }
-
-    // Đóng modal
-    const createModal = bootstrap.Modal.getInstance(document.getElementById('createOrderModal'));
-    if (createModal) createModal.hide();
-
-    // Hiển thị thông báo thành công
-    showSuccessPopup("Thành công", "Đã tạo đơn hàng mới!");
-    
-  } catch (error) {
-    console.error("Lỗi khi tạo đơn hàng:", error);
-    alert(`Lỗi: ${error.message}`);
-  }
-};
 
 // Khởi tạo khi trang tải
 document.addEventListener("DOMContentLoaded", function () {
