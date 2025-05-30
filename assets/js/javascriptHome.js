@@ -131,7 +131,44 @@ document.addEventListener("DOMContentLoaded", function () {
                   localStorage.setItem('cart', JSON.stringify(cart));
                   // Optional: Show a notification that item was added to cart
                   console.log(`${product.bookTitle} added to cart`);
+
+                  // Hiển thị modal thông báo
+                  showNotificationModal(`${product.bookTitle} đã được thêm vào giỏ hàng!`);
               });
+          });
+      }
+
+      // Hàm hiển thị modal
+      function showNotificationModal(message) {
+          const modal = document.getElementById('cartNotificationModal');
+          const messageElement = document.getElementById('notificationMessage');
+          if (!modal || !messageElement) {
+              console.error('Modal hoặc message element không tồn tại');
+              return;
+          }
+          messageElement.textContent = message;
+          modal.style.display = 'flex';
+      }
+
+      // Hàm ẩn modal
+      function closeNotificationModal() {
+          const modal = document.getElementById('cartNotificationModal');
+          if (modal) modal.style.display = 'none';
+      }
+
+      // Thêm event listener để đóng modal khi click vào nút Đóng
+      const closeModalBtn = document.getElementById('closeModalBtn');
+      if (closeModalBtn) {
+          closeModalBtn.addEventListener('click', closeNotificationModal);
+      }
+
+      // Thêm event listener để đóng modal khi click ra ngoài modal
+      const cartNotificationModal = document.getElementById('cartNotificationModal');
+      if (cartNotificationModal) {
+          cartNotificationModal.addEventListener('click', function (e) {
+              if (e.target === this) {
+                  closeNotificationModal();
+              }
           });
       }
 

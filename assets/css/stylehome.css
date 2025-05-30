@@ -896,10 +896,6 @@ section.book-banners, section.book-banners2 {
     transition: transform 0.5s ease;
   }
 
-  .banner-container:hover .banner-image {
-    transform: scale(1.1);
-  }
-
   .book-banners .banner-item img:hover,
   .book-banners2 .banner-item2 img:hover {
     transform: scale(1.1);
