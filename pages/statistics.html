@@ -139,28 +139,18 @@
           <div class="chart-summary-layout">
             <div class="box chart-box wide">
               <div class="box-header">
-                <div>
-                  <img src="../assets/images/Thống kê xanh.png" width="16" />
-                  <strong>Doanh số bán hàng</strong>
-                </div>
+                <div><img src="../assets/images/Thống kê xanh.png" width="16" /> <strong>Doanh số bán hàng</strong></div>
+                
               </div>
               <canvas id="salesChart" width="400" height="150"></canvas>
-              <p style="text-align: center">
-                <strong
-                  >Tổng doanh thu:
-                  <span style="color: #86a788">...</span></strong
-                >
-              </p>
+              <p style="text-align: center;"><strong>Tổng doanh thu: <span style="color: #86a788;">...</span></strong></p>
             </div>
 
             <div class="box chart-box narrow">
               <div class="box-header">
-                <div>
-                  <img src="../assets/images/Quyển sách.png" width="16" />
-                  <strong>Sản phẩm bán chạy nhất</strong>
-                </div>
+                <div><img src="../assets/images/Quyển sách.png" width="16" /> <strong>Sản phẩm bán chạy nhất</strong></div>
               </div>
-              <!-- Sản phẩm được thêm động -->
+               <div id="top-products-list"></div>
             </div>
           </div>
         </div>
@@ -169,5 +159,6 @@
 
     <!-- Load logic từ file JS tách rời -->
     <script src="../assets/js/API_statistics.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   </body>
 </html>
