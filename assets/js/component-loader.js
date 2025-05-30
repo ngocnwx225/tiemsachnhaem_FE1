@@ -45,6 +45,8 @@ document.addEventListener('DOMContentLoaded', function() {
         logoutBtn.addEventListener('click', function() {
           console.log('Đăng xuất');
           localStorage.removeItem('userInfo');
+          localStorage.getItem("cart") && localStorage.removeItem("cart");
+          localStorage.getItem("isDiscountApplied") && localStorage.removeItem("isDiscountApplied");
           const isLogout = confirm('Bạn có muốn đăng xuất không?');
           if (isLogout) {
             alert('Đăng xuất thành công');

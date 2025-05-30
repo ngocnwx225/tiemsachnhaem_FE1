@@ -192,6 +192,16 @@ function logOutHandler() {
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
 
+    // Xoá CartData trong localStorage
+    if (localStorage.getItem("cart")) {
+      localStorage.removeItem("cart");
+    }
+
+    //   Kiểm tra isDiscountApplied trong localStorage là true thì cho thành false
+    if (localStorage.getItem("isDiscountApplied")) {
+      localStorage.setItem("isDiscountApplied", false);
+    }
+
     // Xác định đường dẫn đến trang đăng nhập dựa trên vị trí hiện tại
     const currentPath = window.location.pathname;
     let loginPath;
