@@ -57,9 +57,9 @@
 }
 
 .main-header {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   align-items: center;
-  justify-content: space-between;
   gap: 10px;
   padding: 10px 0;
   flex-wrap: wrap;
@@ -131,6 +131,7 @@
   color: #1A3229;
   position: relative;
   line-height: 1;
+  justify-content: right;
 }
 
 .header-divider {
