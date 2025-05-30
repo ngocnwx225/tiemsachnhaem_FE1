@@ -227,5 +227,7 @@ async function confirmUnlockAction() {
   });
 });
 
+
+
 // Gọi API khi trang tải
 document.addEventListener('DOMContentLoaded', fetchCustomers);
