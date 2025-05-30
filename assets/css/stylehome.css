@@ -438,6 +438,7 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
     font-family: 'Montserrat', sans-serif;
+    
   }
   
   .see-all-btn:hover {
@@ -577,7 +578,7 @@ footer {
       background-color: #729775;
     }
 
-    /* HÀNG NÚT ĐIỀU KHIỂN + XEM TẤT CẢ 
+    /*HÀNG NÚT ĐIỀU KHIỂN + XEM TẤT CẢ 
     .control-row {
       display: flex;
       justify-content: space-between;
@@ -936,6 +937,20 @@ section.book-banners, section.book-banners2 {
 .buy-button:hover, .add-button:hover {
   transform: scale(1.05);
 }
+
+.control-row {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.right-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Canh giữa theo chiều dọc */
+  width: 100%; /* Bắt buộc để h3 và button nằm 2 bên */
+  padding-bottom: 15px;
+}
 .see-all-btn {
   background-color: #88a58a;
   color: white;
@@ -946,6 +961,7 @@ section.book-banners, section.book-banners2 {
   cursor: pointer;
   transition: background-color 0.3s ease;
   font-family: 'Montserrat', sans-serif;
+  
 }
 
 .see-all-btn:hover {

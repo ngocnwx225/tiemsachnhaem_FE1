@@ -15,6 +15,7 @@ body {
   padding-left: 120px;
   padding-right: 120px;
   box-sizing: border-box;
+  padding-bottom: 20px;
 }
 
 .book-detail {
@@ -114,10 +115,8 @@ body {
 section h3 {
   margin-top: 2rem;
 }
-.book-list {
-  display: flex;
-  gap: 16px;
-}
+
+
 
 .carousel-wrapper {
   display: flex;
@@ -167,8 +166,16 @@ section h3 {
 }
 
 /*Products*/
+.book-list {
+  display: flex;
+  gap: 16px;
+  align-items: stretch;
+  flex-wrap: nowrap;        /* Không xuống dòng */
+  width: 100%;
+  justify-content: flex-start; /* Các card dàn đều */
+}
+
 .product-card {
-  
   width: 281.25px;
   height: 100%;
   padding-bottom: 24px;
@@ -480,7 +487,6 @@ body { /* Thêm body để reset margin mặc định nếu cần */
       justify-content: center;
       align-items: center;
       width: 100%;
-
     }
     .product-card {
       width: 220px;
