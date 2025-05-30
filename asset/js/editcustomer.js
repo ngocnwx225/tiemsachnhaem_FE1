@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 alert('Cập nhật thông tin thành công');
 
                 // Chuyển về trang thông tin tài khoản
-                window.location.href = 'profilecustomer.html';
+                window.location.href = 'profile.html';
 
             } catch (error) {
                 console.error('Lỗi khi cập nhật thông tin:', error);
