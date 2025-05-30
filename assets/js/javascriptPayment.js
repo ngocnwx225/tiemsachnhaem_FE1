@@ -333,24 +333,55 @@ function closeModal() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
-    const cartData = JSON.parse(localStorage.getItem('cartData') || '{}');
-    const userId = cartData.userId;
+    try {
+        const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
+        const cartData = localStorage.getItem('cartData');
+        console.log('Initial cartData check in DOMContentLoaded:', cartData);
+        
+        if (!cartData) {
+            console.error('Không tìm thấy cartData trong localStorage');
+            showErrorModal('Không tìm thấy thông tin giỏ hàng. Vui lòng quay lại giỏ hàng.');
+            setTimeout(() => {
+                window.location.href = 'cart.html';
+            }, 2000);
+            return;
+        }
+        
+        const parsedCartData = JSON.parse(cartData);
+        console.log('Parsed cartData in DOMContentLoaded:', parsedCartData);
+        
+        if (!parsedCartData || !parsedCartData.items || parsedCartData.items.length === 0) {
+            console.error('CartData không hợp lệ hoặc trống');
+            showErrorModal('Giỏ hàng trống. Vui lòng quay lại giỏ hàng để chọn sản phẩm.');
+            setTimeout(() => {
+                window.location.href = 'cart.html';
+            }, 2000);
+            return;
+        }
+        
+        const userId = parsedCartData.userId;
+        if (!userInfo || !userInfo.id || !userId) {
+            console.error('Không tìm thấy thông tin người dùng');
+            showErrorModal('Bạn cần đăng nhập để tiếp tục thanh toán. Vui lòng quay lại giỏ hàng.');
+            setTimeout(() => {
+                window.location.href = 'cart.html';
+            }, 2000);
+            return;
+        }
 
-    if (!userInfo || !userInfo.id || !userId) {
-        showErrorModal('Bạn cần đăng nhập để tiếp tục thanh toán. Vui lòng quay lại giỏ hàng.');
+        const checkoutBtn = document.querySelector('.checkout-btn');
+        const citySelect = document.getElementById('city');
+        
+        if (checkoutBtn) checkoutBtn.addEventListener('click', showConfirmationModal);
+        if (citySelect) citySelect.addEventListener('change', updateDistricts);
+
+        updateDistricts();
+        renderOrderDetails();
+    } catch (error) {
+        console.error('Lỗi khởi tạo trang payment:', error);
+        showErrorModal('Có lỗi xảy ra khi tải trang: ' + error.message);
         setTimeout(() => {
             window.location.href = 'cart.html';
         }, 2000);
-        return;
     }
-
-    const checkoutBtn = document.querySelector('.checkout-btn');
-    const citySelect = document.getElementById('city');
-    
-    if (checkoutBtn) checkoutBtn.addEventListener('click', showConfirmationModal);
-    if (citySelect) citySelect.addEventListener('change', updateDistricts);
-
-    updateDistricts();
-    renderOrderDetails();
 });

@@ -88,6 +88,23 @@
 
     <!-- Load component-loader.js trước, sau đó mới load javascriptCart.js -->
     <script src="../assets/js/component-loader.js"></script>
+    <script>
+        // Thêm debug để kiểm tra dữ liệu localStorage trước khi load javascriptCart.js
+        console.log('Initial cart debug - localStorage:', {
+            cart: localStorage.getItem('cart'),
+            cartData: localStorage.getItem('cartData'),
+            isDiscountApplied: localStorage.getItem('isDiscountApplied')
+        });
+        
+        // Chuyển hướng Debug Helper
+        window.debugRedirect = function(data) {
+            console.log('Debug trước khi chuyển hướng sang payment:', data);
+            // Lưu dữ liệu để debug
+            localStorage.setItem('debugRedirectData', JSON.stringify(data));
+            // Cho phép chuyển hướng sau khi log
+            return true;
+        };
+    </script>
     <script src="../assets/js/javascriptCart.js"></script>
 </body>
 </html>

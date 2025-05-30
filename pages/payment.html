@@ -142,7 +142,22 @@
 
     <!-- Load component-loader.js trước, sau đó mới load các script khác -->
     <script src="../assets/js/component-loader.js"></script>
-    <script src="../assets/js/API_Payment.js"></script>
-    <script src="../assets/js/javascriptPayment.js"></script>
+    <script>
+        // Debug script để kiểm tra dữ liệu localStorage khi trang payment.html được load
+        console.log('Payment page load - localStorage data:', {
+            cartData: localStorage.getItem('cartData'),
+            parsedCartData: localStorage.getItem('cartData') ? JSON.parse(localStorage.getItem('cartData')) : null,
+            isDiscountApplied: localStorage.getItem('isDiscountApplied'),
+            debugRedirectData: localStorage.getItem('debugRedirectData'),
+            userInfo: localStorage.getItem('userInfo')
+        });
+        
+        // Kiểm tra dữ liệu xem có bị mất không
+        if (!localStorage.getItem('cartData')) {
+            console.error('CRITICAL: cartData không tồn tại trong localStorage!');
+        }
+    </script>
+    <script src="../assets/js/API_Payment.js" type="module"></script>
+    <script src="../assets/js/javascriptPayment.js" type="module"></script>
   </body>
 </html>

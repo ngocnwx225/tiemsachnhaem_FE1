@@ -208,9 +208,29 @@ function setupCartEvents() {
         console.log('Cart Data to be saved:', cartData);
         console.log('isDiscountApplied:', isDiscountApplied);
 
+        // Xóa dữ liệu cũ trước khi lưu mới để tránh lỗi
+        localStorage.removeItem('cartData');
+        localStorage.removeItem('isDiscountApplied');
+
+        // Lưu dữ liệu mới
         localStorage.setItem('isDiscountApplied', JSON.stringify(isDiscountApplied));
         localStorage.setItem('cartData', JSON.stringify(cartData));
-        window.location.href = 'payment.html';
+        
+        // Debug để kiểm tra dữ liệu sau khi lưu
+        console.log('Cart Data after save - check localStorage:', {
+            cartData: localStorage.getItem('cartData'),
+            isDiscountApplied: localStorage.getItem('isDiscountApplied')
+        });
+        
+        // Dùng timeout nhỏ để đảm bảo localStorage đã được lưu trước khi chuyển trang
+        setTimeout(() => {
+            // Nếu có hàm debug chuyển hướng, sử dụng nó
+            if (window.debugRedirect && window.debugRedirect(cartData)) {
+                window.location.href = 'payment.html';
+            } else {
+                window.location.href = 'payment.html';
+            }
+        }, 100);
     });
 
     cartDOM.applyDiscountBtn.addEventListener('click', () => {
