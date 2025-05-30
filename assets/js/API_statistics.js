@@ -74,7 +74,6 @@ async function loadOrderRevenueChart() {
 
     const data = await response.json();
     const orders = data.recentOrders;
-
     // Hiển thị tổng doanh thu
     const totalRevenue = parseInt(data.totalRevenue) || 0;
     const revenueDisplay = document.querySelector('span[style*="color: #86a788"]');
@@ -90,68 +89,107 @@ async function loadOrderRevenueChart() {
   }
 }
 
-function renderSalesChart(orders) {
-  const currentYear = new Date().getFullYear();
-  const revenueByMonth = {};
+// function renderSalesChart(orders) {
+//   const currentYear = new Date().getFullYear();
+//   const revenueByMonth = {};
 
-  for (let m = 1; m <= 12; m++) {
-    const key = `${currentYear}-${m.toString().padStart(2, '0')}`;
-    revenueByMonth[key] = 0;
-  }
+//   for (let m = 1; m <= 12; m++) {
+//     const key = `${currentYear}-${m.toString().padStart(2, '0')}`;
+//     revenueByMonth[key] = 0;
+//   }
 
-  orders.forEach(order => {
-    if (['completed', 'delivered'].includes(order.status)) {
-      const date = new Date(order.orderDate);
-      const year = date.getFullYear();
-      const month = (date.getMonth() + 1).toString().padStart(2, '0');
-      const key = `${year}-${month}`;
+//   orders.forEach(order => {
+//     if (['completed', 'delivered'].includes(order.status)) {
+//       const date = new Date(order.orderDate);
+//       const year = date.getFullYear();
+//       const month = (date.getMonth() + 1).toString().padStart(2, '0');
+//       const key = `${year}-${month}`;
 
-      if (year === currentYear && revenueByMonth.hasOwnProperty(key)) {
-        revenueByMonth[key] += parseInt(order.totalAmount) || 0;
-      }
-    }
-  });
+//       if (year === currentYear && revenueByMonth.hasOwnProperty(key)) {
+//         revenueByMonth[key] += parseInt(order.totalAmount) || 0;
+//       }
+//     }
+//   });
 
-  const labels = Object.keys(revenueByMonth).map((_, i) => `Tháng ${i + 1}`);
-  const values = Object.values(revenueByMonth);
-  const ctx = document.getElementById('salesChart').getContext('2d');
+  // const labels = Object.keys(revenueByMonth).map((_, i) => `Tháng ${i + 1}`);
+  // const values = Object.values(revenueByMonth);
+  // const ctx = document.getElementById('salesChart').getContext('2d');
 
-  if (window.salesChartInstance) {
-    window.salesChartInstance.destroy();
-  }
+  // if (window.salesChartInstance) {
+  //   window.salesChartInstance.destroy();
+  // }
 
-  window.salesChartInstance = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: labels,
+
+
+//   window.salesChartInstance = new Chart(ctx, {
+//     type: 'bar',
+//     data: {
+//       labels: labels,
+//       datasets: [{
+//         label: 'Doanh thu (VNĐ)',
+//         data: values,
+//         backgroundColor: '#86a788',
+//         borderRadius: 8
+//       }]
+//     },
+//     options: {
+//       responsive: true,
+//       scales: {
+//         y: {
+//           beginAtZero: true,
+//           ticks: {
+//             callback: value => value.toLocaleString('vi-VN') + ' ₫'
+//           }
+//         }
+//       },
+//       plugins: {
+//         legend: { display: false },
+//         tooltip: {
+//           callbacks: {
+//             label: context => 'Doanh thu (VNĐ): ' + context.raw.toLocaleString('vi-VN')
+//           }
+//         }
+//       }
+//     }
+//   });
+// }
+function renderSalesChart(orders){
+  const monthlyRevenue = Array(12).fill(0); // Tạo mảng 12 tháng với giá trị 0
+console.log(orders)
+orders.forEach(order => {
+  const date = new Date(order.orderDate);
+  const month = date.getMonth(); // getMonth trả về từ 0 (Jan) đến 11 (Dec)
+  monthlyRevenue[month] += order.totalAmount;
+});
+
+var data = {
+      labels: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"],
       datasets: [{
-        label: 'Doanh thu (VNĐ)',
-        data: values,
-        backgroundColor: '#86a788',
-        borderRadius: 8
+        label: "Doanh thu theo tháng",
+        strokeColor: "rgba(75,192,192,1)",
+        pointColor: "rgba(75,192,192,1)",
+        pointStrokeColor: "#fff",
+        pointHighlightFill: "#fff",
+        pointHighlightStroke: "rgba(75,192,192,1)",
+        data: monthlyRevenue
       }]
-    },
-    options: {
-      responsive: true,
-      scales: {
-        y: {
-          beginAtZero: true,
-          ticks: {
-            callback: value => value.toLocaleString('vi-VN') + ' ₫'
-          }
-        }
-      },
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          callbacks: {
-            label: context => 'Doanh thu (VNĐ): ' + context.raw.toLocaleString('vi-VN')
-          }
-        }
-      }
-    }
-  });
+    };
+
+    var options = {
+      bezierCurve: false,
+      datasetFill: false,
+      tooltipTemplate: "<%if (label){%><%=label %>: <%}%><%= value + ' VNĐ' %>",
+      legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].pointColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
+    };
+
+    // Khởi tạo line chart
+    var ctx = document.getElementById('salesChart').getContext('2d');
+    var myChart = new Chart(ctx).Line(data, options);
+
+    // Gắn legend
+    document.getElementById('legend').innerHTML = myChart.generateLegend();
 }
+
 
 // Gọi các sản phẩm bán chạy
 async function loadTopSellingProducts() {
