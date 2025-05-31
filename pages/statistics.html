@@ -36,7 +36,7 @@
       input,
       select,
       textarea {
-        font-family: "Montserrat", sans-serif;
+        font-family: 'Montserrat', sans-serif;
       }
       .order-stats-row {
         display: flex;
@@ -94,7 +94,7 @@
               <button class="time-btn">Năm</button>
               <button class="time-btn custom">
                 <img
-                  src="../assets/images/Máy in.png"
+                  src="assets/images/Máy in.png"
                   width="16"
                   style="margin-right: 4px"
                 />
@@ -112,7 +112,7 @@
           <div class="box">
             <div class="box-header">
               <div>
-                <img src="../assets/images/Container.png" width="16" />
+                <img src="assets/images/Container.png" width="16" />
                 <strong>Thống kê đơn hàng</strong>
               </div>
             </div>
@@ -139,18 +139,28 @@
           <div class="chart-summary-layout">
             <div class="box chart-box wide">
               <div class="box-header">
-                <div><img src="../assets/images/Thống kê xanh.png" width="16" /> <strong>Doanh số bán hàng</strong></div>
-                
+                <div>
+                  <img src="assets/images/Thống kê xanh.png" width="16" />
+                  <strong>Doanh số bán hàng</strong>
+                </div>
               </div>
               <canvas id="salesChart" width="400" height="150"></canvas>
-              <p style="text-align: center;"><strong>Tổng doanh thu: <span style="color: #86a788;">...</span></strong></p>
+              <p style="text-align: center">
+                <strong
+                  >Tổng doanh thu:
+                  <span style="color: #86a788">...</span></strong
+                >
+              </p>
             </div>
 
             <div class="box chart-box narrow">
               <div class="box-header">
-                <div><img src="../assets/images/Quyển sách.png" width="16" /> <strong>Sản phẩm bán chạy nhất</strong></div>
+                <div>
+                  <img src="assets/images/Quyển sách.png" width="16" />
+                  <strong>Sản phẩm bán chạy nhất</strong>
+                </div>
               </div>
-               <div id="top-products-list"></div>
+              <div id="top-products-list"></div>
             </div>
           </div>
         </div>

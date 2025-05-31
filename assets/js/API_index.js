@@ -118,7 +118,7 @@ function renderRecentOrders(orders) {
       (order) => `
     <div class="order-item">
       <div class="order-left">
-        <img src="../assets/images/Container.png" width="32" height="32" />
+        <img src="assets/images/Container.png" width="32" height="32" />
         <div class="order-info">
           <strong>${order.customerName}</strong>
           <span>${order.productCount} sản phẩm</span>
