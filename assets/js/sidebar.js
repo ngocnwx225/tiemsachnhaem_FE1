@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!user) {
     window.location.href = '../pages/dangNhapAd.html';
   } else if (user.role !== 'admin') {
-    window.location.href = '/';
+    window.location.href = '../pages/index.html';
   }
 });
 

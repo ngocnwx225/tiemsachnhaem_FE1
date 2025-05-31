@@ -94,7 +94,7 @@ function callLoginAPI(event) {
 
           alert('Đăng nhập thành công!');
           // Chuyển hướng đến trang chủ
-          window.location.href = '/';
+          window.location.href = 'index.html';
         } else {
           console.error('Phản hồi không có thông tin user:', data);
           alert(
