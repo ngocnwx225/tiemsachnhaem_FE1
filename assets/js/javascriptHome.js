@@ -213,7 +213,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const seeAllButton = document.querySelector('.see-all-btn');
   if (seeAllButton) {
     seeAllButton.addEventListener('click', function () {
-      window.location.href = './shopPage.html'; // Giả sử shoppage.html nằm trong cùng thư mục
+      window.location.href = './ShopPage.html'; // Giả sử shoppage.html nằm trong cùng thư mục
     });
   }
 });
