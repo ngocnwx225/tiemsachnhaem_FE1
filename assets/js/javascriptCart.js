@@ -306,7 +306,7 @@ function setupCartEvents() {
 
   cartDOM.confirmLoginPrompt.addEventListener('click', () => {
     cartDOM.loginPromptModal.style.display = 'none';
-    window.location.href = 'pages/dangNhap.html';
+    window.location.href = '../pages/dangNhap.html';
   });
 
   cartDOM.loginPromptModal.addEventListener('click', (e) => {

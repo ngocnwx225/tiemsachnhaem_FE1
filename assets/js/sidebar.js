@@ -32,7 +32,7 @@ function loadSidebar() {
   if (currentPath.includes('/pages/')) {
     sidebarPath = '../components/sidebar.html';
   } else {
-    sidebarPath = 'components/sidebar.html';
+    sidebarPath = '../components/sidebar.html';
   }
 
   // Tải sidebar
@@ -221,15 +221,15 @@ function logOutHandler() {
       currentPath === '/' ||
       currentPath.endsWith('/')
     ) {
-      loginPath = 'pages/dangNhapAd.html';
+      loginPath = '../pages/dangNhapAd.html';
     }
     // Nếu đang ở trong thư mục pages
     else if (currentPath.includes('/pages/')) {
-      loginPath = 'pages/dangNhapAd.html';
+      loginPath = '../pages/dangNhapAd.html';
     }
     // Trường hợp khác
     else {
-      loginPath = 'pages/dangNhapAd.html';
+      loginPath = '../pages/dangNhapAd.html';
     }
     alert('Đăng xuất thành công!');
     console.log('Đăng xuất thành công, chuyển hướng đến:', loginPath);

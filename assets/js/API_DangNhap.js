@@ -2,9 +2,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const user = JSON.parse(localStorage.getItem('userInfo'));
   if (user) {
     if (user.role === 'admin') {
-      window.location.href = '/admin.html';
+      window.location.href = '../../pages/admin.html';
     } else {
-      window.location.href = '/';
+      window.location.href = '../../pages/index.html';
     }
   }
 });
