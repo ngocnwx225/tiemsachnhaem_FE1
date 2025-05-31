@@ -1,5 +1,14 @@
+document.addEventListener('DOMContentLoaded', () => {
+  const user = JSON.parse(localStorage.getItem('userInfo'));
+  if (!user) {
+    window.location.href = '../pages/dangNhapAd.html';
+  } else if (user.role !== 'admin') {
+    window.location.href = '/';
+  }
+});
+
 // Xử lý tương tác với sidebar
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener('DOMContentLoaded', function () {
   // Tải sidebar
   loadSidebar();
 
@@ -12,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Tải sidebar và xử lý đường dẫn
 function loadSidebar() {
-  const sidebarContainer = document.getElementById("sidebar-container");
+  const sidebarContainer = document.getElementById('sidebar-container');
   if (!sidebarContainer) return;
 
   // Xác định đường dẫn tới sidebar.html dựa trên vị trí trang hiện tại
@@ -20,10 +29,10 @@ function loadSidebar() {
   let sidebarPath;
 
   // Nếu đang ở trong thư mục pages
-  if (currentPath.includes("/pages/")) {
-    sidebarPath = "../components/sidebar.html";
+  if (currentPath.includes('/pages/')) {
+    sidebarPath = '../components/sidebar.html';
   } else {
-    sidebarPath = "components/sidebar.html";
+    sidebarPath = 'components/sidebar.html';
   }
 
   // Tải sidebar
@@ -34,16 +43,16 @@ function loadSidebar() {
 
       // Fix các đường dẫn trong sidebar nếu cần
       document
-        .querySelectorAll("#sidebar-container a, #sidebar-container img")
+        .querySelectorAll('#sidebar-container a, #sidebar-container img')
         .forEach((el) => {
-          const src = el.getAttribute("src") || el.getAttribute("href");
-          if (src && !src.startsWith("http")) {
+          const src = el.getAttribute('src') || el.getAttribute('href');
+          if (src && !src.startsWith('http')) {
             // Nếu đang ở trong thư mục pages và đường dẫn không bắt đầu bằng ../
-            if (currentPath.includes("/pages/") && !src.startsWith("../")) {
-              if (el.tagName === "IMG") {
-                el.src = "../" + src;
+            if (currentPath.includes('/pages/') && !src.startsWith('../')) {
+              if (el.tagName === 'IMG') {
+                el.src = '../' + src;
               } else {
-                el.href = "../" + src;
+                el.href = '../' + src;
               }
             }
           }
@@ -51,22 +60,22 @@ function loadSidebar() {
 
       // Điều chỉnh vị trí của sidebar để nằm sát lề trái
       const sidebarElement = document.querySelector(
-        "#sidebar-container .sidebar"
+        '#sidebar-container .sidebar'
       );
       if (sidebarElement) {
-        sidebarElement.style.left = "0";
-        sidebarElement.style.top = "0";
-        sidebarElement.style.overflow = "visible";
+        sidebarElement.style.left = '0';
+        sidebarElement.style.top = '0';
+        sidebarElement.style.overflow = 'visible';
       }
 
       // Highlight menu item phù hợp sau khi tải sidebar
       highlightCurrentPage();
 
       // Thiết lập sự kiện đăng xuất sau khi sidebar được tải
-    //   setupLogout();
+      //   setupLogout();
     })
     .catch((error) => {
-      console.error("Lỗi khi tải sidebar:", error);
+      console.error('Lỗi khi tải sidebar:', error);
     });
 }
 
@@ -76,43 +85,43 @@ function highlightCurrentPage() {
   const fullPath = window.location.pathname;
 
   // Lấy tên file từ đường dẫn (phần cuối cùng sau dấu /)
-  let pageName = fullPath.split("/").pop();
+  let pageName = fullPath.split('/').pop();
 
   // Nếu không có tên file (chỉ có '/' ở cuối), coi như là trang chủ
   if (!pageName) {
-    pageName = "index.html";
+    pageName = 'admin.html';
   }
 
-  console.log("Current page:", pageName);
+  console.log('Current page:', pageName);
 
   // Highlight menu dựa trên trang hiện tại
-  if (pageName.includes("index.html") || pageName === "") {
-    highlightMenuItem("menu-overview");
-  } else if (pageName.includes("adminQLSP.html")) {
-    highlightMenuItem("menu-products");
-  } else if (pageName.includes("quanlydonhang.html")) {
-    highlightMenuItem("menu-orders");
-  } else if (pageName.includes("QLKH.html")) {
-    highlightMenuItem("menu-customers");
-  } else if (pageName.includes("statistics.html")) {
-    highlightMenuItem("menu-statistics");
+  if (pageName.includes('admin.html') || pageName === '') {
+    highlightMenuItem('menu-overview');
+  } else if (pageName.includes('adminQLSP.html')) {
+    highlightMenuItem('menu-products');
+  } else if (pageName.includes('quanlydonhang.html')) {
+    highlightMenuItem('menu-orders');
+  } else if (pageName.includes('QLKH.html')) {
+    highlightMenuItem('menu-customers');
+  } else if (pageName.includes('statistics.html')) {
+    highlightMenuItem('menu-statistics');
   }
 }
 
 // Highlight một menu item cụ thể
 function highlightMenuItem(menuId) {
   // Xóa trạng thái active từ tất cả các mục
-  document.querySelectorAll(".menu li").forEach((item) => {
-    item.classList.remove("active");
+  document.querySelectorAll('.menu li').forEach((item) => {
+    item.classList.remove('active');
   });
 
   // Thêm trạng thái active cho mục tương ứng
   const menuItem = document.getElementById(menuId);
   if (menuItem) {
-    menuItem.classList.add("active");
-    console.log("Activated menu item:", menuId);
+    menuItem.classList.add('active');
+    console.log('Activated menu item:', menuId);
   } else {
-    console.log("Menu item not found:", menuId);
+    console.log('Menu item not found:', menuId);
   }
 }
 
@@ -137,10 +146,10 @@ function highlightMenuItem(menuId) {
 
 //             // Nếu đang trong thư mục pages
 //             if (currentPath.includes("/pages/")) {
-//                 window.location.href = "dangnhap1.html";
+//                 window.location.href = "dangNhapAd.html";
 //             } else {
 //                 // Nếu ở root hoặc nơi khác
-//                 window.location.href = "pages/dangnhap1.html";
+//                 window.location.href = "pages/dangNhapAd.html";
 //             }
 
 //             console.log("Đăng xuất thành công");
@@ -152,7 +161,7 @@ function highlightMenuItem(menuId) {
 
 // Hiển thị thông tin người dùng từ localStorage
 function displayUserInfo() {
-  const userInfo = localStorage.getItem("userInfo");
+  const userInfo = localStorage.getItem('userInfo');
   if (userInfo) {
     try {
       const user = JSON.parse(userInfo);
@@ -160,7 +169,7 @@ function displayUserInfo() {
       // Hiển thị tên người dùng nếu có
       if (user.fullName) {
         const accountName = document.querySelector(
-          ".profile-section div:nth-child(2)"
+          '.profile-section div:nth-child(2)'
         );
         if (accountName) {
           accountName.textContent = user.fullName;
@@ -170,36 +179,36 @@ function displayUserInfo() {
       // Hiển thị vai trò người dùng
       if (user.role) {
         const accountRole = document.querySelector(
-          ".profile-section div:nth-child(3) b"
+          '.profile-section div:nth-child(3) b'
         );
         if (accountRole) {
           accountRole.textContent = user.role.toUpperCase();
         }
       }
     } catch (error) {
-      console.error("Lỗi khi hiển thị thông tin người dùng:", error);
+      console.error('Lỗi khi hiển thị thông tin người dùng:', error);
     }
   }
 }
 
-const logOutBtn = document.getElementById("logout-button");
+const logOutBtn = document.getElementById('logout-button');
 function logOutHandler() {
-  console.log("Logout function called directly");
-  const isLogout = confirm("Bạn có muốn đăng xuất không?");
+  console.log('Logout function called directly');
+  const isLogout = confirm('Bạn có muốn đăng xuất không?');
   if (isLogout) {
     // Xóa thông tin người dùng khỏi localStorage
-    localStorage.removeItem("userInfo");
-    localStorage.removeItem("token");
-    localStorage.removeItem("userId");
+    localStorage.removeItem('userInfo');
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
 
     // Xoá CartData trong localStorage
-    if (localStorage.getItem("cart")) {
-      localStorage.removeItem("cart");
+    if (localStorage.getItem('cart')) {
+      localStorage.removeItem('cart');
     }
 
     //   Kiểm tra isDiscountApplied trong localStorage là true thì cho thành false
-    if (localStorage.getItem("isDiscountApplied")) {
-      localStorage.setItem("isDiscountApplied", false);
+    if (localStorage.getItem('isDiscountApplied')) {
+      localStorage.setItem('isDiscountApplied', false);
     }
 
     // Xác định đường dẫn đến trang đăng nhập dựa trên vị trí hiện tại
@@ -208,24 +217,24 @@ function logOutHandler() {
 
     // Nếu đang ở trang chính (root)
     if (
-      currentPath.endsWith("index.html") ||
-      currentPath === "/" ||
-      currentPath.endsWith("/")
+      currentPath.endsWith('admin.html') ||
+      currentPath === '/' ||
+      currentPath.endsWith('/')
     ) {
-      loginPath = "dangnhap1.html";
+      loginPath = 'pages/dangNhapAd.html';
     }
     // Nếu đang ở trong thư mục pages
-    else if (currentPath.includes("/pages/")) {
-      loginPath = "dangnhap1.html";
+    else if (currentPath.includes('/pages/')) {
+      loginPath = 'pages/dangNhapAd.html';
     }
     // Trường hợp khác
     else {
-      loginPath = "pages/dangnhap1.html";
+      loginPath = 'pages/dangNhapAd.html';
     }
-    alert("Đăng xuất thành công!");
-    console.log("Đăng xuất thành công, chuyển hướng đến:", loginPath);
+    alert('Đăng xuất thành công!');
+    console.log('Đăng xuất thành công, chuyển hướng đến:', loginPath);
     // Chuyển hướng đến trang đăng nhập
     window.location.href = loginPath;
   }
 }
-logOutBtn.addEventListener("click", logOutHandler);
+logOutBtn.addEventListener('click', logOutHandler);

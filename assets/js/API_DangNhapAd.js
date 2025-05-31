@@ -1,3 +1,14 @@
+document.addEventListener('DOMContentLoaded', () => {
+  const user = JSON.parse(localStorage.getItem('userInfo'));
+  if (user) {
+    if (user.role === 'admin') {
+      window.location.href = '/admin.html';
+    } else {
+      window.location.href = '/';
+    }
+  }
+});
+
 document.addEventListener('DOMContentLoaded', function () {
   // Gán sự kiện submit cho form
   const loginForm = document.getElementById('loginForm');
@@ -80,7 +91,7 @@ function callLoginAPI(event) {
           console.log('Đã lưu thông tin người dùng:', data.user);
           alert('Đăng nhập thành công!');
           // Chuyển hướng đến trang chủ (hoặc trang admin)
-          window.location.href = '/'; // Bạn có thể đổi sang trang admin nếu có
+          window.location.href = '/admin.html'; // Bạn có thể đổi sang trang admin nếu có
         } else {
           // Nếu role không phải admin
           console.warn('Người dùng không có quyền truy cập:', data.user.role);

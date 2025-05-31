@@ -1,426 +1,428 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+/>
 <header class="header-component">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
 
     .header-component {
-  width: 100%;
-  background: #fff;
-  z-index: 1000;
-}
+      width: 100%;
+      background: #fff;
+      z-index: 1000;
+    }
 
-.header-top {
-  background-color: #1A3229;
-  color: white;
-  width: 100%;
-}
+    .header-top {
+      background-color: #1a3229;
+      color: white;
+      width: 100%;
+    }
 
-.header-top-inner {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  padding: 10px 0;
-  font-size: 14px;
-  font-family: 'Montserrat', sans-serif;
-  max-width: 1200px; /* Match homepage container max-width */
-  margin: 0 auto;
-  box-sizing: border-box;
-}
+    .header-top-inner {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      padding: 10px 0;
+      font-size: 14px;
+      font-family: 'Montserrat', sans-serif;
+      max-width: 1200px; /* Match homepage container max-width */
+      margin: 0 auto;
+      box-sizing: border-box;
+    }
 
-.header-top-inner i {
-  margin-right: 6px;
-  
-}
+    .header-top-inner i {
+      margin-right: 6px;
+    }
 
-.logo-section {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 6px;
-  justify-content: center;
-  padding: 16px 0 8px 0;
-  width: 100%;
-  max-width: 1200px; /* Match homepage container max-width */
-  margin: 0 auto;
-}
+    .logo-section {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 6px;
+      justify-content: center;
+      padding: 16px 0 8px 0;
+      width: 100%;
+      max-width: 1200px; /* Match homepage container max-width */
+      margin: 0 auto;
+    }
 
-.logo-section img {
-  height: 60px;
-}
+    .logo-section img {
+      height: 60px;
+    }
 
-.logo-section h2 {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 24px;
-  color: #1A3229;
-  font-weight: 600;
-  margin: 0;
-}
+    .logo-section h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 24px;
+      color: #1a3229;
+      font-weight: 600;
+      margin: 0;
+    }
 
-.main-header {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  align-items: center;
-  gap: 10px;
-  padding: 10px 0;
-  flex-wrap: wrap;
-  width: 100%;
-  max-width: 1680px;
-  margin: 0 auto;
-  background: #fff;
-}
+    .main-header {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      align-items: center;
+      gap: 10px;
+      padding: 10px 0;
+      flex-wrap: wrap;
+      width: 100%;
+      max-width: 1680px;
+      margin: 0 auto;
+      background: #fff;
+    }
 
-.container {
-  width: 100%;
-  max-width: 1680px;
-  margin: 0 auto;
-  padding-left: 120px;
-  padding-right: 120px;
-  box-sizing: border-box;
-}
+    .container {
+      width: 100%;
+      max-width: 1680px;
+      margin: 0 auto;
+      padding-left: 120px;
+      padding-right: 120px;
+      box-sizing: border-box;
+    }
 
-.nav-links {
-  display: flex;
-  gap: 20px;
-  flex-shrink: 0;
-}
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      flex-shrink: 0;
+    }
 
-.nav-links a {
-  text-decoration: none;
-  color: #333;
-  font-weight: 500;
-  font-family: 'Montserrat', sans-serif;
-  transition: color 0.2s;
-}
+    .nav-links a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      font-family: 'Montserrat', sans-serif;
+      transition: color 0.2s;
+    }
 
-.nav-links a:hover {
-  color: #86A788;
-}
+    .nav-links a:hover {
+      color: #86a788;
+    }
 
-.search-bar {
-  font-family: 'Montserrat', sans-serif;
-  flex-grow: 1;
-  max-width: 400px;
-  margin: 0 16px;
-  position: relative;
-}
+    .search-bar {
+      font-family: 'Montserrat', sans-serif;
+      flex-grow: 1;
+      max-width: 400px;
+      margin: 0 16px;
+      position: relative;
+    }
 
-.search-bar input {
-  font-family: 'Montserrat', sans-serif;
-  width: 100%;
-  padding: 8px 16px 8px 36px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-  box-sizing: border-box;
-}
+    .search-bar input {
+      font-family: 'Montserrat', sans-serif;
+      width: 100%;
+      padding: 8px 16px 8px 36px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
 
-.search-bar .fa-search {
-  position: absolute;
-  left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #999;
-  cursor: pointer;
-}
+    .search-bar .fa-search {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #999;
+      cursor: pointer;
+    }
 
-.icons {
-  display: flex;
-  gap: 15px;
-  flex-shrink: 0;
-  font-size: 18px;
-  color: #1A3229;
-  position: relative;
-  line-height: 1;
-  justify-content: right;
-}
+    .icons {
+      display: flex;
+      gap: 15px;
+      flex-shrink: 0;
+      font-size: 18px;
+      color: #1a3229;
+      position: relative;
+      line-height: 1;
+      justify-content: right;
+    }
 
-.header-divider {
-  color: #eee;
-  margin: 0;
-  border: none;
-  border-top: 1px solid #eee;
-}
+    .header-divider {
+      color: #eee;
+      margin: 0;
+      border: none;
+      border-top: 1px solid #eee;
+    }
 
-.icons .fa-user {
-  cursor: pointer;
-}
+    .icons .fa-user {
+      cursor: pointer;
+    }
 
-.icons .fa-shopping-cart {
-  cursor: pointer;
-}
+    .icons .fa-shopping-cart {
+      cursor: pointer;
+    }
 
-.dropdown-menu {
-  display: none;
-  position: absolute;
-  top: 100%;
-  right: 0;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  z-index: 1000;
-}
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+    }
 
-.dropdown-menu.show {
-  display: block;
-}
+    .dropdown-menu.show {
+      display: block;
+    }
 
-.dropdown-menu p {
-  display: block;
-  padding: 10px 20px;
-  text-decoration: none;
-  color: #333;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 14px;
-  white-space: nowrap;
-  cursor: pointer;
-}
+    .dropdown-menu p {
+      display: block;
+      padding: 10px 20px;
+      text-decoration: none;
+      color: #333;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px;
+      white-space: nowrap;
+      cursor: pointer;
+    }
 
-.dropdown-menu p:hover {
-  background-color: #f5f5f5;
-}
+    .dropdown-menu p:hover {
+      background-color: #f5f5f5;
+    }
 
-.search-results {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  z-index: 1000;
-  max-height: 300px;
-  overflow-y: auto;
-}
+    .search-results {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      max-height: 300px;
+      overflow-y: auto;
+    }
 
-.search-results.show {
-  display: block;
-}
+    .search-results.show {
+      display: block;
+    }
 
-.search-result-item {
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  border-bottom: 1px solid #eee;
-  text-decoration: none;
-  color: #333;
-  font-family: 'Montserrat', sans-serif;
-}
+    .search-result-item {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      text-decoration: none;
+      color: #333;
+      font-family: 'Montserrat', sans-serif;
+    }
 
-.search-result-item:last-child {
-  border-bottom: none;
-}
+    .search-result-item:last-child {
+      border-bottom: none;
+    }
 
-.search-result-item:hover {
-  background-color: #f5f5f5;
-}
+    .search-result-item:hover {
+      background-color: #f5f5f5;
+    }
 
-.search-result-item img {
-  width: 50px;
-  height: 50px;
-  object-fit: cover;
-  margin-right: 10px;
-}
+    .search-result-item img {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      margin-right: 10px;
+    }
 
-.search-result-item div {
-  flex: 1;
-}
+    .search-result-item div {
+      flex: 1;
+    }
 
-.search-result-item .product-name {
-  font-size: 14px;
-  font-weight: 500;
-  margin: 0;
-}
+    .search-result-item .product-name {
+      font-size: 14px;
+      font-weight: 500;
+      margin: 0;
+    }
 
-.search-result-item .product-price {
-  font-size: 12px;
-  color: #666;
-  margin: 0;
-}
+    .search-result-item .product-price {
+      font-size: 12px;
+      color: #666;
+      margin: 0;
+    }
 
-.search-result-item.view-all {
-  background-color: #f8f8f8;
-  text-align: center;
-  justify-content: center;
-}
+    .search-result-item.view-all {
+      background-color: #f8f8f8;
+      text-align: center;
+      justify-content: center;
+    }
 
-.search-result-item.view-all:hover {
-  background-color: #eef5ef;
-}
+    .search-result-item.view-all:hover {
+      background-color: #eef5ef;
+    }
 
-@media (max-width: 1200px) {
-  .container {
-    padding-left: 24px;
-    padding-right: 24px;
-  }
-}
+    @media (max-width: 1200px) {
+      .container {
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+    }
 
-@media (max-width: 600px) {
-  .container {
-    padding-left: 8px;
-    padding-right: 8px;
-  }
-}
+    @media (max-width: 600px) {
+      .container {
+        padding-left: 8px;
+        padding-right: 8px;
+      }
+    }
 
-@media (max-width: 768px) {
-  .header-top-inner {
-    flex-direction: row; /* Changed to row for horizontal layout */
-    gap: 20px; /* Reduced gap for better spacing on mobile */
-    padding: 8px 0;
-    font-size: 12px;
-  }
+    @media (max-width: 768px) {
+      .header-top-inner {
+        flex-direction: row; /* Changed to row for horizontal layout */
+        gap: 20px; /* Reduced gap for better spacing on mobile */
+        padding: 8px 0;
+        font-size: 12px;
+      }
 
-  /* Ensure icons remain visible and spaced properly on mobile */
-  .header-top-inner div {
-    justify-content: center;
-  }
-  /* Hide the text, keep the icons */
-.header-top-inner span {
-  display: none; /* Hides the text inside span elements */
-}
+      /* Ensure icons remain visible and spaced properly on mobile */
+      .header-top-inner div {
+        justify-content: center;
+      }
+      /* Hide the text, keep the icons */
+      .header-top-inner span {
+        display: none; /* Hides the text inside span elements */
+      }
 
-/* Adjust the layout to space icons evenly */
-.header-top-inner div {
-  display: flex;
-  align-items: center;
-}
+      /* Adjust the layout to space icons evenly */
+      .header-top-inner div {
+        display: flex;
+        align-items: center;
+      }
 
-  .logo-section {
-    padding: 12px 0;
-    flex-direction: column;
-    text-align: center;
-  }
+      .logo-section {
+        padding: 12px 0;
+        flex-direction: column;
+        text-align: center;
+      }
 
-  .logo-section h2 {
-    font-size: 20px;
-  }
+      .logo-section h2 {
+        font-size: 20px;
+      }
 
-  .main-header {
-    flex-direction: column;
-    align-items: center;
-    padding: 10px 0;
-    gap: 15px;
-  }
+      .main-header {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px 0;
+        gap: 15px;
+      }
 
-  .nav-links {
-    display: none;
-    flex-direction: column;
-    width: 100%;
-    text-align: center;
-  }
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+      }
 
-  .nav-links.active {
-    display: flex;
-  }
+      .nav-links.active {
+        display: flex;
+      }
 
-  .nav-links a {
-    padding: 10px 0;
-    font-size: 16px;
-  }
+      .nav-links a {
+        padding: 10px 0;
+        font-size: 16px;
+      }
 
-  .search-bar {
-    max-width: 100%;
-    margin: 0;
-    width: 100%;
-  }
+      .search-bar {
+        max-width: 100%;
+        margin: 0;
+        width: 100%;
+      }
 
-  .search-bar input {
-    padding: 10px 16px 10px 40px;
-    font-size: 12px;
-  }
+      .search-bar input {
+        padding: 10px 16px 10px 40px;
+        font-size: 12px;
+      }
 
-  .icons {
-    gap: 10px;
-    font-size: 14px;
-  }
+      .icons {
+        gap: 10px;
+        font-size: 14px;
+      }
 
-  /* Hamburger Menu */
-  .hamburger {
-    display: block;
-    font-size: 24px;
-    background: none;
-    border: none;
-    color: #1A3229;
-    cursor: pointer;
-    padding: 5px;
-  }
+      /* Hamburger Menu */
+      .hamburger {
+        display: block;
+        font-size: 24px;
+        background: none;
+        border: none;
+        color: #1a3229;
+        cursor: pointer;
+        padding: 5px;
+      }
 
-  .nav-links {
-    display: none;
-  }
+      .nav-links {
+        display: none;
+      }
 
-  .nav-links.active {
-    display: flex;
-  }
+      .nav-links.active {
+        display: flex;
+      }
 
-  .main-header {
-    position: relative;
-  }
+      .main-header {
+        position: relative;
+      }
 
-  .hamburger {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-  }
+      .hamburger {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+      }
 
-  .nav-links {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background-color: #fff;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    padding: 10px 0;
-    z-index: 1001;
-  }
+      .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: #fff;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        padding: 10px 0;
+        z-index: 1001;
+      }
 
-  .nav-links a {
-    padding: 12px 20px;
-    border-bottom: 1px solid #eee;
-  }
+      .nav-links a {
+        padding: 12px 20px;
+        border-bottom: 1px solid #eee;
+      }
 
-  .nav-links a:last-child {
-    border-bottom: none;
-  }
+      .nav-links a:last-child {
+        border-bottom: none;
+      }
 
-  .search-bar {
-    width: 70%;
-    margin: 10px 0;
-  }
+      .search-bar {
+        width: 70%;
+        margin: 10px 0;
+      }
 
-  .icons {
-    justify-content: right;
-    margin-top: 10px;
-  }
-}
+      .icons {
+        justify-content: right;
+        margin-top: 10px;
+      }
+    }
 
-/* Hamburger Icon Animation */
-.hamburger:focus {
-  outline: none;
-}
+    /* Hamburger Icon Animation */
+    .hamburger:focus {
+      outline: none;
+    }
 
-.hamburger.active .bar:nth-child(1) {
-  transform: rotate(45deg) translate(5px, 5px);
-}
+    .hamburger.active .bar:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
 
-.hamburger.active .bar:nth-child(2) {
-  opacity: 0;
-}
+    .hamburger.active .bar:nth-child(2) {
+      opacity: 0;
+    }
 
-.hamburger.active .bar:nth-child(3) {
-  transform: rotate(-45deg) translate(7px, -7px);
-}
+    .hamburger.active .bar:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -7px);
+    }
 
-.bar {
-  display: block;
-  width: 25px;
-  height: 3px;
-  background-color: #1A3229;
-  margin: 5px 0;
-  transition: all 0.3s ease;
-}
+    .bar {
+      display: block;
+      width: 25px;
+      height: 3px;
+      background-color: #1a3229;
+      margin: 5px 0;
+      transition: all 0.3s ease;
+    }
   </style>
   <div class="header-top">
     <div class="container header-top-inner">
@@ -440,20 +442,34 @@
   </div>
   <div class="container">
     <div class="logo-section">
-      <img src="../assets/images/Logo to.png" alt="Logo">
+      <img src="../assets/images/Logo to.png" alt="Logo" />
       <h2>Tiệm sách nhà em</h2>
     </div>
   </div>
   <nav class="main-header container">
     <div class="nav-links">
-      <a href="../pages/Home.html" onclick="window.location.href=this.href; return false;">Trang chủ</a>
-      <a href="../pages/ShopPage.html" onclick="window.location.href=this.href; return false;">Sản phẩm</a>
-      <a href="../pages/gioithieu.html" onclick="window.location.href=this.href; return false;">Giới thiệu</a>
-      <a href="../pages/F&Q.html" onclick="window.location.href=this.href; return false;">F&Q</a>
+      <a href="/" onclick="window.location.href=this.href; return false;"
+        >Trang chủ</a
+      >
+      <a
+        href="../pages/ShopPage.html"
+        onclick="window.location.href=this.href; return false;"
+        >Sản phẩm</a
+      >
+      <a
+        href="../pages/gioithieu.html"
+        onclick="window.location.href=this.href; return false;"
+        >Giới thiệu</a
+      >
+      <a
+        href="../pages/F&Q.html"
+        onclick="window.location.href=this.href; return false;"
+        >F&Q</a
+      >
     </div>
     <div class="search-bar">
-      <div style="width: 100%;">
-        <input  type="text" id="search-input" placeholder="Tìm kiếm sản phẩm">
+      <div style="width: 100%">
+        <input type="text" id="search-input" placeholder="Tìm kiếm sản phẩm" />
         <i class="fas fa-search" id="search-icon"></i>
         <div class="search-results" id="search-results"></div>
       </div>
@@ -463,11 +479,15 @@
         <i class="fas fa-user"></i>
         <div class="dropdown-menu">
           <p class="profile-btn">Thông tin khách hàng</p>
+          <p class="admin-btn">Quản trị viên</p>
           <p class="logout-btn">Đăng xuất</p>
         </div>
       </div>
-      <i class="fas fa-shopping-cart" onclick="window.location.href='../pages/cart.html'; return false;"></i>
+      <i
+        class="fas fa-shopping-cart"
+        onclick="window.location.href='../pages/cart.html'; return false;"
+      ></i>
     </div>
   </nav>
-  <hr class="header-divider">
+  <hr class="header-divider" />
 </header>

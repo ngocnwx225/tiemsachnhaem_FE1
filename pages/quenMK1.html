@@ -1,31 +1,46 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-  <meta charset="UTF-8">
-  <title>Quên mật khẩu</title>
-  <link rel="stylesheet" href="../assets/css/styledangky.css">
-  <script src="../assets/js/javascriptDangKy.js"></script>
-  <script src="../assets/js/API_ForgotPass.js"></script>
-</head>
-<body>
-  <div class="container">
-    <div class="logo-box">
-      <img src="../assets/Hình/logo.png" alt="Logo">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Quên mật khẩu</title>
+    <link rel="stylesheet" href="../assets/css/styledangky.css" />
+    <script src="../assets/js/javascriptDangKy.js"></script>
+    <script src="../assets/js/API_ForgotPass.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="logo-box">
+        <img src="../assets/Hình/logo.png" alt="Logo" />
+      </div>
+      <div class="form-box">
+        <h1>Khôi phục mật khẩu</h1>
+        <p>
+          Nhập email đã đăng ký với tài khoản của bạn để khôi phục mật khẩu.
+        </p>
+        <br />
+        <form id="forgotForm" onsubmit="return callForgotPassAPI(event)">
+          <h4>Email</h4>
+          <input
+            type="email"
+            id="email"
+            placeholder="Nhập email"
+            required
+            oninvalid="setEmailError(this)"
+          />
+          <div id="email-error" class="error-message hidden">
+            Vui lòng nhập email!
+          </div>
+          <br /><br />
+          <button type="submit">Tiếp tục</button>
+          <br /><br />
+          <a
+            href="../pages/dangNhap.html"
+            class="login-linkcuoi"
+            style="margin-top: 200px"
+            >&larr; Trở về Đăng nhập</a
+          >
+        </form>
+      </div>
     </div>
-    <div class="form-box">
-      <h1>Khôi phục mật khẩu</h1>
-      <p>Nhập email đã đăng ký với tài khoản của bạn để khôi phục mật khẩu.</p>
-      <br>
-      <form id="forgotForm" onsubmit="return callForgotPassAPI(event)">
-        <h4>Email</h4>
-        <input type="email" id="email" placeholder="Nhập email" required oninvalid="setEmailError(this)">
-        <div id="email-error" class="error-message hidden">Vui lòng nhập email!</div>
-        <br><br>
-        <button type="submit">Tiếp tục</button>
-        <br><br>
-        <a href="../pages/dangnhap1.html" class="login-linkcuoi" style="margin-top: 200px;">&larr; Trở về Đăng nhập</a>
-      </form>
-    </div>
-  </div>
-</body>
+  </body>
 </html>

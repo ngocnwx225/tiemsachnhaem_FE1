@@ -1,112 +1,114 @@
 <!DOCTYPE html>
-<html lang="vi">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Trang quản lý - Tiệm Sách Nhà Em</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="assets/css/style_sidebar.css" />
-    <link rel="stylesheet" href="assets/css/style_common.css" />
-    <link rel="stylesheet" href="assets/css/style_index.css" />
-    <style>
-      .container-all {
-        display: flex;
-        margin: 0 auto;
-        overflow: hidden;
-        background-color: #f5f5f7;
-      }
-      body,
-      h1,
-      h2,
-      h3,
-      h4,
-      p,
-      button,
-      input,
-      select,
-      textarea {
-        font-family: 'Montserrat', sans-serif;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container-all">
-      <div id="sidebar-container" class="sidebar"></div>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Trang chủ</title>
+  <link rel="stylesheet" href="../assets/css/stylehome.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="../assets/css/style_DetailProduct.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <div id="header-placeholder"></div>
 
-      <div class="main">
-        <div class="container">
-          <h2>Xin chào!</h2>
-          <div class="overview-header">
-            <p>Đây là tổng quan hoạt động của ngày hôm nay.</p>
-            <div class="time-filter">
-              <button class="time-btn active">Tuần</button>
-              <button class="time-btn">Tháng</button>
-              <button class="time-btn">Năm</button>
-              <button class="time-btn custom">
-                <img
-                  src="assets/images/Máy in.png"
-                  width="16"
-                  style="margin-right: 4px"
-                />
-                Tùy chỉnh
-              </button>
-            </div>
-            <div id="custom-date-range" style="display: none; margin-top: 10px">
-              <label>Từ ngày: <input type="date" id="from-date" /></label>
-              <label>Đến ngày: <input type="date" id="to-date" /></label>
-              <button id="apply-filter">Lọc</button>
-            </div>
+    <main class="container">
+        <!-- Include header -->
+          <div class="banner-container">
+            <img src="../assets/Hình/Welcome.png" alt="Tiệm sách nhà em" class="banner-image">
           </div>
 
-          <div class="overview">
-            <div class="card blue">
-              <div class="icon">📦</div>
-              <h3>Tổng đơn hàng</h3>
-              <div class="value" id="total-orders">...</div>
+        
+        <section class="book-banners" aria-label="Các banner sách nổi bật">
+            <div class="banner-item">
+                <img src="../assets/Hình/h1.jpg" alt="Combo sách trí tuệ của thiên nhiên">
             </div>
-            <div class="card green">
-              <div class="icon">🛒</div>
-              <h3>Đơn hàng mới</h3>
-              <div class="value" id="new-orders">...</div>
+            <div class="banner-item">
+                <img src="../assets/Hình/h2.jpg" alt="Bestseller Books">
             </div>
-            <div class="card purple">
-              <div class="icon">👥</div>
-              <h3>Khách hàng</h3>
-              <div class="value" id="total-customers">...</div>
+            <div class="banner-item">
+                <img src="../assets/Hình/h3.jpg" alt="Đường xưa mây trắng - Truyện về Đức Phật">
             </div>
-            <div class="card yellow">
-              <div class="icon">💰</div>
-              <h3>Doanh thu</h3>
-              <div class="value" id="revenue">...</div>
-            </div>
-          </div>
+        </section>
+  
+  <section class="popular-books">
+  <!-- DÒNG NÚT + XEM TẤT CẢ -->
+  <div class="control-row">
+    <div class="right-controls">
+      <h3>Sách nổi bật</h3>
+      <button class="see-all-btn">Xem tất cả</button>
+    </div>
+  </div>
 
-          <div class="section">
-            <div class="box">
-              <div class="box-header">
-                <h4>Sách bán chạy</h4>
-              </div>
-              <div id="top-products-list">Đang tải...</div>
-            </div>
+  <div class="carousel-wrapper">
+      <button class="carousel-btn prev"><i class="fas fa-arrow-left"></i></button>
 
-            <div class="box">
-              <div class="box-header">
-                <h4>Đơn hàng gần đây</h4>
-              </div>
-              <div id="recent-orders">Đang tải đơn hàng gần đây...</div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="book-list">
+      <!-- Product cards will be loaded here by javascriptHome.js -->
     </div>
 
-    <!-- Load script -->
-    <script src="assets/js/API_index.js"></script>
-    <script src="assets/js/sidebar.js"></script>
-  </body>
+  <button class="carousel-btn next"><i class="fas fa-arrow-right"></i></button>
+</section>
+
+        <section class="book-banners2" aria-label="Poster">
+            <div class="banner-item2">
+                <img src="../assets/Hình/h4.jpg" alt="New Releases">
+            </div>
+            <div class="banner-item2">
+                <img src="../assets/Hình/h5.jpg" alt="Must read book for teen">
+            </div>
+            <div class="banner-item2">
+                <img src="../assets/Hình/h6.jpg" alt="Jigsaw puzzles play and learn">
+            </div>
+            <div class="banner-item2">
+                <img src="../assets/Hình/h7.jpg" alt="Top books for self-improvement">
+            </div>
+        </section>
+
+            <section class="service-features">
+        <div class="feature-item">
+          <i class="fas fa-shipping-fast"></i>
+          <h4>Giao hàng miễn phí</h4>
+          <p>Miễn phí nội thành HN, TP.HCM, ĐN</p>
+        </div>
+        <div class="feature-item">
+          <i class="fas fa-credit-card"></i>
+          <h4>Thanh toán an toàn</h4>
+          <p>Thanh toán linh hoạt, an toàn và tiện lợi</p>
+        </div>
+        <div class="feature-item">
+          <i class="fas fa-shopping-bag"></i>
+          <h4>Đổi hàng theo yêu cầu</h4>
+          <p>Đổi hàng dễ dàng trong 7 ngày nếu có lỗi</p>
+        </div>
+        <div class="feature-item">
+          <i class="fas fa-recycle"></i>
+          <h4>Đổi mới vì môi trường</h4>
+          <p>Giảm thiểu rác thải sử dụng</p>
+        </div>
+    </main>
+    
+  </div>
+<!-- Include footer -->
+  <div id="footer-placeholder"></div>
+
+  <script src="../assets/js/component-loader.js"></script>
+  <script src="../assets/js/javascriptHome.js"></script>
+
+  <div id="cartNotificationModal" class="modal" style="display: none;">
+    <div class="modal-content success-content">
+      <div class="modal-header">
+        <i class="fas fa-check-circle" style="color: #52c41a;"></i>
+        <h2>Thành công</h2>
+      </div>
+      <div class="modal-body">
+        <p id="notificationMessage"></p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-confirm" id="closeModalBtn">Đóng</button>
+      </div>
+    </div>
+  </div>
+  <div id="cartNotificationText" style="display: none;"></div>
+</body>
 </html>
