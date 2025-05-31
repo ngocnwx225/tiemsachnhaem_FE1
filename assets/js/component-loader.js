@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
           if (user.role === 'admin') {
             adminBtn.style.display = 'block';
             adminBtn.addEventListener('click', function () {
-              window.location.href = `/admin.html`;
+              window.location.href = `${basePath}/pages/admin.html`;
             });
           }
           profileBtn.addEventListener('click', function () {
