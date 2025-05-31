@@ -83,8 +83,12 @@ document.addEventListener("DOMContentLoaded", async function () {
     const buyButton = document.querySelector('.buy-button');
     const addButton = document.querySelector('.add-button');
 
-    if (buyButton) {
-      buyButton.addEventListener('click', function () {
+    buyButton.addEventListener('click', function () {
+      console.log('Mua hàng');
+      if (!productData._id || !productData.bookTitle || !productData.price || !productData.imageUrl) {
+          alert('Dữ liệu sản phẩm không đầy đủ khi thêm vào giỏ:', productData);
+          return;
+        }
         const product = {
           id: productData._id,
           bookTitle: productData.bookTitle,
@@ -93,6 +97,11 @@ document.addEventListener("DOMContentLoaded", async function () {
           quantity: 1,
           checked: true
         };
+
+        if (!product.id || !product.bookTitle || !product.price || !product.imageUrl) {
+          alert('Thuộc tính sản phẩm không hợp lệ:', product);
+          return;
+        }
 
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
         const existingProduct = cart.find(item => item.id === product.id);
@@ -104,13 +113,11 @@ document.addEventListener("DOMContentLoaded", async function () {
         localStorage.setItem('cart', JSON.stringify(cart));
         window.location.href = 'cart.html';
       });
-    }
 
-    if (addButton) {
       addButton.addEventListener('click', function () {
         // Kiểm tra dữ liệu trước khi tạo object sản phẩm
         if (!productData._id || !productData.bookTitle || !productData.price || !productData.imageUrl) {
-          console.error('Dữ liệu sản phẩm không đầy đủ khi thêm vào giỏ:', productData);
+          alert('Dữ liệu sản phẩm không đầy đủ khi thêm vào giỏ:', productData);
           return;
         }
 
@@ -124,14 +131,13 @@ document.addEventListener("DOMContentLoaded", async function () {
         };
 
         // Debug để kiểm tra object sản phẩm
-        console.log('Sản phẩm được thêm vào giỏ:', product);
-
+        
         // Kiểm tra từng thuộc tính của product
         if (!product.id || !product.bookTitle || !product.price || !product.imageUrl) {
-          console.error('Thuộc tính sản phẩm không hợp lệ:', product);
+          alert('Thuộc tính sản phẩm không hợp lệ:', product);
           return;
         }
-
+        
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
         const existingProduct = cart.find(item => item.id === product.id);
         if (existingProduct) {
@@ -140,11 +146,11 @@ document.addEventListener("DOMContentLoaded", async function () {
           cart.push(product);
         }
         localStorage.setItem('cart', JSON.stringify(cart));
+        alert('Sản phẩm được thêm vào giỏ:', product);
 
         // Hiển thị modal thông báo
         showNotificationModal(`${product.bookTitle} đã được thêm vào giỏ hàng!`);
       });
-    }
 
     // Load sách cùng thể loại
     if (productData.catalog) {
