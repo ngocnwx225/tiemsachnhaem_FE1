@@ -262,6 +262,57 @@ async function loadRelatedBooks(catalog, currentId) {
         card.querySelector('.product-image').addEventListener('click', () => {
           window.location.href = `DetailProduct.html?id=${book._id}`;
         });
+        // Thêm sự kiện cho các nút "Mua hàng"
+        bookList.querySelectorAll('.buy-button').forEach((button) => {
+          button.addEventListener('click', function () {
+            const product = {
+              id: this.getAttribute('data-id'),
+              bookTitle: this.getAttribute('data-title'),
+              price: parseInt(this.getAttribute('data-price')),
+              imageUrl: this.getAttribute('data-image'),
+              quantity: 1,
+            };
+
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const existingProduct = cart.find((item) => item.id === product.id);
+            if (existingProduct) {
+              existingProduct.quantity += 1;
+            } else {
+              cart.push(product);
+            }
+            localStorage.setItem('cart', JSON.stringify(cart));
+            window.location.href = 'cart.html'; // Chuyển hướng đến trang giỏ hàng sau khi mua
+          });
+        });
+
+        // Thêm sự kiện cho các nút "Thêm vào giỏ hàng"
+        bookList.querySelectorAll('.cart-button').forEach((button) => {
+          button.addEventListener('click', function () {
+            const product = {
+              id: this.getAttribute('data-id'),
+              bookTitle: this.getAttribute('data-title'),
+              price: parseInt(this.getAttribute('data-price')),
+              imageUrl: this.getAttribute('data-image'),
+              quantity: 1,
+            };
+
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const existingProduct = cart.find((item) => item.id === product.id);
+            if (existingProduct) {
+              existingProduct.quantity += 1;
+            } else {
+              cart.push(product);
+            }
+            localStorage.setItem('cart', JSON.stringify(cart));
+            // Tùy chọn: Hiển thị thông báo khi sản phẩm được thêm vào giỏ hàng
+            console.log(`${product.bookTitle} added to cart`);
+
+            // Hiển thị modal thông báo
+            showNotificationModal(
+              `${product.bookTitle} đã được thêm vào giỏ hàng!`
+            );
+          });
+        });
 
         container.appendChild(card);
       });
@@ -321,6 +372,57 @@ async function loadTopSellingBooks() {
         `;
       card.querySelector('.product-image').addEventListener('click', () => {
         window.location.href = `DetailProduct.html?id=${book._id}`;
+      });
+      // Thêm sự kiện cho các nút "Mua hàng"
+      bookList.querySelectorAll('.buy-button').forEach((button) => {
+        button.addEventListener('click', function () {
+          const product = {
+            id: this.getAttribute('data-id'),
+            bookTitle: this.getAttribute('data-title'),
+            price: parseInt(this.getAttribute('data-price')),
+            imageUrl: this.getAttribute('data-image'),
+            quantity: 1,
+          };
+
+          let cart = JSON.parse(localStorage.getItem('cart')) || [];
+          const existingProduct = cart.find((item) => item.id === product.id);
+          if (existingProduct) {
+            existingProduct.quantity += 1;
+          } else {
+            cart.push(product);
+          }
+          localStorage.setItem('cart', JSON.stringify(cart));
+          window.location.href = 'cart.html'; // Chuyển hướng đến trang giỏ hàng sau khi mua
+        });
+      });
+
+      // Thêm sự kiện cho các nút "Thêm vào giỏ hàng"
+      bookList.querySelectorAll('.cart-button').forEach((button) => {
+        button.addEventListener('click', function () {
+          const product = {
+            id: this.getAttribute('data-id'),
+            bookTitle: this.getAttribute('data-title'),
+            price: parseInt(this.getAttribute('data-price')),
+            imageUrl: this.getAttribute('data-image'),
+            quantity: 1,
+          };
+
+          let cart = JSON.parse(localStorage.getItem('cart')) || [];
+          const existingProduct = cart.find((item) => item.id === product.id);
+          if (existingProduct) {
+            existingProduct.quantity += 1;
+          } else {
+            cart.push(product);
+          }
+          localStorage.setItem('cart', JSON.stringify(cart));
+          // Tùy chọn: Hiển thị thông báo khi sản phẩm được thêm vào giỏ hàng
+          console.log(`${product.bookTitle} added to cart`);
+
+          // Hiển thị modal thông báo
+          showNotificationModal(
+            `${product.bookTitle} đã được thêm vào giỏ hàng!`
+          );
+        });
       });
 
       container.appendChild(card);
