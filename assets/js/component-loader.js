@@ -39,12 +39,12 @@ document.addEventListener('DOMContentLoaded', function () {
       if (profileBtn) {
         const user = JSON.parse(localStorage.getItem('userInfo'));
         if (user) {
-          if (user.role !== 'admin') {
-            adminBtn.style.display = 'none';
+          if (user.role === 'admin') {
+            adminBtn.style.display = 'block';
+            adminBtn.addEventListener('click', function () {
+              window.location.href = `/admin.html`;
+            });
           }
-          adminBtn.addEventListener('click', function () {
-            window.location.href = `/admin.html`;
-          });
           profileBtn.addEventListener('click', function () {
             window.location.href = `${basePath}/pages/profile.html`;
           });
