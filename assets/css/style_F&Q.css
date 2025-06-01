@@ -4,7 +4,7 @@ body {
     width: 100%;
 }
 .faq-container {
-    max-width: 1400px;
+    max-width: 1450px;
     margin: 0 auto;
     padding: 20px 40px;
     font-family: 'Montserrat', sans-serif;
@@ -149,13 +149,5 @@ a:hover {
 
     .faq-item p, .faq-item ul, .faq-item ol li {
         font-size: 12px;
-    }
-}
-
-/* Desktop Enhancements */
-@media (min-width: 1025px) {
-    .faq-container {
-        max-width: 1200px;
-        padding: 20px 50px;
     }
 }

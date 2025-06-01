@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   // Khi trang load lần đầu, gọi API với filter=1 (tuần)
-  loadStatisticsAndOrders({ filter: '1' });
+  loadStatisticsAndOrders({});
   loadTopSellingProducts();
   loadRecentOrders({});
 });

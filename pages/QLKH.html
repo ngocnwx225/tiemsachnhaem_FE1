@@ -77,8 +77,8 @@
             <div class="status-dropdown">
               <select id="statusFilter" onchange="filterStatus(this.value)">
                 <option value="all">Tất cả trạng thái</option>
-                <option value="active">Active</option>
-                <option value="lock">Lock</option>
+                <option value="true">Hoạt động</option>
+                <option value="false">Bị khóa</option>
               </select>
             </div>
           </div>
@@ -155,8 +155,9 @@
         </div>
         <div class="popup-footer">
           <button
+            id="block-btn"
             class="block-btn"
-            onclick="showConfirmPopupFromPopup(document.getElementById('popupName').textContent, document.getElementById('popupStatus').textContent === 'lock')"
+            onclick="showConfirmPopupFromPopup(document.getElementById('popupName').textContent, document.getElementById('popupStatus').textContent === 'Bị khóa')"
           >
             <img
               src="https://img.icons8.com/material-outlined/24/ffffff/lock.png"

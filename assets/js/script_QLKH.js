@@ -37,7 +37,7 @@ function renderTable() {
   const customerList = document.getElementById('customerList');
   customerList.innerHTML = '';
   customers.forEach(customer => {
-    const status = customer.status.toLowerCase() === 'bị khóa' ? 'lock' : 'active';
+    const status = customer.status;
     const row = document.createElement('tr');
     row.setAttribute('data-id', customer.id);
     row.setAttribute('data-status', status);
@@ -49,10 +49,10 @@ function renderTable() {
       </td>
       <td>${customer.totalOrders || 0}</td>
       <td>${(customer.totalSpent || 0).toLocaleString('vi-VN')}đ</td>
-      <td><span class="status ${status}">${status === 'lock' ? 'Bị khóa' : 'Hoạt động'}</span></td>
+      <td><span class="status ${status ? "active" : "lock"}">${status ? 'Hoạt động' : 'Bị khóa'}</span></td>
       <td class="actions">
         <img src="https://img.icons8.com/material-outlined/24/000000/visible.png" alt="view" onclick="showPopup(this.parentNode.parentNode)">
-        <img src="https://img.icons8.com/material-outlined/24/${status === 'lock' ? '00ff00' : 'ff0000'}/${status === 'lock' ? 'unlock' : 'lock'}.png" alt="${status === 'lock' ? 'unblock' : 'block'}" onclick="showConfirmPopup('${customer.fullName}', this.parentNode.parentNode, ${status === 'lock'})">
+        <img src="https://img.icons8.com/material-outlined/24/${status ? 'ff0000' : '00ff00'}/${!status ? 'unlock' : 'lock'}.png" alt="${!status ? 'unblock' : 'block'}" onclick="showConfirmPopup('${customer.fullName}', this.parentNode.parentNode, ${!status})">
       </td>
     `;
     customerList.appendChild(row);
@@ -86,19 +86,21 @@ async function showPopup(row) {
     if (!response.ok) throw new Error('Lỗi khi gọi API chi tiết');
     const customer = await response.json();
 
-    const status = customer.status.toLowerCase() === 'bị khóa' ? 'lock' : 'active';
+    const status = customer.status;
     document.getElementById('popupName').textContent = customer.fullName || '';
     document.getElementById('popupEmail').textContent = customer.email || '';
     document.getElementById('popupPhone').textContent = customer.phoneNumber || '';
     document.getElementById('popupAddress').textContent = customer.address || 'Chưa có địa chỉ';
 
     // Ngày đăng ký (dựa trên đơn hàng đầu tiên)
-    const regDate = customer.orders && customer.orders.length > 0 ? new Date(customer.orders[customer.orders.length - 1].createdAt).toLocaleDateString('vi-VN') : '';
+    const regDate = new Date(customer.createdAt).toLocaleDateString('vi-VN');
     document.getElementById('popupRegDate').textContent = regDate;
 
-    document.getElementById('popupStatus').textContent = status === 'lock' ? 'Bị khóa' : 'Hoạt động';
+    document.getElementById('popupStatus').textContent = !status ? 'Bị khóa' : 'Hoạt động';
     document.getElementById('popupOrderCount').textContent = customer.totalOrders || 0;
     document.getElementById('popupTotalSpent').textContent = (customer.totalSpent || 0).toLocaleString('vi-VN') + 'đ';
+    document.getElementById('block-btn').textContent = !status ? 'MỞ TÀI KHOẢN' : 'KHÓA TÀI KHOẢN';
+    document.getElementById('block-btn').style.backgroundColor = !status ? '#00ff00' : '#ff0000';
 
     // Đơn hàng gần nhất và gần đây nhất
     const sortedOrders = customer.orders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
@@ -137,7 +139,7 @@ function closePopup() {
 }
 
 // Hiển thị popup xác nhận khóa
-function showConfirmPopup(name, row, isUnlockAction = false) {
+function showConfirmPopup(name, row, isUnlockAction) {
   if (isUnlockAction || isAccountLocked(row)) {
     showUnlockPopup(name, row);
     return;
@@ -148,7 +150,7 @@ function showConfirmPopup(name, row, isUnlockAction = false) {
 
 // Hiển thị popup xác nhận khóa từ popup thông tin
 function showConfirmPopupFromPopup(name, isLocked) {
-  if (!isLocked) {
+  if (isLocked) {
     showUnlockPopup(name, currentRow);
     return;
   }
@@ -158,7 +160,7 @@ function showConfirmPopupFromPopup(name, isLocked) {
 // Kiểm tra trạng thái khóa
 function isAccountLocked(row) {
   const statusCell = row.querySelector('.status');
-  return statusCell && statusCell.textContent === 'lock';
+  return statusCell && statusCell.textContent === "Bị khóa";
 }
 
 // Đóng popup xác nhận khóa
@@ -170,7 +172,7 @@ function closeConfirmPopup() {
 async function confirmBlockAction() {
   if (currentRow) {
     const customerId = currentRow.getAttribute('data-id');
-    const updatedCustomer = await updateUserStatus(customerId, 'lock');
+    const updatedCustomer = await updateUserStatus(customerId, false);
     if (updatedCustomer) {
       const statusCell = currentRow.querySelector('.status');
       const actionCell = currentRow.querySelector('.actions img:last-child');
@@ -178,7 +180,7 @@ async function confirmBlockAction() {
       statusCell.className = 'status lock';
       actionCell.src = 'https://img.icons8.com/material-outlined/24/00ff00/unlock.png';
       actionCell.alt = 'unblock';
-      currentRow.setAttribute('data-status', 'lock');
+      currentRow.setAttribute('data-status', false);
       closeConfirmPopup();
       closePopup();
       showSuccessPopup();
@@ -212,7 +214,7 @@ function closeUnlockPopup() {
 async function confirmUnlockAction() {
   if (currentRow) {
     const customerId = currentRow.getAttribute('data-id');
-    const updatedCustomer = await updateUserStatus(customerId, 'active');
+    const updatedCustomer = await updateUserStatus(customerId, true);
     if (updatedCustomer) {
       const statusCell = currentRow.querySelector('.status');
       const actionCell = currentRow.querySelector('.actions img:last-child');
@@ -220,7 +222,7 @@ async function confirmUnlockAction() {
       statusCell.className = 'status active';
       actionCell.src = 'https://img.icons8.com/material-outlined/24/ff0000/lock.png';
       actionCell.alt = 'block';
-      currentRow.setAttribute('data-status', 'active');
+      currentRow.setAttribute('data-status', true);
       closeUnlockPopup();
       if (document.getElementById('popupOverlay').style.display === 'flex') closePopup();
     }
