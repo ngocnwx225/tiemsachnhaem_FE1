@@ -450,7 +450,7 @@ addForm.addEventListener('submit', async (event) => {
         const isbn = document.getElementById('add-isbn').value.trim();
         const categorySelect = document.getElementById('add-category');
         const selectedCatalog = categorySelect.value;
-        const stock = Number(document.getElementById('edit-stock').value); // Sửa ID từ add-stock thành edit-stock
+        const stock = Number(document.getElementById('add-stock').value);
 
         if (!selectedCatalog) {
             throw new Error('Vui lòng chọn thể loại sách');
