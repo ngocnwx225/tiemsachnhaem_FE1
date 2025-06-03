@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
                    ...user, // Giữ lại các thông tin cũ như id, status, role
                    fullName: fullName,
                    email: email, // Email không đổi qua form nhưng vẫn lưu lại
-                   phone: phone, // Lưu phone với tên phone trong storage
+                   phoneNumber: phone, // Lưu phone với tên phone trong storage
                    address: address
                 };
                 localStorage.setItem('userInfo', JSON.stringify(updatedUserInStorage));
