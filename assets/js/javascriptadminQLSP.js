@@ -470,13 +470,17 @@ addForm.addEventListener('submit', async (event) => {
             catalog: selectedCatalog,
             description: document.getElementById('add-notes').value.trim(),
             imageUrl: addImageURL.value.trim(),
-            pageCount: Number(document.getElementById('edit-pageCount').value),
-            bookWeight: document.getElementById('edit-bookWeight').value.trim()
+            pageCount: Number(document.getElementById('add-pageCount').value),
+            bookWeight: document.getElementById('add-bookWeight').value.trim()
         };
+        const checkPrice = typeof formData.price === 'number'
+        const checkStock = typeof formData.stock === 'number'
+        const checkPageCount = typeof formData.pageCount === 'number'
+ 
 
         if (!formData.ISBN || !formData.bookTitle || !formData.author || 
-            !formData.publisher || isNaN(formData.price) || isNaN(formData.stock) || 
-            !formData.catalog || isNaN(formData.pageCount) || !formData.bookWeight) {
+            !formData.publisher || !checkPrice || !checkStock || !checkPageCount || 
+            !formData.catalog || !formData.bookWeight) {
             throw new Error('Vui lòng điền đầy đủ thông tin bắt buộc');
         }
 
