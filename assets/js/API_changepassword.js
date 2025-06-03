@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (response.ok) {
                 alert('Đổi mật khẩu thành công!');
-                window.location.href = '../pages/profilecustomer.html';
+                window.location.href = '../pages/profile.html';
             } else {
                 alert(data.message || 'Email không tồn tại hoặc lỗi đổi mật khẩu.');
             }

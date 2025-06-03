@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Điền thông tin vào form
         document.getElementById('fullName').value = user.fullName || '';
         document.getElementById('email').value = user.email || '';
-        document.getElementById('phone').value = user.phone || ''; // Giữ lại phone cho input
+        document.getElementById('phone').value = user.phoneNumber || ''; // Giữ lại phone cho input
         document.getElementById('address').value = user.address || '';
     }
     
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     email: email,
                     phoneNumber: phone, // Sử dụng phoneNumber cho API
                     address: address,
-                    status: user.status || 'active', // Giữ nguyên status hoặc mặc định
+                    status: user.status || true, // Giữ nguyên status hoặc mặc định
                     role: user.role || 'user'       // Giữ nguyên role hoặc mặc định
                 };
 

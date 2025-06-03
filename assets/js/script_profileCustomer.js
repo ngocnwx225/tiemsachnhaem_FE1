@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('customer-mail').textContent = user.email || '';
         document.getElementById('customer-name').textContent = user.fullName || '';
         document.getElementById('customer-fullname').textContent = user.fullName || '';
-        document.getElementById('customer-phone').textContent = user.phone || '';
+        document.getElementById('customer-phone').textContent = user.phoneNumber || '';
         document.getElementById('customer-address').textContent = user.address || '';
         
     }

@@ -223,9 +223,9 @@ function setupCartEvents() {
       );
       return;
     }
-
+    const cart = JSON.parse(localStorage.getItem('cart'));
     const cartData = {
-      items: selectedItems.map((item) => ({
+      items: cart.map((item) => ({
         id: item.id,
         bookTitle: item.bookTitle || item.name,
         price: item.price,
@@ -273,6 +273,12 @@ function setupCartEvents() {
 
   cartDOM.applyDiscountBtn.addEventListener('click', () => {
     const code = cartDOM.discountCodeInput.value.trim();
+    const cartData = JSON.parse(localStorage.getItem('cart'));
+    const newCartData = cartData.map((item) => ({
+      ...item,
+      price: item.price - item.price * discountRate,
+    }));
+    localStorage.setItem('cart', JSON.stringify(newCartData));
     const subtotal = cartItems.reduce(
       (sum, item) => sum + (item.checked ? item.price * item.quantity : 0),
       0

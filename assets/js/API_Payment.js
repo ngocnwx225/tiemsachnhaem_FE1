@@ -12,7 +12,7 @@ const orderAPI = {
       paymentMethod: data.paymentMethod,
       shippingAddress: data.shippingAddress,
     };
-    // console.log(data);
+    
 
     const response = await fetch(`${API_BASE_URL}/orders`, {
       method: 'POST',
